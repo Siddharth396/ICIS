@@ -1,0 +1,75 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: homepage-app
+spec:
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+      strategy: rollback
+  releaseName: authoring-app-integration
+  values:
+    namespace: "atcore-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    app:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-app # {"$imagepolicy": "flux-system:authoring-app-integration:name"}
+        tag: integration-74-1.56.0-51163 # {"$imagepolicy": "flux-system:authoring-app-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        REACT_APP_ANALYTICS_ACCOUNT: rbiuk-icis-genesis-dev
+        REACT_APP_ANALYTICS_SCRIPT_SRC: //assets.adobedtm.com/c89af706acda/906d7140be39/launch-3c41f40d121d-development.min.js
+        REACT_APP_BFF_URL: https://authoring.integration.cha.rbxd.ds/api/core/v1
+        REACT_APP_BYPASS_VERSION_CHECK: 'false'
+        REACT_APP_AUTH_DOMAIN: .cha.rbxd.ds
+        REACT_APP_OIDC_LOG_LEVEL: '4'
+        REACT_APP_SHARED_HEADER_ROOT: https://subscriber.integration.genesis.cha.rbxd.ds
+        REACT_APP_MFE_FEED_SERVICE_URL: https://authoring.integration.cha.rbxd.ds/mfe/mfe-feed-service/api/v1/mfe
+        REACT_APP_ENVIRONMENT: integration
+        REACT_APP_ENABLE_APM: true
+        REACT_APP_APM_URL: https://authoring.integration.cha.rbxd.ds/api/apm
+        REACT_APP_IS_AUTHORING: 'true'
+        REACT_APP_CONTENT_NOTIFIER_PUBNUB_SUBSCRIBE_KEY: 'sub-c-243d5f8c-53b7-4fa0-b868-e7fe0e203918'
+        REACT_APP_CONTENT_NOTIFIER_PUBNUB_CHANNELS: WorkflowEvents,PriceAuthoringEvents,TableEntryEvents
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: 100m
+        limits:
+          cpu: "200m"
+          memory: 256Mi
+    ingress:
+      enabled: true
+      name: authoring-appshell-integration-ingress
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      hosts:
+      - host: authoring.integration.cha.rbxd.ds
+        paths:
+        - /
+        tls: "true"
+      tls:
+      - hosts:
+        - authoring.integration.cha.rbxd.ds
+        secretName: authoring.integration.cha.rbxd.ds
+    secrets:
+      name: authoring.integration.cha.rbxd.ds
+    nginx:
+      csp_domains:
+      - "*.cha.rbxd.ds"
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80

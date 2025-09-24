@@ -1,0 +1,8 @@
+version: "3.4"
+services:
+  supply-and-demand-realm-deployer:
+    build:
+      context: ../../
+      dockerfile: ./DockerFiles/pre-live-deploy/deploy.Dockerfile
+      target: deployer
+    container_name: supply-and-demand-realm-deployer

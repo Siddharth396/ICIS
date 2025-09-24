@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "lint": "eslint --config eslint.config.js migrations repeatable_migrations helpers --quiet",
+    "lint:fix": "eslint --config eslint.config.js --fix migrations repeatable_migrations helpers"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "migrate-mongo": "^12.1.2",
+    "mongodb": "^6.7.0",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.25.1",
+    "eslint": "^9.25.1",
+    "eslint-plugin-import": "^2.31.0",
+    "globals": "^16.3.0"
+  }
+}

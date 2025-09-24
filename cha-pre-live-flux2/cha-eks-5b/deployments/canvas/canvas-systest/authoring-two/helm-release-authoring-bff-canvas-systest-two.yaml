@@ -1,0 +1,83 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  chart:
+    spec:
+      version: "0.1.71"
+  releaseName: authoring-bff-canvas-systest-two
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    projectName: "authoring-two-canvas"
+    replicaCount: 1
+    namespace: "canvas-systest"
+    environment: "systest"
+    deploymentStrategy: "RollingUpdate"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/canvas/mongo-two-migration # {"$imagepolicy": "flux-system:canvas-mongo-migration-systest-two:name"}
+        tag: systest-127-1.101.0-bug-fix-MARS-5589-delete-old-pvc-page-revisions-53089 # {"$imagepolicy": "flux-system:canvas-mongo-migration-systest-two:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/canvas/authoring-two-bff # {"$imagepolicy": "flux-system:canvas-authoring-bff-systest-two:name"}
+        tag: systest-196-1.100.0-main-12758 # {"$imagepolicy": "flux-system:canvas-authoring-bff-systest-two:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/canvas-2-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        DEV_MODE: true
+        ID_CLAIM: user_id
+        ENCRYPTED_ID_CLAIM: user_id_encrypted
+        NAME_CLAIM: given_name
+        EMAIL_CLAIM: email
+        ALLOWED_ROLES: "RBI-GLO-ICIS-APPLICATION-SECURITY-CANVAS-ALPHA"
+        ACS_URL: "https://acm.integration.cha.rbxd.ds/v1/userpermission"
+        IS_NEW_AUTH: false
+        CLIENT_ID_CLAIM: client_id
+        ENCRYPTED_CLIENT_ID_CLAIM: client_id_encrypted
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        SWAGGER_ENABLED: true
+        DOMAIN_IDENTITY_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        DOMAIN_IDENTITY_CLIENT_ID: canvas.bff
+        SCOPE_OPTIONS: all
+        RICH_TEXT_URL: /api/richtext/v1/publish
+        LOG_LEVEL: Information
+        DOMAIN_IDENTITY_URL: https://domainidentity.integration.cha.rbxd.ds/v1
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/canvas-two/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-canvas-systest-2
+      VaultK8sRoleName: "kv-canvas-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "canvas/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-canvas-systest-2
+      VaultK8sRoleName: "kv-canvas-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

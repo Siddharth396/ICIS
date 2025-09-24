@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+      strategy: rollback
+  releaseName: subscriber-bff-spt-systest
+  values:
+    replicaCount: 1
+    namespace: "spt-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/spot-price/spt-bff # {"$imagepolicy": "flux-system:spt-bff-systest:name"}
+        tag: systest-143-2.5.0-main-54551 # {"$imagepolicy": "flux-system:spt-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live.ak0n6.mongodb.net/spt-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds,https://localhost:8083
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        DEV_MODE: false
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ENABLED_OVERRIDE_OFFERINGS: true
+        OverrideOfferings__306_4_1__0: "F-BEN-SPT"
+        OverrideOfferings__373_9_1__0: "F-MEG-SPT"
+        OverrideOfferings__203_4_1__0: "F-PXOX"
+        OverrideOfferings__326_9_1__0: "F-ETHY"
+        OverrideOfferings__513_9_1__0: "F-PROPY"
+        OverrideOfferings__326_14_1__0: "U-ETHY"
+        OverrideOfferings__513_14_1__0: "U-PROPY"
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/spot-price-tracker/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-spt-systest
+      VaultSecretPath: "spt/systest/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-spt-systest

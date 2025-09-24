@@ -1,0 +1,98 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-realm-bff
+spec:
+  values:
+    namespace: "sboutg-staging"
+    environment: "staging"
+    authproxy:
+      resources:
+        requests:
+          memory: "16Mi"
+          cpu: "10m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+    realm_deployer:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sboutg-realm-deployer # {"$imagepolicy": "flux-system:sboutg-realm-bff-staging:name"}
+        tag: staging-35-4.0.1-MARS-5655.1-35790 # {"$imagepolicy": "flux-system:sboutg-realm-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      appsettings:
+        REALMID: sboutg-staging-zujwc
+        REALMDATABASE: sboutg-staging
+        REALMCLUSTERNAME: cha-pre-live
+        AUDIENCE: id.staging.genesis.cha.rbxd.ds
+        ENVVALUE: staging
+        SECRET_FILE_PATH: /etc/secrets/.env
+    data_deployer:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sboutg-realm-data-deployer # {"$imagepolicy": "flux-system:sboutg-realm-data-staging:name"}
+        tag: staging-32-0.0.1-956024 # {"$imagepolicy": "flux-system:sboutg-realm-data-staging:tag"}
+        pullPolicy: IfNotPresent
+      appsettings:
+        REALMDATABASE: sboutg-staging
+        DEPLOYENV: staging
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MONGODB_SERVER: cha-pre-live-ak0n6.mongodb.net
+    nginx:
+      resources:
+        requests:
+          memory: "16Mi"
+          cpu: "10m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+      reverse_proxy:
+        port: 8087
+        appsettings:
+          REALM_WEBHOOK_URL: https://eu-west-1.aws.data.mongodb-api.com/app/sboutg-systest-eamse/endpoint/webhooks/context_initializer
+          REALM_NORMAL_URL: https://eu-west-1.aws.realm.mongodb.com/api/client/v2.0/app/sboutg-systest-eamse/graphql
+        #this config has to be ovverriden by indvidual components using this chart
+        config: |-
+          access_log  /dev/stdout  main;
+          include /etc/nginx/mime.types;
+          client_header_buffer_size 8k;
+          large_client_header_buffers 4 32k;
+
+          upstream eu-west-1.aws.realm.mongodb.com {
+              server eu-west-1.aws.realm.mongodb.com:443;
+          }
+          upstream eu-west-1.aws.webhooks.mongodb-realm.com {
+              server eu-west-1.aws.webhooks.mongodb-realm.com:443;
+          }
+
+          map $http_authorization $jwtToken {
+              ~*^bearer(\s*)(?<token>(.*))$ $token;
+              default $http_authorization;
+          }
+          map $http_x_icis_user_roles $roles {
+              default $http_x_icis_user_roles;
+          }
+          server {
+              listen 8087;
+              proxy_buffering off;
+              proxy_buffers 8 8k;
+              location / {
+                  return 200 'Healthly';
+              }
+          }
+    ingress:
+      enabled: false
+      className: icis-nginx-ingress
+      name: ccurve-realm-performance-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/analytics/outages(/|$)(.*)
+    vault_secrets:
+      name: subscriber-realm-bff-vault-secret-sboutg-staging
+      VaultSecretPath: "sboutg/systest/realm"
+    vault_secrets_proxy:
+      name: subscriber-realm-bff-vault-secret-proxy-sboutg-staging

@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: sonarqube-poc
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sonarqube
+    namespace: flux-system
+  filterTags:
+    pattern: '^poc-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

@@ -1,0 +1,69 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  chart:
+    spec:
+      chart: subscriber-bff
+      version: 0.1.75
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  releaseName: authoring-api-kfkpro-performance
+  values:
+    autoscaling:
+      enabled: true
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+    pdb:
+      minAvailable: 1
+    replicaCount: 3
+    namespace: "supdem-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: Always
+    nginx:
+      readinessProbe:
+        initialDelaySeconds: 10
+        periodSeconds: 60
+        timeoutSeconds: 60
+        successThreshold: 1
+        failureThreshold: 1
+    bff:
+      resources:
+        limits:
+          cpu: "1"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/snd/kfkpro # {"$imagepolicy": "flux-system:kfkpro-performance:name"}
+        tag: performance-111-2.3.2-41266 # {"$imagepolicy": "flux-system:kfkpro-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ASPNETCORE_ENVIRONMENT: performance
+        ENVIRONMENT: performance
+        CONNECTION_STRING: Data Source=SND_AO_PerfEdit.cha.rbxd.ds;initial catalog=SupplyNDemandEditing;user id=${SQL_USER};password=${SQL_PWD};Encrypt=false;Integrated Security=False;MultiSubnetFailover=True;Connection Timeout=60
+        CommandTimeout: 60
+        ThresholdForBackgroundProcessing: 500
+        BatchLength: 2000
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/snd/kafka/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-risk-vault-secret-supdem-performance
+      VaultSecretPath: "supdem/performance/kfkpro"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-supdem-kfkpro-connection"
+      VaultNamespace: dataservices/icis/nonprod

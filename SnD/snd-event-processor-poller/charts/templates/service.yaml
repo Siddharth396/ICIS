@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "supdem-processor.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app.kubernetes.io/name: {{ include "supdem-processor.name" . }}
+    helm.sh/chart: {{ include "supdem-processor.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - name: http
+    port: {{ .Values.service.port }}
+    targetPort: {{ .Values.nginx.port }}
+    protocol: TCP
+  selector:
+    app.kubernetes.io/name: {{ include "supdem-processor.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    

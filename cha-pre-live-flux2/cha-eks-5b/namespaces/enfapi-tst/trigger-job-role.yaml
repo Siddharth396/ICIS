@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: enfapi-tst
+  name: trigger-data-cleaner-job
+rules:
+  - apiGroups: ["batch", ""] # "" indicates the core API group
+    resources: ["cronjobs"]
+    verbs: ["get", "list", "watch"] # Permissions to read CronJobs
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "list", "delete", "get", "watch"] # Permissions to manage Jobs

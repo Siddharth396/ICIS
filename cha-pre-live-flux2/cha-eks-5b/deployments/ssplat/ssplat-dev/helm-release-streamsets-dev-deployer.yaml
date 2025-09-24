@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: streamsets-poc-release
+  namespace: ssplat-dev
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: streamsets
+      version: 0.0.15
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    ServiceAccountName: "ssplat"
+    namespace: "ssplat-dev"
+    LOAD_BALANCER_HOSTNAME: streamsets-poc-deployment.cha.eu-west-1.dev
+    SMTP_HOST: chamailrelay.cha.rbxd.ds
+    SMTP_FROM_HOST: streamsets-poc@cha.rbxd.ds
+    SDC_REPO: "artifacts.cha.rbxd.ds/ds/streamsets-dc-generic"
+    SDC_TAG: "1.0.25.5"
+    SDC_VERSION: "6.3.0-0103"
+    REQUESTS_MEMORY: 5Mi
+    REQUESTS_CPU: "200m"
+    LIMITS_MEMORY: 1Gi
+    LIMITS_CPU: "500m"
+    USER_STAGE_LIBS: http,apache-kafka,aws,aws-secrets-manager-credentialstore,jdbc,jython_2_7,sdc-snowflake,vault-credentialstore,mongodb-atlas,groovy_4_0,webclient-impl-okhttp,orchestrator
+    streamsets:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/ssplat" # {"$imagepolicy": "flux-system:ssplat-deployer:name"}
+        tag: "streamsets-20-0.0.0.20" # {"$imagepolicy": "flux-system:ssplat-deployer:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: dev
+      argument:
+        arg1: deployment.properties
+        arg2: ssplat-dev
+        arg3: deployment
+    vault_secrets:
+      name: streamsets-poc-secrets-deployer
+      VaultK8sRoleName: "kv-ssplat-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "ssplat/poc"
+    vault_secrets_streamsets:
+      name: streamsets-poc-job-deployer
+      VaultK8sRoleName: "kv-ssplat-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "ssplat/poc"

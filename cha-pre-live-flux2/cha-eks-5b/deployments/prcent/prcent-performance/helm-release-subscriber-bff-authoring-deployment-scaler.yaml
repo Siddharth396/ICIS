@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff-authoring-deployment-scaler
+  namespace: prcent-performance
+spec:
+  releaseName: subscriber-bff-authoring-deployment-scaler
+  interval: 5m0s
+  chart:
+    spec:
+      chart: deployment-scaler
+      version: "0.1.2"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    deployments:
+      - name: authoring-deployment
+        namespace: prcent-performance
+        deploymentName: subscriber-bff-authoring-prcent
+        serviceAccountName: prcent
+        scaleUpSchedule: "30 2 * * 1-5"  # Weekday scale-up at 2:30 AM UTC
+        scaleUpReplicas: 3
+        scaleDownSchedule: "0 18 * * 1-4"  # Weekday scale-down at 6:00 PM UTC (Monday to Thursday)
+        scaleDownReplicas: 1
+        weekendScaleDown:
+          enabled: true
+          schedule: "0 18 * * 5"  # Scale-down at 6:00 PM UTC on Friday,weekend sleep 
+          replicas: 0

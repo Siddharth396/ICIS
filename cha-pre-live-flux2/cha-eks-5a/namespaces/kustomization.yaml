@@ -1,0 +1,1084 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - icis-squidex-systest
+  - icis-squidex-performance
+  - icis-squidex-uat
+  ###############################
+  - rpet-systest/namespace-rpet-systest.yaml
+  - rpet-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - rpet-performance/namespace-rpet-performance.yaml
+  - rpet-performance/vault-serviceaccount-clusterrolebinding.yaml
+  ###############################
+  - c-hub-systest/namespace-c-hub-systest.yaml
+  - c-hub-systest/network-policy-apps.yaml
+  - c-hub-systest/network-policy-defaults.yaml
+  - c-hub-systest/vault-serviceaccount-clusterrolebinding.yaml
+  ###############################
+  - c-hub-staging/namespace-c-hub-staging.yaml
+  - c-hub-staging/network-policy-apps.yaml
+  - c-hub-staging/network-policy-defaults.yaml
+  - c-hub-staging/vault-serviceaccount-clusterrolebinding.yaml
+  ###############################
+  - c-hub-performance/namespace-c-hub-performance.yaml
+  - c-hub-performance/network-policy-apps.yaml
+  - c-hub-performance/network-policy-defaults.yaml
+  - c-hub-performance/vault-serviceaccount-clusterrolebinding.yaml
+  ###############################
+  - genesis-platform/namespace-genesis-platform.yaml
+  - genesis-platform/network-policy-apps.yaml
+  - genesis-platform/network-policy-defaults.yaml
+  - genesis-platform/secrets-genesis-platform.yaml
+  ###############################
+  - c-hub-test/namespace-c-hub-test.yaml
+  ################################
+  - pforecast-performance/namespace-pforecast-performance.yaml
+  - pforecast-performance/network-policy-apps.yaml
+  - pforecast-performance/network-policy-defaults.yaml
+  - pforecast-performance/vault-access.yaml
+  - pforecast-integ/namespace-pforecast-integ.yaml
+  - pforecast-integ/network-policy-apps.yaml
+  - pforecast-integ/network-policy-defaults.yaml
+  - pforecast-integ/vault-access.yaml
+  - pforecast-systest/namespace-pforecast-systest.yaml
+  - pforecast-systest/network-policy-apps.yaml
+  - pforecast-systest/network-policy-defaults.yaml
+  - pforecast-systest/vault-access.yaml
+  - pforecast-staging/namespace-pforecast-staging.yaml
+  - pforecast-staging/network-policy-apps.yaml
+  - pforecast-staging/network-policy-defaults.yaml
+  - pforecast-staging/vault-access.yaml
+  ################################
+  - amw-poc-systest/namespace-amw-poc-systest.yaml
+  - amw-poc-systest/network-policy-apps.yaml
+  - amw-poc-systest/network-policy-defaults.yaml
+  - amw-poc-systest/vault-access.yaml
+  ################################
+  - lngedge-systest/namespace-lngedge-systest.yaml
+  - lngedge-systest/network-policy-apps.yaml
+  - lngedge-systest/network-policy-defaults.yaml
+  - lngedge-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - lngedge-uat/namespace-lngedge-uat.yaml
+  - lngedge-uat/network-policy-apps.yaml
+  - lngedge-uat/network-policy-defaults.yaml
+  - lngedge-uat/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - grn-systest/namespace-grn-systest.yaml
+  - grn-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - grn-systest/network-policy-apps.yaml
+  - grn-systest/network-policy-defaults.yaml
+  - grn-performance/namespace-grn-performance.yaml
+  - grn-performance/vault-serviceaccount-clusterrolebinding.yaml
+  - grn-performance/network-policy-apps.yaml
+  - grn-performance/network-policy-defaults.yaml
+  - grn-staging/namespace-grn-staging.yaml
+  - grn-staging/vault-serviceaccount-clusterrolebinding.yaml
+  - grn-staging/network-policy-apps.yaml
+  - grn-staging/network-policy-defaults.yaml
+  ################################
+  - homepage-systest/namespace-homepage-systest.yaml
+  - homepage-systest/network-policy-apps.yaml
+  - homepage-systest/network-policy-defaults.yaml
+  - homepage-systest/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - homepage-staging/namespace-homepage-staging.yaml
+  - homepage-staging/network-policy-apps.yaml
+  - homepage-staging/network-policy-defaults.yaml
+  - homepage-staging/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - homepage-performance/namespace-homepage-performance.yaml
+  - homepage-performance/network-policy-apps.yaml
+  - homepage-performance/network-policy-defaults.yaml
+  - homepage-performance/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - homepage-integration/namespace-homepage-integration.yaml
+  - homepage-integration/network-policy-apps.yaml
+  - homepage-integration/network-policy-defaults.yaml
+  - homepage-integration/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - enapi1-dev/namespace-enapi1-dev.yaml
+  - enapi1-dev/network-policy-apps.yaml
+  - enapi1-dev/network-policy-defaults.yaml
+  - enapi1-dev/vault-serviceaccount-clusterrolebinding.yaml
+  - enapi1-uat/namespace-enapi1-uat.yaml
+  - enapi1-uat/network-policy-apps.yaml
+  - enapi1-uat/network-policy-defaults.yaml
+  - enapi1-uat/vault-serviceaccount-clusterrolebinding.yaml
+  - enapi1-prf/namespace-enapi1-prf.yaml
+  - enapi1-prf/network-policy-apps.yaml
+  - enapi1-prf/network-policy-defaults.yaml
+  - enapi1-prf/vault-serviceaccount-clusterrolebinding.yaml
+  - enapi1-int/namespace-enapi1-int.yaml
+  - enapi1-int/network-policy-apps.yaml
+  - enapi1-int/network-policy-defaults.yaml
+  - enapi1-int/vault-serviceaccount-clusterrolebinding.yaml
+  - enalog-dev/namespace-enalog-dev.yaml
+  - enalog-dev/network-policy-apps.yaml
+  - enalog-dev/network-policy-defaults.yaml
+  - enalog-dev/vault-serviceaccount-clusterrolebinding.yaml
+  - enalog-integration/namespace-enalog-integration.yaml
+  - enalog-integration/network-policy-apps.yaml
+  - enalog-integration/network-policy-defaults.yaml
+  - enalog-integration/vault-serviceaccount-clusterrolebinding.yaml
+  - enalog-performance/namespace-enalog-performance.yaml
+  - enalog-performance/network-policy-apps.yaml
+  - enalog-performance/network-policy-defaults.yaml
+  - enalog-performance/vault-serviceaccount-clusterrolebinding.yaml
+  - enalog-uat/namespace-enalog-uat.yaml
+  - enalog-uat/network-policy-apps.yaml
+  - enalog-uat/network-policy-defaults.yaml
+  - enalog-uat/vault-serviceaccount-clusterrolebinding.yaml
+  - enavip-dev/namespace-enavip-dev.yaml
+  - enavip-dev/network-policy-apps.yaml
+  - enavip-dev/network-policy-defaults.yaml
+  - enavip-dev/vault-serviceaccount-clusterrolebinding.yaml
+  - enavip-integration/namespace-enavip-integration.yaml
+  - enavip-integration/network-policy-apps.yaml
+  - enavip-integration/network-policy-defaults.yaml
+  - enavip-integration/vault-serviceaccount-clusterrolebinding.yaml
+  - enavip-performance/namespace-enavip-performance.yaml
+  - enavip-performance/network-policy-apps.yaml
+  - enavip-performance/network-policy-defaults.yaml
+  - enavip-performance/vault-serviceaccount-clusterrolebinding.yaml
+  - enavip-uat/namespace-enavip-uat.yaml
+  - enavip-uat/network-policy-apps.yaml
+  - enavip-uat/network-policy-defaults.yaml
+  - enavip-uat/vault-serviceaccount-clusterrolebinding.yaml
+  - enavip-tst/namespace-enavip-tst.yaml
+  - enavip-tst/network-policy-apps.yaml
+  - enavip-tst/network-policy-defaults.yaml
+  - enavip-tst/vault-serviceaccount-clusterrolebinding.yaml
+  - enalog-tst/namespace-enalog-tst.yaml
+  - enalog-tst/network-policy-apps.yaml
+  - enalog-tst/network-policy-defaults.yaml
+  - enalog-tst/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - iddn-kafka-systest/namespace-iddn-kafka-systest.yaml
+  - iddn-kafka-systest/network-policy-apps.yaml
+  - iddn-kafka-systest/network-policy-defaults.yaml
+  - iddn-kafka-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - iddn-kafka-uat/namespace-iddn-kafka-uat.yaml
+  - iddn-kafka-uat/network-policy-apps.yaml
+  - iddn-kafka-uat/network-policy-defaults.yaml
+  - iddn-kafka-uat/vault-serviceaccount-clusterrolebinding.yaml
+  - iddn-kafka-performance/namespace-iddn-kafka-performance.yaml
+  - iddn-kafka-performance/network-policy-apps.yaml
+  - iddn-kafka-performance/network-policy-defaults.yaml
+  - iddn-kafka-performance/vault-serviceaccount-clusterrolebinding.yaml
+  - iddn-kafka-integ/namespace-iddn-kafka-integ.yaml
+  - iddn-kafka-integ/network-policy-apps.yaml
+  - iddn-kafka-integ/network-policy-defaults.yaml
+  - iddn-kafka-integ/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - tesla-kafka-systest/namespace-tesla-kafka-systest.yaml
+  - tesla-kafka-systest/network-policy-defaults.yaml
+  - tesla-kafka-systest/network-policy-apps.yaml
+  - tesla-kafka-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - tesla-kafka-automation-systest/namespace-tesla-kafka-automation-systest.yaml
+  - tesla-kafka-automation-systest/network-policy-defaults.yaml
+  - tesla-kafka-automation-systest/network-policy-apps.yaml
+  - tesla-kafka-automation-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - tesla-kafka-performance/namespace-tesla-kafka-performance.yaml
+  - tesla-kafka-performance/network-policy-defaults.yaml
+  - tesla-kafka-performance/network-policy-apps.yaml
+  - tesla-kafka-performance/vault-serviceaccount-clusterrolebinding.yaml
+  - tesla-kafka-uat/namespace-tesla-kafka-uat.yaml
+  - tesla-kafka-uat/network-policy-defaults.yaml
+  - tesla-kafka-uat/network-policy-apps.yaml
+  - tesla-kafka-uat/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - order-systest/namespace-order-systest.yaml
+  - order-systest/network-policy-apps.yaml
+  - order-systest/network-policy-defaults.yaml
+  - order-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - order-uat/namespace-order-uat.yaml
+  - order-uat/network-policy-apps.yaml
+  - order-uat/network-policy-defaults.yaml
+  - order-uat/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - pricing-systest/namespace-pricing-systest.yaml
+  - pricing-systest/network-policy-apps.yaml
+  - pricing-systest/network-policy-defaults.yaml
+  - pricing-systest/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - pricing-staging/namespace-pricing-staging.yaml
+  - pricing-staging/network-policy-apps.yaml
+  - pricing-staging/network-policy-defaults.yaml
+  - pricing-staging/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - pricing-performance/namespace-pricing-performance.yaml
+  - pricing-performance/network-policy-apps.yaml
+  - pricing-performance/network-policy-defaults.yaml
+  - pricing-performance/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - pricing-integration/namespace-pricing-integration.yaml
+  - pricing-integration/network-policy-apps.yaml
+  - pricing-integration/network-policy-defaults.yaml
+  - pricing-integration/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - tesla-systest/namespace-tesla-systest.yaml
+  - tesla-systest/network-policy-defaults.yaml
+  - tesla-systest/network-policy-apps.yaml
+  - tesla-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - tesla-systest/vault-serviceaccount-clusterrolebinding-contentservice.yaml
+  - tesla-systest/vault-serviceaccount-clusterrolebinding-editorialservice.yaml
+  - tesla-systest/vault-serviceaccount-clusterrolebinding-spreadcalculator.yaml
+  - tesla-systest/vault-serviceaccount-clusterrolebinding-tesla-indexcalculator.yaml
+  - tesla-performance/namespace-tesla-performance.yaml
+  - tesla-performance/network-policy-defaults.yaml
+  - tesla-performance/network-policy-apps.yaml
+  - tesla-performance/vault-serviceaccount-clusterrolebinding.yaml
+  - tesla-performance/vault-serviceaccount-clusterrolebinding-contentservice.yaml
+  - tesla-performance/vault-serviceaccount-clusterrolebinding-editorialservice.yaml
+  - tesla-performance/vault-serviceaccount-clusterrolebinding-spreadcalculator.yaml
+  - tesla-performance/vault-serviceaccount-clusterrolebinding-tesla-indexcalculator.yaml
+  - tesla-uat/namespace-tesla-uat.yaml
+  - tesla-uat/network-policy-defaults.yaml
+  - tesla-uat/network-policy-apps.yaml
+  - tesla-uat/vault-serviceaccount-clusterrolebinding.yaml
+  - tesla-uat/vault-serviceaccount-clusterrolebinding-contentservice.yaml
+  - tesla-uat/vault-serviceaccount-clusterrolebinding-editorialservice.yaml
+  - tesla-uat/vault-serviceaccount-clusterrolebinding-spreadcalculator.yaml
+  - tesla-uat/vault-serviceaccount-clusterrolebinding-tesla-indexcalculator.yaml
+  ######################################################
+  - alerting-engine-systest/namespace-alerting-engine-systest.yaml
+  - alerting-engine-systest/network-policy-defaults.yaml
+  - alerting-engine-systest/network-policy-apps.yaml
+  - alerting-engine-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - alerting-engine-performance/namespace-alerting-engine-performance.yaml
+  - alerting-engine-performance/network-policy-defaults.yaml
+  - alerting-engine-performance/network-policy-apps.yaml
+  - alerting-engine-performance/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  # - spt-performance/namespace-spt-performance.yaml
+  # - spt-performance/network-policy-apps.yaml
+  # - spt-performance/network-policy-defaults.yaml
+  # - spt-performance/vault-access.yaml
+  # - spt-systest/namespace-spt-systest.yaml
+  # - spt-systest/network-policy-apps.yaml
+  # - spt-systest/network-policy-defaults.yaml
+  # - spt-systest/vault-access.yaml
+  # - spt-staging/namespace-spt-staging.yaml
+  # - spt-staging/network-policy-apps.yaml
+  # - spt-staging/network-policy-defaults.yaml
+  # - spt-staging/vault-access.yaml
+  ################################
+  - sbnews-performance/namespace-sbnews-performance.yaml
+  - sbnews-performance/network-policy-apps.yaml
+  - sbnews-performance/network-policy-defaults.yaml
+  - sbnews-performance/vault-access.yaml
+  - sbnews-systest/namespace-sbnews-systest.yaml
+  - sbnews-systest/network-policy-apps.yaml
+  - sbnews-systest/network-policy-defaults.yaml
+  - sbnews-systest/vault-access.yaml
+  - sbnews-staging/namespace-sbnews-staging.yaml
+  - sbnews-staging/network-policy-apps.yaml
+  - sbnews-staging/network-policy-defaults.yaml
+  - sbnews-staging/vault-access.yaml
+  - sbnews-integ/namespace-sbnews-integ.yaml
+  - sbnews-integ/network-policy-apps.yaml
+  - sbnews-integ/network-policy-defaults.yaml
+  - sbnews-integ/vault-access.yaml
+  - sbnews-systest2/namespace-sbnews-systest2.yaml
+  - sbnews-systest2/network-policy-apps.yaml
+  - sbnews-systest2/network-policy-defaults.yaml
+  - sbnews-systest2/vault-access.yaml
+  - sbnews-integration/namespace-sbnews-integration.yaml
+  - sbnews-integration/network-policy-apps.yaml
+  - sbnews-integration/network-policy-defaults.yaml
+  - sbnews-integration/vault-access.yaml
+  ################################
+  - sbsrch-performance/namespace-sbsrch-performance.yaml
+  - sbsrch-performance/network-policy-apps.yaml
+  - sbsrch-performance/network-policy-defaults.yaml
+  - sbsrch-performance/vault-access.yaml
+  - sbsrch-systest/namespace-sbsrch-systest.yaml
+  - sbsrch-systest/network-policy-apps.yaml
+  - sbsrch-systest/network-policy-defaults.yaml
+  - sbsrch-systest/vault-access.yaml
+  - sbsrch-staging/namespace-sbsrch-staging.yaml
+  - sbsrch-staging/network-policy-apps.yaml
+  - sbsrch-staging/network-policy-defaults.yaml
+  - sbsrch-staging/vault-access.yaml
+  - sbsrch-integration/namespace-sbsrch-integration.yaml
+  - sbsrch-integration/network-policy-apps.yaml
+  - sbsrch-integration/network-policy-defaults.yaml
+  - sbsrch-integration/vault-access.yaml
+  ################################
+  - sbcore-performance/namespace-sbcore-performance.yaml
+  - sbcore-performance/network-policy-apps.yaml
+  - sbcore-performance/network-policy-defaults.yaml
+  - sbcore-performance/vault-access.yaml
+  - sbcore-systest/namespace-sbcore-systest.yaml
+  - sbcore-systest/network-policy-apps.yaml
+  - sbcore-systest/network-policy-defaults.yaml
+  - sbcore-systest/vault-access.yaml
+  - sbcore-staging/namespace-sbcore-staging.yaml
+  - sbcore-staging/network-policy-apps.yaml
+  - sbcore-staging/network-policy-defaults.yaml
+  - sbcore-staging/vault-access.yaml
+  - sbcore-integration/namespace-sbcore-integration.yaml
+  - sbcore-integration/network-policy-apps.yaml
+  - sbcore-integration/network-policy-defaults.yaml
+  - sbcore-integration/vault-access.yaml
+  ################################
+  - priceopt-performance/namespace-priceopt-performance.yaml
+  - priceopt-performance/network-policy-apps.yaml
+  - priceopt-performance/network-policy-defaults.yaml
+  - priceopt-performance/vault-access.yaml
+  - priceopt-systest/namespace-priceopt-systest.yaml
+  - priceopt-systest/network-policy-apps.yaml
+  - priceopt-systest/network-policy-defaults.yaml
+  - priceopt-systest/vault-access.yaml
+  - priceopt-uat/namespace-priceopt-uat.yaml
+  - priceopt-uat/network-policy-apps.yaml
+  - priceopt-uat/network-policy-defaults.yaml
+  - priceopt-uat/vault-access.yaml
+  ################################
+  - hpt-performance/namespace-hpt-performance.yaml
+  - hpt-performance/network-policy-apps.yaml
+  - hpt-performance/network-policy-defaults.yaml
+  - hpt-performance/vault-access.yaml
+  - hpt-systest/namespace-hpt-systest.yaml
+  - hpt-systest/network-policy-apps.yaml
+  - hpt-systest/network-policy-defaults.yaml
+  - hpt-systest/vault-access.yaml
+  - hpt-uat/namespace-hpt-uat.yaml
+  - hpt-uat/network-policy-apps.yaml
+  - hpt-uat/network-policy-defaults.yaml
+  - hpt-uat/vault-access.yaml
+  ###############################
+  - supdem-performance/namespace-supdem-performance.yaml
+  - supdem-performance/network-policy-apps.yaml
+  - supdem-performance/network-policy-defaults.yaml
+  - supdem-performance/vault-access.yaml
+  - supdem-systest/namespace-supdem-systest.yaml
+  - supdem-systest/network-policy-apps.yaml
+  - supdem-systest/network-policy-defaults.yaml
+  - supdem-systest/vault-access.yaml
+  - supdem-uat/namespace-supdem-uat.yaml
+  - supdem-uat/network-policy-apps.yaml
+  - supdem-uat/network-policy-defaults.yaml
+  - supdem-uat/vault-access.yaml
+  ##########################################################
+  - sbmobl-systest/namespace-sbmobl-systest.yaml
+  - sbmobl-systest/network-policy-apps.yaml
+  - sbmobl-systest/network-policy-defaults.yaml
+  - sbmobl-systest/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - sbmobl-staging/namespace-sbmobl-staging.yaml
+  - sbmobl-staging/network-policy-apps.yaml
+  - sbmobl-staging/network-policy-defaults.yaml
+  - sbmobl-staging/vault-serviceaccount-clusterrolebinding.yaml
+  ################################
+  - sbmobl-performance/namespace-sbmobl-performance.yaml
+  - sbmobl-performance/network-policy-apps.yaml
+  - sbmobl-performance/network-policy-defaults.yaml
+  - sbmobl-performance/vault-serviceaccount-clusterrolebinding.yaml
+  ##################################################################
+  - sbmobl-integration/namespace-sbmobl-integration.yaml
+  - sbmobl-integration/network-policy-apps.yaml
+  - sbmobl-integration/network-policy-defaults.yaml
+  - sbmobl-integration/vault-serviceaccount-clusterrolebinding.yaml
+  ##################################################################
+  - sbfeed-performance/namespace-sbfeed-performance.yaml
+  - sbfeed-performance/network-policy-apps.yaml
+  - sbfeed-performance/network-policy-defaults.yaml
+  - sbfeed-performance/vault-access.yaml
+  - sbfeed-systest/namespace-sbfeed-systest.yaml
+  - sbfeed-systest/network-policy-apps.yaml
+  - sbfeed-systest/network-policy-defaults.yaml
+  - sbfeed-systest/vault-access.yaml
+  - sbfeed-staging/namespace-sbfeed-staging.yaml
+  - sbfeed-staging/network-policy-apps.yaml
+  - sbfeed-staging/network-policy-defaults.yaml
+  - sbfeed-staging/vault-access.yaml
+  - sbfeed-integration/namespace-sbfeed-integration.yaml
+  - sbfeed-integration/network-policy-apps.yaml
+  - sbfeed-integration/network-policy-defaults.yaml
+  - sbfeed-integration/vault-access.yaml
+  ##################################################################
+  - sberdg-performance/namespace-sberdg-performance.yaml
+  - sberdg-performance/network-policy-apps.yaml
+  - sberdg-performance/network-policy-defaults.yaml
+  - sberdg-performance/vault-access.yaml
+  - sberdg-systest/namespace-sberdg-systest.yaml
+  - sberdg-systest/network-policy-apps.yaml
+  - sberdg-systest/network-policy-defaults.yaml
+  - sberdg-systest/vault-access.yaml
+  - sberdg-staging/namespace-sberdg-staging.yaml
+  - sberdg-staging/network-policy-apps.yaml
+  - sberdg-staging/network-policy-defaults.yaml
+  - sberdg-staging/vault-access.yaml
+  - sberdg-integration/namespace-sberdg-integration.yaml
+  - sberdg-integration/network-policy-apps.yaml
+  - sberdg-integration/network-policy-defaults.yaml
+  - sberdg-integration/vault-access.yaml
+  ##################################################################
+  - sbcomm-performance/namespace-sbcomm-performance.yaml
+  - sbcomm-performance/network-policy-apps.yaml
+  - sbcomm-performance/network-policy-defaults.yaml
+  - sbcomm-performance/vault-access.yaml
+  - sbcomm-systest/namespace-sbcomm-systest.yaml
+  - sbcomm-systest/network-policy-apps.yaml
+  - sbcomm-systest/network-policy-defaults.yaml
+  - sbcomm-systest/vault-access.yaml
+  - sbcomm-staging/namespace-sbcomm-staging.yaml
+  - sbcomm-staging/network-policy-apps.yaml
+  - sbcomm-staging/network-policy-defaults.yaml
+  - sbcomm-staging/vault-access.yaml
+  - sbcomm-integration/namespace-sbcomm-integration.yaml
+  - sbcomm-integration/network-policy-apps.yaml
+  - sbcomm-integration/network-policy-defaults.yaml
+  - sbcomm-integration/vault-access.yaml
+  ##################################################################
+  - extids-performance/namespace-extids-performance.yaml
+  - extids-performance/network-policy-apps.yaml
+  - extids-performance/network-policy-defaults.yaml
+  - extids-performance/vault-access.yaml
+  - extids-performance2/namespace-extids-performance2.yaml
+  - extids-performance2/network-policy-apps.yaml
+  - extids-performance2/network-policy-defaults.yaml
+  - extids-performance2/vault-access.yaml
+  - extids-systest/namespace-extids-systest.yaml
+  - extids-systest/network-policy-apps.yaml
+  - extids-systest/network-policy-defaults.yaml
+  - extids-systest/vault-access.yaml
+  - extids-staging/namespace-extids-staging.yaml
+  - extids-staging/network-policy-apps.yaml
+  - extids-staging/network-policy-defaults.yaml
+  - extids-staging/vault-access.yaml
+  - extids-integration/namespace-extids-integration.yaml
+  - extids-integration/network-policy-apps.yaml
+  - extids-integration/network-policy-defaults.yaml
+  - extids-integration/vault-access.yaml
+  - extids-sysdev1/namespace-extids-sysdev1.yaml
+  - extids-sysdev1/network-policy-apps.yaml
+  - extids-sysdev1/network-policy-defaults.yaml
+  - extids-sysdev1/vault-access.yaml
+  ##################################################################
+  - pfawf-performance/namespace-pfawf-performance.yaml
+  - pfawf-performance/network-policy-apps.yaml
+  - pfawf-performance/network-policy-defaults.yaml
+  - pfawf-performance/vault-access.yaml
+  - pfawf-systest/namespace-pfawf-systest.yaml
+  - pfawf-systest/network-policy-apps.yaml
+  - pfawf-systest/network-policy-defaults.yaml
+  - pfawf-systest/vault-access.yaml
+  - pfawf-staging/namespace-pfawf-staging.yaml
+  - pfawf-staging/network-policy-apps.yaml
+  - pfawf-staging/network-policy-defaults.yaml
+  - pfawf-staging/vault-access.yaml
+  - pfawf-integration/namespace-pfawf-integration.yaml
+  - pfawf-integration/network-policy-apps.yaml
+  - pfawf-integration/network-policy-defaults.yaml
+  - pfawf-integration/vault-access.yaml
+  ##################################################################
+  - notsys-performance/namespace-notsys-performance.yaml
+  - notsys-performance/network-policy-apps.yaml
+  - notsys-performance/network-policy-defaults.yaml
+  - notsys-performance/vault-access.yaml
+  - notsys-systest/namespace-notsys-systest.yaml
+  - notsys-systest/network-policy-apps.yaml
+  - notsys-systest/network-policy-defaults.yaml
+  - notsys-systest/vault-access.yaml
+  - notsys-staging/namespace-notsys-staging.yaml
+  - notsys-staging/network-policy-apps.yaml
+  - notsys-staging/network-policy-defaults.yaml
+  - notsys-staging/vault-access.yaml
+  - notsys-integration/namespace-notsys-integration.yaml
+  - notsys-integration/network-policy-apps.yaml
+  - notsys-integration/network-policy-defaults.yaml
+  - notsys-integration/vault-access.yaml
+  ##################################################################
+  - ensftp-performance/namespace-ensftp-performance.yaml
+  - ensftp-performance/network-policy-apps.yaml
+  - ensftp-performance/network-policy-defaults.yaml
+  - ensftp-performance/vault-serviceaccount-clusterrolebinding.yaml
+  - ensftp-systest/namespace-ensftp-systest.yaml
+  - ensftp-systest/network-policy-apps.yaml
+  - ensftp-systest/network-policy-defaults.yaml
+  - ensftp-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - ensftp-dev/namespace-ensftp-dev.yaml
+  - ensftp-dev/network-policy-apps.yaml
+  - ensftp-dev/network-policy-defaults.yaml
+  - ensftp-dev/vault-serviceaccount-clusterrolebinding.yaml
+  - ensftp-uat/namespace-ensftp-uat.yaml
+  - ensftp-uat/network-policy-apps.yaml
+  - ensftp-uat/network-policy-defaults.yaml
+  - ensftp-uat/vault-serviceaccount-clusterrolebinding.yaml
+  ################################################################
+  - petana-performance/namespace-petana-performance.yaml
+  - petana-performance/network-policy-apps.yaml
+  - petana-performance/network-policy-defaults.yaml
+  - petana-performance/vault-access.yaml
+  - petana-systest/namespace-petana-systest.yaml
+  - petana-systest/network-policy-apps.yaml
+  - petana-systest/network-policy-defaults.yaml
+  - petana-systest/vault-access.yaml
+  - petana-uat/namespace-petana-uat.yaml
+  - petana-uat/network-policy-apps.yaml
+  - petana-uat/network-policy-defaults.yaml
+  - petana-uat/vault-access.yaml
+  ################################################################
+  - spfeed-systest/namespace-spfeed-systest.yaml
+  - spfeed-systest/network-policy-defaults.yaml
+  - spfeed-systest/network-policy-apps.yaml
+  - spfeed-systest/vault-access.yaml
+  - spfeed-staging/namespace-spfeed-staging.yaml
+  - spfeed-staging/network-policy-defaults.yaml
+  - spfeed-staging/network-policy-apps.yaml
+  - spfeed-staging/vault-access.yaml
+  - spfeed-performance/namespace-spfeed-performance.yaml
+  - spfeed-performance/network-policy-defaults.yaml
+  - spfeed-performance/network-policy-apps.yaml
+  - spfeed-performance/vault-access.yaml
+  ################################################################
+  - datapr-integration/namespace-datapr-integration.yaml
+  - datapr-integration/network-policy-apps.yaml
+  - datapr-integration/network-policy-defaults.yaml
+  - datapr-integration/vault-serviceaccount-clusterrolebinding.yaml
+  ################################################################
+  - sboutg-systest/namespace-sboutg-systest.yaml
+  - sboutg-systest/network-policy-apps.yaml
+  - sboutg-systest/network-policy-defaults.yaml
+  - sboutg-systest/vault-access.yaml
+  - sboutg-staging/namespace-sboutg-staging.yaml
+  - sboutg-staging/network-policy-apps.yaml
+  - sboutg-staging/network-policy-defaults.yaml
+  - sboutg-staging/vault-access.yaml
+  - sboutg-performance/namespace-sboutg-performance.yaml
+  - sboutg-performance/network-policy-apps.yaml
+  - sboutg-performance/network-policy-defaults.yaml
+  - sboutg-performance/vault-access.yaml
+  - sboutg-integration/namespace-sboutg-integration.yaml
+  - sboutg-integration/network-policy-apps.yaml
+  - sboutg-integration/network-policy-defaults.yaml
+  - sboutg-integration/vault-access.yaml
+  #################################################################
+  - esvcep-performance/namespace-esvcep-performance.yaml
+  - esvcep-performance/network-policy-apps.yaml
+  - esvcep-performance/network-policy-defaults.yaml
+  - esvcep-performance/vault-access.yaml
+  ##########
+  - esvcep-systest/namespace-esvcep-systest.yaml
+  - esvcep-systest/network-policy-apps.yaml
+  - esvcep-systest/network-policy-defaults.yaml
+  - esvcep-systest/vault-access.yaml
+  ##################################################################
+  - darchk-systest/namespace-darchk-systest.yaml
+  - darchk-systest/network-policy-apps.yaml
+  - darchk-systest/network-policy-defaults.yaml
+  - darchk-systest/vault-serviceaccount-clusterrolebinding.yaml
+  - darchk-dev/namespace-darchk-dev.yaml
+  - darchk-dev/network-policy-apps.yaml
+  - darchk-dev/network-policy-defaults.yaml
+  - darchk-dev/vault-serviceaccount-clusterrolebinding.yaml
+
+  ##############################
+  - rclpet-systest/namespace-rclpet-systest.yaml
+  - rclpet-systest/network-policy-apps.yaml
+  - rclpet-systest/network-policy-defaults.yaml
+  - rclpet-systest/vault-access.yaml
+  #############################
+  ##############################
+  - rclpet-staging/namespace-rclpet-staging.yaml
+  - rclpet-staging/network-policy-apps.yaml
+  - rclpet-staging/network-policy-defaults.yaml
+  - rclpet-staging/vault-access.yaml
+  #############################
+  ##############################
+  - rclpet-integration/namespace-rclpet-integration.yaml
+  - rclpet-integration/network-policy-apps.yaml
+  - rclpet-integration/network-policy-defaults.yaml
+  - rclpet-integration/vault-access.yaml
+  #############################
+  ###############################
+  - icis-backstage/namespace-icis-backstage.yaml
+  - icis-backstage/network-policy-apps.yaml
+  - icis-backstage/network-policy-defaults.yaml
+  - icis-backstage/vault-access.yaml
+  ###############################
+  - icis-deployment-agent/namespace-icis-deployment-agent.yaml
+  - icis-deployment-agent/network-policy-apps.yaml
+  - icis-deployment-agent/network-policy-defaults.yaml
+  - icis-deployment-agent/vault-access.yaml
+  ##############################
+  - rclpet-performance/namespace-rclpet-performance.yaml
+  - rclpet-performance/network-policy-apps.yaml
+  - rclpet-performance/network-policy-defaults.yaml
+  - rclpet-performance/vault-access.yaml
+  #############################
+  - prsftp-systest/namespace-prsftp-systest.yaml
+  - prsftp-systest/network-policy-apps.yaml
+  - prsftp-systest/network-policy-defaults.yaml
+  - prsftp-systest/vault-access.yaml
+  - prsftp-dev/namespace-prsftp-dev.yaml
+  - prsftp-dev/network-policy-apps.yaml
+  - prsftp-dev/network-policy-defaults.yaml
+  - prsftp-dev/vault-access.yaml
+  #############################
+  ##############################
+  - didens-systest/namespace-didens-systest.yaml
+  - didens-systest/network-policy-apps.yaml
+  - didens-systest/network-policy-defaults.yaml
+  - didens-systest/vault-access.yaml
+  - didens-staging/namespace-didens-staging.yaml
+  - didens-staging/network-policy-apps.yaml
+  - didens-staging/network-policy-defaults.yaml
+  - didens-staging/vault-access.yaml
+  - didens-integration/namespace-didens-integration.yaml
+  - didens-integration/network-policy-apps.yaml
+  - didens-integration/network-policy-defaults.yaml
+  - didens-integration/vault-access.yaml
+  - didens-performance/namespace-didens-performance.yaml
+  - didens-performance/network-policy-apps.yaml
+  - didens-performance/network-policy-defaults.yaml
+  - didens-performance/vault-access.yaml
+  #############################
+  ##############################
+  - atcore-systest/namespace-atcore-systest.yaml
+  - atcore-staging/namespace-atcore-staging.yaml
+  - atcore-performance/namespace-atcore-performance.yaml
+  - atcore-integration/namespace-atcore-integration.yaml
+  - atcore-systest/network-policy-apps.yaml
+  - atcore-staging/network-policy-apps.yaml
+  - atcore-performance/network-policy-apps.yaml
+  - atcore-integration/network-policy-apps.yaml
+  - atcore-systest/network-policy-defaults.yaml
+  - atcore-staging/network-policy-defaults.yaml
+  - atcore-performance/network-policy-defaults.yaml
+  - atcore-integration/network-policy-defaults.yaml
+  - atcore-systest/vault-access.yaml
+  - atcore-staging/vault-access.yaml
+  - atcore-performance/vault-access.yaml
+  - atcore-integration/vault-access.yaml
+  #############################
+  ##############################
+  - rchtxt-systest/namespace-rchtxt-systest.yaml
+  - rchtxt-staging/namespace-rchtxt-staging.yaml
+  - rchtxt-performance/namespace-rchtxt-performance.yaml
+  - rchtxt-integration/namespace-rchtxt-integration.yaml
+  - rchtxt-systest/network-policy-apps.yaml
+  - rchtxt-staging/network-policy-apps.yaml
+  - rchtxt-performance/network-policy-apps.yaml
+  - rchtxt-integration/network-policy-apps.yaml
+  - rchtxt-systest/network-policy-defaults.yaml
+  - rchtxt-staging/network-policy-defaults.yaml
+  - rchtxt-performance/network-policy-defaults.yaml
+  - rchtxt-integration/network-policy-defaults.yaml
+  - rchtxt-systest/vault-access.yaml
+  - rchtxt-staging/vault-access.yaml
+  - rchtxt-performance/vault-access.yaml
+  - rchtxt-integration/vault-access.yaml
+  #############################
+  ##############################
+  - cimage-systest/namespace-cimage-systest.yaml
+  - cimage-staging/namespace-cimage-staging.yaml
+  - cimage-performance/namespace-cimage-performance.yaml
+  - cimage-integration/namespace-cimage-integration.yaml
+  - cimage-systest/network-policy-apps.yaml
+  - cimage-staging/network-policy-apps.yaml
+  - cimage-performance/network-policy-apps.yaml
+  - cimage-integration/network-policy-apps.yaml
+  - cimage-systest/network-policy-defaults.yaml
+  - cimage-staging/network-policy-defaults.yaml
+  - cimage-performance/network-policy-defaults.yaml
+  - cimage-integration/network-policy-defaults.yaml
+  - cimage-systest/vault-access.yaml
+  - cimage-staging/vault-access.yaml
+  - cimage-performance/vault-access.yaml
+  - cimage-integration/vault-access.yaml
+  #############################
+  ##############################
+  - cvideo-systest/namespace-cvideo-systest.yaml
+  - cvideo-staging/namespace-cvideo-staging.yaml
+  - cvideo-performance/namespace-cvideo-performance.yaml
+  - cvideo-integration/namespace-cvideo-integration.yaml
+  - cvideo-systest/network-policy-apps.yaml
+  - cvideo-staging/network-policy-apps.yaml
+  - cvideo-performance/network-policy-apps.yaml
+  - cvideo-integration/network-policy-apps.yaml
+  - cvideo-systest/network-policy-defaults.yaml
+  - cvideo-staging/network-policy-defaults.yaml
+  - cvideo-performance/network-policy-defaults.yaml
+  - cvideo-integration/network-policy-defaults.yaml
+  - cvideo-systest/vault-access.yaml
+  - cvideo-staging/vault-access.yaml
+  - cvideo-performance/vault-access.yaml
+  - cvideo-integration/vault-access.yaml
+  #############################
+  ##############################
+  - canvas-systest/namespace-canvas-systest.yaml
+  - canvas-staging/namespace-canvas-staging.yaml
+  - canvas-performance/namespace-canvas-performance.yaml
+  - canvas-integration/namespace-canvas-integration.yaml
+  - canvas-systest/network-policy-apps.yaml
+  - canvas-staging/network-policy-apps.yaml
+  - canvas-performance/network-policy-apps.yaml
+  - canvas-integration/network-policy-apps.yaml
+  - canvas-systest/network-policy-defaults.yaml
+  - canvas-staging/network-policy-defaults.yaml
+  - canvas-performance/network-policy-defaults.yaml
+  - canvas-integration/network-policy-defaults.yaml
+  - canvas-systest/vault-access.yaml
+  - canvas-staging/vault-access.yaml
+  - canvas-performance/vault-access.yaml
+  - canvas-integration/vault-access.yaml
+  #############################
+  ##############################
+  - adchrt-systest/namespace-adchrt-systest.yaml
+  - adchrt-staging/namespace-adchrt-staging.yaml
+  - adchrt-performance/namespace-adchrt-performance.yaml
+  - adchrt-integration/namespace-adchrt-integration.yaml
+  - adchrt-systest/network-policy-apps.yaml
+  - adchrt-staging/network-policy-apps.yaml
+  - adchrt-performance/network-policy-apps.yaml
+  - adchrt-integration/network-policy-apps.yaml
+  - adchrt-systest/network-policy-defaults.yaml
+  - adchrt-staging/network-policy-defaults.yaml
+  - adchrt-performance/network-policy-defaults.yaml
+  - adchrt-integration/network-policy-defaults.yaml
+  - adchrt-systest/vault-access.yaml
+  - adchrt-staging/vault-access.yaml
+  - adchrt-performance/vault-access.yaml
+  - adchrt-integration/vault-access.yaml
+  #############################
+  ##############################
+  - chempf-systest/namespace-chempf-systest.yaml
+  - chempf-staging/namespace-chempf-staging.yaml
+  - chempf-performance/namespace-chempf-performance.yaml
+  - chempf-integration/namespace-chempf-integration.yaml
+  - chempf-systest/network-policy-apps.yaml
+  - chempf-staging/network-policy-apps.yaml
+  - chempf-performance/network-policy-apps.yaml
+  - chempf-integration/network-policy-apps.yaml
+  - chempf-systest/network-policy-defaults.yaml
+  - chempf-staging/network-policy-defaults.yaml
+  - chempf-performance/network-policy-defaults.yaml
+  - chempf-integration/network-policy-defaults.yaml
+  - chempf-systest/vault-access.yaml
+  - chempf-staging/vault-access.yaml
+  - chempf-performance/vault-access.yaml
+  - chempf-integration/vault-access.yaml
+  #############################
+  ##############################
+  - newsfd-systest/namespace-newsfd-systest.yaml
+  - newsfd-staging/namespace-newsfd-staging.yaml
+  - newsfd-performance/namespace-newsfd-performance.yaml
+  - newsfd-integration/namespace-newsfd-integration.yaml
+  - newsfd-systest/network-policy-apps.yaml
+  - newsfd-staging/network-policy-apps.yaml
+  - newsfd-performance/network-policy-apps.yaml
+  - newsfd-integration/network-policy-apps.yaml
+  - newsfd-systest/network-policy-defaults.yaml
+  - newsfd-staging/network-policy-defaults.yaml
+  - newsfd-performance/network-policy-defaults.yaml
+  - newsfd-integration/network-policy-defaults.yaml
+  - newsfd-systest/vault-access.yaml
+  - newsfd-staging/vault-access.yaml
+  - newsfd-performance/vault-access.yaml
+  - newsfd-integration/vault-access.yaml
+  #############################
+  ##############################
+  - adtabl-systest/namespace-adtabl-systest.yaml
+  - adtabl-staging/namespace-adtabl-staging.yaml
+  - adtabl-performance/namespace-adtabl-performance.yaml
+  - adtabl-integration/namespace-adtabl-integration.yaml
+  - adtabl-systest/network-policy-apps.yaml
+  - adtabl-staging/network-policy-apps.yaml
+  - adtabl-performance/network-policy-apps.yaml
+  - adtabl-integration/network-policy-apps.yaml
+  - adtabl-systest/network-policy-defaults.yaml
+  - adtabl-staging/network-policy-defaults.yaml
+  - adtabl-performance/network-policy-defaults.yaml
+  - adtabl-integration/network-policy-defaults.yaml
+  - adtabl-systest/vault-access.yaml
+  - adtabl-staging/vault-access.yaml
+  - adtabl-performance/vault-access.yaml
+  - adtabl-integration/vault-access.yaml
+  #############################
+  ##############################
+  - eacons-systest/namespace-eacons-systest.yaml
+  - eacons-staging/namespace-eacons-staging.yaml
+  - eacons-performance/namespace-eacons-performance.yaml
+  - eacons-integration/namespace-eacons-integration.yaml
+  - eacons-systest/network-policy-apps.yaml
+  - eacons-staging/network-policy-apps.yaml
+  - eacons-performance/network-policy-apps.yaml
+  - eacons-integration/network-policy-apps.yaml
+  - eacons-systest/network-policy-defaults.yaml
+  - eacons-staging/network-policy-defaults.yaml
+  - eacons-performance/network-policy-defaults.yaml
+  - eacons-integration/network-policy-defaults.yaml
+  - eacons-systest/vault-access.yaml
+  - eacons-staging/vault-access.yaml
+  - eacons-performance/vault-access.yaml
+  - eacons-integration/vault-access.yaml
+  #############################
+  # - contnf-systest/namespace-contnf-systest.yaml
+  # - contnf-systest/network-policy-apps.yaml
+  # - contnf-systest/network-policy-defaults.yaml
+  # - contnf-systest/vault-access.yaml
+  # #############################
+  # ##############################
+  # - contnf-staging/namespace-contnf-staging.yaml
+  # - contnf-staging/network-policy-apps.yaml
+  # - contnf-staging/network-policy-defaults.yaml
+  # - contnf-staging/vault-access.yaml
+  # #############################
+  # ##############################
+  # - contnf-integration/namespace-contnf-integration.yaml
+  # - contnf-integration/network-policy-apps.yaml
+  # - contnf-integration/network-policy-defaults.yaml
+  # - contnf-integration/vault-access.yaml
+  # #############################
+  # ##############################
+  # - contnf-performance/namespace-contnf-performance.yaml
+  # - contnf-performance/network-policy-apps.yaml
+  # - contnf-performance/network-policy-defaults.yaml
+  # - contnf-performance/vault-access.yaml
+  #############################
+  ##############################
+  - acmser-systest/namespace-acmser-systest.yaml
+  - acmser-systest/network-policy-apps.yaml
+  - acmser-systest/network-policy-defaults.yaml
+  - acmser-systest/vault-access.yaml
+  #############################
+  ##############################
+  - acmser-staging/namespace-acmser-staging.yaml
+  - acmser-staging/network-policy-apps.yaml
+  - acmser-staging/network-policy-defaults.yaml
+  - acmser-staging/vault-access.yaml
+  #############################
+  ##############################
+  - acmser-performance/namespace-acmser-performance.yaml
+  - acmser-performance/network-policy-apps.yaml
+  - acmser-performance/network-policy-defaults.yaml
+  - acmser-performance/vault-access.yaml
+  #############################
+  ##############################
+  - acmser-integration/namespace-acmser-integration.yaml
+  - acmser-integration/network-policy-apps.yaml
+  - acmser-integration/network-policy-defaults.yaml
+  - acmser-integration/vault-access.yaml
+  #############################
+  #############################
+  - wkfeng-systest/namespace-wkfeng-systest.yaml
+  - wkfeng-systest/network-policy-apps.yaml
+  - wkfeng-systest/network-policy-defaults.yaml
+  - wkfeng-systest/vault-access.yaml
+  #############################
+  #############################
+  - wkfeng-staging/namespace-wkfeng-staging.yaml
+  - wkfeng-staging/network-policy-apps.yaml
+  - wkfeng-staging/network-policy-defaults.yaml
+  - wkfeng-staging/vault-access.yaml
+  #############################
+  #############################
+  - wkfeng-performance/namespace-wkfeng-performance.yaml
+  - wkfeng-performance/network-policy-apps.yaml
+  - wkfeng-performance/network-policy-defaults.yaml
+  - wkfeng-performance/vault-access.yaml
+  #############################
+  #############################
+  - wkfeng-integration/namespace-wkfeng-integration.yaml
+  - wkfeng-integration/network-policy-apps.yaml
+  - wkfeng-integration/network-policy-defaults.yaml
+  - wkfeng-integration/vault-access.yaml
+  #############################
+  ##############################
+  - acmapi-systest/namespace-acmapi-systest.yaml
+  - acmapi-systest/network-policy-apps.yaml
+  - acmapi-systest/network-policy-defaults.yaml
+  - acmapi-systest/vault-access.yaml
+  - acmapi-integration/namespace-acmapi-integration.yaml
+  - acmapi-integration/network-policy-apps.yaml
+  - acmapi-integration/network-policy-defaults.yaml
+  - acmapi-integration/vault-access.yaml
+  - acmapi-performance/namespace-acmapi-performance.yaml
+  - acmapi-performance/network-policy-apps.yaml
+  - acmapi-performance/network-policy-defaults.yaml
+  - acmapi-performance/vault-access.yaml
+  - acmapi-staging/namespace-acmapi-staging.yaml
+  - acmapi-staging/network-policy-apps.yaml
+  - acmapi-staging/network-policy-defaults.yaml
+  - acmapi-staging/vault-access.yaml
+  ################################################
+  ################################################
+  - kfkpro-systest/namespace-kfkpro-systest.yaml
+  - kfkpro-systest/network-policy-apps.yaml
+  - kfkpro-systest/network-policy-defaults.yaml
+  - kfkpro-systest/vault-access.yaml
+  - kfkpro-integration/namespace-kfkpro-integration.yaml
+  - kfkpro-integration/network-policy-apps.yaml
+  - kfkpro-integration/network-policy-defaults.yaml
+  - kfkpro-integration/vault-access.yaml
+  - kfkpro-performance/namespace-kfkpro-performance.yaml
+  - kfkpro-performance/network-policy-apps.yaml
+  - kfkpro-performance/network-policy-defaults.yaml
+  - kfkpro-performance/vault-access.yaml
+  - kfkpro-staging/namespace-kfkpro-staging.yaml
+  - kfkpro-staging/network-policy-apps.yaml
+  - kfkpro-staging/network-policy-defaults.yaml
+  - kfkpro-staging/vault-access.yaml
+  - kfkpro-dev/namespace-kfkpro-dev.yaml
+  - kfkpro-dev/network-policy-apps.yaml
+  - kfkpro-dev/network-policy-defaults.yaml
+  - kfkpro-dev/vault-access.yaml
+  ##############################
+  - pdcast-systest/namespace-pdcast-systest.yaml
+  - pdcast-staging/namespace-pdcast-staging.yaml
+  - pdcast-performance/namespace-pdcast-performance.yaml
+  - pdcast-integration/namespace-pdcast-integration.yaml
+  - pdcast-systest/network-policy-apps.yaml
+  - pdcast-staging/network-policy-apps.yaml
+  - pdcast-performance/network-policy-apps.yaml
+  - pdcast-integration/network-policy-apps.yaml
+  - pdcast-systest/network-policy-defaults.yaml
+  - pdcast-staging/network-policy-defaults.yaml
+  - pdcast-performance/network-policy-defaults.yaml
+  - pdcast-integration/network-policy-defaults.yaml
+  - pdcast-systest/vault-access.yaml
+  - pdcast-staging/vault-access.yaml
+  - pdcast-performance/vault-access.yaml
+  - pdcast-integration/vault-access.yaml
+  #############################
+  - sonarqube-poc/namespace-sonarqube-poc.yaml
+  - sonarqube-poc/vault-access.yaml
+  - sonarqube-poc/network-policy-defaults.yaml
+  - sonarqube-poc/network-policy-apps.yaml
+  ##############################
+  - dscvry-systest/namespace-dscvry-systest.yaml
+  - dscvry-staging/namespace-dscvry-staging.yaml
+  - dscvry-performance/namespace-dscvry-performance.yaml
+  - dscvry-integration/namespace-dscvry-integration.yaml
+  - dscvry-systest/network-policy-apps.yaml
+  - dscvry-staging/network-policy-apps.yaml
+  - dscvry-performance/network-policy-apps.yaml
+  - dscvry-integration/network-policy-apps.yaml
+  - dscvry-systest/network-policy-defaults.yaml
+  - dscvry-staging/network-policy-defaults.yaml
+  - dscvry-performance/network-policy-defaults.yaml
+  - dscvry-integration/network-policy-defaults.yaml
+  - dscvry-systest/vault-access.yaml
+  - dscvry-staging/vault-access.yaml
+  - dscvry-performance/vault-access.yaml
+  - dscvry-integration/vault-access.yaml
+  #############################
+  ##############################
+  - sprdcl-systest/namespace-sprdcl-systest.yaml
+  - sprdcl-systest/network-policy-apps.yaml
+  - sprdcl-systest/network-policy-defaults.yaml
+  - sprdcl-systest/vault-access.yaml
+  #############################
+  ##############################
+  - llmrag-systest/namespace-llmrag-systest.yaml
+  - llmrag-staging/namespace-llmrag-staging.yaml
+  - llmrag-performance/namespace-llmrag-performance.yaml
+  - llmrag-integration/namespace-llmrag-integration.yaml
+  - llmrag-systest/network-policy-apps.yaml
+  - llmrag-staging/network-policy-apps.yaml
+  - llmrag-performance/network-policy-apps.yaml
+  - llmrag-integration/network-policy-apps.yaml
+  - llmrag-systest/network-policy-defaults.yaml
+  - llmrag-staging/network-policy-defaults.yaml
+  - llmrag-performance/network-policy-defaults.yaml
+  - llmrag-integration/network-policy-defaults.yaml
+  - llmrag-systest/vault-access.yaml
+  - llmrag-staging/vault-access.yaml
+  - llmrag-performance/vault-access.yaml
+  - llmrag-integration/vault-access.yaml
+  ##############################
+  - wrkflw-systest/namespace-wrkflw-systest.yaml
+  - wrkflw-systest/network-policy-apps.yaml
+  - wrkflw-systest/network-policy-defaults.yaml
+  - wrkflw-systest/vault-access.yaml
+  - wrkflw-staging/namespace-wrkflw-staging.yaml
+  - wrkflw-staging/network-policy-apps.yaml
+  - wrkflw-staging/network-policy-defaults.yaml
+  - wrkflw-staging/vault-access.yaml
+  - wrkflw-performance/namespace-wrkflw-performance.yaml
+  - wrkflw-performance/network-policy-apps.yaml
+  - wrkflw-performance/network-policy-defaults.yaml
+  - wrkflw-performance/vault-access.yaml
+  - wrkflw-integration/namespace-wrkflw-integration.yaml
+  - wrkflw-integration/network-policy-apps.yaml
+  - wrkflw-integration/network-policy-defaults.yaml
+  - wrkflw-integration/vault-access.yaml
+  #############################
+  ##############################
+  - idsadm-systest/namespace-idsadm-systest.yaml
+  - idsadm-staging/namespace-idsadm-staging.yaml
+  - idsadm-performance/namespace-idsadm-performance.yaml
+  - idsadm-integration/namespace-idsadm-integration.yaml
+  - idsadm-systest/network-policy-apps.yaml
+  - idsadm-staging/network-policy-apps.yaml
+  - idsadm-performance/network-policy-apps.yaml
+  - idsadm-integration/network-policy-apps.yaml
+  - idsadm-systest/network-policy-defaults.yaml
+  - idsadm-staging/network-policy-defaults.yaml
+  - idsadm-performance/network-policy-defaults.yaml
+  - idsadm-integration/network-policy-defaults.yaml
+  - idsadm-systest/vault-access.yaml
+  - idsadm-staging/vault-access.yaml
+  - idsadm-performance/vault-access.yaml
+  - idsadm-integration/vault-access.yaml
+  #############################
+  - rundeck-dev/namespace-rundeck-dev.yaml
+  - rundeck-dev/storage-class-efs.yaml
+  - rundeck-dev/vault-secrets.yaml
+  - rundeck-dev/vault-serviceaccount-clusterrolebinding.yaml
+  #############################
+  - innovation-dev/namespace-innovation-dev.yaml
+  - innovation-dev/network-policy-apps.yaml
+  - innovation-dev/network-policy-defaults.yaml
+  - innovation-dev/vault-serviceaccount-clusterrolebinding.yaml
+
+  #############################
+  ##############################
+  - prcent-systest/namespace-prcent-systest.yaml
+  - prcent-staging/namespace-prcent-staging.yaml
+  - prcent-performance/namespace-prcent-performance.yaml
+  - prcent-integration/namespace-prcent-integration.yaml
+  - prcent-systest/network-policy-apps.yaml
+  - prcent-staging/network-policy-apps.yaml
+  - prcent-performance/network-policy-apps.yaml
+  - prcent-integration/network-policy-apps.yaml
+  - prcent-systest/network-policy-defaults.yaml
+  - prcent-staging/network-policy-defaults.yaml
+  - prcent-performance/network-policy-defaults.yaml
+  - prcent-integration/network-policy-defaults.yaml
+  - prcent-systest/vault-access.yaml
+  - prcent-staging/vault-access.yaml
+  - prcent-performance/vault-access.yaml
+  - prcent-integration/vault-access.yaml
+  #############################
+  ##############################
+  - sodadq-dev/namespace-sodadq-dev.yaml
+  - sodadq-dev/network-policy-apps.yaml
+  - sodadq-dev/network-policy-defaults.yaml
+  - sodadq-dev/vault-access.yaml
+  #############################
+  ##############################
+  - icis-prototypes/namespace-icis-prototypes.yaml
+  - icis-prototypes/network-policy-apps.yaml
+  - icis-prototypes/network-policy-defaults.yaml
+  - icis-prototypes/vault-access.yaml
+  #############################
+  - icis-risk-vso/namespace-icis-risk-vso.yaml
+  #############################
+  - opstribe-scheduler/namespace-opstribe-scheduler.yaml
+  - opstribe-scheduler/service-account.yaml
+  #############################
+  - genai-cs-dev/namespace-genai-cs.yaml
+  - genai-cs-dev/network-policy-defaults.yaml
+  - genai-cs-dev/vault-access.yaml
+  #############################
+  - c3p0sb-integration/namespace-c3p0sb-integration.yaml
+  - c3p0sb-integration/network-policy-defaults.yaml
+  - c3p0sb-integration/vault-access.yaml
+  #############################
+  - actapp-integration/namespace-actapp-integration.yaml
+  - actapp-integration/network-policy-defaults.yaml
+  - actapp-integration/vault-access.yaml

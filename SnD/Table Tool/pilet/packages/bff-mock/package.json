@@ -1,0 +1,48 @@
+{
+  "name": "@icis/supply-and-demand-mock-bff",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@icis/bff-mock": "^2.0.5",
+    "apollo-server": "^2.21.0",
+    "date-fns": "^2.28.0",
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.16",
+    "path": "^0.12.7",
+    "ts-node": "^9.1.1"
+  },
+  "scripts": {
+    "start:bff": "ts-node --skip-project index.ts",
+    "start:shell": "ts-node --skip-project appShellMock.ts",
+    "start": "nodemon --exec concurrently -k -n FE,BFF -c green,blue \"yarn start:bff\" \"yarn start:shell\"",
+    "start:mock": "yarn start:bff"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "concurrently": "^6.3.0"
+  },
+  "resolutions": {
+    "cross-spawn": "6.0.6",
+    "body-parser": "1.20.3",
+    "path-to-regexp": "0.1.12",
+    "ws": "7.5.10",
+    "braces": "3.0.3",
+    "semver":"7.5.2",
+    "busboy":"1.6.0",
+    "node-fetch":"2.6.7"
+  }
+}

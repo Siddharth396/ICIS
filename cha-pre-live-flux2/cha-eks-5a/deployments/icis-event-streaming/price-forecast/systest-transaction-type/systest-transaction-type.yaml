@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: price-forecast
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_petchem_transaction_type_1
+    database: pf-systest
+    collection: raw.transaction_type

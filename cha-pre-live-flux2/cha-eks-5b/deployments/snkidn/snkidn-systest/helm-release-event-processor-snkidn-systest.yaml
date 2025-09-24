@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: snkidn-event-processor
+spec:
+  releaseName: snkidn-event-processor-systest
+  values:
+    replicaCount: 1
+    namespace: "snkidn-systest"
+    environment: "systest"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/snkidn/snkidn-event-processor # {"$imagepolicy": "flux-system:snkidn-event-processor-systest:name"}
+        tag: systest-103-0.0.0-base-branch-add-sources-and-metadata.12819 # {"$imagepolicy": "flux-system:snkidn-event-processor-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/snkidn-systest?retryWrites=true&w=majority"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENVIRONMENT: systest
+        QUEUE_NAME: "systest-CONTENT_STRUCTURES-changes-sync_to_iddn"
+        SNOWFLAKE_USER: "SVC_SYNC_TO_IDDN_RW_USER_GOLD_DEV"
+        SNOWFLAKE_ROLE: "SVC_SYNC_TO_IDDN_RW_GOLD_DEV"
+        SNOWFLAKE_WAREHOUSE: "QRY_WH_GOLD_DEV"
+        SNOWFLAKE_DB: "ICIS_GOLD_DEV_DB"
+        IDDN_FETCH_API_URL: "http://genesis.systest.iddn.cha.rbxd.ds:9000"
+        IDDN_STORE_API_URL: "http://genesis.systest.iddn.cha.rbxd.ds:9100"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/sync-to-iddn/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: snkidn-vault-secret-event-processor-systest
+      VaultSecretPath: "snkidn/systest/eventprocessor"
+    vault_secrets_proxy:
+      name: snkidn-auth-proxy-vault-secret-event-processor-systest

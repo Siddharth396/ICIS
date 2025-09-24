@@ -1,0 +1,62 @@
+{
+  "name": "@icis/price-entry-mock-bff",
+  "version": "0.1.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@graphql-tools/schema": "^10.0.6",
+    "apollo-server": "^3.13.0",
+    "apollo-server-core": "^3.13.0",
+    "apollo-server-express": "^3.13.0",
+    "camelcase-keys": "6.2.2",
+    "date-fns": "^2.28.0",
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.21.0",
+    "graphql": "^16.9.0",
+    "graphql-playground-middleware-express": "^1.7.23",
+    "https": "^1.0.0",
+    "node-fetch": "^3.3.2",
+    "nodemon": "^3.1.7",
+    "path": "^0.12.7",
+    "ts-node": "^10.9.2"
+  },
+  "scripts": {
+    "start:bff": "nodemon -e ts --exec \"ts-node --skip-project index.ts\"",
+    "start:shell": "ts-node --skip-project appShellMock.ts",
+    "start": "nodemon --exec concurrently -k -n FE,BFF -c green,blue \"yarn start:bff\" \"yarn start:shell\"",
+    "start:mock": "yarn start:bff"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.31",
+    "concurrently": "^9.0.1",
+    "typescript": "^5.4.5"
+  },
+  "resolutions": {
+    "path-to-regexp": "0.1.12",
+    "semver": "7.5.3",
+    "cross-fetch": "2.2.6",
+    "yargs-parser": "21.1.1",
+    "mem": "4.0.0",
+    "cookie": "0.7.0",
+    "brace-expansion": "1.1.12",
+    "sha.js": "^2.4.12"
+  }
+}

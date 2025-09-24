@@ -1,0 +1,30 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deployment-scaler-role
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments", "deployments/scale"]
+    verbs: ["get", "list", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: deployment-scaler-binding
+subjects:
+  - kind: ServiceAccount
+    name: atcore
+    namespace: atcore-performance
+  - kind: ServiceAccount
+    name: sbnews
+    namespace: sbnews-performance 
+  - kind: ServiceAccount
+    name: homepage
+    namespace: homepage-performance   
+roleRef:
+  kind: ClusterRole
+  name: deployment-scaler-role
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-opsadm-systest
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "opsadm-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: Always
+    deploymentStrategy: "RollingUpdate"
+    migration_init_script:
+      enabled: false
+      # image:
+      #   repository: artifacts.cha.rbxd.ds/automated/opsadm/mongo-migration # {"$imagepolicy": "flux-system:opsadm-mongo-migration-systest:name"}
+      #   tag: systest-todo-1 # {"$imagepolicy": "flux-system:opsadm-mongo-migration-systest:tag"}
+      #   pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/opsadm/authoring-bff # {"$imagepolicy": "flux-system:opsadm-authoring-bff-systest:name"}
+        tag: systest-1-0.1.7.28560 # {"$imagepolicy": "flux-system:opsadm-authoring-bff-systest:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/opsadm-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/ops-admin-tool/?(.*)
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-opsadm-systest-author
+      VaultSecretPath: "opsadm/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-opsadm-systest-author

@@ -1,0 +1,38 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: icis-squidex-performance
+  name: pod-reader-squidex-performance
+rules:
+- apiGroups: [ "" ]
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: icis-squidex-performance
+  name:  pod-reader-squidex-performance-binding
+subjects:
+- kind: ServiceAccount
+  name: icis-squidex
+  namespace: icis-squidex-performance
+roleRef:
+  kind: Role
+  name:  pod-reader-squidex-performance
+  apiGroup: ''
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: icis-squidex-performance
+  name:  pod-reader-squidex-icis-service-emails-performance-binding
+subjects:
+- kind: ServiceAccount
+  name: icis-service-emails
+  namespace: icis-squidex-performance
+roleRef:
+  kind: Role
+  name:  pod-reader-squidex-performance
+  apiGroup: ''

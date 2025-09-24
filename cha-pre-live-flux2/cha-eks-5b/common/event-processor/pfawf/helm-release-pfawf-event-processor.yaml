@@ -1,0 +1,64 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  values:
+    projectName: "pfawf"
+    ServiceAccountName: "pfawf"
+    
+    event_processor:
+        livenessProbe:
+          httpGet:
+            path: /v1/healthcheck
+            port: 80
+          initialDelaySeconds: 60
+          periodSeconds: 30
+    
+    podMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /metrics
+          targetPort: 80
+          scheme: http
+    
+    nginx:
+      port: 8080
+      image:
+        repository: artifacts.cha.rbxd.ds/base-image/nginx-unprivileged
+        tag: 1.19-alpine
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+      readinessProbe:
+        httpGet:
+          path: /v1/healthcheck
+          port: 8080
+          scheme: HTTPS
+        initialDelaySeconds: 60
+        periodSeconds: 5
+        timeoutSeconds: 2
+      livenessProbe:
+        httpGet:
+          path: /v1/healthcheck
+          port: 8080
+          scheme: HTTPS
+        initialDelaySeconds: 60
+        periodSeconds: 30
+    
+    vault_secrets:
+      VaultK8sRoleName: "kv-pfawf-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_consumer:
+      VaultK8sRoleName: "kv-pfawf-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"    

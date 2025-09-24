@@ -1,0 +1,67 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-cimage-performance
+  values:
+    replicaCount: 1
+    namespace: "cimage-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "50m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cimage/authoring-bff # {"$imagepolicy": "flux-system:cimage-auth-bff-performance:name"}
+        tag: performance-31-1.8.1.38816 # {"$imagepolicy": "flux-system:cimage-auth-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/cimage-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        MUTATION: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AWS_BUCKET_NAME: icis-cc-image-capability-pre-live
+        REDIS_CONNECTION_STRING: cimage-performance.drtozh.ng.0001.euw1.cache.amazonaws.com:6379
+        REDIS_CACHE_EXPIRY_IN_DAYS: 32
+        LOG_LEVEL: Information
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        SWAGGER_OAUTH_ROLE: ICIS_Mercury
+        SWAGGER_ENABLED: true
+        WOODWING_USER: apiuser
+        WOODWING_URL: http://rbiqhscmsp002v.b2b.regn.net
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/image/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-cimage-performance
+      VaultSecretPath: "cimage/performance/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-cimage-performance
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 1

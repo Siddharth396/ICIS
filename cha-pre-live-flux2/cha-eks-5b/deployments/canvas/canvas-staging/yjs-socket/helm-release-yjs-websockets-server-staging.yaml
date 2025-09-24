@@ -1,0 +1,34 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-socket-bff
+spec:
+  releaseName: yjs-websockets-server-canvas-staging
+  values:
+    replicaCount: 1
+    namespace: "canvas-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/canvas/yjs-websockets-server # {"$imagepolicy": "flux-system:canvas-yjs-websockets-server-staging:name"}
+        tag: staging-3-1.0.2-upgrade-canvas-bff.1-64294 # {"$imagepolicy": "flux-system:canvas-yjs-websockets-server-staging:tag"}
+        pullPolicy: IfNotPresent
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/canvas-yjs/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-canvas-staging-yjs
+      VaultSecretPath: "canvas/staging/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-canvas-staging-yjs

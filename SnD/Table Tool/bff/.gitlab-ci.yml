@@ -1,0 +1,530 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive  
+  NO_PROXY: "gitlab.cha.rbxd.ds,checkmarx.rbxd.ds"
+  ## see https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#tls-enabled for Dind configuration
+  DOCKER_HOST: tcp://127.0.0.1:2375
+  DOCKER_TLS_CERTDIR: ""
+  # When using dind, it's wise to use the overlayfs driver for
+  # improved performance.
+  DOCKER_DRIVER: overlay2
+  # KUBECONFIG_PATH: /root/.kube/config
+
+.docker_runner_image: &docker_runner_image
+  image:
+    name: ${DOCKER_REGISTRY_CHA}/docker/dind:26.0.0
+  variables:
+    DOCKER_HOST: tcp://localhost:2375
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+  tags:
+    - k8s-cha-v2
+  services:
+    - name: ${DOCKER_REGISTRY_CHA}/docker/dind:26.0.0
+      command: ["dockerd", "-H", "tcp://localhost:2375"]
+
+.docker_curl_runner_image: &docker_curl_runner_image
+  image:
+    name: ${DOCKER_REGISTRY_CHA}/alpine/curl-jq:3.14
+  tags:
+    - k8s-cha-v2
+
+stages:
+  - env-check
+  - version
+  - test
+  - build
+  - security
+  - publish
+  - systest
+  - staging
+  - performance
+  - integration
+  - production
+
+cache:
+  key: "$CI_PROJECT_ID-$CI_COMMIT_REF_SLUG"
+  policy: pull
+  untracked: true
+
+##################################
+# Environment check stage
+##################################
+
+env-check:
+  <<: *docker_runner_image
+  stage: env-check
+  script:
+    - chmod +x ./gitlab_scripts/env_check.sh
+    - ./gitlab_scripts/env_check.sh
+
+##################################
+# Determine semantic version
+##################################
+
+determine-version:
+  <<: *docker_runner_image
+  stage: version
+  image:
+    name: artifacts.cha.rbxd.ds/gittools/gitversion:5.10.1
+    entrypoint: ['']
+  script:
+    - chmod +x ./gitlab_scripts/version.sh
+    - ./gitlab_scripts/version.sh
+  artifacts:
+    reports:
+      dotenv: build.env
+  needs:
+    - job: env-check
+
+##################################
+# Run tests & coverage stage
+##################################
+
+run-unit-tests:
+  <<: *docker_runner_image
+  stage: test
+  variables:
+    target_coverage: 96
+  script:
+    - chmod +x ./gitlab_scripts/run_unit_tests.sh
+    - ./gitlab_scripts/run_unit_tests.sh
+  artifacts:
+    name: test_results
+    when: always
+    paths:
+      - ./artifacts/*test-result.xml
+      - ./build/coverage/
+    expire_in: 4 days
+    reports:
+      junit:
+       - ./artifacts/*test-result.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: build/coverage/report/Cobertura.xml       
+
+##################################
+# Build docker images
+##################################
+   
+authoring-bff-build:
+  <<: *docker_runner_image
+  stage: build
+  script:
+    - chmod +x ./gitlab_scripts/build_authoring_bff.sh
+    - ./gitlab_scripts/build_authoring_bff.sh
+  artifacts:
+    paths:
+      - authoringBffBuild.tar
+    expire_in: 1 days
+  needs:
+    - job: determine-version
+ #   - job: run-unit-tests
+
+subscriber-bff-build:
+  <<: *docker_runner_image
+  stage: build
+  script:
+    - chmod +x ./gitlab_scripts/build_subscriber_bff.sh
+    - ./gitlab_scripts/build_subscriber_bff.sh
+  artifacts:
+    paths:
+      - subscriberBffBuild.tar
+    expire_in: 1 days
+  needs:
+    - job: determine-version
+ #   - job: run-unit-tests
+
+##################################
+# Checkmarx scan
+##################################
+checkmarx-scan:
+  <<: *docker_runner_image
+  stage: security
+  script:
+    - chmod +x ./gitlab_scripts/checkmarx_run.sh
+    - ./gitlab_scripts/checkmarx_run.sh | tee checkmarx.result
+    # fail job if issues are found
+    - ! grep "High severity results:[ ]0" checkmarx.result
+    - ! grep "Medium severity results:[ ]0" checkmarx.result
+  needs:
+    - job: authoring-bff-build
+    - job: subscriber-bff-build
+    
+##################################
+# Whitesource scan
+##################################
+authoring-bff-whitesource-scan:
+  <<: *docker_runner_image
+  stage: security
+  artifacts:
+    name: whitesource_scan_results
+    paths:
+      - ./whitesource/index.html
+    expire_in: 2 days
+  dependencies:
+    - "determine-version"
+    - "authoring-bff-build"
+  needs:
+    - job: authoring-bff-build
+    - job: determine-version
+  script:
+    - chmod +x ./build_tools/whitesource/build_authoring_bff.sh
+    - ./build_tools/whitesource/build_authoring_bff.sh &> whitesource.result
+    # fail if text not found
+    - ! grep "All dependencies conform with open source policies" whitesource.result
+
+subscriber-bff-whitesource-scan:
+  <<: *docker_runner_image
+  stage: security
+  artifacts:
+    name: whitesource_scan_results
+    paths:
+      - ./whitesource/index.html
+    expire_in: 2 days
+  dependencies:
+    - "determine-version"
+    - "subscriber-bff-build"
+  needs:
+    - job: subscriber-bff-build
+    - job: determine-version
+  script:
+    - chmod +x ./build_tools/whitesource/build_subscriber_bff.sh
+    - ./build_tools/whitesource/build_subscriber_bff.sh &> whitesource.result
+    # fail if text not found
+    - ! grep "All dependencies conform with open source policies" whitesource.result
+
+##################################
+# Publish docker images to nexus
+##################################
+
+authoring-bff-publish:
+  <<: *docker_runner_image
+  stage: publish
+  before_script:
+    - chmod +x ./gitlab_scripts/docker_login.sh
+    - ./gitlab_scripts/docker_login.sh
+  script:
+    - chmod +x ./gitlab_scripts/publish_authoring_bff.sh
+    - ./gitlab_scripts/publish_authoring_bff.sh 
+  dependencies:
+    - "determine-version"
+    - "authoring-bff-build"
+  needs:
+    - job: checkmarx-scan
+    - job: authoring-bff-whitesource-scan
+    - job: authoring-bff-build
+    - job: determine-version
+
+subscriber-bff-publish:
+  <<: *docker_runner_image
+  stage: publish
+  before_script:
+    - chmod +x ./gitlab_scripts/docker_login.sh
+    - ./gitlab_scripts/docker_login.sh
+  script:
+    - chmod +x ./gitlab_scripts/publish_subscriber_bff.sh
+    - ./gitlab_scripts/publish_subscriber_bff.sh 
+  dependencies:
+    - "determine-version"
+    - "subscriber-bff-build"
+  needs:
+    - job: checkmarx-scan
+    - job: subscriber-bff-whitesource-scan
+    - job: subscriber-bff-build
+    - job: determine-version
+
+################################################
+# CD pipeline - environments deploy and checks #
+################################################
+
+################################################
+# Systest
+################################################
+
+authoring-bff-systest-deploy:
+  <<: *docker_curl_runner_image
+  stage: systest
+  variables:
+    IMAGE_TYPE: authoring
+    ENVIRONMENT: systest
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to systest"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: authoring-bff-publish
+    - job: determine-version
+
+subscriber-bff-systest-deploy:
+  <<: *docker_curl_runner_image
+  stage: systest
+  variables:
+    IMAGE_TYPE: subscriber
+    ENVIRONMENT: systest
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to systest"     
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: subscriber-bff-publish
+    - job: determine-version
+
+authoring-bff-systest-run-e2e-tests:
+  <<: *docker_curl_runner_image
+  stage: systest
+  script:
+    - echo "Success"
+  when: manual
+
+subscriber-bff-systest-run-e2e-tests:
+  <<: *docker_curl_runner_image
+  stage: systest
+  script:
+    - echo "Success"
+  when: manual
+
+################################################
+# Staging
+################################################
+
+authoring-bff-staging-deploy:
+  <<: *docker_curl_runner_image
+  stage: staging
+  variables:
+    IMAGE_TYPE: authoring
+    ENVIRONMENT: staging
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to staging"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: authoring-bff-publish
+    - job: determine-version
+
+subscriber-bff-staging-deploy:
+  <<: *docker_curl_runner_image
+  stage: staging
+  variables:
+    IMAGE_TYPE: subscriber
+    ENVIRONMENT: staging
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to staging"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: subscriber-bff-publish
+    - job: determine-version
+
+authoring-bff-staging-run-e2e-tests:
+  <<: *docker_curl_runner_image
+  stage: staging
+  script:
+    - echo "Success"
+  when: manual
+
+subscriber-bff-staging-run-e2e-tests:
+  <<: *docker_curl_runner_image
+  stage: staging
+  script:
+    - echo "Success"
+  when: manual
+
+################################################
+# Performance
+################################################
+
+authoring-bff-performance-deploy:
+  <<: *docker_curl_runner_image
+  stage: performance
+  variables:
+    IMAGE_TYPE: authoring
+    ENVIRONMENT: performance
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to performance"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: authoring-bff-publish
+    - job: determine-version
+
+subscriber-bff-performance-deploy:
+  <<: *docker_curl_runner_image
+  stage: performance
+  variables:
+    IMAGE_TYPE: subscriber
+    ENVIRONMENT: performance
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to performance"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: subscriber-bff-publish
+    - job: determine-version
+
+authoring-bff-performance-run-smoke-tests:
+  <<: *docker_curl_runner_image
+  stage: performance
+  script:
+    - echo "Success"
+  when: manual
+
+subscriber-bff-performance-run-smoke-tests:
+  <<: *docker_curl_runner_image
+  stage: performance
+  script:
+    - echo "Success"
+  when: manual
+
+authoring-bff-subscriber-bff-performance-run-smoke-tests:
+  <<: *docker_curl_runner_image
+  stage: performance
+  script:
+    - echo "Success"
+  when: manual
+
+subscriber-bff-performance-run-performance-tests:
+  <<: *docker_curl_runner_image
+  stage: performance
+  script:
+    - echo "Success"
+  when: manual
+
+################################################
+# Integration
+################################################
+
+authoring-bff-integration-deploy:
+  <<: *docker_curl_runner_image
+  stage: integration
+  variables:
+    IMAGE_TYPE: authoring
+    ENVIRONMENT: integration
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to integration"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: authoring-bff-publish
+    - job: determine-version
+  only:
+    - tags
+
+subscriber-bff-integration-deploy:
+  <<: *docker_curl_runner_image
+  stage: integration
+  variables:
+    IMAGE_TYPE: subscriber
+    ENVIRONMENT: integration
+    CLUSTER_VERSION: $CLUSTER_VERSION_PRELIVE
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX
+  when: manual
+  script:
+     - echo "Deployment to integration"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: subscriber-bff-publish
+    - job: determine-version
+  only:
+    - tags
+
+authoring-bff-integration-run-e2e-tests:
+  <<: *docker_curl_runner_image
+  stage: integration
+  script:
+    - echo "Success"
+  when: manual
+  only:
+    - tags
+
+subscriber-bff-integration-run-e2e-tests:
+  <<: *docker_curl_runner_image
+  stage: integration
+  script:
+    - echo "Success"
+  when: manual
+  only:
+    - tags
+
+################################################
+# Production
+################################################
+
+authoring-bff-production-deploy:
+  <<: *docker_curl_runner_image
+  stage: production
+  variables:
+    IMAGE_TYPE: authoring
+    ASSETID: sndctl
+    ENVIRONMENT: prod
+    CLUSTER_VERSION: $CLUSTER_VERSION_PROD
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX_PROD
+  when: manual
+  script:
+     - echo "Deployment to prod"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: authoring-bff-publish
+    - job: determine-version
+  only:
+    - tags
+
+subscriber-bff-production-deploy:
+  <<: *docker_curl_runner_image
+  stage: production
+  variables:
+    IMAGE_TYPE: subscriber
+    ASSETID: sndctl
+    ENVIRONMENT: prod
+    CLUSTER_VERSION: $CLUSTER_VERSION_PROD
+    PROJECT_DEPLOYERPATH_FLUX_URL: $PROJECT_DEPLOYERPATH_FLUX_PROD
+  when: manual
+  script:
+     - echo "Deployment to prod"
+     - chmod +x ./gitlab_scripts/deployer.sh
+     - ./gitlab_scripts/deployer.sh
+  needs:
+    - job: subscriber-bff-publish
+    - job: determine-version
+  only:
+    - tags
+
+authoring-bff-production-run-smoke-tests:
+  <<: *docker_curl_runner_image
+  stage: production
+  script:
+    - echo "Run any smoke tests available to ensure deployment was with success"
+  when: manual
+  only:
+    - tags
+
+subscriber-bff-production-run-smoke-tests:
+  <<: *docker_curl_runner_image
+  stage: production
+  script:
+    - echo "Run any smoke tests available to ensure deployment was with success"
+  when: manual
+  only:
+    - tags

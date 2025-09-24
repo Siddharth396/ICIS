@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: order-cronjob-executor
+  namespace: default
+secrets:
+  - name: order-cronjob-token
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: order-cronjob-token
+  namespace: default
+  annotations:
+    kubernetes.io/service-account.name: order-cronjob-executor
+type: kubernetes.io/service-account-token
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: order-cronjob-executor
+rules:
+- apiGroups: ["batch"]
+  resources: ["cronjobs", "jobs"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
+  resources: ["pods", "pods/log", "services", "events", "namespaces"]
+  verbs: ["get", "list", "watch"]
+- nonResourceURLs:
+  - /version
+  - /healthz
+  - /api
+  - /apis
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: order-cronjob-executor-binding
+subjects:
+- kind: ServiceAccount
+  name: order-cronjob-executor
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: order-cronjob-executor
+  apiGroup: rbac.authorization.k8s.io

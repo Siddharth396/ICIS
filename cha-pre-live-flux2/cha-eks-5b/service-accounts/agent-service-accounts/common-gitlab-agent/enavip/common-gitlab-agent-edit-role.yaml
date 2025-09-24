@@ -1,0 +1,77 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: enavip-dev
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: enavip-tst
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: enavip-integration
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: enavip-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: enavip-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io

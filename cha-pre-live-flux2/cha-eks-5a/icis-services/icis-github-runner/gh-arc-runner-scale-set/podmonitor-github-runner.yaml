@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: github-scale-set
+  namespace: icis-gh-arc-runners
+  labels:
+    monitoring-platform: icis-monitoring
+    namespace: icis-gh-arc-runners
+spec:
+  selector:
+    matchLabels:
+      app: github-scale-set
+  podMetricsEndpoints:
+  - honorLabels: true
+    path: /metrics
+    targetPort: 9252
+    scheme: http

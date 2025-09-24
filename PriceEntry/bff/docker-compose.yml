@@ -1,0 +1,149 @@
+version: '3'
+services:
+  sql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 
+      MSSQL_PID: Express
+      MSSQL_MEMORY_LIMIT_MB: 512
+    ports:
+      - '1433:1433'
+
+  mongodb:
+    image: mongo:5.0.14
+    container_name: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PWD}
+    volumes:
+      - ./mongo_entrypoint.sh:/scripts/mongo_entrypoint.sh
+    entrypoint: bash /scripts/mongo_entrypoint.sh
+    healthcheck:
+      test: 'mongosh "mongodb://localhost:27017" --eval "var res = db.runCommand({ ping: 1 }).ok; res - 1" --quiet'
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  identityserver:
+    container_name: genesis-identityserver
+    image: artifacts.cha.rbxd.ds/genesis-identityserver-dev:latest
+    depends_on: ['sql']
+    ports:
+      - '5002:5002'
+    environment:
+      - LOCAL_DEV_MODE=true  
+      
+  authoring-bff-authproxy:
+     container_name: authoring-bff-authproxy
+     image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy:${AUTHPROXY_TAG:-latest}
+     depends_on:
+       - mongodb
+       - authoring-bff
+     ports:
+       - '7002:7002'
+     environment:
+       - ENVIRONMENT=local
+       - LOG_LEVEL=Debug
+       - Hosting__DevMode=true
+       - Hosting__DevPort=7002
+       - Proxy__ForwardToPath=http://localhost:8005
+       - Proxy__HealthCheckPath=/v1/version
+       - MongoDb__ConnectionString=${AUTH_PROXY_MONGO_CONNECTION_STRING}
+       - MongoDb__Username=${MONGO_DB_USER}
+       - MongoDb__Password=${MONGO_DB_PWD}
+       - BasePath=
+       - IdentityServer__Authority=https://domainidentity.integration.cha.rbxd.ds/
+       - IdentityServer__Issuer=https://domainidentity.integration.cha.rbxd.ds/
+       - IdentityServer__HealthCheckUrl=https://domainidentity.integration.cha.rbxd.ds/internal/health/liveness
+       - CookieInfo__Domain=localhost
+       - OidcInfo__ClientId=${AUTHPROXY_CLIENT_ID}
+       - OidcInfo__ClientSecret=${AUTHPROXY_CLIENT_SECRET}
+     command:
+       - sh
+       - -c
+       - |
+         apk add socat
+         socat TCP-LISTEN:8005,fork TCP:host.docker.internal:8005 &
+         /opt/authproxy/run.sh
+
+  authoring-bff:
+     container_name: authoring-bff
+     image: artifacts.cha.rbxd.ds/prcent/authoring-bff:${AUTHORING_BFF_TAG:-latest}
+     command:
+       - sh
+       - -c
+       - |
+         mkdir /etc/secrets -p
+         mv /opt/bff/dev.env /etc/secrets/.env
+         /opt/bff/run.sh
+     depends_on: ['mongodb']
+     ports:
+       - '8005:8005'
+     environment: 
+       - MongoDb__ConnectionString=${MONGO_DB_CONNECTION_STRING}
+       - MongoDb__Username=${MONGO_DB_USER}
+       - MongoDb__Password=${MONGO_DB_PWD}
+
+  subscriber-bff-authproxy:
+     container_name: subscriber-bff-authproxy
+     image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy:${AUTHPROXY_TAG:-latest}
+     depends_on: 
+       - identityserver
+       - mongodb
+       - subscriber-bff
+     ports:
+       - '7004:7004'
+     environment:
+       - ENVIRONMENT=local
+       - LOG_LEVEL=Debug
+       - Hosting__DevMode=true
+       - Hosting__DevPort=7004
+       - Proxy__ForwardToPath=http://localhost:8003
+       - Proxy__HealthCheckPath=/v1/version
+       - MongoDb__ConnectionString=${AUTH_PROXY_MONGO_CONNECTION_STRING}
+       - MongoDb__Username=${MONGO_DB_USER}
+       - MongoDb__Password=${MONGO_DB_PWD}
+       - BasePath=
+       - CookieInfo__Domain=localhost
+     command:
+       - sh
+       - -c
+       - |
+         apk add socat
+         socat TCP-LISTEN:5002,fork TCP:host.docker.internal:5002 &
+         socat TCP-LISTEN:8003,fork TCP:host.docker.internal:8003 &
+         /opt/authproxy/run.sh
+
+  subscriber-bff:
+     container_name: subscriber-bff
+     image: artifacts.cha.rbxd.ds/prcent/subscriber-bff:${SUBSCRIBER_BFF_TAG:-latest}
+     command:
+       - sh
+       - -c
+       - |
+         mkdir /etc/secrets -p
+         mv /opt/bff/dev.env /etc/secrets/.env
+         /opt/bff/run.sh
+     depends_on: ['mongodb']
+     ports:
+       - '8003:8003'
+     environment: 
+       - MongoDb__ConnectionString=${MONGO_DB_CONNECTION_STRING}
+       - MongoDb__Username=${MONGO_DB_USER}
+       - MongoDb__Password=${MONGO_DB_PWD}
+
+  mongodb-seeder:
+    image: artifacts.cha.rbxd.ds/prcent/mongodb-seeder:latest
+    container_name: mongodb-seeder
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - MongoDb__ConnectionString=${PRICE_ENTRY_MONGO_CONNECTION_STRING}
+      - MongoDb__Username=${MONGO_DB_USER}
+      - MongoDb__Password=${MONGO_DB_PWD} 

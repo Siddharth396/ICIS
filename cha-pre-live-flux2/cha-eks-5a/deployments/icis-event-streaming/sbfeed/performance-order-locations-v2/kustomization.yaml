@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: -performance-order-locations-2
+resources:
+- ../common
+
+patches:
+- path: performance-order-locations-v2.yaml

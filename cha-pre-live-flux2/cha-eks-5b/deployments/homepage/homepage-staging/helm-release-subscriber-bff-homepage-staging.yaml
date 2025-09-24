@@ -1,0 +1,83 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-homepage-staging
+  values:
+    namespace: "homepage-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-bff # {"$imagepolicy": "flux-system:sbcore-bff-staging:name"}
+        tag: staging-184-1.39.0-feature-ATL-4440-16322 # {"$imagepolicy": "flux-system:sbcore-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        BASE_PATH: /home
+        JWT_INFO_AUTHORITY: https://id.staging.genesis.cha.rbxd.ds
+        IDS_HEALTHCHECK_URL: https://id.internal.staging.genesis.cha.rbxd.ds/version
+        DBAPI_URL: https://dbapi.staging.genesis.cha.rbxd.ds/v1
+        SQL_HOST: genesis-ups-stag.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com
+        SQL_CAT: genesis-ups-staging
+        SQL_USR: genesis-ups-staging
+        CORESERVICE_URL: https://api.subscriber.internal.staging.genesis.cha.rbxd.ds/v1
+        IS_TOGGLE_TO_NEWHOME_ENABLED: true
+        IS_R2_TOGGLE_ENABLED: true
+        IS_R3_TOGGLE_ENABLED: true
+        IS_ASK_ICIS_ENABLED: true
+        IS_NOTIFICATION_BANNER_ENABLED: true
+        # For multiple domains separate them by comma
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds
+        # https://www.elastic.co/guide/en/apm/agent/dotnet/current/config-core.html
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        SECRET_FILE_PATH: /etc/secrets/.env
+        # MongoDb
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbcore-staging?retryWrites=true"
+        MONGO_DB_COLLECTION_PRODUCT_ITEMS: product_items
+        MONGO_DB_COLLECTION_PRICE_ASSESSMENTS_SPECIFICATION: price_assessments_specification
+        MONGO_DB_COLLECTION_SUBSCRIPTION_REQUESTS: subscription_requests
+        # Analytic toggles
+        RECYCLING_SUPPLY_TRACKER_MECHANICAL_ANALYTICS_CARD_ENABLED: true
+        RECYCLING_SUPPLY_TRACKER_CHEMICAL_ANALYTICS_CARD_ENABLED: true
+        PLANT_CE_ANALYTICS_ENABLED: true
+        HYDROGEN_PRICING_AND_ANALYTICS_CARD_ENABLED: true
+        SUPPLIER_CARBON_FOOTPRINTS_ANALYTICS_CARD_ENABLED: true
+        ENERGY_GAS_ANALYTICS_CARD_ENABLED: true
+        POWER_FORESIGHT_ANALYTICS_CARD_ENABLED: true
+        JOBS_ENABLED: true
+        JOBS_RETRY_ATTEMPTS: 2
+        JOBS_RETRY_DELAYS: 5,10
+        JOBS_SUBSCRIPTION_REQUESTS_ENABLED: true
+        JOBS_SUBSCRIPTION_REQUESTS_INTERVAL: 1
+        JOBS_SUBSCRIPTION_REQUESTS_BATCH_SIZE: 10
+        ELOQUA_URL: https://eu-west-1.aws.data.mongodb-api.com/app/eloquamock-ndzjg/endpoint/subscription
+        IS_AUTH0_CHANGE_PASSWORD_ENABLED: true
+        DOMAIN: staging-login.icis.com
+        IDS_URL: id.staging.genesis.cha.rbxd.ds
+        PASSWORD_CHANGE_M2M_CLIENT_ID: X9cuUG1LbrWWqd9phigPw2WwYbWHjYFJ
+        AUDIENCE: icis-eu-staging.eu.auth0.com
+        APPLICATION_CLIENT_ID: 5BXdoWrnxCQzuQCEFHZkc8BR3dx3ZTaj
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/core/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    vault_secrets:
+      name: subscriber-bff-vault-secret-homepage-staging
+      VaultSecretPath: "homepage/staging/bff"

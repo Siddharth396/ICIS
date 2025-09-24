@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: recycling
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_recycling_process_family_1, public_systest_recycling_process_code_1, public_systest_recycling_process_1, public_systest_recycling_feedstock_1, public_systest_recycling_plant_type_1, public_systest_recycling_output_product_secondary_1, public_systest_recycling_output_product_primary_1, public_systest_recycling_output_product_family_1, public_systest_recycling_mixed_plastic_polymers_1, public_systest_recycling_mass_balance_certification_1, public_systest_recycling_currency_1, public_systest_recycling_chem_feedstock_type_1, public_systest_recycling_chem_endmarket_sector_1, public_systest_recycling_chem_endmarket_1  
+    database: grn-systest
+    collection: ReferenceData
+    transforms.RenameField.renames: id:_id

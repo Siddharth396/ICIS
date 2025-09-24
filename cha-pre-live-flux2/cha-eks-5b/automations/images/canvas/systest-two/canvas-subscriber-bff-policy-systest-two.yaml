@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: canvas-subscriber-bff-systest-two
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: canvas-subscriber-two-bff
+    namespace: flux-system
+  filterTags:
+    pattern: '^systest-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

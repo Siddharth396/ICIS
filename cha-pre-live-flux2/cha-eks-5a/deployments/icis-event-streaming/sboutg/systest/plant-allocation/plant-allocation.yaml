@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_supplydemand_plant_allocation_1
+    database: sboutg-systest
+    collection: raw_plant_allocation

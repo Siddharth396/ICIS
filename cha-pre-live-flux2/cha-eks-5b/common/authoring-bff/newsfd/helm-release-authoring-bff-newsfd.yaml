@@ -1,0 +1,59 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-newsfd"
+    ServiceAccountName: "newsfd"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-mongo-newsfd
+      VaultK8sRoleName: "kv-newsfd-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"
+    vault_secrets:
+      VaultK8sRoleName: "kv-newsfd-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    bff:
+      config_env:
+        MUTATION: true
+    nginx:
+      config: |
+        server {
+          listen 443 ssl;
+          server_name  localhost;
+
+          proxy_read_timeout 300;
+          proxy_connect_timeout 300;
+          proxy_send_timeout 300;
+
+          access_log /dev/stdout main;
+          error_log /dev/stdout warn;
+
+          ssl_certificate /etc/ssl/tls.crt;
+          ssl_certificate_key /etc/ssl/tls.key;
+
+          client_header_buffer_size    8k;
+          large_client_header_buffers  4 32k;
+
+          server_tokens off;
+          
+          #Reverse Proxy rules to serve the BFF from other container
+          
+          location / {
+            add_header Strict-Transport-Security \"max-age=31536000\";
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_buffers 4 64k;
+            proxy_buffer_size 32k; 
+            proxy_busy_buffers_size 64k;
+
+            proxy_pass http://localhost:8090;
+          }
+        }

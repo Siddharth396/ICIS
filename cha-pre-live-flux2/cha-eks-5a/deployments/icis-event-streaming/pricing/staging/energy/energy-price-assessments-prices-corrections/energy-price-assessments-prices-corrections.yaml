@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: pricing
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_energy_price_assessments_2
+    database: pricing-staging
+    collection: energy_price_assessments_3

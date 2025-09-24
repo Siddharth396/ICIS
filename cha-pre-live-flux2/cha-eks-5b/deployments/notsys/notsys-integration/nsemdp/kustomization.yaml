@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: notsys-integration
+nameSuffix: -nsemdp
+resources:
+- ../../../../common/event-processor/nsemdp/
+patches:
+- path: helm-release-event-processor-nsemdp-integration.yaml

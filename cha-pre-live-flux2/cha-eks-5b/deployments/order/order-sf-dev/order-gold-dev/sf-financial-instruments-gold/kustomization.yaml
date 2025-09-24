@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: order-systest
+nameSuffix: -fin-instrmnt-gold
+resources:
+- ../../../../../common/order-snowflake-producer/
+patches:
+- path: helm-release-order-sf-producer-fin-instrmnt-gold.yaml
+

@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- sbfeed-bff-policy-integration.yaml
+- sbfeed-bff-policy-performance.yaml
+- sbfeed-bff-policy-staging.yaml
+- sbfeed-bff-policy-systest.yaml
+- sbfeed-bff-registry.yaml
+###############################
+- sbfeed-event-processor-policy-integration.yaml
+- sbfeed-event-processor-policy-performance.yaml
+- sbfeed-event-processor-policy-staging.yaml
+- sbfeed-event-processor-policy-systest.yaml
+- sbfeed-event-processor-registry.yaml
+###############################
+- sbfeed-event-processor-healthcheck-policy-integration.yaml
+- sbfeed-event-processor-healthcheck-policy-staging.yaml
+- sbfeed-event-processor-healthcheck-policy-systest.yaml
+- sbfeed-event-processor-healthcheck-registry.yaml
+###############################
+- sbfeed-mongo-migrator-policy-systest.yaml
+- sbfeed-mongo-migrator-policy-staging.yaml
+- sbfeed-mongo-migrator-policy-performance.yaml
+- sbfeed-mongo-migrator-policy-integration.yaml
+- sbfeed-mongo-migrator-registry.yaml

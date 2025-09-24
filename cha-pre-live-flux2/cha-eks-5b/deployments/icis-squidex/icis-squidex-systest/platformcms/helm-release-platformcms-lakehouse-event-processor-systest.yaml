@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: lakehouse-event-processor
+  namespace: icis-squidex-systest
+spec:
+  releaseName: platformcms-lakehouse-event-processor-systest
+  values:
+    replicaCount: 1
+    namespace: "icis-squidex-systest"
+    environment: "systest"
+    projectName: "platformcms-systest"
+    event_processor:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/icis-squidex/lakehouse-event-processor" # {"$imagepolicy": "flux-system:icis-squidex-lakehouse-event-processor-systest:name"}
+        tag: systest-40-1.0.0-bug-fix-MARS-5588.21165 # {"$imagepolicy": "flux-system:icis-squidex-lakehouse-event-processor-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        ELASTIC_APM_SERVICE_NAME: "Platform CMS - Lakehouse Event Processor"
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/platformcms-squidex-systest?retryWrites=true&w=majority"
+        SNOWFLAKE_CONNECTION_STRING: "account={0};user={1};password={2};role={3};warehouse={4};db={5};schema={6}"
+        SNOWFLAKE_ACCOUNT: "ex99616.eu-west-1"
+        SNOWFLAKE_USER: "SVC_CHEMS_ANALYTICS_PLATFORM_CMS_RO_USER_GOLD_UAT"
+        SNOWFLAKE_ROLE: "SVC_CHEMS_ANALYTICS_PLATFORM_CMS_RO_GOLD_UAT"
+        SNOWFLAKE_WAREHOUSE: "QRY_WH_GOLD_UAT"
+        SNOWFLAKE_SCHEMA: "REFERENCE_DATA"
+        SNOWFLAKE_DB: "ICIS_GOLD_UAT_DB"
+        SQUIDEX_APP_NAME: "platformcms"
+        SQUIDEX_URL: "https://platformcms.cosmos.systest.cha.eu-west-1.dev/"
+        POLLING_INTERVAL_MILLISECONDS: 60000
+        SQUIDEX_BULK_UPSERT_BATCH_SIZE: 50
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.COMMODITY_FAMILY__IdentifierFieldInSource: "GUID"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.COMMODITY_FAMILY__LastUpdatedFieldNameInSource: "LASTUPDATEDON"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.COMMODITY_FAMILY__TargetSchemaName: "order-commodity-family"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.COMMODITY_FAMILY__FieldMappings__GUID: "id"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.COMMODITY_FAMILY__FieldMappings__NAME: "name"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.COMMODITY_FAMILY__FieldMappings__CATEGORY_CODE: "category-code"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.COMMODITY_FAMILY__FieldMappings__ISDELETED: "is-deleted"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.LOCATION__IdentifierFieldInSource: "GUID"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.LOCATION__LastUpdatedFieldNameInSource: "LASTUPDATEDON"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.LOCATION__TargetSchemaName: "order-location"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.LOCATION__FieldMappings__GUID: "id"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.LOCATION__FieldMappings__NAME: "name"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.LOCATION__FieldMappings__LOCATION_TYPE_NAME: "location-type"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.LOCATION__FieldMappings__ISDELETED: "is-deleted"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.REF_LANGUAGE__IdentifierFieldInSource: "GUID"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.REF_LANGUAGE__LastUpdatedFieldNameInSource: "LASTUPDATEDON"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.REF_LANGUAGE__TargetSchemaName: "order-language"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.REF_LANGUAGE__FieldMappings__GUID: "id"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.REF_LANGUAGE__FieldMappings__LG_CODE: "lg-code"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.REF_LANGUAGE__FieldMappings__NAME: "lg-name"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.REFERENCE_DATA.REF_LANGUAGE__FieldMappings__ISDELETED: "is-deleted"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__IdentifierFieldInSource: "SERIES_PUBLIC_UUID"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__LastUpdatedFieldNameInSource: "DLH_LOAD_TIMESTAMP"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__TargetSchemaName: "price-series"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__FieldMappings__SERIES_URI: "series-uri"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__FieldMappings__SERIES_PUBLIC_UUID: "series-public-uuid"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__FieldMappings__MIGRATED_SERIES_ID: "migrated-series-id"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__FieldMappings__SERIES_NAME: "series-name"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__FieldMappings__SERIES_SHORT_NAME: "series-short-name"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.PRICE_SERIES__FieldMappings__SERIES_UNIQUE_NAME: "series-unique-name"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__IdentifierFieldInSource: "SERIES_PUBLIC_UUID"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__LastUpdatedFieldNameInSource: "DLH_LOAD_TIMESTAMP"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__TargetSchemaName: "price-series"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__FieldMappings__SERIES_URI: "series-uri"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__FieldMappings__SERIES_PUBLIC_UUID: "series-public-uuid"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__FieldMappings__MIGRATED_SERIES_ID: "migrated-series-id"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__FieldMappings__SERIES_NAME: "series-name"
+        DataSyncMappings__ICIS_GOLD_UAT_DB.PRICING.CHARTER_RATE_SERIES__FieldMappings__SERIES_SHORT_NAME: "series-short-name"
+    vault_secrets:
+      name: platformcms-lakehouse-event-processor-vault-secret-systest
+      VaultSecretPath: "icis-squidex/platformcms/systest/lakehouse-event-processor"

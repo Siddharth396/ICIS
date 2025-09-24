@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: chempf-auth-bff-staging
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: chempf-auth-bff
+    namespace: flux-system
+  filterTags:
+    pattern: '^staging-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

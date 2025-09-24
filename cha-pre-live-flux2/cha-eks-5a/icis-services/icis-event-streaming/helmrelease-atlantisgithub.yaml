@@ -1,0 +1,226 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: atlantis-github
+  namespace: icis-event-streaming
+spec:
+  releaseName: atlantis-github
+  interval: 5m0s
+  chart:
+    spec:
+      chart: atlantis
+      version: "5.7.0"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    orgAllowlist: github.com/LexisNexis-RBA/*
+    #orgAllowlist: stash.cha.rbxd.ds/*
+    # orgWhitelist: stash.cha.rbxd.ds/*
+    # repoAllowlist: stash.cha.rbxd.ds/*
+    # logLevel: "debug"
+
+    # If using Bitbucket, specify like the following:
+    github:
+      user: svc-icis-gh-auto
+      #token: token
+      #secret: secret
+    #bitbucket:
+      #user: svc-atlantisbot
+      #token: token
+      #MDE1MTU3NTI2Njc1Osg42A83kpBr7BpD563XE1dr9mrt
+    #Bitbucket Server only:
+      #secret: secret
+      #rohit
+      #baseURL: http://stash.cha.rbxd.ds
+    # (The chart will perform the base64 encoding for you for values that are stored in secrets.)
+
+    # If managing secrets outside the chart for the webhook, use this variable to reference the secret name
+    # created with below command
+    # kubectl create secret generic atlantis-secret --from-literal=bitbucket_token=valid_token --from-literal=bitbucket_secret=atlantis
+#    extraVolumes:
+#    - name: ssl-certs
+#      emptyDir: {}
+    
+#    initContainers:
+#    - name: atlantis-init  # <- will be used as container name
+#      image: "alpine:3.12"
+#      command: ['sh', '-c', 'apk add --update ca-certificates openssl && wget http://certhub.b2b.regn.net/Cert_Bundles/b2b_bundle.crt && cp b2b_bundle.crt /usr/local/share/ca-certificates/b2b_bundle.crt && update-ca-certificates']
+#      volumeMounts:
+#        - mountPath: /etc/ssl/certs
+#          name: ssl-certs
+    
+#    extraVolumeMounts:
+#      - name: ssl-certs
+#        mountPath: /etc/ssl/certs
+    initContainers:
+    - name: init-ssh
+      image: busybox
+      command:
+        - sh
+        - -c
+        - |
+          mkdir -p /shared/.ssh
+          cp /secrets/id_rsa /shared/.ssh/id_rsa
+          cp /secrets/known_host /shared/.ssh/known_hosts
+          chmod 600 /shared/.ssh/id_rsa
+          cat > /shared/.ssh/config << EOF
+          Host github.com
+            HostName ssh.github.com
+            IdentityFile /home/atlantis/.ssh/id_rsa
+            Port 443
+            User git
+            ServerAliveInterval 20
+          EOF
+      volumeMounts:
+        - name: ssh-key-private
+          mountPath: /secrets
+        - name: shared-ssh
+          mountPath: /shared
+
+    extraVolumes:
+      - name: ssh-key-private
+        secret:
+          secretName: github-ssh-creds
+      - name: shared-ssh
+        emptyDir: {}
+
+    extraVolumeMounts:
+      - name: shared-ssh
+        mountPath: /home/atlantis
+
+    vcsSecretName: 'atlantis-vcs'
+    serviceAccountSecrets:
+
+    image:
+      repository: ghcr.io/runatlantis/atlantis
+      tag: v0.30.0
+      pullPolicy: IfNotPresent
+
+    repoConfig: |
+      ---
+      repos:
+      - id: /.*/
+        apply_requirements: [approved, mergeable]
+
+
+    # allowForkPRs enables atlantis to run on a fork Pull Requests
+    allowForkPRs: false
+
+    ## defaultTFVersion set the default terraform version to be used in atlantis server
+    # defaultTFVersion: v0.12.0
+
+    # disableApplyAll disables running `atlantis apply` without any flags
+    disableApplyAll: false
+
+    # We only need to check every 60s since Atlantis is not a high-throughput service.
+    livenessProbe:
+      enabled: true
+      periodSeconds: 60
+      initialDelaySeconds: 5
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
+      scheme: HTTP
+    readinessProbe:
+      enabled: true
+      periodSeconds: 60
+      initialDelaySeconds: 5
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 5
+      scheme: HTTP
+
+    service:
+      type: NodePort
+      port: 80
+
+    ### GitHub Config ###
+    podTemplate:
+      annotations: 
+        #iam.amazonaws.com/role: arn:aws:iam::512544833523:role/svc-icis-event-streaming-pre-live-atlantis-s3-rw
+        # kube2iam example:
+        # iam.amazonaws.com/role: role-arn
+      labels:
+        require-internet-egress: "true"
+        require-iam-access: "true"
+
+    statefulSet:
+      annotations: {}
+      labels: {}
+
+    ingress:
+      enabled: true
+      ingressClassName: icis-nginx-ingress
+      annotations:
+        lnrs.io/zone-type: private
+        #kubernetes.io/ingress.class: icis-nginx-ingress
+        cert-manager.io/cluster-issuer: vault-issuer
+        external-dns.alpha.kubernetes.io/hostname: atlantisgithub.cha.eu-west-1.dev
+        # kubernetes.io/tls-acme: "true"
+      path: /
+      host: atlantisgithub.cha.eu-west-1.dev
+      tls: 
+      - secretName: atlantisgithub.cha.eu-west-1.dev
+        hosts:
+          - atlantisgithub.cha.eu-west-1.dev
+      labels: {}
+
+    resources:
+      requests:
+        memory: 1Gi
+        cpu: 100m
+      limits:
+        memory: 1Gi
+        cpu: 100m
+
+    # Disk space for Atlantis to check out repositories
+    dataStorage: 5Gi
+
+    replicaCount: 1
+
+    ## test container details
+    test:
+      enabled: true
+      image: lachlanevenson/k8s-kubectl
+      imageTag: v1.4.8-bash
+
+    nodeSelector: {}
+
+    tolerations: []
+
+    affinity: {}
+
+    serviceAccount:
+      # Specifies whether a ServiceAccount should be created
+      create: true
+      # The name of the ServiceAccount to use.
+      # If not set and create is true, a name is generated using the fullname template
+      annotations:
+        eks.amazonaws.com/role-arn: "arn:aws:iam::512544833523:role/svc-icis-event-streaming-pre-live-atlantis-s3-rw"
+      name:
+
+    storageClassName: ebs-gp3-delete
+    # tlsSecretName: tls
+
+    # Optionally specify additional environment variables to be populated from Kubernetes secrets.
+    # Useful for passing in TF_VAR_foo or other secret environment variables from Kubernetes secrets.
+    #environmentSecrets: []
+    # kubectl create secret generic confluent-password --from-literal=password=<password>
+    environmentSecrets:
+      - name: SSH_KEY
+        secretKeyRef:
+          name: github-ssh
+          key: id_rsa
+      - name: TF_VAR_SASL_PASSWORD
+        secretKeyRef:
+          name: confluent-password
+          key: password
+
+    environment:
+      ATLANTIS_AUTOMERGE: true
+
+    # Optionally specify google service account credentials as Kubernetes secrets. If you are using the terraform google provider you can specify the credentials as "${file("/var/secrets/some-secret-name/key.json")}".
+    googleServiceAccountSecrets: []
+    

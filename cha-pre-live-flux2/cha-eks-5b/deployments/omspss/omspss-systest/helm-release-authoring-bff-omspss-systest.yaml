@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-omspss-systest
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "omspss-systest"
+    environment: "systest"
+    deploymentStrategy: "RollingUpdate"
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/omspss/mongo-migration # {"$imagepolicy": "flux-system:omspss-mongo-migration-systest:name"}
+        tag: systest-todo-1 # {"$imagepolicy": "flux-system:omspss-mongo-migration-systest:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/omspss/authoring-bff # {"$imagepolicy": "flux-system:omspss-authoring-bff-systest:name"}
+        tag: systest-149-1.8.2.38133 # {"$imagepolicy": "flux-system:omspss-authoring-bff-systest:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/omspss-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/price-series-oms/?(.*)
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-omspss-systest
+      VaultK8sRoleName: "kv-omspss-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "omspss/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-omspss-systest
+      VaultK8sRoleName: "kv-omspss-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

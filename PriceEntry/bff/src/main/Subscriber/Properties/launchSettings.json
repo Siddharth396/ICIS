@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Subscriber": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "v1/version",
+      "applicationUrl": "http://localhost:8003",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "local"
+      }
+    }
+  }
+}

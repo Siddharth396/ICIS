@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-pdcast-integration
+  values:
+    replicaCount: 1
+    namespace: "pdcast-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pdcast/authoring-bff # {"$imagepolicy": "flux-system:pdcast-auth-bff-integration:name"}
+        tag: integration-4-1.3.1.12651 # {"$imagepolicy": "flux-system:pdcast-auth-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pdcast-integration?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.integration.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        MUTATION: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      host:
+        name: authoring.integration.cha.rbxd.ds
+        path: /api/podcast/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-pdcast-integration
+      VaultSecretPath: "pdcast/integration/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-pdcast-integration

@@ -1,0 +1,72 @@
+####################################################
+## Allow ingress from ensftp-dev and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-ensftp-dev
+  namespace: ensftp-dev
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: ensftp-dev
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from ensftp-dev ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-ensftp-dev
+  namespace: ensftp-dev
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: ensftp-dev
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: ensftp-dev
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+---
+
+################
+## ICIS monitoring ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: ensftp-dev
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:

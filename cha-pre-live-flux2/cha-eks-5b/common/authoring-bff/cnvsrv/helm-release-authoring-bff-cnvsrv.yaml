@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-cnvsrv"
+    ServiceAccountName: "cnvsrv"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-mongo-cnvsrv
+      VaultK8sRoleName: "kv-cnvsrv-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"
+    vault_secrets:
+      VaultK8sRoleName: "kv-cnvsrv-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    authproxy:
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|(/swagger?/*)|(/hf-dashboard?/*)"
+# trigger rebase to sync with remote branch

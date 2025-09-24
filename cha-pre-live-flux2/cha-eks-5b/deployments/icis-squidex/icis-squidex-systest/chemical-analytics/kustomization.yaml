@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: chemical-analytics-
+resources:
+- ../common/
+- ../common/event-processor
+patches:
+- path: helm-release-chemical-analytics-systest.yaml
+- path: helm-release-chemical-analytics-event-processor-systest.yaml

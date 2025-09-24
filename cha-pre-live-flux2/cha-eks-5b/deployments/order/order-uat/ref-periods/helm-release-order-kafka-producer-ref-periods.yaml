@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: order-kafka-producer
+spec:
+  values:
+    namespace: order-uat
+    kafka_producer:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/ds/order-custom-kafka-producer # {"$imagepolicy": "flux-system:order-kafka-producer-uat:name"}
+        tag: uat-24-1.2.26 # {"$imagepolicy": "flux-system:order-kafka-producer-uat:tag"}
+        pullPolicy: IfNotPresent
+      schedule: '"*/10 * * * *"'
+      custom_command: python producers/ref_periods_producer.py
+      topic_reference: ref-periods
+      env:
+        ENVIRONMENT: UAT
+        SOURCE_CONTEXT: order_ref_periods_producer
+        postgres_database: order_uat
+        topic_name: refdata_ref_periods_1
+        topic_environment: uat
+    vault_secrets:
+      name: "order-kafka-producer-secret-uat"

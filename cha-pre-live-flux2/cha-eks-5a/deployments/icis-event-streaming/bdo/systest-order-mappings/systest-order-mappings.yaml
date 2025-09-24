@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: bdo
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_refdata_mappings_2
+    database: spt-systest
+    collection: order_mappings
+    transforms.RenameField.renames: id:_id
+    transforms.FilterValue.filter.condition: $[?(@.data_producer == "Integrated Data Delivery Network")]
+    transforms.FilterValue.filter.type: include

@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cronjob
+spec:
+  values:
+    namespace: sbfeed-systest
+    cronjob:
+      schedule: '"0 * * * *"' # every 1 hour at 0 minute
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbfeed/sbfeed-event-processor-healthcheck # {"$imagepolicy": "flux-system:sbfeed-event-processor-healthcheck-systest:name"}
+        tag: systest-22-1.4.41-atl-4590-fix-event-proc-healthcheck.1-87 # {"$imagepolicy": "flux-system:sbfeed-event-processor-healthcheck-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbfeed-systest?retryWrites=true&w=majority"
+        KAFKA_TOPIC_NAME: public_systest_alerting_notifications_2
+    vault_secrets:
+      name: event-proc-cronjob-vault-secret-sbfeed-systest
+      VaultSecretPath: "sbfeed/systest/eventprocessor"

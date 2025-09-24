@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- domain-identity-policy-integration.yaml
+- domain-identity-policy-performance.yaml
+- domain-identity-policy-staging.yaml
+- domain-identity-policy-systest.yaml
+- domain-identity-registry.yaml
+###############################

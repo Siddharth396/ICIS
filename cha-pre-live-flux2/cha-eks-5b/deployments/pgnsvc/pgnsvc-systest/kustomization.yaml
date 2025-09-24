@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: pgnsvc-systest
+nameSuffix: -pgnsvc
+resources:
+- ../../../common/authoring-bff/pgnsvc/ 
+- ../../../common/job/pgnsvc/
+patches:
+- path: helm-release-authoring-bff-pgnsvc-systest.yaml
+- path: helm-release-mongo-seeder-pgnsvc-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN1

@@ -1,0 +1,86 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarqube
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: sonarqube
+      version: "10.0.3"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 1
+    serviceAccount:
+      create: false
+      name: sonarqube
+    vault_agent:
+      repository: "artifacts.cha.rbxd.ds/base-image/vault"
+      tag: "latest"
+    consul_template:
+      repository: "artifacts.cha.rbxd.ds/base-image/consul-template"
+      tag: "alpine"
+    env:
+      SONAR_SECURITY_REALM: LDAP
+      LDAP_URL: ldaps://CHAQHSDCXD002V.cha.rbxd.ds:636
+      LDAP_USER_BASEDN: dc=cha,dc=rbxd,dc=ds
+      LDAP_USER_REQUEST: (&(objectClass=user)(sAMAccountName={login}))
+      LDAP_USER_REALNAMEATTRIBUTE: displayName
+      LDAP_USER_EMAILATTRIBUTE: mail
+      LDAP_GROUP_BASEDN: dc=cha,dc=rbxd,dc=ds
+      LDAP_GROUP_REQUEST: (&(objectCategory=group)(!(cn=CHA*V*Administrators))(!(cn=*jira*))(!(cn=*stash*))(!(cn=*confluence*))(member={dn}))
+      LDAP_FOLLOWREFERRALS: false
+      SONAR_LOG_LEVEL: DEBUG
+    ingress:
+      enabled: true
+      ingressClassName: icis-nginx-ingress
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: HTTP
+        lnrs.io/zone-type: private
+        cert-manager.io/cluster-issuer: vault-issuer
+    caCerts:
+      enabled: true
+      secret: sonarqube-ca-secret
+    postgresql:
+      enabled: false
+    networkPolicy:
+      enabled: true
+    vault:
+      url: "https://vault_eu_prod.b2b.regn.net"
+      VaultK8sRoleName: "kv-sonarqube-read"
+      VaultK8sAuthPath: "auth/cha/eks-b"
+      certificate:
+        vault.crt: |-
+          -----BEGIN CERTIFICATE-----
+          MIIEijCCA3KgAwIBAgIQay0iJoZ+c6NJt7cqchus+zANBgkqhkiG9w0BAQsFADBg
+          MRMwEQYKCZImiZPyLGQBGRYDbmV0MRQwEgYKCZImiZPyLGQBGRYEcmVnbjETMBEG
+          CgmSJomT8ixkARkWA2IyYjEeMBwGA1UEAxMVYjJiLVJCSVFIU1BLSVAwMDJWLUNB
+          MB4XDTE3MDgxNzA5MzY1N1oXDTI3MDgxNzA5NDY1N1owYDETMBEGCgmSJomT8ixk
+          ARkWA25ldDEUMBIGCgmSJomT8ixkARkWBHJlZ24xEzARBgoJkiaJk/IsZAEZFgNi
+          MmIxHjAcBgNVBAMTFWIyYi1SQklRSFNQS0lQMDAyVi1DQTCCASIwDQYJKoZIhvcN
+          AQEBBQADggEPADCCAQoCggEBAMv3KNkRI/WzMqcLwkSsKU3vM5coMtDbqdPccdXU
+          MufO94gQXzWsLYN4gUVW2BQq2ULolCzwEDuEep61By2uKw4myr9RHENM8zy7cQXs
+          VvrkNiE+cyYa2zxxM34ImJDc19vHdBovX0zcY3jT3uqtdJX42Etvh2zJoAi26SDk
+          9miXggePd9eoGfnE6MKxTdCtf3s7AHQxR9Y3Rx+uCMKOSWNN+LterAA2n7qMtu6n
+          Uo51ZXmCdJYQDgyvVgS2CgUZwfCwBvD3bCeDwM8FLOr/V/5FDDVvIDmREqQN1eeY
+          Y2q7UQTujHRFzF18Iw+Thk1eGV/zyNvaXr8ny7o1uOeIg80CAwEAAaOCAT4wggE6
+          MBMGCSsGAQQBgjcUAgQGHgQAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTAD
+          AQH/MB0GA1UdDgQWBBQjySkPLCVwclOIUQnzz5V3rO+1WzASBgkrBgEEAYI3FQEE
+          BQIDBQAFMIGsBgNVHR8EgaQwgaEwgZ6ggZuggZiGSmh0dHA6Ly9yYmlxaHNwa2lw
+          MDAzdi5iMmIucmVnbi5uZXQvQ2VydEVucm9sbC9iMmItUkJJUUhTUEtJUDAwMlYt
+          Q0EoNSkuY3JshkpodHRwOi8vcmJpcWhzcGtpcDAwNHYuYjJiLnJlZ24ubmV0L0Nl
+          cnRFbnJvbGwvYjJiLVJCSVFIU1BLSVAwMDJWLUNBKDUpLmNybDAjBgkrBgEEAYI3
+          FQIEFgQU2RDhuv3cL/CQBA4ZVzMUpO+Tqf4wDQYJKoZIhvcNAQELBQADggEBADHm
+          Vhw0S0ICMgXQDpXOp8nraCKsm9LpLcmi/SOtR35AgGQmxAxlPebKgIL3vpUOfnec
+          10htfOInwmF2dVheluEoFBPSbh0uXm3+Rm2p44/d6HTo5AkTygOQf3Fdu0IFqvBH
+          kXBLyQkgVfH2p3OjIfJAV+6seWBI3n+VvBg+YUVYHIqUCHzmxL07ztKuI7f6ZTuO
+          8AvcJzMcsjKkGeUNS3lNimEdI339C93BrBDNzPHZe7LOQr7SiFcIU32hIKfLLkWT
+          MM+pxYAJe1wZkDN1XvYgQ+R4W9XItalDf4y4ZwQIpYo60jZLS1OJQJngE3Tu6R2K
+          gA9dcD2vlZA86EhY8Mg=
+          -----END CERTIFICATE-----
+
+# test2

@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- authoring-dlchrt-bff-systest-policy.yaml
+- authoring-dlchrt-bff-staging-policy.yaml
+- authoring-dlchrt-bff-performance-policy.yaml
+- authoring-dlchrt-bff-registry.yaml
+- authoring-dlchrt-bff-integration-policy.yaml
+#################################################
+- subscriber-dlchrt-bff-systest-policy.yaml
+- subscriber-dlchrt-bff-staging-policy.yaml
+- subscriber-dlchrt-bff-performance-policy.yaml
+- subscriber-dlchrt-bff-registry.yaml
+- subscriber-dlchrt-bff-integration-policy.yaml
+##################################################

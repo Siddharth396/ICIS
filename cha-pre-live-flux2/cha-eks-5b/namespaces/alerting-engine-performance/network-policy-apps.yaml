@@ -1,0 +1,131 @@
+####################################################
+## Allow ingress from alerting-engine-performance and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-alerting-engine-performance
+  namespace: alerting-engine-performance
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: alerting-engine-performance
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from alerting-engine-performance ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-alerting-engine-performance
+  namespace: alerting-engine-performance
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: alerting-engine-performance
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: alerting-engine-performance
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#########################################
+## Allow SQL Server egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-sql-server
+  namespace: alerting-engine-performance
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/22
+    ports:
+    - port: 1433
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.36.0/22
+    ports:
+    - port: 1433
+      protocol: TCP
+
+##################################################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: alerting-engine-performance
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+##################################################
+## allow access to kube2iam to assume iam roles ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: default-allow-iam-access
+  namespace: alerting-engine-performance
+spec:
+  podSelector:
+    matchLabels:
+      require-iam-access: "true"
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.160.0/24
+    ports:
+    - port: 8181
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.161.0/24
+    ports:
+    - port: 8181
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.162.0/24
+    ports:
+    - port: 8181
+      protocol: TCP

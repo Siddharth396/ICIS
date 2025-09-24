@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-contnf-staging
+  values:
+    replicaCount: 1
+    namespace: "contnf-staging"
+    environment: "staging"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "staging"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_staging_notifications_content_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "ui_content_notifier_event_processor_staging"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_staging_notifications_content_retry_1"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_staging_notifications_content_failed_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_staging_notifications_content_1"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/contnf/content-notifier # {"$imagepolicy": "flux-system:content-notifier-staging:name"}
+        tag: staging-25-1.2.1.522390 # {"$imagepolicy": "flux-system:content-notifier-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        MESSAGE_EXPIRE_IN_MINUTES: 21600
+        STOP_NOTIFICATION: false
+        LOG_LEVEL: "Warning"
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/contnf-staging?retryWrites=true&w=majority"
+    vault_secrets:
+      name: contnf-event-processor-vault-secret-staging
+      VaultSecretPath: "contnf/staging/eventprocessor"
+    vault_secrets_consumer:
+      name: contnf-event-processor-vault-secret-consumer-staging
+      VaultSecretPath: "contnf/staging/eventprocessor"

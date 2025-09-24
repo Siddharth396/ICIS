@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: pdcast-performance
+nameSuffix: -pdcast
+resources:
+- ../../../common/subscriber-bff/pdcast/
+- ../../../common/authoring-bff/pdcast/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-pdcast-performance.yaml
+- path: helm-release-authoring-bff-pdcast-performance.yaml
+# BACKSTAGE-COMMENT-PATTERN2

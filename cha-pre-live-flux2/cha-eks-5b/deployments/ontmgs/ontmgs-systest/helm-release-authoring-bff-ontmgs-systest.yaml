@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-ontmgs-systest
+  values:
+    replicaCount: 1
+    namespace: "ontmgs-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    # deploymentStrategy: "RollingUpdate"
+    # migration_init_script:
+    #   enabled: false
+    #   image:
+    #     repository: artifacts.cha.rbxd.ds/automated/ontmgs/mongo-migration # {"$imagepolicy": "flux-system:ontmgs-mongo-migration-systest:name"}
+    #     tag: systest-todo-1 # {"$imagepolicy": "flux-system:ontmgs-mongo-migration-systest:tag"}
+    #     pullPolicy: IfNotPresent
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-20-1.4.47.956 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/ontmgs/authoring-bff # {"$imagepolicy": "flux-system:ontmgs-authoring-bff-systest:name"}
+        tag: systest-16-0.1.2.33580 # {"$imagepolicy": "flux-system:ontmgs-authoring-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/ontmgs-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        LOG_LEVEL: Debug
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/ontology/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-ontmgs-systest
+      VaultSecretPath: "ontmgs/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-ontmgs-systest

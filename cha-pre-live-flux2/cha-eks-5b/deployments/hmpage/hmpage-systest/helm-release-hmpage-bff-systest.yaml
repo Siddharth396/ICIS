@@ -1,0 +1,220 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hmpage-bff
+spec:
+  releaseName: hmpage-bff-systest
+  values:
+    namespace: "hmpage-systest"
+    environment: "systest"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/hmpage/hmpage-bff # {"$imagepolicy": "flux-system:hmpage-bff-systest:name"}
+        tag: systest-1- # {"$imagepolicy": "flux-system:hmpage-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        BaseUrl: "https://api.subscriber.systest.genesis.cha.rbxd.ds/v1.1"
+        IdentityServerBaseUrl: "https://id.internal.systest.genesis.cha.rbxd.ds"
+        DomainApiBaseUrls__News: "https://dbapi.systest.genesis.cha.rbxd.ds/v1"
+        DomainApiBaseUrls__Pricing: "https://dbapi.systest.genesis.cha.rbxd.ds/v1"
+        DomainApiBaseUrls__CHub: "https://dbapi.systest.genesis.cha.rbxd.ds/v1"
+        HealthCheckTimeout: 5000
+        PreferencesDatabase: "Data Source=genesis-ups-stag.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com;Initial Catalog=genesis-ups-systest;User Id=${SQL_USER};Password=${SQL_PWD};Connection Timeout=15"
+        PreferencesDatabaseCommandTimeout: 15
+        Hostings__Urls: "http://*:80"
+        Hostings__ConnectionLimit: 300
+        Hostings__MinThreadCount: 2000
+        Serilog__Using__0: "Serilog.Sinks.Elasticsearch"
+        Serilog__Using__1: "Serilog.Sinks.RollingFile"
+        Serilog__MinimumLevel__Default: "Warning"
+        Serilog__MinimumLevel__Override__Microsoft: "Warning"
+        Serilog__MinimumLevel__Override__Icis.Genesis.Bff.Api.Infrastructure.Adapters.JSNLogToSerilogAdapter: "Information"
+        Serilog__WriteTo__0__Name: "Elasticsearch"
+        Serilog__WriteTo__0__Args__nodeUris: "http://logs.cha.rbxd.ds"
+        Serilog__WriteTo__0__Args__restrictedToMinimumLevel: "Information"
+        Serilog__WriteTo__0__Args__typeName: "_doc"
+        Serilog__WriteTo__0__Args__indexFormat: "logstash-genesis-{0:yyyy.MM}"
+        Serilog__WriteTo__1__Name: "RollingFile"
+        Serilog__WriteTo__1__Args__pathFormat: "logs/Icis.Genesis.Bff.Api-{Hour}.log"
+        Serilog__WriteTo__1__Args__restrictedToMinimumLevel: "Information"
+        Serilog__WriteTo__1__Args__formatter: "Serilog.Formatting.Json.JsonFormatter, Serilog"
+        Serilog__WriteTo__1__Args__fileSizeLimitBytes: 10000000
+        Serilog__Properties__Environment: "systest"
+        Serilog__Properties__Source: "Genesis"
+        Serilog__Properties__Component: "Bff"
+        Serilog__Properties__Service: "Bff.Api"
+        JWTInfo__Audience: "https://id.systest.genesis.cha.rbxd.ds/resources"
+        JWTInfo__Authority: "https://id.systest.genesis.cha.rbxd.ds"
+        JWTInfo__Issuer: "https://id.systest.genesis.cha.rbxd.ds"
+        JWTInfoAuth0__Audience: "https://api.icis.com/api/v1"
+        JWTInfoAuth0__Authority: "https://systest-login.icis.com"
+        JWTInfoAuth0__Issuer: "https://systest-login.icis.com"
+        Viper__SDUrl: "https://api.demo.coa.rbxd.ds/sites/icissd"
+        CookieInfo__Domain: ".cha.rbxd.ds"
+        CookieInfo__ExpiresInDays: 30
+        CorsOrigins__0: "https://subscriber.systest.genesis.cha.rbxd.ds"
+        CorsOrigins__1: "https://localhost:8080"
+        CorsOrigins__2: "https://localhost"
+        CorsOrigins__3: "https://*.cha.rbxd.ds"
+        ResetEndpoints__0: "//subscriber.systest.genesis.cha.rbxd.ds/reset.html"
+        NavUrls__Promotional__Dashboard: "https://dashboard.systest.cha.rbxd.ds/Dashboard/Dashboard/CPDashboard"
+        NavUrls__Promotional__Reports: "https://dashboard.systest.cha.rbxd.ds/Dashboard/Dashboard/CPReports"
+        NavUrls__Promotional__News: "https://dashboard.systest.cha.rbxd.ds/Dashboard/Dashboard/CPNews"
+        NavUrls__AskIcis: "https://subscriber.systest.genesis.cha.rbxd.ds/askicis"
+        NavUrls__HomePage: "https://subscriber.systest.genesis.cha.rbxd.ds"
+        NavUrls__HomePage2: "https://subscriber.systest.genesis.cha.rbxd.ds/home"
+        NavUrls__Dashboard: "https://dashboard.systest.cha.rbxd.ds/dashboard"
+        NavUrls__News: "https://news.systest.dashboard.cha.rbxd.ds/subscriber/news/"
+        NavUrls__Commodities: "https://subscriber.systest.genesis.cha.rbxd.ds/commodity"
+        NavUrls__NewsMySavedArticles: "https://news.systest.dashboard.cha.rbxd.ds/subscriber/news/account/articles"
+        NavUrls__NewsMySavedSearches: "https://news.systest.dashboard.cha.rbxd.ds/subscriber/news/account/searches"
+        NavUrls__NewsAdvancedSearch: "https://news.systest.dashboard.cha.rbxd.ds/subscriber/news/search/"
+        NavUrls__NewsChanOverview: "https://subscriber.staging.genesis.cha.rbxd.ds/news"
+        NavUrls__NewsChanLatest: "https://subscriber.staging.genesis.cha.rbxd.ds/news/newsstream"
+        NavUrls__NewsChanInsightAnalysis: "https://subscriber.staging.genesis.cha.rbxd.ds/news/insightandanalysis"
+        NavUrls__NewsChanSavedSearches: "https://subscriber.staging.genesis.cha.rbxd.ds/news/savedsearches"
+        NavUrls__NewsChanMagazine: "https://www.icis.com/subscriber/icb/"
+        NavUrls__NewsRssFeeds: "https://www.icis.com/help/rss/"
+        NavUrls__Reports: "https://dashboard.systest.cha.rbxd.ds/dashboard/reports"
+        NavUrls__ChubReports: "https://c-hub.systest.genesis.cha.rbxd.ds/commodity"
+        NavUrls__Icb: "https://news.systest.dashboard.cha.rbxd.ds/subscriber/icb/"
+        NavUrls__Alerts: "https://dashboard.systest.cha.rbxd.ds/dashboard/alerting/"
+        NavUrls__CommodityAlerts: "https://subscriber.systest.genesis.cha.rbxd.ds/commodity/alerts"
+        NavUrls__Lsdt: "https://dashboard.systest.cha.rbxd.ds/dashboard/supplydisruptions"
+        NavUrls__LiveDisruptionsSupply: "https://dashboard.systest.cha.rbxd.ds/dashboard/supplydisruptions"
+        NavUrls__LiveDisruptionsImpact: "https://dashboard.systest.cha.rbxd.ds/dashboard/supplydisruptionsimpact"
+        NavUrls__MarginAnalytics: "https://petchem.analytics.icis.com/margins/"
+        NavUrls__SupplyAndDemand: "https://www.icissupplyanddemand.com/"
+        NavUrls__ExchangeRates: "https://dashboard.systest.cha.rbxd.ds/dashboard/xeexchangerates"
+        NavUrls__ExcelPlugin: "https://www.icis.com/explore/dashboard/dataexpress"
+        NavUrls__ApiDataAccess: "https://www.icis.com/explore/dashboard/dataexpress/icis-api"
+        NavUrls__Consultancy: "http://fta.systest.dashboard.cha.rbxd.ds/services/consulting"
+        NavUrls__Training: "http://fta.systest.dashboard.cha.rbxd.ds/training"
+        NavUrls__Conferences: "http://fta.systest.dashboard.cha.rbxd.ds/conferences"
+        NavUrls__ExploreAllServices: "http://www.icis.com/explore/services?fta=access"
+        NavUrls__DownloadAppExternal: "https://subscriber.icis.com/download-icis-app"
+        NavUrls__DownloadAppInternal: "/download-icis-app"
+        NavUrls__IcisServicesHelp: "https://www.icis.com/support/"
+        NavUrls__CreditsHelp: "https://www.icis.com/about/dashboard/credits/"
+        NavUrls__MethodologyHelp: "https://www.icis.com/compliance/"
+        NavUrls__PlatformTrainingHelp: "https://www.icis.com/support/contact/platform-training/"
+        NavUrls__PublishingSchedule: "https://www.icis.com/about/publishing-schedule/"
+        NavUrls__ContactTelephone: "https://www.icis.com/contact/"
+        NavUrls__ContactEmail: "mailto:clientsuccess@icis.com"
+        NavUrls__ChangePassword: "https://dashboard.systest.cha.rbxd.ds/dashboard/PasswordManager/ChangePassword"
+        NavUrls__CookiePolicy: "https://www.icis.com/cookies-policy/"
+        NavUrls__PrivacyPolicy: "https://www.reedbusiness.com/privacy-policy/"
+        NavUrls__TermsAndConditions: "https://www.icis.com/terms/"
+        NavUrls__CreditUsage: "https://icis.com/dashboard/mycreditusage"
+        NavUrls__Analytics: "https://subscriber.systest.genesis.cha.rbxd.ds/analytics"
+        NavUrls__CarbonAnalytics: "https://analytics.icis.com/carbon-analytics/?intcmp=Subscriber-to-carbon-analytics-main-nav-link"
+        NavUrls__PowerAnalytics: "https://analytics.icis.com/power-analytics/?intcmp=Subscriber-to-power-analytics-main-nav-link"
+        NavUrls__LngAnalytics: "https://lngedge.icis.com/?intcmp=Subscriber-to-lng-main-nav-link"
+        NavUrls__NonEntitledLngAnalytics: "mailto:energysales@icis.com?subject=LNG Analytics Access"
+        NavUrls__MyPreferences: "https://dashboard.systest.cha.rbxd.ds/dashboard/MyPreferences"
+        NavUrls__RPET: "https://www.icis.com/dashboard/recycled-pet-data"
+        NavUrls__RPETMarketing: "https://www.icis.com/explore/commodities/chemicals/polyethylene-terephthalate-recycled"
+        NavUrls__WebminarCalendars: "https://www.icis.com/explore/resources/industry-updates#tab,"
+        NavUrls__Overrides__PrivacyPolicy: "https://www.reedbusiness.com/privacy-policy-china"
+        NavUrls__Overrides__CookiePolicy: "https://icis-global.com/china/cookies-policy/"
+        NavUrls__Overrides__MethodologyHelp: "https://www.icis.com/compliance/china-compliance/"
+        NavUrls__Overrides__PublishingSchedule: "http://am.icis-china.com/methodology/publishing-schedule.htm"
+        NavUrls__NativeOverrides__IcisServicesHelp: "https://www.icis.com/support/help/mobile-app/"
+        NavUrls__NativeOverrides__ContactTelephone: "https://www.icis.com/support/contact/"
+        Toggles__SearchEnabled: false
+        Toggles__LiveChatEnabled: true
+        Toggles__DisableHomeForChina: false
+        Toggles__LiveDisruptionsImpactTrackerEnabled: true
+        Toggles__ChinaRefineryEnabled: true
+        Toggles__E-RPETPAEnabled: true
+        Toggles__NewsChannelReleased: true
+        Toggles__ChubNewReportsRedirect: true
+        Toggles__CHubShowReportsToCreditUsers: true
+        Toggles__CommodityHubLinksEnabled: true
+        Toggles__CommodityHubLinksCHubBetaEnabled: true
+        Toggles__CommodityHubLinksGenesisBetaEnabled: true
+        Toggles__RecyclingSupplyTrackerMechanicalAnalyticsCardEnabled: true
+        Toggles__PlantCEAnalyticsEnabled: true
+        Toggles__RecyclingSupplyTrackerChemicalAnalyticsCardEnabled: true
+        Toggles__IsRedirectToNewHomeEnabled: true
+        Toggles__IsR2ToggleEnabled: true
+        Toggles__IsR3ToggleEnabled: true
+        Toggles__HydrogenPricingAndAnalyticsCardEnabled: true
+        Toggles__SupplierCarbonFootprintsAnalyticsCardEnabled: true
+        Toggles__EnergyGasAnalyticsCardEnabled: true
+        Toggles__PowerForesightAnalyticsCardEnabled: true
+        Web__ForceUpgradeVersion: "0.2.0"
+        Web__SuggestedUpgradeVersion: "0.2.0"
+        IOS__ForceUpgradeVersion: "1.17.0"
+        IOS__SuggestedUpgradeVersion: "1.17.0"
+        Android__ForceUpgradeVersion: "1.18.0"
+        Android__SuggestedUpgradeVersion: "1.18.0"
+        HttpClient__MaxRetryAttempts: 3
+        HttpClient__RetriableStatusCodes__0: 408
+        HttpClient__RetriableStatusCodes__1: 429
+        HttpClient__RetriableStatusCodes__2: 502
+        HttpClient__RetriableStatusCodes__3: 503
+        HttpClient__RetriableStatusCodes__4: 504
+        SqlRetry__MaxRetryAttempts: 3
+        SqlRetry__RetriableErrorCodes__0: 615
+        SqlRetry__RetriableErrorCodes__1: 921
+        SqlRetry__RetriableErrorCodes__2: 929
+        SqlRetry__RetriableErrorCodes__3: 10060
+        SqlRetry__RetriableErrorCodes__4: 33136
+        SqlRetry__RetriableErrorCodes__5: 40197
+        SqlRetry__RetriableErrorCodes__6: 40501
+        SqlRetry__RetriableErrorCodes__7: 40613
+        SqlRetry__RetriableErrorCodes__8: 40642
+        SqlRetry__RetriableErrorCodes__9: 40675
+        SqlRetry__RetriableErrorCodes__10: 40825
+        SqlRetry__RetriableErrorCodes__11: 45168
+        SqlRetry__RetriableErrorCodes__12: 45169
+        SqlRetry__RetriableErrorCodes__13: 49809
+        SqlRetry__RetriableErrorCodes__14: 49918
+        SqlRetry__RetriableErrorCodes__15: 49919
+        SqlRetry__RetriableErrorCodes__16: 49920
+        EnableElasticApm: false
+        ElasticApm__ServerUrls: "https://apm.genesis.cha.eu-west-1.dev/"
+        ElasticApm__TransactionSampleRate: 0.5
+        ElasticApm__Environment: "systest"
+        ElasticApm__ServiceName: "Core BFF"
+        ElasticApm__CentralConfig: false
+        ElasticApm__CaptureBody: "no"
+        ElasticApm__CaptureBodyContentType: "application/json"
+
+    ingress:
+      enabled: true
+      name: TBA
+      className: icis-nginx-ingress
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        cert-manager.io/cluster-issuer: vault-issuer
+      hosts:
+        - host: api.subscriber.systest.genesis.cha.rbxd.ds
+          paths:
+          # - /home
+          # - /intelligence
+          # - /content
+          # - /mfe
+          # - /analytics
+          # - /analytics/pce
+          # - /commodity/energy
+          # - /commodity/rpet/europe
+          # - /recycling/supply-tracker
+          # - /download-icis-app
+          # - /askicis
+          # - /
+          tls: "true"
+      tls:
+        - hosts:
+            - TBA
+          secretName: TBA
+    secrets:
+      enabled: false
+      name: TBA    
+
+    vault_secrets:
+      name: hmpage-bff-secrets-systest
+      VaultSecretPath: "hmpage/systest/bff"
+      VaultConnName: "hmpage-bff-vault-secret-connection-systest"

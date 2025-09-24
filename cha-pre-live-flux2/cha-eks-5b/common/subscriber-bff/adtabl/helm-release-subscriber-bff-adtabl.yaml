@@ -1,0 +1,10 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "subscriber-adtabl"
+    ServiceAccountName: "adtabl"

@@ -1,0 +1,7 @@
+version: "3.4"
+services:
+  checkmarx:
+    build:
+      context: .
+      dockerfile: ./checkmarx.Dockerfile
+    command: Scan -projectname "CxServer\\SP\\RBI\\ICIS\\Supply And Demand"  -cxserver "https://checkmarx.rbxd.ds/" -cxuser "${CHECKMARX_USER}" -cxpassword "${CHECKMARX_PASS}" -locationtype "folder" -locationpath "/source" -v -locationfilesexclude "!**/.vs/**,!**/.git/**,!**/bin/**,!**/obj/**,!**/backup/**,!**test.*"

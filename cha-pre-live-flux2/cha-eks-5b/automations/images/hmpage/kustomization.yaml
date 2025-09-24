@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- hmpage-bff-registry.yaml
+####################################
+- hmpage-app-policy-integration.yaml
+- hmpage-app-policy-performance.yaml
+- hmpage-app-policy-staging.yaml
+- hmpage-app-policy-systest.yaml
+- hmpage-app-registry.yaml

@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- nseata-event-processor-policy-systest.yaml
+- nseata-event-processor-registry.yaml

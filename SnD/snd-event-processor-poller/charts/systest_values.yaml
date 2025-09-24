@@ -1,0 +1,45 @@
+# Systest values for SnD-Event-Processor
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 3
+namespace: supdem-systest
+environment: systest
+ServiceAccountName: supdem
+
+
+
+processor:
+  image:
+    tag: "0.1.0-beta.1.258-322"
+  env_vars:
+    ASPNETCORE_ENVIRONMENT: systest
+
+poller:
+  image:
+    tag: "0.1.0-alpha.82-170"
+  env_vars:
+    ASPNETCORE_ENVIRONMENT: systest
+
+
+ingress:
+  enabled: true
+  className: icis-nginx-ingress
+  annotations:
+    lnrs.io/zone-type: private
+    external-dns.alpha.kubernetes.io/hostname: supply-demand.processor.systest.cha.eu-west-1.dev
+    #traefik.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: vault-issuer
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    #ingress.kubernetes.io/ssl-redirect: "false"
+  hosts:
+    - host: supply-demand.processor.systest.cha.eu-west-1.dev
+      paths:
+      - /
+      tls: "true"
+  tls:
+    - hosts:
+      - supply-demand.processor.systest.cha.eu-west-1.dev
+      secretName: supply-demand-processor-systest-cha-eu-west-1-dev
+
+vault:
+  VaultSecretPath: "kv/cha/k8s/data/supdem/systest/processor"

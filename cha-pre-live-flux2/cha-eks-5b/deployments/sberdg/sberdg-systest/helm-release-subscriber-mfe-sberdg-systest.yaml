@@ -1,0 +1,23 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: subscriber-mfe
+  annotations:
+    repository.fluxcd.io/mfe: mfe.image.repository
+    tag.fluxcd.io/mfe: mfe.image.tag
+    filter.fluxcd.io/mfe: glob:systest-*
+spec:
+  releaseName: subscriber-mfe-sberdg-systest
+  values:
+    namespace : "sberdg-systest"
+    mfe:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/sbmfe/sbmfe-energy-pilets"
+        tag: systest-1-0.1.11-ERD-85-update-docker-image-name.0-116
+        pullPolicy: IfNotPresent
+    
+    feedServiceUrl: "https://subscriber-mfe-feed-service.systest.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe"
+    vault_secrets:
+      name: "sberdg-subscriber-mfe-secret-systest"
+

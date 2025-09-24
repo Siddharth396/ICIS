@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Authoring": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "v1/version",
+      "applicationUrl": "http://localhost:8005",
+      "environmentVariables": {
+      }
+    }
+  }
+}

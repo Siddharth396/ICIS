@@ -1,0 +1,10 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: cnvspt-mongo-migration-bff
+  namespace: flux-system
+spec:
+  certSecretRef:
+    name: artifacts-ca-crt
+  image: artifacts.cha.rbxd.ds/automated/cnvspt/mongo-migration-bff
+  interval: 5m0s

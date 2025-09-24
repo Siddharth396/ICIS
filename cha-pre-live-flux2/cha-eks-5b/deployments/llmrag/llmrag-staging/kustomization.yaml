@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: llmrag-staging
+nameSuffix: -llmrag
+resources:
+- ../../../common/subscriber-bff/llmrag/
+- ../../../common/askics-importer/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-llmrag-staging.yaml
+- path: helm-release-askics-importer-staging.yaml
+# BACKSTAGE-COMMENT-PATTERN2

@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: homepage-systest
+nameSuffix: -homepage
+resources:
+- ../../../common/subscriber-bff/homepage/
+- ../../../common/app-shell/subscriber-app/
+- ../../../common/feed-service/subscriber/
+- ../../../common/job/homepage/
+patches:
+- path: helm-release-subscriber-app-homepage-systest.yaml
+- path: helm-release-subscriber-bff-homepage-systest.yaml
+- path: helm-release-subscriber-feed-service.yaml
+- path: helm-release-homepage-migration-systest.yaml

@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: notsys-event-processor-nsemdp-staging
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: notsys-event-processor-nsemdp
+    namespace: flux-system
+  filterTags:
+    pattern: '^staging-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

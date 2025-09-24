@@ -1,0 +1,11 @@
+# testing flux issues
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_performance_supplydemand_plant_ownership_1
+    database: sboutg-performance
+    collection: raw_plant_ownership

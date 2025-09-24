@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: recycling
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_recycling_mechanical_plant_1
+    database: grn-systest
+    collection: MechanicalPlant
+    transforms.RenameField.renames: id:_id

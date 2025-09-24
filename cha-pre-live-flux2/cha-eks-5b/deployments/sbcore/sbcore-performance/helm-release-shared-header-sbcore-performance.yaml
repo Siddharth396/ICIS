@@ -1,0 +1,140 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: shared-header
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: sbcore-shared-header
+      version: 1.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  releaseName: shared-header-sbcore-performance
+  values:
+    replicaCount: 1
+    projectName: "sbcore"
+    serviceAccountName: "sbcore"
+    namespace: "sbcore-performance"
+    environment: "performance"
+    shared_header:
+      port: 80
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/sbcore/sbcore-shared-header-standalone" # {"$imagepolicy": "flux-system:sbcore-shared-header-performance:name"}
+        tag: "performance-225-3.32.5-187" # {"$imagepolicy": "flux-system:sbcore-shared-header-performance:tag"}
+        pullPolicy: IfNotPresent
+      livenessProbe:
+        httpGet:
+          path: /shared-header/init.js
+          port: 80
+        periodSeconds: 30
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+      config_env:
+        ENVIRONMENT: performance
+        SECRET_FILE_PATH: /etc/secrets/.env
+        REACT_APP_BASE_URL: https://subscriber.performance.genesis.cha.rbxd.ds/shared-header
+        REACT_APP_BFF_URL: https://subscriber.performance.genesis.cha.rbxd.ds/api/core/v1
+        REACT_APP_IDS_URL: https://id.performance.genesis.cha.rbxd.ds
+        REACT_APP_IDS_CLIENT_URL: https://subscriber.performance.genesis.cha.rbxd.ds
+        REACT_APP_IDS_CLIENT_ID: performance
+        REACT_APP_IDS_TOKEN_AUDIENCE:
+        REACT_APP_AUTH_DOMAIN: .cha.rbxd.ds
+        REACT_APP_LIVE_AGENT_SCRIPT_URL: https://c.la1-c1cs-lon.salesforceliveagent.com/content/g/js/38.0/deployment.js
+        REACT_APP_LIVE_AGENT_CHAT_URL: https://d.la1-c1cs-lon.salesforceliveagent.com/chat
+        REACT_APP_LIVE_AGENT_CHAT_ID: 5737E0000004CDP
+        REACT_APP_LIVE_AGENT_DEPLOYMENT_ID: 5727E0000004CCg
+        REACT_APP_LIVE_AGENT_ORGANISATION_ID: 00D7E000000D2FW
+        REACT_APP_LIVE_AGENT_OFFLINE_EMAIL: clientsuccess@icis.com
+        REACT_APP_LIVE_AGENT_CHINA_CHAT_URL: https://d.la1-c1cs-hnd.salesforceliveagent.com/chat
+        REACT_APP_LIVE_AGENT_CHINA_CHAT_ID: 573O0000000Cb37
+        REACT_APP_LIVE_AGENT_CHINA_DEPLOYMENT_ID: 572O0000000Cb7Y
+        REACT_APP_LIVE_AGENT_CHINA_ORGANISATION_ID: 00DO00000053jT1
+        REACT_APP_LIVE_AGENT_CHINA_OFFLINE_EMAIL: clientsuccess@icis.com
+        REACT_APP_LOGGING_CONSOLE_CAPTURE_REG_EXP: (React Intl|LiveAgent)
+        REACT_APP_OIDC_LOG_LEVEL: 1
+        REACT_APP_SEARCH_URL: https://subscriber.performance.genesis.cha.rbxd.ds/search
+        REACT_APP_ANALYTICS_URL: https://analytics.icis.com
+        REACT_APP_ANALYTICS_ACCOUNT: rbiuk-icis-genesis-dev
+        REACT_APP_ANALYTICS_SCRIPT: //assets.adobedtm.com/c89af706acda/906d7140be39/launch-3c41f40d121d-development.min.js
+        REACT_APP_HOMEPAGE_V1_URL: https://subscriber.performance.genesis.cha.rbxd.ds
+        REACT_APP_HOMEPAGE_V2_URL: https://subscriber.performance.genesis.cha.rbxd.ds/home
+        REACT_APP_WALKME_URL: https://cdn.walkme.com/users/3c32c6f6d3eb4fd1947bf24be131782b/test/walkme_3c32c6f6d3eb4fd1947bf24be131782b_https.js
+        REACT_APP_WALKME_WAIT_TIME: 6000
+        REACT_APP_ACTIVITY_FEED_URL: https://subscriber.performance.genesis.cha.rbxd.ds/mfe/activity-feed/shared-header
+        REACT_APP_ACTIVITY_FEED_BFF: https://subscriber.performance.genesis.cha.rbxd.ds/api/notifications/feed/v1/graphql
+        REACT_APP_INTELLIGENCE_PAGES_NAV_URL: https://subscriber.performance.genesis.cha.rbxd.ds/mfe/canvas-core/topic-pages/shared-header
+        REACT_APP_COMMODITIES_NAV_URL: https://subscriber.performance.genesis.cha.rbxd.ds/mfe/commodities/my-commodities/shared-header
+    nginx:
+      port: 443
+      image:
+        repository: "artifacts.cha.rbxd.ds/base-image/nginx"
+        tag: alpine
+        pullPolicy: IfNotPresent
+      readinessProbe:
+        httpGet:
+          path: /shared-header/init.js
+          port: 443
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /shared-header/init.js
+          port: 443
+          scheme: HTTPS
+        periodSeconds: 30
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+    container:
+      lifecycle:
+        preStop:
+          exec:
+            command: ["/bin/sh", "-c", "sleep 20"]
+    service:
+      port: 443
+      listPorts:
+        # if enabled then the list of ports will be used instead of the above `service.port`
+        enabled: false
+        ports:
+          - name: http
+            port: 80
+            targetPort: 80
+          - name: https
+            port: 443
+            targetPort: 443
+    autoscaling:
+      enabled: false
+    serviceMonitor:
+      enabled: false
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /shared-header/?(.*)
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        cert-manager.io/cluster-issuer: vault-issuer

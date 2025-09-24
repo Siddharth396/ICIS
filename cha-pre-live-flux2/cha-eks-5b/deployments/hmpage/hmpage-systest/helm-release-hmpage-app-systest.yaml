@@ -1,0 +1,184 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: hmpage-app
+spec:
+  values:
+    namespace: "hmpage-systest"
+    environment: "systest"
+    app:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/hmpage/hmpage-app # {"$imagepolicy": "flux-system:hmpage-app-systest:name"}
+        tag: systest-1- # {"$imagepolicy": "flux-system:hmpage-app-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        web_globals__analyticsScript: "//assets.adobedtm.com/c89af706acda/906d7140be39/launch-3c41f40d121d-development.min.js"
+        web_globals__analyticsAccount: "rbiuk-icis-genesis-dev"
+        web_globals__baseUrl: "https://subscriber.systest.genesis.cha.rbxd.ds"
+        web_globals__sharedHeaderUrl: "https://subscriber.systest.genesis.cha.rbxd.ds"
+        web_globals__bffUrl: "https://api.subscriber.systest.genesis.cha.rbxd.ds/v1.1"
+        web_globals__idsUrl: "https://id.systest.genesis.cha.rbxd.ds"
+        web_globals__idsClientUrl: "https://subscriber.systest.genesis.cha.rbxd.ds"
+        web_globals__idsClientId: "systest"
+        web_globals__idsTokenAudience: "https://api.subscriber.systest.genesis.cha.rbxd.ds"
+        web_globals__authDomain: ".cha.rbxd.ds"
+        web_globals__useLogin: true
+        web_globals__isExternal: false
+        web_globals__playStoreLink: "https://play.google.com/store/apps/details?id=com.rbi.icis"
+        web_globals__appStoreLink: "https://itunes.apple.com/app/id1391672121"
+        web_globals__liveAgentScriptUrl: "https://c.la1-c1cs-lon.salesforceliveagent.com/content/g/js/38.0/deployment.js"
+        web_globals__liveAgentChatUrl: "https://d.la1-c1cs-lon.salesforceliveagent.com/chat"
+        web_globals__liveAgentChatId: "5737E0000004CDP"
+        web_globals__liveAgentDeploymentId: "5727E0000004CCg"
+        web_globals__liveAgentOrganisationId: "00D7E000000D2FW"
+        web_globals__liveAgentOfflineEmail: "clientsuccess@icis.com"
+        web_globals__loggingConsoleCaptureRegExp: "(React Intl|LiveAgent)"
+        web_globals__oidcLogLevel: 1
+        web_globals__searchUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/search"
+        web_globals__analyticsUrl: "https://analytics.icis.com"
+        web_globals__newsUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/news"
+        web_globals__commoditiesUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/commodity"
+        web_globals__logRocketCookieSessionKey: "icis.logRocketEnabled"
+        web_globals__logRocketExpireTime: 7
+        web_globals__homepageV2Url: "https://subscriber.systest.genesis.cha.rbxd.ds/home"
+        web_globals__enabledFeatures: ""
+        web_globals__pricingMarketingUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/home/marketing/pricing"
+
+        sharedheader_config__analyticsScript: "//assets.adobedtm.com/c89af706acda/906d7140be39/launch-3c41f40d121d-development.min.js"
+        sharedheader_config__analyticsAccount: "rbiuk-icis-genesis-dev"
+        sharedheader_config__baseUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/shared-header"
+        sharedheader_config__bffUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/api/core/v1"
+        sharedheader_config__idsUrl: "https://id.systest.genesis.cha.rbxd.ds"
+        sharedheader_config__idsClientUrl: "https://subscriber.systest.genesis.cha.rbxd.ds"
+        sharedheader_config__idsClientId: "systest"
+        sharedheader_config__authDomain: ".cha.rbxd.ds"
+        sharedheader_config__useLogin: false
+        sharedheader_config__isExternal: true
+        sharedheader_config__playStoreLink: "https://play.google.com/store/apps/details?id=com.rbi.icis"
+        sharedheader_config__appStoreLink: "https://itunes.apple.com/app/id1391672121"
+        sharedheader_config__liveAgentScriptUrl: "https://c.la1-c1cs-lo2.salesforceliveagent.com/content/g/js/50.0/deployment.js"
+        sharedheader_config__liveAgentChatUrl: "https://d.la1-c1cs-lo2.salesforceliveagent.com/chat"
+        sharedheader_config__liveAgentChatId: "5733L0000008ORl"
+        sharedheader_config__liveAgentDeploymentId: "5723L0000004CFp"
+        sharedheader_config__liveAgentOrganisationId: "00D3L0000008aQV"
+        sharedheader_config__liveAgentOfflineEmail: "clientsuccess@icis.com"
+        sharedheader_config__liveAgentChinaChatUrl: "https://d.la2-c1cs-ukb.salesforceliveagent.com/chat"
+        sharedheader_config__liveAgentChinaChatId: "5736F0000008lZk"
+        sharedheader_config__liveAgentChinaDeploymentId: "5726F000000CxLr"
+        sharedheader_config__liveAgentChinaOrganisationId: "00D0T0000008ag3"
+        sharedheader_config__liveAgentChinaOfflineEmail: "cc-support@icis.com"
+        sharedheader_config__loggingConsoleCaptureRegExp: "(React Intl|LiveAgent)"
+        sharedheader_config__oidcLogLevel: 1
+        sharedheader_config__searchUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/search"
+        sharedheader_config__analyticsUrl: "https://analytics.icis.com"
+        sharedheader_config__logRocketId: "yttqws/icis-pre-live"
+        sharedheader_config__logRocketWhitelist: "(search|news|/|support|commodity)"
+        sharedheader_config__logRocketCookieSessionKey: "icis.logRocketEnabled"
+        sharedheader_config__uptrendsScript: "https://hit.uptrendsdata.com/rum.min.js"
+        sharedheader_config__uptrendsSid: "%{alias('uptrendsSid')}"
+        sharedheader_config__uptrendsAip: 1
+        sharedheader_config__homepageV1Url: "https://subscriber.systest.genesis.cha.rbxd.ds"
+        sharedheader_config__homepageV2Url: "https://subscriber.systest.genesis.cha.rbxd.ds/home"
+        sharedheader_config__walkMeUrl: "%{alias('walkMeUrl')}"
+        sharedheader_config__activityFeedUrl: "https://subscriber.systest.genesis.cha.rbxd.ds/home/mfe/activity-feed-pilet/dropdown"
+        sharedheader_config__activityFeedBff: "https://subscriber.systest.genesis.cha.rbxd.ds/api/notifications/feed/v1"
+        sharedheader_config__surveyEnabled: false
+
+    nginx:
+      image:
+        repository: artifacts.cha.rbxd.ds/base-image/nginx-unprivileged
+        tag: 1.19-alpine
+      container:
+        name: nport
+        port: 8080
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 8080
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 5
+        timeoutSeconds: 2
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 8080
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 30
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+      configmap:
+        name: sbsrch-nginx-config
+      config: |-
+        server {
+          listen 8080 ssl;
+          server_name  localhost;
+
+          access_log /dev/stdout main;
+          error_log /dev/stdout warn;
+
+          ssl_certificate /etc/ssl/tls.crt;
+          ssl_certificate_key /etc/ssl/tls.key;
+
+          client_header_buffer_size    8k;
+          large_client_header_buffers  4 32k;
+
+          server_tokens off;
+
+          #Reverse Proxy rules to serve the BFF from other container
+
+          location / {
+              proxy_set_header Host $http_host;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+
+              proxy_buffers 4 64k;
+              proxy_buffer_size 32k;
+              proxy_busy_buffers_size 64k;
+
+              proxy_pass http://localhost:80;
+          }
+
+        }
+
+    ingress:
+      enabled: true
+      name: TBA
+      className: icis-nginx-ingress
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        cert-manager.io/cluster-issuer: vault-issuer
+      hosts:
+        - host: subscriber.systest.genesis.cha.rbxd.ds
+          paths:
+          # - /home
+          # - /intelligence
+          # - /content
+          # - /mfe
+          # - /analytics
+          # - /analytics/pce
+          # - /commodity/energy
+          # - /commodity/rpet/europe
+          # - /recycling/supply-tracker
+          # - /download-icis-app
+          # - /askicis
+          # - /
+          tls: "true"
+      tls:
+        - hosts:
+            - TBA
+          secretName: TBA
+    secrets:
+      enabled: false
+      name: TBA
+
+    vault_secrets:
+      name: hmpage-app-secrets-systest
+      VaultSecretPath: "hmpage/systest/app"
+      VaultConnName: "hmpage-app-vault-secret-connection-systest"

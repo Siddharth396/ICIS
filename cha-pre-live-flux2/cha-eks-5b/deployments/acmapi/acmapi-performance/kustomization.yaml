@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: acmapi-performance
+nameSuffix: -acmapi
+resources:
+- helm-release-acmapi-performance.yaml
+- helm-release-acmapi-performance-deployment-scaler.yaml

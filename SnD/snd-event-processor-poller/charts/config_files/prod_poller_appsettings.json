@@ -1,0 +1,33 @@
+{
+  "SnDQueueNames": [
+    "snd_live_company_events.fifo",
+    "snd_live_region_events.fifo",
+    "snd_live_country_events.fifo",
+    "snd_live_state_events.fifo",
+    "snd_live_site_events.fifo",
+    "snd_live_product_events.fifo",
+    "snd_live_route_events.fifo",
+    "snd_live_technology_events.fifo",
+    "snd_live_licensor_events.fifo",
+    "snd_live_generic_events.fifo"
+  ],
+  "PollerConfig": {
+    "MaxInitialDelayInSeconds": 60,
+    "IntervalInSeconds": 300,
+    "MessageBatchSize": 10
+  },
+  "SQSConfig": {
+    "SQSRegion": "eu-west-1",
+    "MessageWaitTime": "5",
+    "MessageVisibilityTimeout": 360,
+    "RequestTimeOutInSeconds": 30,
+    "MaxRetryCount": 3
+  },
+  "SnDEventProcessorApiUrl": "https://supply-demand.processor.icis.chp.eu-west-1.prod/api/sndevents",
+  "SnDKafkaProducerApiUrl": "https://authoring.icis.rbi.web.ds/api/snd/kafka/v1/Publish",
+  "EnableAuthorization": true,
+  "AuthorizationRequestDetail": {
+	"DomainUrl": "https://domainidentity.icis.rbi.web.ds/connect/token",
+	"GrantType": "client_credentials"
+  }
+}

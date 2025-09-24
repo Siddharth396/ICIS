@@ -1,0 +1,73 @@
+version: "3"
+services:
+  mongodb:
+    container_name: mongo
+    image: mongo:5.0.14
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD}
+
+  app-authproxy:
+    container_name: app-authproxy
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy${AUTHPROXY_TAG:-:latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    depends_on:
+      - mongodb
+    ports:
+      - "8050:8050"
+    environment:
+      - Hosting__DevPort=8050
+      - Proxy__ForwardToPath=https://localhost:8083
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/icis/authproxy -p
+        mv /opt/authproxy/localhost/subscriber.app.local.env /etc/icis/authproxy/local.env
+        /opt/authproxy/run.sh
+
+  homepage-subscriber-bff-authproxy:
+    container_name: homepage-subscriber-bff-authproxy
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy${AUTHPROXY_TAG:-:latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    depends_on:
+      - mongodb
+      - homepage-subscriber-bff
+    ports:
+      - "4200:4200"
+    environment:
+      - Hosting__DevPort=4200
+      - Proxy__ForwardToPath=http://localhost:4201
+      - CorsOrigins=https://localhost:8050,https://localhost:8080,https://localhost:8083
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/icis/authproxy -p
+        mv /opt/authproxy/localhost/subscriber.api.local.env /etc/icis/authproxy/local.env
+        /opt/authproxy/run.sh
+
+  homepage-subscriber-bff:
+    container_name: homepage-subscriber-bff
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-bff${HOMEPAGE_BFF_TAG:-:latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    depends_on:
+      - mongodb
+    ports:
+      - "4201:4201"
+    environment:
+      - PreferenceStore__ConnectionString=Data Source=;Initial Catalog=;User ID=;Password=;Connection Timeout=15
+    command:
+      - sh
+      - -c
+      - |
+        mv /opt/homepage/dev.env /opt/homepage/.env
+        /opt/homepage/run.sh
+
+# Add own BFF and its auth proxy here when ready.

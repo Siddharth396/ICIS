@@ -1,0 +1,35 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-wrkflw"
+    ServiceAccountName: "wrkflw"
+
+    vault_secrets:
+      VaultK8sRoleName: "kv-wrkflw-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_proxy:
+      VaultK8sRoleName: "kv-wrkflw-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"
+
+    bff:
+      config_env:
+        LOG_LEVEL: Error
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        SWAGGER_OAUTH_ROLE: ICIS_Mercury
+        SWAGGER_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1.0
+        ELASTIC_APM_CAPTURE_BODY: off
+
+    authproxy:
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|(/swagger?/*)"

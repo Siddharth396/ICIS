@@ -1,0 +1,22 @@
+{
+  "name": "priceentry",
+  "version": "1.0.0",
+  "description": "Currently running for priceEntry as price entry queries need to be updated",
+  "main": "script.js",
+  "scripts": {
+    "bundle:priceEntry": "esbuild ./scripts/priceEntryGridDataLoadTest.ts --format=cjs --external:k6/* --external:k6 --bundle --outfile=dist/priceEntryGridDataLoadTest.js",
+    "start:priceEntry": "yarn bundle:priceEntry && yarn run:priceEntry",
+    "run:priceEntry": "k6 run dist/priceEntryGridDataLoadTest.js",
+    "run:priceEntry:debug": "k6 run dist/priceEntryGridDataLoadTest.js --http-debug='full'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {
+    "@types/k6": "^0.35.0",
+    "@types/node": "^16.11.15",
+    "esbuild": "^0.25.3",
+    "typescript": "^4.5.4"
+  }
+}

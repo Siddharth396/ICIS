@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: entitlements-api
+spec:
+  releaseName: entitlements-api-entapi-systest
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "entapi-systest"
+    environment: "systest"
+    deploymentStrategy: "RollingUpdate"
+    entapi:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/entapi/entitlements-api # {"$imagepolicy": "flux-system:entapi-entitlements-api-systest:name"}
+        tag: systest-18-1.0.0-main-18557 # {"$imagepolicy": "flux-system:entapi-entitlements-api-systest:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/nsesvc-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://internal-api.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        VIPER_URL: https://api.demo.coa.rbxd.ds/
+        VIPER_CONN_ESTABLISHMENT_TIMEOUT: 1000
+        VIPER_HEALTH_CHECK_INTERVAL: 5
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+    ingress:
+      enabled: true
+      host:
+        name: internal-api.systest.cha.rbxd.ds
+        path: /entitlements/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: entitlements-api-vault-secret-entapi-systest
+      VaultSecretPath: "entapi/systest/entitlements/api"

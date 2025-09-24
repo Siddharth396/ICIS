@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  releaseName: mongo-canvas-systest
+  values:
+    replicaCount: 1
+    namespace: "canvas-systest"
+    environment: "systest"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/canvas/mongo-migration # {"$imagepolicy": "flux-system:canvas-mongo-migration-systest:name"}
+        tag: systest-1110-1.113.1-feature-GEN-14925-Canvas-BFF-Db-Mig-RenameNModifyMrktWorkspace-50318 # {"$imagepolicy": "flux-system:canvas-mongo-migration-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/canvas-systest?retryWrites=true&w=majority"
+    vault_secrets:
+      name: mongo-vault-secret-canvas-systest
+      VaultSecretPath: "canvas/systest/authoring/bff"

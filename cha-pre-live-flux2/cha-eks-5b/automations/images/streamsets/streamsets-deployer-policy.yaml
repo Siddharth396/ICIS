@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: streamsets-deployer
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: streamsets-deployer
+    namespace: flux-system
+  filterTags:
+    pattern: '^streamsets-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

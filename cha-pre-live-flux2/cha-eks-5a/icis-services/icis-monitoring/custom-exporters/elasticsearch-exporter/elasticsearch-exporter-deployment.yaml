@@ -1,0 +1,72 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-elasticsearch-exporter
+  namespace: icis-monitoring
+spec:
+  replicas: 1
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: prometheus-elasticsearch-exporter
+  template:
+    metadata:
+      labels:
+        app: prometheus-elasticsearch-exporter
+    spec:
+      containers:
+        - env:
+            - name: ELASTICSEARCH_URL
+              valueFrom:
+                secretKeyRef:
+                  name: elasticsearch-vars
+                  key: ELASTICSEARCH_URL
+          command:
+            - /bin/elasticsearch_exporter
+            - --es.uri=$(ELASTICSEARCH_URL)
+            - --es.timeout=60s
+            - --es.indices
+            - --es.ssl-skip-verify
+            - --es.all
+          image: artifacts.cha.rbxd.ds/docker_images_proxy/prometheuscommunity/elasticsearch-exporter:latest
+          securityContext:
+            capabilities:
+              drop:
+                - SETPCAP
+                - MKNOD
+                - AUDIT_WRITE
+                - CHOWN
+                - NET_RAW
+                - DAC_OVERRIDE
+                - FOWNER
+                - FSETID
+                - KILL
+                - SETGID
+                - SETUID
+                - NET_BIND_SERVICE
+                - SYS_CHROOT
+                - SETFCAP
+            readOnlyRootFilesystem: true
+          name: prometheus-elasticsearch-exporter
+          ports:
+            - containerPort: 9114
+              name: http
+          resources:
+            limits:
+              cpu: 250m
+              memory: 128Mi
+            requests:
+              cpu: 25m
+              memory: 64Mi
+      restartPolicy: Always
+      securityContext:
+        runAsNonRoot: true
+        runAsGroup: 10000
+        runAsUser: 10000
+        fsGroup: 10000
+

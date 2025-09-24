@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: job
+      version: 0.0.10
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    serviceAccountName: ""
+    projectName: ""
+    namespace: ""
+
+    vault_agent:
+      repository: "artifacts.cha.rbxd.ds/base-image/vault"
+      tag: "latest"
+    consul_template:
+      repository: "artifacts.cha.rbxd.ds/base-image/consul-template"
+      tag: "alpine"
+
+    job:
+      backoffLimit: 5
+      ttlSecondsAfterFinished: 120
+      image:
+        repository: ""
+        tag: ""
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        SECRET_FILE_PATH: /etc/secrets/.env
+
+
+    vault:
+      # secretPaths:
+      #   - basePath: "secret/data/myapp"
+      #     secrets:
+      #       - key: MONGO_DB_USER
+      #         subPath: "mongo_user"
+      #       - key: MONGO_DB_PWD
+      #         subPath: "mongo_password"
+      url: "https://vault_eu_prod.b2b.regn.net"
+      VaultK8sRoleName: ""
+      VaultK8sAuthPath: "auth/cha/eks-b"

@@ -1,0 +1,387 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mars-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: pforecast-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: pforecast-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: pforecast-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: pforecast-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: pforecast-integ
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: pforecast-integ
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: priceopt-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: priceopt-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: priceopt-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: priceopt-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: priceopt-uat
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: priceopt-uat
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: pforecast-staging
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: pforecast-staging
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: rpet-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: rpet-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: grn-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: grn-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: rpet-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: rpet-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: grn-systest
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: grn-performance
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin
+  namespace: grn-staging
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: mars-admin-service-monitor
+  namespace: grn-staging
+subjects:
+- kind: ServiceAccount
+  name: mars-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+  

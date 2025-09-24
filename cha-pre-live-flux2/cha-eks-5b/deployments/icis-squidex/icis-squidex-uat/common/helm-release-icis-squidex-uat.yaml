@@ -1,0 +1,125 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-uat
+  namespace: icis-squidex-uat
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: icis-squidex
+      version: "0.1.31"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    vault_squidex_secrets:
+      VaultK8sRoleName: "kv-icis-squidex-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "icis-squidex/common"
+    vault_kafka_secrets:
+      VaultK8sRoleName: "kv-icis-squidex-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    namespace: icis-squidex-uat
+    environment: uat
+    domain: cha.eu-west-1.dev
+    serviceAccountName: icis-squidex
+    projectName: "icis-squidex"
+    replicaCount: 1
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-uat:name"}
+        tag: uat-211-7.7.35 # {"$imagepolicy": "flux-system:icis-squidex-uat:tag"}
+        pullPolicy: IfNotPresent
+      ingress:
+        className: icis-nginx-ingress
+        annotations:
+          lnrs.io/zone-type: private
+          cert-manager.io/cluster-issuer: vault-issuer
+          nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+          nginx.ingress.kubernetes.io/proxy-body-size: 8m
+          nginx.ingress.kubernetes.io/ssl-ciphers: "ALL:!aNULL:!EXPORT56:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP"
+      enableProbes: false
+      readinessProbe:
+        httpGet:
+          path: /healthz
+          port: 80
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 80
+      periodSeconds: 30
+      lifecycle:
+        preStop:
+          exec:
+            command: ["/bin/sh", "-c", "sleep 20"]
+      service:
+        port_name: http
+        port: 80
+      serviceMonitor:
+        enabled: true
+        endpoints:
+          - interval: 30s
+            honorLabels: true
+            path: /metrics
+            targetPort: 80
+            scheme: http
+      container:
+        name: cport
+        port: 80
+      customEnvValues:
+        ELASTIC_APM_ENABLED: "'False'"
+      envValues:
+        URLS__ENFORECEHTTPS: "'False'"
+        ORLEANS__CLUSTERING: MongoDB
+        UI__LAUNCHPADCONFIG: uat
+        IDENTITY__ICISAUTHSERVER: "https://domainidentity.staging.cha.rbxd.ds"
+        IDENTITY__SHOWPII: "'True'"
+        IDENTITY__MULTIPLEDOMAINS: "'true'"
+        IDENTITY__ICISOIDCCLIENT: "icis.squidex"
+        IDENTITY__ICISOIDCSECRET: "icis.squidex"
+        IDENTITY__ICISOIDCSCOPES: ""
+        LOGGING__HUMAN: "'False'"
+        LOGGING__COLORS: "'False'"
+        PLUGINS__0: Squidex.Extensions.dll
+        PLUGINS__1: ICIS.IdentityService.dll
+        EXPOSEDCONFIGURATION__image: hostings:imageversion
+        ELASTIC_APM_SERVER_URL: https://apm.genesis.cha.eu-west-1.dev/
+        ELASTIC_APM_ENVIRONMENT: "uat"
+      kafka:
+        enabled: False
+        # Need to specify these values if kafka is enabled.
+        envValues:
+          KAFKA__BOOTSTRAPSERVERS: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+          KAFKA__SECURITYPROTOCOL: SaslSsl
+          KAFKA__SASLMECHANISM: Plain
+          KAFKA__PRODUCER__BOOTSTRAPSERVERS: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+          KAFKA__PRODUCER__SECURITYPROTOCOL: SaslSsl
+          KAFKA__PRODUCER__SASLMECHANISM: Plain
+          KAFKA__SCHEMAREGISTRY__URL: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud/
+          KAFKA__SCHEMAREGISTRY__SCHEMAREGISTRYURL: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud/
+          KAFKA__SCHEMAREGISTRY__SCHEMAREGISTRYREQUESTTIMEOUTMS: "'5000'"
+          KAFKA__SCHEMAREGISTRY__SCHEMAREGISTRYMAXCACHEDSCHEMAS: "'10'"
+      resources:
+        limits:
+          cpu: 200m
+          memory: 512Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+    squidexCli:
+      enabled: False
+      schedule: "'00 8,11,14,15,17 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-uat:name"}
+        tag: uat-91-8.0.39 # {"$imagepolicy": "flux-system:icis-squidex-cli-uat:tag"}
+        pullPolicy: IfNotPresent

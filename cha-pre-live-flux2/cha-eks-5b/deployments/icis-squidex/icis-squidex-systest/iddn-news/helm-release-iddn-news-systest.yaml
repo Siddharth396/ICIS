@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: iddn-news-systest
+  values:
+    projectName: "iddn-news"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-iddn-news:name"}
+        tag: systest-iddn-news-1004-7.7.2-feature-vega-3122-lfs7-7-kafkafailureemptyjsonvalue.2 # {"$imagepolicy": "flux-system:icis-squidex-systest-iddn-news:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: iddn-news
+        ADMIN__ADMINUSERGROUP__0: ICIS_IDDN
+        CONTENTS__MAXRESULTS: "'6000'"
+        CONTENTS__DEFAULTPAGESIZE: "'6000'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+      kafka:
+        enabled: True
+      envValues:
+        IDENTITY__ICISAUTHSERVER: "https://domainidentity.integration.cha.rbxd.ds"
+        IDENTITY__ICISOIDCSCOPES: ""
+    squidexCli:
+      enabled: True
+      schedule: "'45 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-iddn-news:name"}
+        tag: systest-iddn-news-97-8.0.35 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-iddn-news:tag"}
+    vault_squidex_secrets:
+      name: iddn-news-squidex-systest-secret
+    vault_kafka_secrets:
+      name: iddn-news-squidex-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/iddn-news/systest"

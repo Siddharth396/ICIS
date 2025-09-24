@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- pgnsvc-authoring-bff-policy-integration.yaml
+- pgnsvc-authoring-bff-policy-systest.yaml
+- pgnsvc-authoring-bff-policy-performance.yaml
+- pgnsvc-authoring-bff-policy-staging.yaml
+- pgnsvc-authoring-bff-registry.yaml
+########
+- pgnsvc-mongo-migration-policy-integration.yaml
+- pgnsvc-mongo-migration-policy-systest.yaml
+- pgnsvc-mongo-migration-policy-performance.yaml
+- pgnsvc-mongo-migration-policy-staging.yaml
+- pgnsvc-mongo-migration-registry.yaml
+#########
+- pgnsvc-absolute-policy-integration.yaml
+- pgnsvc-absolute-policy-systest.yaml
+- pgnsvc-absolute-policy-performance.yaml
+- pgnsvc-absolute-policy-staging.yaml
+- pgnsvc-absolute-registry.yaml

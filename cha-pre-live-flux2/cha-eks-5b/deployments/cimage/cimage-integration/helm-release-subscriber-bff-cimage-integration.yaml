@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-cimage-integration
+  values:
+    replicaCount: 1
+    namespace: "cimage-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cimage/subscriber-bff # {"$imagepolicy": "flux-system:cimage-sub-bff-integration:name"}
+        tag: integration-20-2.6.1.19039 # {"$imagepolicy": "flux-system:cimage-sub-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/cimage-integration?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.integration.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        MUTATION: false
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AWS_BUCKET_NAME: icis-cc-image-capability-pre-live
+        REDIS_CONNECTION_STRING: cimage-systest.drtozh.ng.0001.euw1.cache.amazonaws.com:6379
+        REDIS_CACHE_EXPIRY_IN_DAYS: 32
+        LOG_LEVEL: Information
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.integration.genesis.cha.rbxd.ds
+        path: /api/image/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-cimage-integration
+      VaultSecretPath: "cimage/integration/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-cimage-integration

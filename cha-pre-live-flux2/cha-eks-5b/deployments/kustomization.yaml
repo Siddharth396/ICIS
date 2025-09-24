@@ -1,0 +1,79 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- atcore
+- dscvry
+- order
+- sprdcl
+- didens
+- rclpet
+- backstage
+- pricing
+- pforecast
+- petana
+#- sbsrch
+- icis-squidex
+- spt
+- rchtxt
+- cimage
+- cvideo
+- grn
+- notsys
+- sbfeed
+- homepage
+- hmpage
+- sbnews
+- sbmobl
+- spfeed
+- esvcep
+- sboutg
+- canvas
+- newsfd
+- adtabl
+- adchrt
+- sbcore
+- eacons
+- contnf
+- pdcast
+- wrkflw
+- wkfeng
+- acmapi
+- llmrag
+- idsadm
+##- sonarqube
+- prcent
+- cnvsrv
+- infgrm
+- supdem
+- pgnsvc
+- icis-watcher
+- ontmgs
+- syctcv
+- opsadm
+- ssplat
+- streamsets
+- mongodb
+- dlchrt
+- tblent
+#- omspss
+- snkidn
+- refdts
+- alrthb
+- cvsems
+- entapi
+- prcndv
+- cnvspt
+- tmockapi
+- verify
+# BACKSTAGE-COMMENT-PATTERN
+
+
+
+
+
+
+
+
+
+
+

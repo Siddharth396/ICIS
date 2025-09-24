@@ -1,0 +1,117 @@
+####################################################
+## Allow ingress from hpt-performance and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-hpt-performance
+  namespace: hpt-performance
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: hpt-performance
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from hpt-performance ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-hpt-performance
+  namespace: hpt-performance
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: hpt-performance
+          
+#########################################
+## Allow external http traffic egress  ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: hpt-performance
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP          
+
+##################################################
+## Allow traffic to confluent cloud peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-confluent
+  namespace: hpt-performance
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+
+---
+
+################
+## ICIS monitoring ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: hpt-performance
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+---
+
+################
+## Allow external http traffic egress to IDDN ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-iddn-external
+  namespace: hpt-performance
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/22
+    - ipBlock:
+        cidr: 10.52.36.0/22
+  
+    ports:
+      - port: 9000
+        protocol: TCP

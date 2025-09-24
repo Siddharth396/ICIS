@@ -1,0 +1,26 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-canvas-deployment-scaler
+  namespace: canvas-performance
+spec:
+  releaseName: authoring-canvas-deployment-scaler
+  interval: 5m0s
+  chart:
+    spec:
+      chart: deployment-scaler
+      version: "0.1.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    deployments:
+    - name: authoring-canvas-deployment
+      namespace: canvas-performance
+      deploymentName: subscriber-bff-authoring-canvas
+      scaleUpReplicas: 3   # Number of replicas for scale-up
+      scaleDownReplicas: 1 # Number of replicas for scale-down
+      scaleUpSchedule: "00 8 * * 1-5"      ## UTC time zone 8 AM
+      scaleDownSchedule: "00 17 * * 1-5"  ## UTC time zone 5 PM
+      serviceAccountName: canvas

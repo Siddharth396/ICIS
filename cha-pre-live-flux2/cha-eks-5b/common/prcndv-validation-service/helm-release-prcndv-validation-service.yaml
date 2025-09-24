@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prcndv-validation-service
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: prcndv-validation-service
+      version: "0.0.11"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    replicaCount: 1
+    ServiceAccountName: "prcndv"
+    projectName: "price-data-validation-service"
+    vault_secrets:
+      VaultK8sRoleName: "kv-prcndv-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    validation-service:
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "512Mi"
+          cpu: "250m"
+      config_env:
+      port: 8100
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8100
+        periodSeconds: 30
+        
+    serviceMonitor:
+      enabled: false
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /health
+          targetPort: 8100
+          scheme: http

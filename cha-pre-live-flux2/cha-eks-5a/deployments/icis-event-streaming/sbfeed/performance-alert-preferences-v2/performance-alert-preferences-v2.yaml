@@ -1,0 +1,12 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sbfeed
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_performance_alerting_preferences_2
+    database: sbfeed-performance
+    collection: alerting_preferences_audit_v2
+    transforms.RenameField.renames: id:userId
+    document.id.strategy: com.mongodb.kafka.connect.sink.processor.id.strategy.BsonOidStrategy

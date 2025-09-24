@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: newsfd
+  namespace: newsfd-performance
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-newsfd-performance-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: newsfd
+  namespace: newsfd-performance
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

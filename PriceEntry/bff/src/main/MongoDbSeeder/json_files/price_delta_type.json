@@ -1,0 +1,38 @@
+[
+  {
+    "guid": "fe446f10-4901-4661-a281-44d2f9ba26e4",
+    "code": "REGULAR",
+    "name": {
+      "en": "regular"
+    },
+    "description": {
+      "en": "a delta calculated as the routine difference between adjacent items, showing the most recent trend of the price"
+    },
+    "expired_as_of": null,
+    "is_deleted": false,
+    "created_on": {
+      "$date": "2024-05-08T00:00:00.000Z"
+    },
+    "last_updated_on": {
+      "$date": "2024-05-08T00:00:00.000Z"
+    }
+  },
+  {
+    "guid": "65f70709-3cfc-4e54-8913-759a2ec76d5b",
+    "code": "NONMKTADJ",
+    "name": {
+      "en": "non market adjustment"
+    },
+    "description": {
+      "en": "contextualising possible jumps in the price niveau owed to a re-baselining of underlying price"
+    },
+    "expired_as_of": null,
+    "is_deleted": false,
+    "created_on": {
+      "$date": "2024-05-08T00:00:00.000Z"
+    },
+    "last_updated_on": {
+      "$date": "2024-05-08T00:00:00.000Z"
+    }
+  }
+]

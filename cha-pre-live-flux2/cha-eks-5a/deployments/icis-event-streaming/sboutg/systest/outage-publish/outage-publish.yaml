@@ -1,0 +1,249 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+  labels:
+    strimzi.io/cluster: prelive-connect-cluster
+spec:
+  config:
+  
+    # this will be fixed with mongo-db connector 1.7.0
+    topic.namespace.map:
+      {
+        "sboutg-dev.mv_outage_published": "public_systest_supplydemand_plant_outages_1",
+      }
+    output.format.value: schema
+    output.schema.infer.value: false
+    topic.separator: _
+    topic.suffix: _1
+    output.schema.value:
+      {
+        \"type\": \"record\",
+        \"name\": \"OutageRecordHistory\",
+        \"fields\":
+          [
+            { \"name\": \"outageId\", \"type\": \"int\" },
+            {
+              \"name\": \"physicalPlant\",
+              \"type\":
+                {
+                  \"type\": \"record\",
+                  \"name\": \"PhysicalPlantReference\",
+                  \"fields\":
+                    [
+                      { \"name\": \"id\", \"type\": \"int\" },
+                      { \"name\": \"type\", \"type\": \"string\" },
+                    ],
+                },
+            },
+            { \"name\": \"eventType\", \"type\": \"string\" },
+            {
+              \"name\": \"outageRecords\",
+              \"type\":
+                {
+                  \"type\": \"array\",
+                  \"items\":
+                    {
+                      \"type\": \"record\",
+                      \"name\": \"OutageUpdate\",
+                      \"fields\":
+                        [
+                          { \"name\": \"outageRecordId\", \"type\": \"int\" },
+                          {
+                            \"name\": \"datetime\",
+                            \"type\":
+                              {
+                                \"type\": \"long\",
+                                \"logicalType\": \"timestamp-millis\",
+                              },
+                          },
+                          {
+                            \"name\": \"forceMajeure\",
+                            \"type\":
+                              {
+                                \"type\": \"record\",
+                                \"name\": \"ForceMajeureDetails\",
+                                \"fields\":
+                                  [
+                                    {
+                                      \"name\": \"isDeclared\",
+                                      \"type\": \"boolean\",
+                                    },
+                                    {
+                                      \"name\": \"startDate\",
+                                      \"type\":
+                                        [
+                                          {
+                                            \"type\": \"int\",
+                                            \"logicalType\": \"date\",
+                                          },
+                                          \"null\",
+                                        ],
+                                    },
+                                    {
+                                      \"name\": \"endDate\",
+                                      \"type\":
+                                        [
+                                          {
+                                            \"type\": \"int\",
+                                            \"logicalType\": \"date\",
+                                          },
+                                          \"null\",
+                                        ],
+                                    },
+                                  ],
+                              },
+                          },
+                          {
+                            \"name\": \"comment\",
+                            \"type\": [\"string\", \"null\"],
+                          },
+                          {
+                            \"name\": \"relatedNews\",
+                            \"type\":
+                              [
+                                { \"type\": \"array\", \"items\": \"string\" },
+                                \"null\",
+                              ],
+                          },
+                          {
+                            \"name\": \"outageRecordDetails\",
+                            \"type\":
+                              {
+                                \"type\": \"array\",
+                                \"items\":
+                                  {
+                                    \"type\": \"record\",
+                                    \"name\": \"OutageImpactOnPlants\",
+                                    \"fields\":
+                                      [
+                                        {
+                                          \"name\": \"informationSourceType\",
+                                          \"type\": \"string\",
+                                        },
+                                        {
+                                          \"name\": \"reasonType\",
+                                          \"type\": \"string\",
+                                        },
+                                        {
+                                          \"name\": \"reason\",
+                                          \"type\": \"string\",
+                                        },
+                                        {
+                                          \"name\": \"productionImpact\",
+                                          \"type\":
+                                            {
+                                              \"type\": \"array\",
+                                              \"items\":
+                                                {
+                                                  \"type\": \"record\",
+                                                  \"name\": \"ImpactToProduction\",
+                                                  \"fields\":
+                                                    [
+                                                      {
+                                                        \"name\": \"plant\",
+                                                        \"type\":
+                                                          {
+                                                            \"type\": \"record\",
+                                                            \"name\": \"VirtualPlantReference\",
+                                                            \"fields\":
+                                                              [
+                                                                {
+                                                                  \"name\": \"id\",
+                                                                  \"type\": \"int\",
+                                                                },
+                                                                {
+                                                                  \"name\": \"type\",
+                                                                  \"type\": \"string\",
+                                                                },
+                                                              ],
+                                                          },
+                                                      },
+                                                      {
+                                                        \"name\": \"percentProductionLoss\",
+                                                        \"type\":
+                                                          [\"int\", \"null\"],
+                                                      },
+                                                      {
+                                                        \"name\": \"startDate\",
+                                                        \"type\":
+                                                          {
+                                                            \"type\": \"int\",
+                                                            \"logicalType\": \"date\",
+                                                          },
+                                                      },
+                                                      {
+                                                        \"name\": \"startDateTo\",
+                                                        \"type\":
+                                                          [
+                                                            {
+                                                              \"type\": \"int\",
+                                                              \"logicalType\": \"date\",
+                                                            },
+                                                            \"null\",
+                                                          ],
+                                                      },
+                                                      {
+                                                        \"name\": \"endDate\",
+                                                        \"type\":
+                                                          {
+                                                            \"type\": \"int\",
+                                                            \"logicalType\": \"date\",
+                                                          },
+                                                      },
+                                                      {
+                                                        \"name\": \"endDateTo\",
+                                                        \"type\":
+                                                          [
+                                                            {
+                                                              \"type\": \"int\",
+                                                              \"logicalType\": \"date\",
+                                                            },
+                                                            \"null\",
+                                                          ],
+                                                      },
+                                                    ],
+                                                },
+                                            },
+                                        },
+                                      ],
+                                  },
+                              },
+                          },
+                        ],
+                    },
+                },
+            },
+          ],
+      }
+    offset.partition.name: sboutg_systest_outage_partition1
+    connection.uri: ${file:/opt/kafka/external-configuration/sboutg-mongo-uri/mongoConnection:connectionURI}
+    database: sboutg-dev
+    collection: mv_outage_published
+    pipeline:
+      [
+        { $match: { operationType: { $in: ["insert", "update"] } } },
+        {
+          $project:
+            {
+              _id: 1,
+              ns: 1,
+              "fullDocument._id": "$fullDocument._id",
+              "fullDocument.metadata.event_type": "$fullDocument.metadata.event_type",
+              "fullDocument.metadata.partition_key": "$fullDocument.metadata.partition_key",
+              "fullDocument.metadata.correlation_id": "$fullDocument.metadata.correlation_id",
+              "fullDocument.metadata.id": "$fullDocument.metadata.id",
+              "fullDocument.metadata.source": "$fullDocument.metadata.source",
+              "fullDocument.metadata.type": "$fullDocument.metadata.type",
+              "fullDocument.metadata.event_time": "$fullDocument.metadata.event_time",
+              "fullDocument.metadata.released_on": "$fullDocument.metadata.released_on",
+              "fullDocument.physicalPlant": "$fullDocument.physicalPlant",
+              "fullDocument.outageRecords": "$fullDocument.outageRecords",
+              "fullDocument.outageId": "$fullDocument.outageId",
+              "fullDocument.eventType": "$fullDocument.metadata.event_type",
+            },
+        },
+      ]
+    publish.full.document.only: true
+    topic.prefix: public_systest_supplydemand_sboutg_

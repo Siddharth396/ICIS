@@ -1,0 +1,102 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cnvspt-event-processor
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: cnvspt-event-processor
+      version: "1.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    replicaCount: 1
+    ServiceAccountName: "cnvspt"
+    projectName: "canvas-snapshots-system"
+    vault_secrets:
+      VaultK8sRoleName: "kv-cnvspt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-cnvspt-connection"
+      VaultNamespace: dataservices/icis/nonprod
+    vault_secrets_proxy:
+      VaultK8sRoleName: "kv-cnvspt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-proxy-connection"
+      VaultNamespace: dataservices/icis/nonprod
+    event_processor:
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "512Mi"
+          cpu: "250m"
+      config_env:
+        Serilog__Source: "CanvasSnapshotsSystem"
+        Serilog__Component: "EventProcessor"
+        Serilog__Service: "CanvasSnapshotsSystem.EventProcessor"
+        ELASTIC_APM_SERVICE_NAME: "CanvasSnapshotsSystem - Event Processor"
+        ELASTIC_APM_TRANSACTION_IGNORE_URLS: /internal/*
+        ELASTIC_APM_CENTRAL_CONFIG: false
+        ELASTIC_APM_ENABLED: true
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        SQSOptions__ConnectWithIAMRoles: true
+        SNOWFLAKE_CONNECTION_STRING: "account={0};user={1};password={2};role={3};warehouse={4};db={5}"
+        SNOWFLAKE_ACCOUNT: "ex99616.eu-west-1"
+      port: 80
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        periodSeconds: 30
+    authproxy:
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|(/swagger?/*)|health"
+      port: 8090
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-stable:name"}
+        tag: stable-108-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-stable:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "128Mi"
+          cpu: "200m"
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 8090
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 8090
+        periodSeconds: 30
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 8090
+          scheme: http

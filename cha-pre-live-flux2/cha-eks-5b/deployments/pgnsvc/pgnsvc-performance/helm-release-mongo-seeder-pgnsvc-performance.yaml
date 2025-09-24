@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "pgnsvc-performance"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pgnsvc/mongodb-seeder # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-performance:name"} 
+        tag: performance-38-2.5.1-ENAPI-7029-update-migration.1-24635 # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-performance:tag"}
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_NAME: pgnsvc-performance
+    vault_secrets:
+      name: job-vault-secret-pgnsvc-performance
+      VaultK8sRoleName: "kv-pgnsvc-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pgnsvc/performance/authoring/bff"

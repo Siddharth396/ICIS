@@ -1,0 +1,63 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-pricing-performance
+  values:
+    replicaCount: 3
+    namespace: "pricing-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pricing/authoring-pricing-bff # {"$imagepolicy": "flux-system:authoring-bff-pricing-performance:name"}
+        tag: performance-34-1.83.0.3518 # {"$imagepolicy": "flux-system:authoring-bff-pricing-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        LOG_LEVEL: Debug
+        BASE_PATH: /pricing
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pricing-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        ENERGY_SERIES_VALID_MONTHS: 120
+        HOT_CHOCOLATE_REQUEST_TIMEOUT: 60
+        PETCHEM_SERIES_VALID_MONTHS: 60
+        FeatureToggles__RestrictSeriesByLatestSeriesItem: true
+        FeatureToggles__HidePetchemSpecsWithNoPrices: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/pricing/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-pricing-performance
+      VaultK8sRoleName: "kv-pricing-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pricing/performance/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-pricing-performance
+      VaultK8sRoleName: "kv-pricing-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"
+    autoscaling:
+      enabled: false
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

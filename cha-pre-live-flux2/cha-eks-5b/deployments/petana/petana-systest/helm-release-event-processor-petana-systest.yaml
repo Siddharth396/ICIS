@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: generic-event-processor-kafka-consumer
+      version: "0.13.12"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  releaseName: event-processor-petana-systest
+  values:
+    replicaCount: 1
+    namespace: "petana-systest"
+    environment: "systest"
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.2.0.457
+        pullPolicy: IfNotPresent
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "systest"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_systest_supplydemand_technology_fixed_cost_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_systest_supplydemand_technology_process_information_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__private_systest_supplydemand_adp_product_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_systest_supplydemand_process_flexibilities_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_systest_supplydemand_prod_unit_integration_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "petchem_analytics_elisa_consumer"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_systest_petchem_analytics_elisa_consumer_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_systest_petchem_analytics_elisa_consumer_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_systest_supplydemand_technology_fixed_cost_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__1: "public_systest_supplydemand_technology_process_information_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__2: "private_systest_supplydemand_adp_product_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__3: "public_systest_supplydemand_process_flexibilities_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__4: "public_systest_supplydemand_prod_unit_integration_1"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/dsm/cost-curves/event-processor/elisa_event_processor # {"$imagepolicy": "flux-system:event-processor-petana-systest:name"}
+        tag: systest-34-2.0.0 # {"$imagepolicy": "flux-system:event-processor-petana-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        ENVIRONMENT: systest
+        ADP_DB: petchem_dev_2024_03_28
+        ADP_HOST: "adp.cha.rbxd.ds"
+        ADP_PORT: 5432
+        MACHINE_NAME: "systest"
+        COMPONENT: "KafkaEventProcessor"
+        SECURITY_CONTEXT: "RBI\\SYSTEM"
+        SOURCE: "petana"
+        ADP_TABLE: kafka.kafka_consumer_staging_v1
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ADP_SCHEMA_REGISTRY_URL: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud
+    vault_secrets:
+      name: petana-event-processor-vault-secret-systest
+      VaultSecretPath: "petana/eventprocessor"
+      VaultK8sRoleName: "kv-petana-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_consumer:
+      name: petana-event-processor-vault-secret-consumer-systest
+      VaultSecretPath: "petana/eventprocessor"
+      VaultK8sRoleName: "kv-petana-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"

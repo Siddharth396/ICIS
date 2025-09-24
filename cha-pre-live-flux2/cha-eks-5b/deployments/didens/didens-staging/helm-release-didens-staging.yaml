@@ -1,0 +1,79 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: domain-identity-service
+spec:
+  releaseName: domain-identity-service-staging
+  values:
+    replicaCount: 1
+    namespace: "didens-staging"
+    environment: "staging"
+    didens:
+      port: 80
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/domain-identity/core" # {"$imagepolicy": "flux-system:domain-identity-staging:name"}
+        tag: "staging-118-1.16.4-main-18829" # {"$imagepolicy": "flux-system:domain-identity-staging:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "512Mi"
+          cpu: "1"
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 80
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        periodSeconds: 30
+      config_env:
+        ENVIRONMENT: staging
+        LOG_LEVEL: Debug
+        CORS_ORIGINS_DOMAINS: https://domainidentity.staging.cha.rbxd.ds,https://localhost:7002,https://subscriber.c-hub-admin-app.staging.cha.eu-west-1.dev,https://admin.lngedge.rbi.web.internal:8443
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/didens-staging?retryWrites=true&w=majority&maxPoolSize=1024"
+        FEDERATION_TYPE: "Oidc"
+        WSFEDERATION_WREALM: "https://domainidentity.staging.cha.rbxd.ds/"
+        WSFEDERATION_DISPLAYNAME: "CHA"
+        WSFEDERATION_ALLOWED_ROLE_GROUP: "ADFS-ICIS-DOMAIN-IDENTITY-PRELIVE"
+        OIDC_DISPLAYNAME: "B2B"
+        OIDC_AUTHORITY: "https://login.microsoftonline.com/9274ee3f-9425-4109-a27f-9fb15c10675d/v2.0"
+        OIDC_CLIENTID: "3b9619b6-585b-49d1-a749-8f87ad45d5cd"
+        OIDC_ALLOWED_ROLE_GROUP: "RBI-AZ-ICIS-DOMAIN-IDENTITY-PRELIVE"
+        TRACE_ENABLED: true
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ENABLE_DUENDE_LICENSE_KEY: false
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SWAGGER_CONFIGURATION_AUTHORIZATION_URL: "https://domainidentity.staging.cha.rbxd.ds/connect/authorize"
+        SWAGGER_CONFIGURATION_TOKEN_URL: "https://domainidentity.staging.cha.rbxd.ds/connect/token"
+        SWAGGER_CONFIGURATION_CLIENT_ID: "didens-swagger-api"
+        SWAGGER_CONFIGURATION_CLIENT_SECRET: "dFeQxrDiBb1UBoofsd/Ccew38yqN/2LMnVMwDRlhzmg="
+        SWAGGER_CONFIGURATION_CLIENT_REDIRECT_URL: "https://domainidentity.staging.cha.rbxd.ds/swagger/oauth2-redirect.html"
+        AUTHENTICATION_COOKIE_LIFETIME_DAYS: 14
+        AUTHENTICATION_ENABLE_COOKIE_SLIDING_EXPIRATION: true
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/ssl-ciphers: "ALL:!aNULL:!EXPORT56:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP"
+        nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+      host:
+        name: domainidentity.staging.cha.rbxd.ds
+        paths:
+          - /
+        tls: "true"
+      tls:
+        - hosts:
+            - domainidentity.staging.cha.rbxd.ds
+          secretName: domainidentity.staging.cha.rbxd.ds
+    vault_secrets:
+      name: domain-identity-vault-secret-service-staging
+      VaultSecretPath: "didens/staging"

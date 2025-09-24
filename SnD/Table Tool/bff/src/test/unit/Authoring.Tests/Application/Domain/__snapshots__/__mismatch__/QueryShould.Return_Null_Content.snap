@@ -1,0 +1,31 @@
+﻿{
+  "errors": [
+    {
+      "message": "The field `get` does not exist on the type `Query`.",
+      "locations": [
+        {
+          "line": 2,
+          "column": 13
+        }
+      ],
+      "extensions": {
+        "type": "Query",
+        "field": "get",
+        "responseName": "get",
+        "specifiedBy": "http://spec.graphql.org/October2021/#sec-Field-Selections-on-Objects-Interfaces-and-Unions-Types"
+      }
+    },
+    {
+      "message": "The following variables were not used: pageId, mfeIdentifier.",
+      "locations": [
+        {
+          "line": 1,
+          "column": 1
+        }
+      ],
+      "extensions": {
+        "specifiedBy": "http://spec.graphql.org/October2021/#sec-All-Variables-Used"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- workflow-engine-policy-integration.yaml
+- workflow-engine-policy-performance.yaml
+- workflow-engine-policy-staging.yaml
+- workflow-engine-policy-systest.yaml
+- workflow-engine-registry.yaml
+###############################

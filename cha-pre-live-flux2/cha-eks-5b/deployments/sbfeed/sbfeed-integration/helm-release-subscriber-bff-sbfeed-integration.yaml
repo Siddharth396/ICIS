@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-sbfeed-integration
+  values:
+    replicaCount: 1
+    namespace: "sbfeed-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbfeed/sbfeed-bff # {"$imagepolicy": "flux-system:sbfeed-bff-integration:name"}
+        tag: integration-67-1.4.39.895 # {"$imagepolicy": "flux-system:sbfeed-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbfeed-integration?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SUBSCRIBE_KEY: sub-c-d9ff3130-30e2-11ec-bb3f-f27e7ede0273
+        KAFKA_TOPICS_ALERTING_PREFERENCES_2: public_integration_alerting_preferences_2
+        USER_IDENTIFIERS_AUTHORIZED_FOR_REPUBLISH: ee58dffa-9f80-4233-8538-ab3ad072456a
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.integration.genesis.cha.rbxd.ds
+        path: /api/notifications/feed/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-sbfeed-integration
+      VaultSecretPath: "sbfeed/integration/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-sbfeed-integration

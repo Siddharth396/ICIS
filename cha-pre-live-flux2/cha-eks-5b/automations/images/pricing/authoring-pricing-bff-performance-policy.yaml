@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: authoring-bff-pricing-performance
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: authoring-pricing-bff
+    namespace: flux-system
+  filterTags:
+    pattern: '^performance-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

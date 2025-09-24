@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+  annotations:
+    fluxcd.io/automated: "true"
+    repository.fluxcd.io/squidex: squidex.image.repository
+    tag.fluxcd.io/squidex: squidex.image.tag
+    filter.fluxcd.io/squidex: glob:systest-spot-price-*-*.*.*
+    repository.fluxcd.io/squidexCli: squidexCli.image.repository
+    tag.fluxcd.io/squidexCli: squidexCli.image.tag
+    filter.fluxcd.io/squidexCli: regex:^systest-spot-price-*-*.*.*
+spec:
+  releaseName: spot-price-systest
+  values:
+    projectName: "spot-price"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-spot-price:name"}
+        tag: systest-spot-price-1-7.7.31 # {"$imagepolicy": "flux-system:icis-squidex-systest-spot-price:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: spot-price
+        ADMIN__ADMINUSERGROUP__0: ICIS_Mercury
+        CONTENTS__MAXRESULTS: "'6000'"
+        CONTENTS__DEFAULTPAGESIZE: "'6000'"
+        SCRIPTING__TIMEOUTEXECUTION: "'00:05:00'"
+        SCRIPTING__TIMEOUTSCRIPT: "'00:05:00'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+        PLUGINS__2: ICIS.ExportPlugin.dll
+        PLUGINS__3: ICIS.SpotPrices.dll
+        EXPORT__MAXEXPORTCOUNT: "'500'"
+        EXPORT__ENABLEROLEPERMISSION: "'true'"
+        ELASTIC_APM_ENABLED: "'true'"
+      kafka:
+        enabled: True
+      envValues:
+        ELASTIC_APM_SERVICE_NAME: "SpotPrices - CMS"
+        ELASTIC_APM_CENTRAL_CONFIG: "'false'"
+        ELASTIC_APM_CAPTURE_BODY: "all"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: "'1.0'"
+    squidexCli:
+      enabled: True
+      schedule: "'00 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-spot-price:name"}
+        tag: systest-spot-price-100-8.0.35 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-spot-price:tag"}
+    vault_squidex_secrets:
+      name: spot-price-squidex-systest-secret
+    vault_kafka_secrets:
+      name: spot-price-squidex-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/spot-price/systest"

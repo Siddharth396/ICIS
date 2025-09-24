@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: elisa-systest
+  values:
+    projectName: "elisa"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-elisa:name"}
+        tag: systest-elisa-1390-7.7.33 # {"$imagepolicy": "flux-system:icis-squidex-systest-elisa:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: elisa
+        ADMIN__ADMINUSERGROUP__0: ICIS_Mercury
+        CONTENTS__MAXRESULTS: "'6000'"
+        CONTENTS__DEFAULTPAGESIZE: "'6000'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+        PLUGINS__2: ICIS.Elisa.dll
+        PLUGINS__3: ICIS.ExportPlugin.dll
+        PLUGINS__4: ICIS.SpotPrices.dll
+        EXPORT__MAXEXPORTCOUNT: "'501'"
+        EXPORT__ENABLEROLEPERMISSION: "'false'"
+      kafka:
+        enabled: True
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 256Mi
+    squidexCli:
+      enabled: True
+      schedule: "'30 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-elisa:name"}
+        tag: systest-elisa-94-8.0.35 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-elisa:tag"}
+    vault_squidex_secrets:
+      name: elisa-squidex-systest-secret
+      VaultK8sRoleName: "kv-icis-squidex-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "icis-squidex/common"
+    vault_kafka_secrets:
+      name: elisa-squidex-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/elisa/systest"
+      VaultK8sRoleName: "kv-icis-squidex-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"

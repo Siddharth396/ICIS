@@ -1,0 +1,37 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    # Commented values have to be overriden in the environment specific helm-release files
+    # namespace: "sbfeed-<environment>"
+    projectName: "mongo-migrator-sbfeed"
+    serviceAccountName: "sbfeed"
+
+    job:
+    # Commented values have to be overriden in the environment specific helm-release files
+      # image:
+      #   repository: ""
+      #   tag: ""
+      backoffLimit: 2
+      ttlSecondsAfterFinished: 600
+      config_env:
+        # ENVIRONMENT: <environment>
+        # MONGO_DB_NAME: sbfeed-<environment>
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/?retryWrites=true&w=majority"
+
+    vault_secrets:
+      VaultK8sRoleName: "kv-sbfeed-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"   
+      # Commented values have to be overriden in the environment specific helm-release files
+      # secretPaths:
+      # - basePath: "kv/cha/k8s/data/sbfeed/<environment>/eventprocessor"
+      #   secrets:
+      #     - key: MONGO_DB_USER
+      #       subPath: "mongoUser"
+      #     - key: MONGO_DB_PWD
+      #       subPath: "mongoPassword"
+

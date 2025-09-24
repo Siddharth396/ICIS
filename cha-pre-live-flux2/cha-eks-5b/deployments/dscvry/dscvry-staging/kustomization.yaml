@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: dscvry-staging
+nameSuffix: -dscvry
+resources:
+  #- ../../../common/subscriber-bff/dscvry/
+- ../../../common/authoring-bff/dscvry/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+  #- helm-release-subscriber-bff-dscvry-staging.yaml
+- path: helm-release-authoring-bff-dscvry-staging.yaml
+# BACKSTAGE-COMMENT-PATTERN2

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sbnews-performance
+nameSuffix: -sbnews
+resources:
+- ../../../common/subscriber-mfe/sbnews/
+- ../../../common/event-processor/sbnews/
+- helm-release-event-processor-sbnews-deployment-scaler.yaml
+patches:
+- path: helm-release-subscriber-mfe-sbnews-performance.yaml
+- path: helm-release-event-processor-sbnews-performance.yaml

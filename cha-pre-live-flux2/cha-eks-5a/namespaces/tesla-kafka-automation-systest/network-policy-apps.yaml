@@ -1,0 +1,98 @@
+####################################################
+## Allow ingress from tesla-kafka-automation-systest and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-tesla-kafka-automation-systest
+  namespace: tesla-kafka-automation-systest
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: tesla-kafka-automation-systest
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from tesla-kafka-automation-systest ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-tesla-kafka-automation-systest
+  namespace: tesla-kafka-automation-systest
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: tesla-kafka-automation-systest
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: tesla-kafka-automation-systest
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#################################################
+
+##################################################
+## Allow traffic to confluent cloud peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-confluent
+  namespace: tesla-kafka-automation-systest
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+
+---
+
+################
+## ICIS monitoring ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: tesla-kafka-automation-systest
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+

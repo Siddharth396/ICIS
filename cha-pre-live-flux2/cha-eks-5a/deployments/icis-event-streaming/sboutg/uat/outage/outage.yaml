@@ -1,0 +1,14 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: private_uat_supplydemand_outage_poc_outage_input_1
+    database: sboutg-staging
+    consumer.override.bootstrap.servers: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+    consumer.override.sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username='${file:/opt/kafka/external-configuration/kafka-secret-sboutg/kafka-secret-sboutg:kafka_user}' password='${file:/opt/kafka/external-configuration/kafka-secret-sboutg/kafka-secret-sboutg:kafka_key}';
+    consumer.override.sasl.mechanism: PLAIN
+    consumer.override.security.protocol: SASL_SSL
+    collection: raw_outage

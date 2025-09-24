@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: icis-gh-arc-systems
+  name: icis-gh-arc-systems

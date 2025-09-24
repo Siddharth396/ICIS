@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-chempf-systest
+  values:
+    replicaCount: 1
+    namespace: "chempf-systest"
+    environment: "systest"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/chempf/author-bff # {"$imagepolicy": "flux-system:chempf-auth-bff-systest:name"}
+        tag: systest-146-1.0.1-epic-pfe.32425 # {"$imagepolicy": "flux-system:chempf-auth-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/chempf-systest?retryWrites=true&w=majority"
+        PRICING_DB_NAME: "pricing-pfe-systest"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SQUIDEX_URL: https://price-forecasts.cosmos.systest.cha.eu-west-1.dev/
+        MUTATION: true
+        Db__Collections__Published__ModelRunData: subscriber.model_run_data
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/chempf/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-systest
+      VaultSecretPath: "chempf/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-systest      
+  

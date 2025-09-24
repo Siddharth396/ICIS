@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- common-gitlab-agent.yaml
+- enalog
+- enavip
+- enfapi
+- enapi1
+- lngedge
+- dataprovider
+- chempf
+- sbcore
+- sbnews
+- extids

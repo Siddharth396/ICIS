@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cnvsrv-integration
+nameSuffix: -cnvsrv
+resources:
+- ../../../common/authoring-bff/cnvsrv/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-authoring-bff-cnvsrv-integration.yaml
+# BACKSTAGE-COMMENT-PATTERN2

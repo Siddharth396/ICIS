@@ -1,0 +1,58 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: confluent-haproxy
+  namespace: icis-event-streaming
+spec:
+  releaseName: confluent-haproxy
+  interval: 5m0s
+  chart:
+    spec:
+      chart: haproxy
+      version: "0.1.6"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 3
+    namespace: icis-event-streaming
+    environment: cha
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-services/haproxy-base
+      tag: 1
+      pullPolicy: IfNotPresent
+
+    service:
+      type: LoadBalancer
+      topic:
+        name: https
+        port: 443
+        protocol: TCP
+      kafka:
+        name: tcp
+        port: 9092
+        protocol: TCP
+      annotations:
+        service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
+        #service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+        service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+        service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0d1b6a85a4628ff58,subnet-0a7d104e1b322f246,subnet-0d51a2aa909b1d523
+        service.beta.kubernetes.io/aws-load-balancer-type: external
+      loadBalancerSourceRanges:
+        - "10.0.0.0/8"
+        - "100.64.0.0/20"
+
+    container:
+      name: haproxy
+      port: 443
+      protocol: TCP
+
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+    configmap:
+      name: haproxy-config

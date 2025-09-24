@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: logstash
+  namespace: logging
+  labels:
+    monitoring-platform: icis-monitoring
+    namespace: logging
+spec:
+  selector:
+    matchLabels:
+      app: logstash
+  endpoints:
+    - port: metrics
+      path: /
+      interval: 15s
+      scrapeTimeout: 10s

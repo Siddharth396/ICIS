@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: notsys
+  namespace: notsys-integration
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::512544833523:role/svc-icis-notsys-pre-live-eks-role"
+
+
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: role-notsys-integration-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: notsys
+  namespace: notsys-integration
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,58 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-chempf-systest
+  chart:
+    spec:
+      chart: subscriber-bff
+      version: 0.1.59
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 1
+    namespace: "chempf-systest"
+    environment: "systest"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/chempf/subscriber-bff # {"$imagepolicy": "flux-system:chempf-sub-bff-systest:name"}
+        tag: systest-129-1.0.1-MARS-3421-test.57094 # {"$imagepolicy": "flux-system:chempf-sub-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/chempf-systest?retryWrites=true&w=majority"
+        PRICING_DB_NAME: "pricing-pfe-systest"
+        CORS_ORIGINS_DOMAINS: https://subscriber.systest.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        Db__Collections__ModelRunData: subscriber.model_run_data
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/chempf/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    # vault_secrets:
+    #   - name: subscriber-bff
+    #     VaultK8sRoleName: "kv-chempf-read"
+    #     VaultK8sAuthPath: "cha/eks-b"
+    #     VaultSecretMount: "kv/cha/k8s"
+    #     VaultSecretPath: "chempf/systest/subscriber/bff"
+    #   - name: subscriber-bff-secret-proxy
+    #     VaultK8sRoleName: "kv-chempf-read"
+    #     VaultK8sAuthPath: "cha/eks-b"
+    #     VaultSecretMount: "kv/cha/k8s"  
+    #     VaultSecretPath: "subscriber-auth-proxy/mongo"
+    vault_secrets:
+      name: subscriber-bff-vault-secret-systest
+      VaultSecretPath: "chempf/systest/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-systest      

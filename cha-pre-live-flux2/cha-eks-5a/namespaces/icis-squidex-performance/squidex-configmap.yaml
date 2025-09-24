@@ -1,0 +1,75 @@
+# Using DPT vault role for time being. Needs to be changed with icis-squidex vault role
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: icis-squidex-config
+  namespace: icis-squidex-performance
+data:
+
+  consul-template-config.hcl: |-
+    vault {
+      renew_token = false
+      vault_agent_token_file = "/home/vault/.vault-token"
+      retry {
+        backoff = "1s"
+      }
+    }
+
+    template {
+      destination = "/etc/secrets/appsettings.secrets.json"
+      contents = <<EOH
+      {
+        "eventStore": {
+          "mongoDb": {
+            {{- with secret "kv/cha/k8s/data/icis-squidex/common"  }}
+            "configuration": "mongodb+srv://{{ .Data.data.mongoUser }}:{{ .Data.data.mongoPassword }}@cha-pre-live-ak0n6.mongodb.net"
+            {{ end }}
+          }
+        },  
+  
+        "store": {
+          "mongoDb": {
+            {{- with secret "kv/cha/k8s/data/icis-squidex/common"  }}
+            "configuration": "mongodb+srv://{{ .Data.data.mongoUser }}:{{ .Data.data.mongoPassword }}@cha-pre-live-ak0n6.mongodb.net"
+            {{ end }}
+          }
+        },
+        
+        "assetStore": {
+          "mongoDb": {
+            {{- with secret "kv/cha/k8s/data/icis-squidex/common"  }}
+            "configuration": "mongodb+srv://{{ .Data.data.mongoUser }}:{{ .Data.data.mongoPassword }}@cha-pre-live-ak0n6.mongodb.net"
+            {{ end }}
+          }
+        },
+
+        "identity": {
+          {{- with secret "kv/cha/k8s/data/icis-squidex/common"  }}
+          "adminClientId": "{{ .Data.data.identityAdminClientId }}",
+          "adminClientSecret": "{{ .Data.data.identityAdminClientSecret }}"
+          {{ end }}
+        }
+      }
+      EOH
+    }  
+
+  vault-agent-config.hcl: |-
+    # Uncomment this to have Agent run once (e.g. when running as an initContainer)
+    exit_after_auth = true
+    pid_file = "/home/vault/pidfile"
+
+    auto_auth {
+        method "kubernetes" {
+            mount_path = "auth/cha/eks-a"
+            config = {
+                role = "kv-icis-squidex-read"
+            }
+        }
+
+        sink "file" {
+            config = {
+                path = "/home/vault/.vault-token"
+            }
+        }
+    }
+  

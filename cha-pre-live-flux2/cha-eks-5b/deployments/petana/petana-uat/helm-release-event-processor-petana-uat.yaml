@@ -1,0 +1,59 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-petana-uat
+  values:
+    replicaCount: 1
+    namespace: "petana-uat"
+    environment: "uat"
+    
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/dsm/cost-curves/generic-kafka-consumer
+        tag: 2.2.3.268
+        pullPolicy: IfNotPresent
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "uat"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_supplydemand_technology_fixed_cost_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_supplydemand_technology_process_information_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__private_uat_supplydemand_adp_product_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_supplydemand_process_flexibilities_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_supplydemand_prod_unit_integration_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "petchem_analytics_elisa_consumer"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_uat_petchem_analytics_elisa_consumer_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_uat_petchem_analytics_elisa_consumer_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_uat_supplydemand_technology_fixed_cost_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__1: "public_uat_supplydemand_technology_process_information_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__2: "private_uat_supplydemand_adp_product_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__3: "public_uat_supplydemand_process_flexibilities_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__4: "public_uat_supplydemand_prod_unit_integration_1"
+      
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/dsm/cost-curves/event-processor/elisa_event_processor # {"$imagepolicy": "flux-system:event-processor-petana-uat:name"}
+        tag: uat-4-0.3 # {"$imagepolicy": "flux-system:event-processor-petana-uat:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        ENVIRONMENT: uat
+        ADP_DB: petchem_dev_2024_03_28
+        ADP_HOST: "adp.cha.rbxd.ds"
+        ADP_PORT: 5432
+        MACHINE_NAME: "uat"
+        COMPONENT: "KafkaEventProcessor"
+        SECURITY_CONTEXT: "RBI\\SYSTEM"
+        SOURCE: "petana"
+        ADP_TABLE: kafka.kafka_consumer_staging_v1
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ADP_SCHEMA_REGISTRY_URL: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud
+
+    vault:
+      VaultConsumerSecretPath: "kv/cha/k8s/data/petana/eventprocessor"
+      VaultSecretPath: "kv/cha/k8s/data/petana/eventprocessor"

@@ -1,0 +1,58 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-sbmobl-staging
+  values:
+    replicaCount: 1
+    namespace: "sbmobl-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbmobl/sbmobl-bff # {"$imagepolicy": "flux-system:sbmobl-bff-staging:name"}
+        tag: staging-40-0.1.75-14 # {"$imagepolicy": "flux-system:sbmobl-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbmobl-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.staging.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MobileAppSettings__MethodologyUrl: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1"
+        MobileAppSettings__CheckVersionUrl: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1"
+        MobileAppSettings__LogsUrl: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1"
+        MobileAppSettings__AnnouncementsUrl: "https://subscriber.staging.genesis.cha.rbxd.ds/api/core/v1"
+        MobileAppSettings__CommoditiesUrl: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1"
+        MobileAppSettings__UserPreferencesUrl: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1"
+        MobileAppSettings__PricesUrl: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1"
+        MobileAppSettings__UserInformationUrl: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1"
+        MobileAppSettings__NewsUrl: "https://subscriber.staging.genesis.cha.rbxd.ds/api/news/v1"
+        MobileAppSettings__IdentityServerUrl: "https://id.staging.genesis.cha.rbxd.ds/"
+        MobileAppSettings__WebAppUrl: "https://subscriber.staging.genesis.cha.rbxd.ds/?source=native"
+        MobileAppSettings__AlertsWebAppUrl: "https://subscriber.staging.genesis.cha.rbxd.ds/news/alerts"
+        MobileAppSettings__CommodityWebAppUrl: "https://subscriber.staging.genesis.cha.rbxd.ds/commodity/alerts"
+        DBAPI_URL: "https://dbapi.staging.genesis.cha.rbxd.ds/v1"
+        CommoditiesSettings__BinaryEndpoint: "https://api.subscriber.staging.genesis.cha.rbxd.ds/v1.1/binary"
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/mobile/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    vault_secrets:
+      name: subscriber-bff-vault-secret-sbmobl-staging
+      VaultSecretPath: "sbmobl/staging/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-sbmobl-staging

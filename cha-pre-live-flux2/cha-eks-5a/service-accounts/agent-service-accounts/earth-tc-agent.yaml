@@ -1,0 +1,161 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: earth-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin
+  namespace: notsys-systest
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin-service-monitor
+  namespace: notsys-systest
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin
+  namespace: notsys-performance
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin-service-monitor
+  namespace: notsys-performance
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin
+  namespace: notsys-integration
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin-service-monitor
+  namespace: notsys-integration
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin
+  namespace: notsys-staging
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin-service-monitor
+  namespace: notsys-staging
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin
+  namespace: notsys-systest
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: earth-admin-service-monitor
+  namespace: notsys-systest
+subjects:
+- kind: ServiceAccount
+  name: earth-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io

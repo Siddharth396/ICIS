@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-sbfeed-systest
+  values:
+    replicaCount: 1
+    namespace: "sbfeed-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbfeed/sbfeed-bff # {"$imagepolicy": "flux-system:sbfeed-bff-systest:name"}
+        tag: systest-261-0.1.153-PullRequest0045.2-22 # {"$imagepolicy": "flux-system:sbfeed-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbfeed-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SUBSCRIBE_KEY: sub-c-83aede52-30e2-11ec-a9eb-7aa074450caf
+        KAFKA_TOPICS_ALERTING_PREFERENCES_2: public_systest_alerting_preferences_2
+        USER_IDENTIFIERS_AUTHORIZED_FOR_REPUBLISH: "ee58dffa-9f80-4233-8538-ab3ad072456a"
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/notifications/feed/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-sbfeed-systest
+      VaultSecretPath: "sbfeed/systest/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-sbfeed-systest

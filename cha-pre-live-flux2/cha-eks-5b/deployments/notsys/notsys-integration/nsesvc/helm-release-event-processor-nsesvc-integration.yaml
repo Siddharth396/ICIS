@@ -1,0 +1,75 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-nsesvc-integration
+  values:
+    replicaCount: 1
+    namespace: "notsys-integration"
+    environment: "integration"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "integration"
+        LOG_LEVEL: Debug
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_integration_subscription_product_items_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "entitlement_service_consumer_integration"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_integration_notifications_entitlement_service_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_integration_notifications_entitlement_service_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_integration_subscription_product_items_1"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/nsesvc/nsesvc-kafka-event-processor # {"$imagepolicy": "flux-system:event-processor-nsesvc-integration:name"}
+        tag: integration-21-1.0.25-ICISAPI-7624-Adding-user-on-demand-make-entitlement-service-on-real-time-v4.266 # {"$imagepolicy": "flux-system:event-processor-nsesvc-integration:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 500m
+          memory: 256Mi
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/nsesvc-integration?retryWrites=true&w=majority&maxPoolSize=1024"
+        USER_PRODUCT_ITEMS_TOPIC_NAME: public_integration_subscription_user_product_items_1
+        VIPER_BACK_OFFICE_CIRCUIT_BREAKER_DURATION_OF_BREAK_MILLISECONDS: 10000
+        VIPER_BACK_OFFICE_CIRCUIT_BREAKER_EXCEPTIONS_ALLOWED_BEFORE_BREAKING: 2
+        VIPER_BACK_OFFICE_BASE_URL: "https://backoffice.demo.coa.rbxd.ds"
+        VIPER_BACK_OFFICE_HEALTH_CHECK_ENDPOINT: "https://backoffice.demo.coa.rbxd.ds/help"
+        VIPER_BACK_OFFICE_URL: "https://backoffice.demo.coa.rbxd.ds/sites/icis/entitledusers/"
+        VIPER_FRONT_OFFICE_CIRCUIT_BREAKER_DURATION_OF_BREAK_MILLISECONDS: 10000
+        VIPER_FRONT_OFFICE_CIRCUIT_BREAKER_EXCEPTIONS_ALLOWED_BEFORE_BREAKING: 2
+        VIPER_FRONT_OFFICE_HEALTH_CHECK_ENDPOINT: "https://api.demo.coa.rbxd.ds/sites/icis/"
+        VIPER_FRONT_OFFICE_URL: "https://api.demo.coa.rbxd.ds"
+        HANGFIRE_FAILED_JOBS_ENQUEUER_CRON: "30 * * * * *"
+        HANGFIRE_PRODUCT_ITEMS_ENQUEUER_CRON: "0 0 0/12 ? * *"
+        HANGFIRE_USERS_ENQUEUER_CRON: "0 0 0/12 ? * *"
+        PRODUCT_ITEM_WORKER_COUNT: 1
+        REQUEUE_FAILED_JOBS_WORKER_COUNT: 1
+        USER_WORKER_COUNT: 1
+        DELAY_BETWEEN_API_CALL: 100
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: entitlement-service-event-processor.integration.cha.eu-west-1.dev
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        cert-manager.io/cluster-issuer: vault-issuer
+        lnrs.io/zone-type: private
+      hosts:
+        - host: entitlement-service-event-processor.integration.cha.eu-west-1.dev
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - entitlement-service-event-processor.integration.cha.eu-west-1.dev
+          secretName: entitlement-service-event-processor.integration.cha.eu-west-1.dev
+  
+    vault_secrets:
+      name: nsesvc-event-processor-vault-secret-integration
+      VaultSecretPath: "notsys/nsesvc/integration/eventprocessor"
+    vault_secrets_consumer:
+      name: nsesvc-event-processor-vault-secret-consumer-integration
+      VaultSecretPath: "notsys/nsesvc/eventprocessor"     

@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- nsesvc-event-processor-policy-systest.yaml
+- nsesvc-event-processor-policy-integration.yaml
+- nsesvc-event-processor-policy-staging.yaml
+- nsesvc-event-processor-policy-performance.yaml
+- nsesvc-event-processor-registry.yaml

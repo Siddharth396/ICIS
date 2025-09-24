@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-canvas-systest
+  values:
+    replicaCount: 1
+    namespace: "canvas-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/canvas/subscriber-bff # {"$imagepolicy": "flux-system:canvas-subscriber-bff-systest:name"}
+        tag: systest-1471-1.113.0-main-64600 # {"$imagepolicy": "flux-system:canvas-subscriber-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/canvas-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.systest.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AUTH_CHECK_USER_ROLES_ENABLED: false
+        ALLOW_INTERNAL_USERS: true
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://id.systest.genesis.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://id.systest.genesis.cha.rbxd.ds/connect/token
+        SWAGGER_ENABLED: true
+        MUTATION: true
+        ID_CLAIM: sub
+        ENABLE_ENTITLEMENTS: true
+        PAGEVIEWS_TRACKINGENABLED_WORKSPACES: intelligence
+        UPSELL_FEATURE_ENABLED: true
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/canvas/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-canvas-systest
+      VaultSecretPath: "canvas/systest/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-canvas-systest

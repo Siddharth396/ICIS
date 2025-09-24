@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "pgnsvc-staging"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pgnsvc/mongodb-seeder # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-staging:name"}
+        tag: staging-31-2.4.1-4-56653 # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-staging:tag"}
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_NAME: pgnsvc-staging
+    vault_secrets:
+      name: job-vault-secret-pgnsvc-staging
+      VaultK8sRoleName: "kv-pgnsvc-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pgnsvc/staging/authoring/bff"

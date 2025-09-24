@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: pricing-systest
+nameSuffix: -pricing
+resources:
+- ../../../common/subscriber-bff/pricing/
+- ../../../common/authoring-bff/pricing/
+- helm-release-streamsets-pricing-qa.yaml
+patches:
+- path: helm-release-subscriber-bff-pricing-systest.yaml
+- path: helm-release-authoring-bff-pricing-systest.yaml

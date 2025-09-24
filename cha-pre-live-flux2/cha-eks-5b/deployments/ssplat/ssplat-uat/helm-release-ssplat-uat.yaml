@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ssplat-uat-streamsets-release
+  namespace: ssplat-uat
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: streamsets
+      version: 0.0.8
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    ServiceAccountName: "ssplat"
+    namespace: "ssplat-uat"
+    LOAD_BALANCER_HOSTNAME: ssplat-uat-deployment.cha.eu-west-1.dev
+    streamsets:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/ssplat/streamsets" # {"$imagepolicy": "flux-system:ssplat-uat-streamsets:name"}
+        tag: "dev-3-0.0.0.3" # {"$imagepolicy": "flux-system:ssplat-uat-streamsets:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: uat
+      argument:
+        arg1: deployment.properties
+        arg2: ssplat-uat
+        arg3: deployment
+    vault_secrets:
+      name: streamsets-job-ssplat-uat
+      VaultK8sRoleName: "kv-ssplat-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "ssplat/uat"

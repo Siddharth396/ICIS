@@ -1,0 +1,29 @@
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-base-config
+  namespace: logging
+data:
+  logstash.yml: |
+    api.http.host: "0.0.0.0"
+    api.http.port: 9600
+    path.logs: /usr/share/logstash/logs  
+    xpack.monitoring.enabled: false
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-pipelines
+  namespace: logging
+data:
+  pipelines.yml: |
+    - pipeline.id: k8s-input-pipeline
+      path.config: "/usr/share/logstash/k8s-assets/input-conf/*.conf"
+    - pipeline.id: k8s-filter-pipeline
+      path.config: "/usr/share/logstash/k8s-assets/filter-conf/*.conf"
+    - pipeline.id: k8s-output-pipeline
+      path.config: "/usr/share/logstash/k8s-assets/output-conf/*.conf"

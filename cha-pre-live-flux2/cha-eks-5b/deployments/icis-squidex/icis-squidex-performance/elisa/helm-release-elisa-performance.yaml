@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-performance
+  namespace: icis-squidex-performance
+spec:
+  releaseName: elisa-performance
+  values:
+    projectName: "elisa"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-performance-elisa:name"}
+        tag: performance-elisa-265-7.7.4 # {"$imagepolicy": "flux-system:icis-squidex-performance-elisa:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: elisa
+        ADMIN__ADMINUSERGROUP__0: ICIS_Mercury
+        CONTENTS__MAXRESULTS: "'5000'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+        PLUGINS__2: ICIS.Elisa.dll
+        PLUGINS__3: ICIS.ExportPlugin.dll
+        EXPORT__MAXEXPORTCOUNT: "'501'"
+        EXPORT__ENABLEROLEPERMISSION: "'true'"
+      kafka:
+        enabled: True
+    squidexCli:
+      enabled: True
+      schedule: "'25 7,10,13,16 * * *'"
+    vault_squidex_secrets:
+      name: elisa-squidex-performance-secret
+    vault_kafka_secrets:
+      name: elisa-squidex-kafka-performance-secret
+      VaultSecretPath: "icis-squidex/elisa/performance"     

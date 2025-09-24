@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kakfa-connect-operator
+  namespace: icis-event-streaming
+spec:
+  releaseName: kakfa-connect-operator
+  interval: 5m0s
+  chart:
+    spec:
+      chart: strimzi-kafka-operator
+      version: "0.33.2"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system

@@ -1,0 +1,59 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: app-shell
+  description: Enables creation of lightweight and reusable UI components
+spec:
+  type: web-application
+  owner: core
+  system: subscriber-platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "price-entry-pilet"
+  description: "A reusable capability for Price Entry "
+  tags:
+    - react
+    - pilet
+  annotations:
+    gitlab.com/project-slug: "icis/capabilities/price-entry/pilet"
+  links:
+    - url: http://logs.icis.rbi.web.ds/_plugin/kibana/app/kibana#/discover
+      title: Live - Kibana
+      icon: dashboard
+
+    - url: https://kibana.eks-4.genesis.chp.eu-west-1.prod/app/apm/services
+      title: Live - APM
+      icon: dashboard
+
+    - url: https://grafana.icis.rbi.web.ds/login
+      title: Live - Grafana
+      icon: dashboard
+
+    - url: https://logs.cha.rbxd.ds/_dashboards/app/discover
+      title: PreLive - Kibana
+      icon: dashboard
+
+    - url: https://kibana.eks-4.genesis.cha.eu-west-1.dev/app/apm/services
+      title: PreLive - APM
+      icon: dashboard
+
+    - url: https://grafana.cha.rbxd.ds/login
+      title: PreLive - Grafana
+      icon: dashboard
+
+    - url: https://jira.tools.cha.rbxd.ds/secure/RapidBoard.jspa?rapidView=358&projectKey=ATP&view=planning&issueLimit=100
+      title: Dev - Jira Board
+      icon: web
+    - url: https://confluence.tools.cha.rbxd.ds/display/SE/Backstage
+      title: Dev - Confluence Page
+      icon: web
+spec:
+  type: service
+  owner: "Vikings"
+  lifecycle: production
+  system: "capabilities"
+  dependsOn:
+    # - component:default/asset-bff
+    - resource:default/app-shell

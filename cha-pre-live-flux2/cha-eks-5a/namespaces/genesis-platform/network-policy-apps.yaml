@@ -1,0 +1,71 @@
+####################################################
+## Allow ingress from genesis-platform and icis-platform ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-genesis-platform
+  namespace: genesis-platform
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: genesis-platform
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+    - namespaceSelector:
+        matchLabels:
+          name: c-hub-systest
+    - namespaceSelector:
+        matchLabels:
+          name: c-hub-staging
+    - namespaceSelector:
+        matchLabels:
+          name: c-hub-performance
+    - namespaceSelector:
+        matchLabels:
+          name: homepage-systest
+    - namespaceSelector:
+        matchLabels:
+          name: homepage-staging
+    - namespaceSelector:
+        matchLabels:
+          name: homepage-performance
+
+#################################
+## Allow egress from genesis-platform ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-genesis-platform
+  namespace: genesis-platform
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: genesis-platform
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: genesis-platform
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP

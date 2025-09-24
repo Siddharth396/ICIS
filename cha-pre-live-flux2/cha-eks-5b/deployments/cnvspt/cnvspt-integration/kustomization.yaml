@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cnvspt-integration
+nameSuffix: -cnvspt
+resources:
+- ../../../common/authoring-bff/cnvspt/
+- ../../../common/subscriber-bff/cnvspt/
+- ../../../common/canvas-snapshots-event-processor/
+
+patches:
+- path: helm-release-subscriber-bff-cnvspt-integration.yaml
+- path: helm-release-authoring-bff-cnvspt-integration.yaml
+- path: helm-release-event-processor-cnvspt-integration.yaml
+# BACKSTAGE-COMMENT-PATTERN1
+

@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-sboutg-performance
+  values:
+    replicaCount: 3
+    namespace: "sboutg-performance"
+    environment: "performance"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "performance"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_performance_supplydemand_plant_outages_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_performance_alerting_preferences_2: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "activity_feed_outage_consumer_performance"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "public_performance_supplydemand_plant_outages_retry_1"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "public_performance_supplydemand_plant_outages_failed_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_performance_supplydemand_plant_outages_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__1: "public_performance_alerting_preferences_2"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sboutg/sboutg-event-processor # {"$imagepolicy": "flux-system:sboutg-performance:name"}
+        tag: performance-18-3.0.0-58100 # {"$imagepolicy": "flux-system:sboutg-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sboutg-performance?retryWrites=true&w=majority"
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        PUBNUB_SUBSCRIBEKEY: sub-c-83aede52-30e2-11ec-a9eb-7aa074450caf
+        PubNub__Enabled: true
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .1
+        KAFKA_BROKER_SECURITY_PROTOCOL: 3
+        KAFKA_BROKER_SASL_MECHANISM: 1
+        KAFKA_TOPICS_ALERTING_NOTIFICATIONS: public_performance_alerting_notifications_2
+        MESSAGE_EXPIRE_IN_MINUTES: 21600
+        STOP_NOTIFICATION: false
+        VIPER_BACK_OFFICE_ENDPOINT: https://backoffice.demo.coa.rbxd.ds/sites/icis
+        USE_VIPER_ENTITLEMENT_SERVICE: true
+    vault_secrets:
+      name: sboutg-event-processor-vault-secret-performance
+      VaultSecretPath: "sboutg/performance/eventprocessor"
+    vault_secrets_consumer:
+      name: sboutg-event-processor-vault-secret-consumer-performance
+      VaultSecretPath: "sboutg/performance/eventprocessor"

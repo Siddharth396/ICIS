@@ -1,0 +1,80 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-nsesvc-performance
+  values:
+    replicaCount: 1
+    namespace: "notsys-performance"
+    environment: "performance"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "performance"
+        LOG_LEVEL: Debug
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_subscription_product_items_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "entitlement_service_consumer_performance"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_performance_notifications_entitlement_service_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_performance_notifications_entitlement_service_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_uat_subscription_product_items_1"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/nsesvc/nsesvc-kafka-event-processor # {"$imagepolicy": "flux-system:event-processor-nsesvc-performance:name"}
+        tag: performance-94-1.0.26-ICISAPI-7624-Entitlement-Service-BAU-Adding-user-on-demand-V5.356 # {"$imagepolicy": "flux-system:event-processor-nsesvc-performance:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 1024Mi
+        requests:
+          cpu: 500m
+          memory: 512Mi
+      config_env:
+        ENVIRONMENT: performance
+        LOG_LEVEL: Debug
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/nsesvc-performance?retryWrites=true&w=majority&maxPoolSize=1024"
+        USER_PRODUCT_ITEMS_TOPIC_NAME: public_performance_subscription_user_product_items_1
+        VIPER_BACK_OFFICE_BASE_URL: "https://backoffice.demo.coa.rbxd.ds"
+        VIPER_BACK_OFFICE_URL: "https://backoffice.demo.coa.rbxd.ds/sites/icis/entitledusers/"
+        VIPER_BACK_OFFICE_HEALTH_CHECK_ENDPOINT: "https://backoffice.demo.coa.rbxd.ds/help"
+        VIPER_BACK_OFFICE_CIRCUIT_BREAKER_EXCEPTIONS_ALLOWED_BEFORE_BREAKING: 2
+        VIPER_BACK_OFFICE_CIRCUIT_BREAKER_DURATION_OF_BREAK_MILLISECONDS: 10000
+        VIPER_FRONT_OFFICE_CIRCUIT_BREAKER_EXCEPTIONS_ALLOWED_BEFORE_BREAKING: 2
+        VIPER_FRONT_OFFICE_CIRCUIT_BREAKER_DURATION_OF_BREAK_MILLISECONDS: 10000
+        VIPER_FRONT_OFFICE_URL: "https://api.demo.coa.rbxd.ds"
+        VIPER_FRONT_OFFICE_HEALTH_CHECK_ENDPOINT: "https://api.demo.coa.rbxd.ds/sites/icis/"
+        HANGFIRE_PRODUCT_ITEMS_ENQUEUER_CRON: "0 0 0/12 ? * *"
+        HANGFIRE_USERS_ENQUEUER_CRON: "0 0 0/12 ? * *"
+        HANGFIRE_FAILED_JOBS_ENQUEUER_CRON: "30 * * * * *"
+        PRODUCT_ITEM_WORKER_COUNT: 1
+        USER_WORKER_COUNT: 1
+        REQUEUE_FAILED_JOBS_WORKER_COUNT: 1
+        DELAY_BETWEEN_API_CALL: 100
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: entitlement-service-event-processor.performance.cha.eu-west-1.dev
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        cert-manager.io/cluster-issuer: vault-issuer
+        lnrs.io/zone-type: private
+      hosts:
+        - host: entitlement-service-event-processor.performance.cha.eu-west-1.dev
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - entitlement-service-event-processor.performance.cha.eu-west-1.dev
+          secretName: entitlement-service-event-processor.performance.cha.eu-west-1.dev
+    autoscaling:
+      enabled: false
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 75
+    vault_secrets:
+      name: nsesvc-event-processor-vault-secret-performance
+      VaultSecretPath: "notsys/nsesvc/performance/eventprocessor"
+    vault_secrets_consumer:
+      name: nsesvc-event-processor-vault-secret-consumer-performance
+      VaultSecretPath: "notsys/nsesvc/performance/eventprocessor"

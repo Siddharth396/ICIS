@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: pricing
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_petchem_commodity_1
+    database: pricing-systest
+    collection: petchem_commodity_1
+    transforms.RenameField.renames: id:_id

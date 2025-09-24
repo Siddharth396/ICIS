@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prcndv-validation-service
+spec:
+  releaseName: prcndv-validation-service-systest
+  values:
+    replicaCount: 1
+    namespace: "prcndv-systest"
+    environment: "systest"
+    data_validation_service:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcndv/validation-service
+        tag: systest-10-0.0.0.39572 # {"$imagepolicy": "flux-system:prcndv-validation-service-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/pricing-validation-service/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: prcndv-vault-secret-validation-service-systest
+      VaultSecretPath: "prcndv/systest/validationservice"

@@ -1,0 +1,376 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: api-team
+  namespace: default
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: api-team-token
+  namespace: default
+  annotations:
+    kubernetes.io/service-account.name: api-team
+type: kubernetes.io/service-account-token
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: list-all-resources-api-team-sa
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crds-view-api-team-sa
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: crds-viewer
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# enfapi
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enfapi-dev
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enfapi-tst
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enfapi-int
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enfapi-prf
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enfapi-uat
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# enavip
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enavip-dev
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enavip-tst
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enavip-integration
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enavip-performance
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enavip-uat
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# enalog
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enalog-dev
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enalog-tst
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enalog-integration
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enalog-performance
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enalog-uat
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---  
+#enapi1
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enapi1-dev
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enapi1-tst
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enapi1-int
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enapi1-prf
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: api-team
+  namespace: enapi1-uat
+subjects:
+- kind: ServiceAccount
+  name: api-team
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io

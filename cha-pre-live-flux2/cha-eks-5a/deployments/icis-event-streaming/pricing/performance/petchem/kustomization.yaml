@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- pricing-petchem-ref-currency
+- pricing-petchem-ref-location
+- pricing-petchem-ref-frequency
+- pricing-petchem-ref-market-time
+- pricing-petchem-ref-measureunit
+- pricing-petchem-ref-originator
+- pricing-petchem-ref-period
+- pricing-petchem-ref-pricetype
+- pricing-petchem-ref-tradeterms
+- pricing-petchem-ref-transactiontype
+- pricing-petchem-price-assesments-spec-2
+- pricing-petchem-assessments-2
+- pricing-petchem-ref-factory
+- pricing-petchem-ref-timeframe
+- pricing-petchem-ref-commodity
+- pricing-petchem-ref-transport
+- pricing-petchem-ref-commodity-groups
+- pricing-petchem-ref-publication

@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: -staging-petchem-price-assessments-spec-2
+resources:
+- ../../../common
+
+patches:
+- path: petchem-price-assessments-spec-2.yaml

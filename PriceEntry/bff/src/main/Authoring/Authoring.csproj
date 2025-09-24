@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<AssemblyName>Authoring</AssemblyName>
+		<RootNamespace>Authoring</RootNamespace>
+		<Version>1.0.0-local-test+0</Version>
+		<Product>Authoring-1.0.0-pre-test.0</Product>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="dotenv.net" />
+		<PackageReference Include="EnvSettings" />
+		<PackageReference Include="Icis.Workflow" />
+		<PackageReference Include="Serilog.AspNetCore" />
+		<PackageReference Include="StyleCop.Analyzers.Unstable" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
+	</ItemGroup>
+</Project>

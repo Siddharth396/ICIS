@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- authoring-pricing-bff-systest-policy.yaml
+- authoring-pricing-bff-staging-policy.yaml
+- authoring-pricing-bff-integration-policy.yaml
+- authoring-pricing-bff-performance-policy.yaml
+- authoring-pricing-bff-registry.yaml
+#################################################
+- subscriber-pricing-bff-systest-policy.yaml
+- subscriber-pricing-bff-staging-policy.yaml
+- subscriber-pricing-bff-performance-policy.yaml
+- subscriber-pricing-bff-integration-policy.yaml
+- subscriber-pricing-bff-registry.yaml
+##################################################

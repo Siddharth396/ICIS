@@ -1,0 +1,55 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: iddn-cpf-exporter
+  namespace: icis-monitoring
+spec:
+  releaseName: iddn-cpf-exporter
+  interval: 5m0s
+  chart:
+    spec:
+      chart: icis-monitoring-exporter
+      version: "1.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    nameOverride: "iddn-cpf-check-exporter"
+    fullnameOverride: "iddn-cpf-check-exporter"
+
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-monitoring/iddn_cpf_checks_exporter
+      tag: "1.0.0"
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 3301
+
+    vault:
+      type: kv-v2
+      mount: kv/cha/k8s
+      path: icis-monitoring/iddn-cpf-vars
+
+    serviceMonitor:
+      interval: 30s
+      namespace: icis-monitoring
+      release: iddn-exporter
+
+    secrets:
+      - name: iddn-cpf-vars
+        envName: BASE_URL
+        key: IDDNCPF_BASE_URL
+      - name: iddn-cpf-vars
+        envName: PASSWORD
+        key: IDDNCPF_PASSWORD
+      - name: iddn-cpf-vars
+        envName: USERNAME
+        key: IDDNCPF_USERNAME
+

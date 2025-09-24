@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: order-snowflake-producer
+spec:
+  values:
+    namespace: order-systest
+    snowflake_producer:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/ds/order-custom-snowflake-producer # {"$imagepolicy": "flux-system:order-snowflake-producer-qa:name"}
+        tag: qa-56-1.9.0 # {"$imagepolicy": "flux-system:order-snowflake-producer-qa:tag"}
+        pullPolicy: IfNotPresent
+      schedule: '5/15 16 * * 2'
+      custom_command: python producers/sf_price_delta_type_producer.py
+      topic_reference: gold-prc-delta-type-qa
+      env:
+        ENVIRONMENT: QA
+        SOURCE_CONTEXT: order_prc_delta_type_producer
+        postgres_database: order_systest
+        topic_name: refdata_prc_delta_type
+        topic_environment: systest
+        zone_regency: publishing.hwm_gold_zone
+        snowflake_database: ICIS_GOLD_QA_DB
+        snowflake_role: SVC_REF_DATA_PUBLISHER_GOLD_QA
+        snowflake_warehouse: QRY_WH_GOLD_QA
+    vault_secrets:
+      name: "order-snowflake-producer-gold-qa-secret"

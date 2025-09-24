@@ -1,0 +1,62 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-prcent-staging
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "prcent-staging"
+    environment: "staging"
+    deploymentStrategy: "RollingUpdate"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/mongodb-seeder # {"$imagepolicy": "flux-system:prcent-mongo-seeder-staging:name"}
+        tag: staging-66-6.2.0-main.37104 # {"$imagepolicy": "flux-system:prcent-mongo-seeder-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/authoring-bff # {"$imagepolicy": "flux-system:prcent-authoring-bff-staging:name"}
+        tag: staging-177-7.3.0-main-4204 # {"$imagepolicy": "flux-system:prcent-authoring-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/prcent-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        PeriodGeneratorService__BaseUrl: https://authoring.staging.cha.rbxd.ds/api/period-generator
+        Workflow__BaseUrl: https://authoring.staging.cha.rbxd.ds/api/workflow
+        Workflow__Versions__Overrides__LNG: "advance"
+        OAUTH_AUTHORITY_URL: https://domainidentity.integration.cha.rbxd.ds
+        PUBNUB_ENABLED: true
+        LOG_LEVEL: Debug
+        CANVAS_API_URL: https://authoring.staging.cha.rbxd.ds/api/canvas
+        IS_AUTHORING: true
+        DLH_RECORD_SOURCE: canvas-prcent-uat
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/price-entry/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-prcent-staging
+      VaultSecretPath: "prcent/staging/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-prcent-staging

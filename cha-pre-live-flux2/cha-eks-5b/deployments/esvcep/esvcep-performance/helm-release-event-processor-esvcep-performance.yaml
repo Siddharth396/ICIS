@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-esvcep-performance
+  values:
+    replicaCount: 1
+    namespace: "esvcep-performance"
+    environment: "performance"
+    ServiceAccountName: "esvcep"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "performance"
+        LOG_LEVEL: Debug
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__private_performance_notifications_service_email_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_performance_subscription_user_product_items_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "service_email_consumer_performance"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_performance_notifications_service_email_retry_1"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_performance_notifications_service_email_failed_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "private_performance_notifications_service_email_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__1: "public_performance_subscription_user_product_items_1"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/service-email/service-email-event-processor # {"$imagepolicy": "flux-system:esvcep-performance:name"}
+        tag: performance-8-0.24.0-alpha.140 # {"$imagepolicy": "flux-system:esvcep-performance:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 500m
+          memory: 512Mi
+        requests:
+          cpu: 200m
+          memory: 256Mi
+      config_env:
+        ENVIRONMENT: performance
+        LOG_LEVEL: Debug
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/esvcep-performance?retryWrites=true&w=majority&maxPoolSize=1024"
+        KAFKA_TOPICS_ALERTING_NOTIFICATIONS: "public_performance_alerting_notifications_2"
+        EMAIL_TEMPLATE_NAME: "service_email_template"
+    vault_secrets:
+      name: esvcep-event-processor-vault-secret-performance
+      VaultSecretPath: "esvcep/performance/eventprocessor"
+    vault_secrets_consumer:
+      name: esvcep-event-processor-vault-secret-consumer-performance
+      VaultSecretPath: "esvcep/common/consumer"

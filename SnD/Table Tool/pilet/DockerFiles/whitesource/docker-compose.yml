@@ -1,0 +1,10 @@
+version: "3.6"
+services:
+  whitesource:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: runner
+    volumes:
+      - ../../packages/supply-and-demand-pilet:/source
+      - ./whitesource:/whitesource

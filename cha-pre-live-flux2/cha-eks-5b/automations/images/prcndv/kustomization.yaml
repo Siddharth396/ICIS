@@ -1,0 +1,6 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- prcndv-validation-service-policy-systest.yaml
+- prcndv-validation-service-policy-staging.yaml
+- prcndv-validation-service-registry.yaml

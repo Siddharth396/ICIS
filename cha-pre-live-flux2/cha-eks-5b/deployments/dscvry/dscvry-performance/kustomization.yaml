@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: dscvry-performance
+nameSuffix: -dscvry
+resources:
+- ../../../common/authoring-bff/dscvry/
+  #- ../../../common/subscriber-bff/dscvry/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-authoring-bff-dscvry-performance.yaml
+  # helm-release-subscriber-bff-dscvry-performance.yaml
+# BACKSTAGE-COMMENT-PATTERN2

@@ -1,0 +1,35 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: pricing
+  namespace: icis-event-streaming
+  labels:
+    strimzi.io/cluster: prelive-connect-cluster
+spec:
+  class: com.mongodb.kafka.connect.MongoSinkConnector
+  tasksMax: 6
+  config:
+    topics:
+    connection.uri: ${file:/opt/kafka/external-configuration/pricing-mongo-uri/mongoConnection:connectionURI}
+    database:
+    collection:
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    key.converter.schemas.enable: false
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schemas.enable: false
+    transforms: headerToField,patternRename
+    transforms.headerToField.type: com.github.jcustenborder.kafka.connect.transform.common.HeaderToField$Value
+    transforms.headerToField.header.mappings: id:STRING
+    transforms.patternRename.type: com.github.jcustenborder.kafka.connect.transform.common.PatternRename$Value
+    transforms.patternRename.field.pattern: ^id$
+    transforms.patternRename.field.replacement: _id
+    document.id.strategy: com.mongodb.kafka.connect.sink.processor.id.strategy.ProvidedInValueStrategy
+    writemodel.strategy: com.mongodb.kafka.connect.sink.writemodel.strategy.UpdateOneTimestampsStrategy
+    value.converter.schema.registry.url: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:url}
+    value.converter.basic.auth.credentials.source: USER_INFO
+    value.converter.basic.auth.user.info: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:password}
+    config.action.reload: restart
+    errors.retry.timeout: -1
+    errors.retry.delay.max.ms: 60000
+    errors.log.enable: true
+    errors.log.include.messages: true

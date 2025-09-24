@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: prcndv-validation-service-systest
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: prcndv-validation-service
+    namespace: flux-system
+  filterTags:
+    pattern: '^systest-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

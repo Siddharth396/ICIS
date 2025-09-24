@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: -subscriber
+resources:
+- ../../../../common/subscriber-bff/chempf/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-chempf-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN2

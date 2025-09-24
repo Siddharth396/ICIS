@@ -1,0 +1,16 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-mfe
+spec:
+  releaseName: subscriber-mfe-sbnews-staging
+  values:
+    namespace: "sbnews-staging"
+    mfe:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/sbmfe/sbmfe-news-pilet" # {"$imagepolicy": "flux-system:sbmfe-sbnews-pilet-staging:name"}
+        tag: "staging-227-1.24.0-2213" # {"$imagepolicy": "flux-system:sbmfe-sbnews-pilet-staging:tag"}
+        pullPolicy: IfNotPresent
+    feedServiceUrl: "https://subscriber-mfe-feed-service.staging.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe"
+    vault_secrets:
+      name: "sbnews-subscriber-mfe-secret-staging"

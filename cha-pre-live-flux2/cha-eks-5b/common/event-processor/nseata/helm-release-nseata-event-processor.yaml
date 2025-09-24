@@ -1,0 +1,33 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  values:
+    projectName: "nseata"
+    ServiceAccountName: "notsys"
+
+    event_processor:
+      config_env:
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+
+    podMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+    
+    vault_secrets:
+      VaultK8sRoleName: "kv-notsys-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_consumer:
+      VaultK8sRoleName: "kv-notsys-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"

@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-pricing-bff-chempf-staging
+  values:
+    replicaCount: 1
+    namespace: "chempf-staging"
+    environment: "staging"
+    ServiceAccountName: "chempf"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/chempf/pricing/authoring-pricing-bff # {"$imagepolicy": "flux-system:chempf-pricing-auth-bff-staging:name"}
+        # I know!
+        tag: staging-16-1.51.0-pfe-main.2542 # {"$imagepolicy": "flux-system:chempf-pricing-auth-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        DEV_MODE: true
+        ENVIRONMENT: staging
+        BASE_PATH: /chempf-pricing
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pricing-pfe-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        ENERGY_SERIES_VALID_MONTHS: 120
+        HOT_CHOCOLATE_REQUEST_TIMEOUT: 60
+        PETCHEM_SERIES_VALID_MONTHS: 60
+        FeatureToggles__RestrictSeriesByLatestSeriesItem: true
+        FeatureToggles__HidePetchemSpecsWithNoPrices: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+      resources:
+        limits:
+          cpu: "2"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/chempf-pricing/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    vault:
+      VaultSecretPath: "kv/cha/k8s/data/chempf/staging/authoring/bff"
+      VaultK8sRoleName: "kv-chempf-read"

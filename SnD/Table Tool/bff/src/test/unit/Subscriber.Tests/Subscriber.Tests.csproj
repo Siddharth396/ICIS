@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Content Include="..\..\..\main\Subscriber\appsettings.json" Link="subscriber.appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+
+		<Content Include="..\..\..\main\Subscriber\.env" Link="subscriber.env">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\main\Subscriber\Subscriber.csproj" />
+		<ProjectReference Include="..\Test.Infrastructure\Test.Infrastructure.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="altcover" Version="7.1.795" />
+		<PackageReference Include="FluentAssertions" Version="6.11.0" />
+		<PackageReference Include="JunitXml.TestLogger" Version="3.0.114" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+		<PackageReference Include="Mongo2Go" Version="3.1.3" />
+		<PackageReference Include="MongoDB.Driver" Version="2.19.1" />
+		<PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="NSubstitute" Version="5.0.0" />
+		<PackageReference Include="SharpCompress" Version="0.33.0" />
+		<PackageReference Include="Snapshooter" Version="0.13.0" />
+		<PackageReference Include="Snapshooter.Xunit" Version="0.13.0" />
+		<PackageReference Include="WireMock.Net" Version="1.5.24" />
+		<PackageReference Include="xunit" Version="2.4.2" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="Subscriber.test.env">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="xunit.runner.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+	
+</Project>

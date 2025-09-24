@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    monitoring-platform: icis-monitoring
+    release: elastic-search-exporter
+  name: elastic-search-exporter
+  namespace: icis-monitoring
+spec:
+  endpoints:
+  - interval: 30s
+    path: /metrics
+    port: http
+  namespaceSelector:
+    matchNames:
+    - icis-monitoring
+  selector:
+    matchLabels:
+      app: prometheus-elasticsearch-exporter

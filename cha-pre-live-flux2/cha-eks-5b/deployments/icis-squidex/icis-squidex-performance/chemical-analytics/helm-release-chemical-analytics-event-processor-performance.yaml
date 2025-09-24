@@ -1,0 +1,63 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+  namespace: icis-squidex-performance
+spec:
+  releaseName: chemical-analytics-event-processor-performance
+  values:
+    replicaCount: 3
+    namespace: "icis-squidex-performance"
+    environment: "performance"
+    projectName: "chemical-analytics"
+    ServiceAccountName: "icis-squidex"
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 2.1.0.204
+        pullPolicy: IfNotPresent
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "performance"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__private_uat_petchem_model_forecast_price_1: "http://localhost:80/api/1.0/messageHandler"
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "chemical-analytics-consumer-performance-1"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_performance_chemical_analytics_consumer_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_performance_chemical_analytics_consumer_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "private_uat_petchem_model_forecast_price_1"
+    event_processor:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/icis-squidex/event-processor" # {"$imagepolicy": "flux-system:icis-squidex-event-processor-performance-chemical-analytics:name"}
+        tag: performance-chemical-analytics-3-0.1.13-256 # {"$imagepolicy": "flux-system:icis-squidex-event-processor-performance-chemical-analytics:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        Processor__FieldsInLists__0: "meta.createdBy.avatar"
+        Processor__FieldsInLists__1: "meta.status.color"
+        Processor__FieldsInLists__2: "meta.lastModified"
+        ASPNETCORE_ENVIRONMENT: performance
+        SchemaRegistry__Url: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud/
+        Processor__TopicToSchemaMapping__private_uat_petchem_model_forecast_price_1: "analyst-adjustments"
+        Squidex__Url: https://chemical-analytics.cosmos.performance.cha.eu-west-1.dev/
+        Squidex__AppName: "chemical-analytics"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: icis-nginx-ingress
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        external-dns.alpha.kubernetes.io/hostname: chemical-analytics-event-processor.performance.cha.eu-west-1.dev
+        cert-manager.io/cluster-issuer: vault-issuer
+      hosts:
+        - host: chemical-analytics-event-processor.performance.cha.eu-west-1.dev
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - chemical-analytics-event-processor.performance.cha.eu-west-1.dev
+          secretName: chemical-analytics-analytics-event-processor-performance-cha-eu-west-1-dev
+    vault_secrets:
+      name: chemical-analytics-event-processor-vault-secret-performance
+    vault_secrets_consumer:
+      name: chemical-analytics-event-processor-vault-secret-consumer-performance
+      VaultSecretPath: "icis-squidex/chemical-analytics/performance"    

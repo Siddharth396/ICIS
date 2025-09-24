@@ -1,0 +1,13 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: subscriber-mfe
+spec:  
+  values:
+    projectName : "sberdg"
+    serviceAccountName : "sberdg"
+    vault_secrets:
+      VaultK8sRoleName: "kv-sberdg-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"

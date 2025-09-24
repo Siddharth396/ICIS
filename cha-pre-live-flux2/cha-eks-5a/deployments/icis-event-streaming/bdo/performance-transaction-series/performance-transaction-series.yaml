@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: bdo
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: private_performance_petchem_spt_transaction_series_2
+    database: spt-performance
+    collection: transaction_series_2
+    transforms.RenameField.renames: id:_id

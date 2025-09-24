@@ -1,0 +1,225 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sbsrch-bff
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: sbsrch-bff
+      version: 0.1.6
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    replicaCount: 1
+    namespace : sbsrch-systest
+    environment: systest
+    serviceAccountName: sbsrch
+    initContainers: true
+
+    consulTemplate:
+      repository: artifacts.cha.rbxd.ds/base-image/consul-template
+      tag: alpine
+
+    vaultAgent:
+      repository: artifacts.cha.rbxd.ds/base-image/vault
+      tag: latest
+
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbsrch/sbsrch-bff # {"$imagepolicy": "flux-system:sbsrch-systest:name"}
+        tag: systest-1-1.22.0.271 # {"$imagepolicy": "flux-system:sbsrch-systest:tag"}
+        pullPolicy: IfNotPresent
+      container:
+        name: cport
+        port: 80
+        protocol: TCP
+      envConfig:
+        Environment: systest
+        COMPlus_EnableDiagnostics: "0"
+        ANALYTICS_SERVICE_URL: https://api.subscriber.internal.systest.genesis.cha.rbxd.ds/v1
+        BASE_URL: https://subscriber.systest.genesis.cha.rbxd.ds/api/search/v1
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 1
+        CORS_ALLOWED_ORIGINS: https://subscriber.systest.genesis.cha.rbxd.ds
+        COMMODITY_PAGES_URL: https://subscriber.systest.genesis.cha.rbxd.ds/commodity
+        DB_URL: https://dbapi.systest.genesis.cha.rbxd.ds/v1
+        IDENTITYSERVER_AUTHORITY: https://id.systest.genesis.cha.rbxd.ds
+        PREFERENCES_SERVICE_URL: https://api.subscriber.internal.systest.genesis.cha.rbxd.ds/v1
+        TRACE_ENABLED: true
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        initialDelaySeconds: 30
+        periodSeconds: 30
+      securityContext:
+        readOnlyRootFilesystem: false
+        privileged: false
+      resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
+
+    nginx:
+      image:
+        repository: artifacts.cha.rbxd.ds/base-image/nginx-unprivileged
+        tag: 1.19-alpine
+      container:
+        name: nport
+        port: 8080
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 8080
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 5
+        timeoutSeconds: 2
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 8080
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 30
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+      configmap:
+        name: sbsrch-nginx-config
+      config: |-
+        server {
+          listen 8080 ssl;
+          server_name  localhost;
+
+          access_log /dev/stdout main;
+          error_log /dev/stdout warn;
+
+          ssl_certificate /etc/ssl/tls.crt;
+          ssl_certificate_key /etc/ssl/tls.key;
+
+          client_header_buffer_size    8k;
+          large_client_header_buffers  4 32k;
+
+          server_tokens off;
+
+          #Reverse Proxy rules to serve the BFF from other container
+
+          location / {
+              proxy_set_header Host $http_host;
+              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+              proxy_set_header X-Forwarded-Proto $scheme;
+
+              proxy_buffers 4 64k;
+              proxy_buffer_size 32k;
+              proxy_busy_buffers_size 64k;
+
+              proxy_pass http://localhost:80;
+          }
+
+        }
+
+    lifecycle:
+      preStop:
+        exec:
+          command: ["/bin/sh", "-c", "sleep 20"]
+
+    service:
+      port_name: https
+      port: 443
+
+    autoscaling:
+      enabled: false
+
+    serviceMonitor:
+      enabled: false
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+      hosts:
+      - host: subscriber.systest.genesis.cha.rbxd.ds
+        paths:
+        - /api/search/?(.*)
+        tls: "true"
+      tls:
+        - hosts:
+          - subscriber.systest.genesis.cha.rbxd.ds
+          secretName: api.subscriber.systest.genesis.cha.rbxd.ds
+
+
+    secrets:
+      enabled: true
+      name: api.subscriber.systest.genesis.cha.rbxd.ds
+      cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUg1VENDQTgyZ0F3SUJBZ0lDRUowd0RRWUpLb1pJaHZjTkFRRUxCUUF3ZXpFTE1Ba0dBMVVFQmhNQ1IwSXgKRURBT0JnTlZCQWdNQjBWdVoyeGhibVF4RHpBTkJnTlZCQWNNQmxOMWRIUnZiakVOTUFzR0ExVUVDZ3dFU1VOSgpVekVqTUNFR0ExVUVDd3dhU1VOSlV5QkRaWEowYVdacFkyRjBaU0JCZFhSb2IzSnBkSGt4RlRBVEJnTlZCQU1NCkRFbERTVk1nVW05dmRDQkRRVEFlRncweE9EQTFNVFF4TURNMU5ETmFGdzB5T0RBNE1Ua3hNRE0xTkROYU1HNHgKQ3pBSkJnTlZCQVlUQWtkQ01SQXdEZ1lEVlFRSURBZEZibWRzWVc1a01RMHdDd1lEVlFRS0RBUkpRMGxUTVEwdwpDd1lEVlFRTERBUkpRMGxUTVM4d0xRWURWUVFERENaemRXSnpZM0pwWW1WeUxuTjVjM1JsYzNRdVoyVnVaWE5wCmN5NWphR0V1Y21KNFpDNWtjekNDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFNZkcKS1Z2UVB6UWtxNWQyVzZXcS9kenNNQVBzRHo3dkNETnErZVUrUlhoU2lZWEZOVWhKRTVLdFpMRzhKemtHL01GUQpJb2xHeDBDVnhucXFjVE15dEJtOXZJdzhFejc5b2RINmlRRmx5bHBQLzIyeXo4NTV4Q2tzbW16S3V2cFgyNER1CjJFenlWZWZrWWowQjBKVkU4elBVZkpSYWNwV3dVQ0QxZXlaclg4eGpCSHZ2TXc1aWZvUSswRS9IZUNPbzFYU3EKZU8wYWV4Vzh4b3h6WHNpTHdvWnFGRk13T09iSjBoeTFDdlVFVjBlRmI5UmkySjFOQ1Y3NUtLOEJzelNyclpBRQpNcnBTcTQyV2JPRUNLcGxxS2lhd2hmeHFRRXlzeVBOVW5pNFZCV0FIZEswV1dtUEZzQ1ljZERhMUZhQW8rNjBGClNJbUl2T3k3M3F3bmMxV0Z4WmNDQXdFQUFhT0NBWDR3Z2dGNk1Ba0dBMVVkRXdRQ01BQXdFUVlKWUlaSUFZYjQKUWdFQkJBUURBZ1pBTURNR0NXQ0dTQUdHK0VJQkRRUW1GaVJQY0dWdVUxTk1JRWRsYm1WeVlYUmxaQ0JUWlhKMgpaWElnUTJWeWRHbG1hV05oZEdVd0hRWURWUjBPQkJZRUZIM2diZDV5SzJBMFROdDZkdjZVbnd5MVNNRGxNSUd0CkJnTlZIU01FZ2FVd2dhS0FGR2VpVFA3YVFZdzB3bm8vdWVUdlE2MFdObVhlb1gra2ZUQjdNUXN3Q1FZRFZRUUcKRXdKSFFqRVFNQTRHQTFVRUNBd0hSVzVuYkdGdVpERVBNQTBHQTFVRUJ3d0dVM1YwZEc5dU1RMHdDd1lEVlFRSwpEQVJKUTBsVE1TTXdJUVlEVlFRTERCcEpRMGxUSUVObGNuUnBabWxqWVhSbElFRjFkR2h2Y21sMGVURVZNQk1HCkExVUVBd3dNU1VOSlV5QlNiMjkwSUVOQmdna0FrOFBzemdxWDFpSXdEZ1lEVlIwUEFRSC9CQVFEQWdXZ01CTUcKQTFVZEpRUU1NQW9HQ0NzR0FRVUZCd01CTURFR0ExVWRFUVFxTUNpQ0puTjFZbk5qY21saVpYSXVjM2x6ZEdWegpkQzVuWlc1bGMybHpMbU5vWVM1eVluaGtMbVJ6TUEwR0NTcUdTSWIzRFFFQkN3VUFBNElFQVFBQklja2VxYklQCll4NjRLNTdVWFY2UWdCcmF5L0hkQVlPVHZiWk0zbFd6dndmYkVHT21tdkt0Qit2RGplcmdpUU9kaTZOMjJpVzkKZXNreEtCNTNYN0xLQzFCaXpoNHgxeWhpbVJabmd1bzkzL2dmVXV3T3lHb21wekx3cUJ2b0kzQ3FJbGFVVTU2RAphc2ZxNkRrQURyVXc4QWc3OURFWTlyQVFEQWdBTE8wbEwwRFl2K2VNMlVZZkhxL0duMUpKcW5BRXZNdjNxR1Z5CnZlWWJGZVVoMjRLSGI4Wlk1bVJKUVlzY05qSEdBUElIL2YwUjRPYlNjbFpjZWFwNzlCaTZ4TU42cXdqcXN6c1QKNzA3UDYraEdJL25nOEdreFYwUzdIc1YxZFJVTnpoNWdkRFp3aU1DQ3dQZGxmc1grbnBMYVJTS0pIaUJUVHJuSAppZnlqYWREbmlqWVdmNmg3Znh4WFI2VTBXQ1IyaFNyakxRV203YUhLK0dzZHM3ZXFLeTlGdWJvSmtORTA5TUJwCjRHdXplS2NMM2JsYzZTTWdpY3lQVlBXVXdzN0NvN0xsZ2JVTDFydHRFN1hvMU04S2RoUHZGVmQzU1FHaWI1QUYKcWJWTFZ6a012MmxnK3o2UWlBSEczY0RSVGJGQ2RaU3hsVUtrajlnY01nc1RYd3U1dXdpSUFrcitNRUJ5c1pNeQoyTWFEZWUwVUdka0NjbWkyTjVwV0Z3aUk5QlQvWGRtVXpwNVYyRWh2bjh3Y1IxdjVNdVRaZDhMMVZFMFp6QVF3CnIzVG1wNVBZcldmVndUNS9wMHhBbDN4Sk9QVzdJdHVoRlM1YituYlluSEtZTWwzWUtPdUpXVDhnOGpTVTVrbG4KN0YxeVh2NlMvQ25jYWR6UHRZTXk3ZDAyY1RjajY5VlRLdFdKSUtjL2Y1SHJmQXVOT2plMFFEYktxV2Y2OGVxUApxbHdZT1dnNFd3bW1OUkJOQmRTR3dBZ0FERGNRWWc2OHpYT1JLTE1HUEVaREdkZUwyR2w5RmptV2s4dVdKdGxUCjErd0RJWktwR2FyeVVSa3FVWlVlMjR5bzJYaUhyVlFOeEM4bzVsc2NDY004SkdNbmN4Q3JFcHAxZlBsQkZtamQKVi9lOTZSSDNWQ1pyYjgxcjlXeGY5cXVhcUh4UjFFNG1KVGZDU2o2TzZpNXAybEFVYVI0WTViS1VOc21nOGRZcwpsME95UUVjWndrSjNub2l2czY1YllYOHh2QTdadWFXOUdrSFBRRXlzZVdkVVRoTjlIYTNHS2kzWDBCQ3RTajNOCjBpOXNZbHJuUlVDT2NDQTF4WEEybnFKNGEvdVJwdXJyY3RjNmIzcFVUeHloUGh2Vi9WRmlJa1pHdnUrbHF4blIKUmpBUk41eTNud1lBTGRXUmVtT043VEk0eVk4ZFJ2VnBhYTAzNFdzL1paOGJnWEl4OGpIQzNMc2p2SUVXQjEzQQpwcjRwTFRIMG1YRkJCMHdEcmJXRHNpT3dPdHM0TDViT0Z6Y3RNdmRCYUZna1p2WGFrVGJhemcvUGgrVVlwUUZwClF0SmtoUDJYZ3pUNk92Q3Y4R0ltc3dkZDNWdkxRamxyWmQ2eStKT29XeGl1Zzl4V3RLb0dPeTFnbnkwYXlFWi8KQ1VqVjJkMEUvNGhJaUN6WVAyQnpSZUx1VCtPZjNJM3pjVm9IK0V3bzdwVm1zN1UzQ2dwZkprMmZ0T0kwWHB6MQp6RzUxZStreC9jSDJ5VGVPZkVtdW5iemIralJub3crSDdqQk1meTlvaG42R0FIS2dSdnhFOERNV1F4MEEwRXArCmEvQnVxdkFqQmJ5KwotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+      key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBeDhZcFc5QS9OQ1NybDNaYnBhcjkzT3d3QSt3UFB1OElNMnI1NVQ1RmVGS0poY1UxClNFa1RrcTFrc2J3bk9RYjh3VkFpaVViSFFKWEdlcXB4TXpLMEdiMjhqRHdUUHYyaDBmcUpBV1hLV2svL2JiTFAKem5uRUtTeWFiTXE2K2xmYmdPN1lUUEpWNStSaVBRSFFsVVR6TTlSOGxGcHlsYkJRSVBWN0ptdGZ6R01FZSs4egpEbUoraEQ3UVQ4ZDRJNmpWZEtwNDdScDdGYnpHakhOZXlJdkNobW9VVXpBNDVzblNITFVLOVFSWFI0VnYxR0xZCm5VMEpYdmtvcndHek5LdXRrQVF5dWxLcmpaWnM0UUlxbVdvcUpyQ0YvR3BBVEt6STgxU2VMaFVGWUFkMHJSWmEKWThXd0poeDBOclVWb0NqN3JRVklpWWk4N0x2ZXJDZHpWWVhGbHdJREFRQUJBb0lCQUFMNDJMNnI3M1RJSXVGaQorbVFSa2l0S1BFQ2lyMnRoUlA3MjFYYnFvVC8wQW1YQ0ZGUForbmVSS3RGV0drTkg3bFMxNjMyZFZ2T0lCdWJtClNEN1p2MEl1eDNKU3BucW1iVlRoWkU1b0JFV3BzUVFoeCtPcmZoYWF1a1ZxRXJRTXdKQS9mV3BQcEtXSmlVaWQKRVV4WE5VTU5JemxWeXlTYzllUTNvcmhrbW8xQTJSd24zMkEwR25CbXRVS3M5bGxNTGFleWVGbFhKTUlhL2pJeQpzTnVoaFdMZlA5VUlOQ1dlNHhlKzdmaU95ZDc1b3hldTBmYXJOcWF6ZGNPOVVKOTN3LzZIMFAxRUFRdlNGaGE5CndFSzI2bmc1V2h1OE9ZSUpUdnp1cDFUR0VSdzVVcGdEVHBmdU1PUVNwMlNUWEs1LzJtaVNaTUZzMHE2NjRwWGsKWFlNR3BYa0NnWUVBOXArVWFraEdvZkNtRnlNMk80bkRHMnlCSjlHMlJQL0lZRWlwVTlxSHNEWTUvZ0cxK3BONQo3Q0R2UXpaMlBpVGZQeVByMnBWWVFZVS9QSjlZb3dkR1JzSUdWcHlFOUpETTF0Q3UzcGRlYUJHRTBlNzNOaEtwClFJY2N4dVpTSG41dXJpblRSRkE1RHFFRytzVWxDQXZyQWJHQ3daOFNaUzZLMG9EWW8wYWxNVlVDZ1lFQXoxNlgKVEFrekQ2VGpIaWtZYzJpbzB3SVc3TnQxZzcxRitrMENOM3N0QnV0MWUxVGhwWThxODd1emVhS0dHOUt5UUJpNQp4c09rblZacVBqRDhNMnIvSkkrTkZWVjRDWHFGVitHaGltQkNsZTlvaCtzNmhsblZEWHJBMUlyZmpVVkI2aUlqCnJwQlM2ZXNVQ2c1Z3VWVVdGMGN1S0hDK1FjNFBHQXNHZ0dZQnl6c0NnWUVBeHc2OHV5QkZLblpUaUw5YUNhcEMKK1lLVnFLOGk0QVJZRmlidnpRZklsMWpkYkFDemdtSEFlZStIVHdmSlhwVmlQOU5kamRzWEZpTlhqRFhOVkNFTgoveFNpQ3d4Z1lBbnoyN3NxT2UyUlBJeFBXU2I1RUFMMTYyaGl1TU8wS25yQUdRRVhUYjgybm5Fb2NnWG53dHZqCnZrVXBsZUF2OTgwZUxaUGp4NzNBbmRVQ2dZRUFoYUFua0lpeERaaXIvY2h2aUJiZUN6TGlnUGllRGlsT1NZK00KS1NKSGpwajEyR2FIRFQ5blp5NEI1aFNUcEtRdDF0M1lBTHdiZklPdDdLdDJLTS8rMzVsZFNXME03OWF5ekVHSgo3Zmcva0F4NDZIVHMvcHd1alFRWDlCNFZGaHlWOEFEVnkyd1c4Y05ZNDI0R2FBYnJPRTdXOEpwT0QydHdFSWN5ClJsVDFQUGNDZ1lBQTMxWXhKMGxXSXMzZ1Z6bW1YSEFvempFMnp6QnRlbFlPSDdlR3lPUFZDQldnTUFFVk1jYlUKV3BVWjlFMTh6YUsvNVI5dFpUSXhaOWRqYTB6djYxVE5VRkdndXNwc3J1OGVzcUNkZ3VtWEZTa0E5Z3J1eUpyQwowYzE0dFdTMCtFYmlnVmRQS2NKZ2VjWHZTRXNLaEdwVnUzRWt4UzhJdyt6aEp2OXFZd1lJdlE9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+
+
+    vault:
+      vaultAddress : "https://vault_eu_prod.b2b.regn.net"
+      vaultSecretPath: "kv/cha/k8s/data/sbsrch/systest/bff"
+      vaultK8sAuthPath: "auth/cha/eks-b"
+      vaultK8sRoleName: "kv-sbsrch-read"
+
+      configmap:
+        name: sbsrch-vault-config
+      secrets:
+        name: sbsrch-bff-vault-secret
+        secretFiles:
+          vault.crt: |-
+            -----BEGIN CERTIFICATE-----
+            MIIEijCCA3KgAwIBAgIQay0iJoZ+c6NJt7cqchus+zANBgkqhkiG9w0BAQsFADBg
+            MRMwEQYKCZImiZPyLGQBGRYDbmV0MRQwEgYKCZImiZPyLGQBGRYEcmVnbjETMBEG
+            CgmSJomT8ixkARkWA2IyYjEeMBwGA1UEAxMVYjJiLVJCSVFIU1BLSVAwMDJWLUNB
+            MB4XDTE3MDgxNzA5MzY1N1oXDTI3MDgxNzA5NDY1N1owYDETMBEGCgmSJomT8ixk
+            ARkWA25ldDEUMBIGCgmSJomT8ixkARkWBHJlZ24xEzARBgoJkiaJk/IsZAEZFgNi
+            MmIxHjAcBgNVBAMTFWIyYi1SQklRSFNQS0lQMDAyVi1DQTCCASIwDQYJKoZIhvcN
+            AQEBBQADggEPADCCAQoCggEBAMv3KNkRI/WzMqcLwkSsKU3vM5coMtDbqdPccdXU
+            MufO94gQXzWsLYN4gUVW2BQq2ULolCzwEDuEep61By2uKw4myr9RHENM8zy7cQXs
+            VvrkNiE+cyYa2zxxM34ImJDc19vHdBovX0zcY3jT3uqtdJX42Etvh2zJoAi26SDk
+            9miXggePd9eoGfnE6MKxTdCtf3s7AHQxR9Y3Rx+uCMKOSWNN+LterAA2n7qMtu6n
+            Uo51ZXmCdJYQDgyvVgS2CgUZwfCwBvD3bCeDwM8FLOr/V/5FDDVvIDmREqQN1eeY
+            Y2q7UQTujHRFzF18Iw+Thk1eGV/zyNvaXr8ny7o1uOeIg80CAwEAAaOCAT4wggE6
+            MBMGCSsGAQQBgjcUAgQGHgQAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTAD
+            AQH/MB0GA1UdDgQWBBQjySkPLCVwclOIUQnzz5V3rO+1WzASBgkrBgEEAYI3FQEE
+            BQIDBQAFMIGsBgNVHR8EgaQwgaEwgZ6ggZuggZiGSmh0dHA6Ly9yYmlxaHNwa2lw
+            MDAzdi5iMmIucmVnbi5uZXQvQ2VydEVucm9sbC9iMmItUkJJUUhTUEtJUDAwMlYt
+            Q0EoNSkuY3JshkpodHRwOi8vcmJpcWhzcGtpcDAwNHYuYjJiLnJlZ24ubmV0L0Nl
+            cnRFbnJvbGwvYjJiLVJCSVFIU1BLSVAwMDJWLUNBKDUpLmNybDAjBgkrBgEEAYI3
+            FQIEFgQU2RDhuv3cL/CQBA4ZVzMUpO+Tqf4wDQYJKoZIhvcNAQELBQADggEBADHm
+            Vhw0S0ICMgXQDpXOp8nraCKsm9LpLcmi/SOtR35AgGQmxAxlPebKgIL3vpUOfnec
+            10htfOInwmF2dVheluEoFBPSbh0uXm3+Rm2p44/d6HTo5AkTygOQf3Fdu0IFqvBH
+            kXBLyQkgVfH2p3OjIfJAV+6seWBI3n+VvBg+YUVYHIqUCHzmxL07ztKuI7f6ZTuO
+            8AvcJzMcsjKkGeUNS3lNimEdI339C93BrBDNzPHZe7LOQr7SiFcIU32hIKfLLkWT
+            MM+pxYAJe1wZkDN1XvYgQ+R4W9XItalDf4y4ZwQIpYo60jZLS1OJQJngE3Tu6R2K
+            gA9dcD2vlZA86EhY8Mg=
+            -----END CERTIFICATE-----
+
+
+

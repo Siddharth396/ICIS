@@ -1,0 +1,52 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  values:
+    projectName: "event-processor-chempf"
+    ServiceAccountName: "chempf"
+    
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.1.0-vso.1.1002
+        pullPolicy: IfNotPresent
+      config_env:
+        KafkaConsumer_Serilog__Source: "Price Forecast Eveloution Event Processor"
+        KafkaConsumer_Serilog__Component: "EventProcessor"
+        KafkaConsumer_Serilog__Service: "KafkaConsumer"
+        KafkaConsumer_ElasticApm__ServiceName: "PFE PriceForecasts - Kafka Consumer"
+        KafkaConsumer_ElasticApm__TransactionSampleRate: 1
+    
+    event_processor:
+      config_env:
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        KAFKA_BROKER_SECURITY_PROTOCOL: 3
+        KAFKA_BROKER_SASL_MECHANISM: 1
+
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+    
+    vault:
+      VaultK8sRoleName: "kv-chempf-read"
+      VaultK8sAuthPath: "auth/cha/eks-b"
+
+    vault_secrets:
+      name: chempf-event-processor-vault-secret
+      VaultK8sRoleName: "kv-chempf-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s" 
+
+    vault_secrets_consumer:
+      name: chempf-event-processor-vault-secret-consumer
+      VaultK8sRoleName: "kv-chempf-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s" 

@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+      strategy: rollback
+  releaseName: subscriber-bff-spt-staging
+  values:
+    replicaCount: 1
+    namespace: "spt-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/spot-price/spt-bff # {"$imagepolicy": "flux-system:spt-bff-staging:name"}
+        tag: staging-48-2.5.1-141 # {"$imagepolicy": "flux-system:spt-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/spt-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        DEV_MODE: false
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ENABLED_OVERRIDE_OFFERINGS: true
+        OverrideOfferings__306_4_1__0: "F-BEN-SPT"
+        OverrideOfferings__373_9_1__0: "F-MEG-SPT"
+        OverrideOfferings__203_4_1__0: "F-PXOX"
+        OverrideOfferings__326_9_1__0: "F-ETHY"
+        OverrideOfferings__513_9_1__0: "F-PROPY"
+        OverrideOfferings__326_14_1__0: "U-ETHY"
+        OverrideOfferings__513_14_1__0: "U-PROPY"
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/spot-price-tracker/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-spt-staging
+      VaultSecretPath: "spt/staging/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-spt-staging

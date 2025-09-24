@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-omspss-staging
+  values:
+    replicaCount: 1
+    namespace: "omspss-staging"
+    environment: "staging"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/omspss/subscriber-bff # {"$imagepolicy": "flux-system:omspss-subscriber-bff-staging:name"}
+        tag: staging-todo-1.1.1 # {"$imagepolicy": "flux-system:omspss-subscriber-bff-staging:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/omspss-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.staging.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/price-series-oms/?(.*)
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-omspss-staging
+      VaultK8sRoleName: "kv-omspss-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "omspss/staging/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-omspss-staging
+      VaultK8sRoleName: "kv-omspss-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "subscriber-auth-proxy/mongo"

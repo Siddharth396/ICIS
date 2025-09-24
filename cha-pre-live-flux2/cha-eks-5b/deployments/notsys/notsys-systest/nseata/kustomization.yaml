@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: notsys-systest
+nameSuffix: -nseata
+resources:
+- ../../../../common/event-processor/nseata/
+patches:
+- path: helm-release-event-processor-nseata-systest.yaml

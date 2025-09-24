@@ -1,0 +1,69 @@
+{
+    "Commodity_Items": [
+        "LNG",
+        "Melamine",
+        "Styrene"
+    ],
+    "lng_Titles": [
+        "Price series",
+        "Period",
+        "Unit",
+        "Assessment method",
+        "Reference price",
+        "Premium/Discount",
+        "Price",
+        "Data used",
+        "Status",
+        "Change",   
+        "Last assessment price",
+        "Last assessment date"
+    ],
+    "melamine_Titles": [
+        "Price series",
+        "Unit",
+        "Low price",
+        "High price",
+        "Low change",
+        "High change",
+        "Mid price",
+        "Mid change",
+        "Status",
+        "Last assessment price",
+        "Last assessment date"
+    ],
+    "styrene_Titles": [
+        "Price series",
+        "Unit",
+        "Low price",
+        "High price",
+        "Low change",
+        "High change",
+        "Mid price",
+        "Mid change",
+        "Status",
+        "Last assessment price",
+        "Last assessment date"
+    ],
+    "styrene_Signle_Value_Titles": [
+        "Price series",
+        "Units",
+        "Price",
+        "Status",
+        "Change",
+        "Last assessment price",
+        "Last assessment date"
+    ],
+    "referencePriceDropdownValues":[
+        "TTF",
+        "NBP",
+        "THE",
+        "PSV",
+        "PEG",
+        "PVB",
+        "ZTP",
+        "LNG DES Argentina",
+        "LNG FOB Reload NWE",
+        "LNG DES India",
+        "LNG EAX Index"
+    ]
+}

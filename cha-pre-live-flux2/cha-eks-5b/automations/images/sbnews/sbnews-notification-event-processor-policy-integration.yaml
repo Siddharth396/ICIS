@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: sbnews-notification-event-processor-integration
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sbnews-notification-event-processor
+    namespace: flux-system
+  filterTags:
+    pattern: '^integ-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

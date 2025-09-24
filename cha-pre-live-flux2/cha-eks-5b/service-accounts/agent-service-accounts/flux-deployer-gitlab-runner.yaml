@@ -1,0 +1,100 @@
+# Data Strategy squad Teamcity agent
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: flux-deployer
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: flux-deployer-role-binding
+subjects:
+  - kind: ServiceAccount
+    name: flux-deployer
+    namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: flux-deployer-role-binding-custom
+subjects:
+  - kind: ServiceAccount
+    name: flux-deployer
+    namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: flux-deployer-custom
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: flux-deployer-admin-vaults
+  namespace: sbcore-systest
+subjects:
+- kind: ServiceAccount
+  name: flux-deployer
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: flux-deployer-admin-vaults
+  namespace: sbcore-integration
+subjects:
+- kind: ServiceAccount
+  name: flux-deployer
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: flux-deployer-admin-vaults
+  namespace: sbcore-performance
+subjects:
+- kind: ServiceAccount
+  name: flux-deployer
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: flux-deployer-admin-vaults
+  namespace: sbcore-staging
+subjects:
+- kind: ServiceAccount
+  name: flux-deployer
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io  

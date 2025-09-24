@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: wrkflw-performance
+nameSuffix: -wrkflw
+resources:
+- ../../../common/authoring-bff/wrkflw/
+- ../../../common/workflow-event-processor/
+- helm-release-subscriber-bff-authoring-deployment-scaler.yaml
+- helm-release-wrkflw-workflow-event-processor-deployment-scaler.yaml
+patches:
+- path: helm-release-workflow-bff-performance.yaml
+- path: helm-release-workflow-event-processor-performance.yaml

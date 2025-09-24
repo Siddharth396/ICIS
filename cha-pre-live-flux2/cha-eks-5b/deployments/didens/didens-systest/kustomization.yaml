@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: didens-systest
+nameSuffix: -didens
+resources:
+- ../../../common/domain-identity-service/
+- di-client-secret-expire-check-job.yaml
+patches:
+- path: helm-release-didens-systest.yaml

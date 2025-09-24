@@ -1,0 +1,146 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-cc-mongodb-backup
+  namespace: icis-backup
+spec:
+  releaseName: mongo-backup-cc
+  interval: 5m0s
+  chart:
+    spec:
+      chart: mongodb-backups
+      version: "0.1.10"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 1
+    namespace : icis-backup
+    environment: cha_cc
+    init_containers: true
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-services/mongotools
+      tag: 5
+      pullPolicy: Always
+    ServiceAccountName: mongodb-backup
+    container:
+      name: mongobackup
+
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+    env_values:
+      mongo_host: cha-pre-live-ak0n6.mongodb.net
+      mail_to: <to-be-updated@xyz.com>
+      s3_bucket: icis-atlas-mongodb-pre-live-backups
+      upload: 0
+      retention: 2
+      TERM: xterm
+
+    debug:
+      enabled: false
+
+    cronJob:
+      enabled: true
+      schedule: '"30 23 * * *"'
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 1
+
+    vault_secrets:
+      name: mongo-secrets-cc
+      VaultK8sRoleName: "kv-mongobackup-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "core-sre/mongodb/backup"
+
+    mongo_configmap:
+      name: cc-mongo-configs
+
+    persistence:
+      name: pvc-cc-mongobackup
+      size: 100Gi
+      class: ebs-gp3-ext4-retain
+
+    resources:
+      limits:
+        cpu: "1"
+        memory: "3Gi"
+      requests:
+        cpu: "500m"
+        memory: "2Gi"
+    backup:
+      dbs:
+        - pricing-systest
+        - pricing-staging
+        - pricing-performance
+        - didens-systest
+        - didens-staging
+        - didens-performance
+        - didens-integration
+        - sbcore-systest
+        - sbcore-staging
+        - sbcore-performance
+        - sbcore-integration
+        - canvas-systest
+        - canvas-staging
+        - canvas-performance
+        - canvas-integration
+        - rchtxt-staging
+        - newsfd-staging
+        - adchrt-staging
+        - cvideo-staging
+        - cimage-staging
+        - adtabl-staging
+        - prcent-staging
+        - pdcast-staging
+        - cnvsrv-staging
+        - infgrm-systest
+        - infgrm-staging
+        - infgrm-integration
+        - infgrm-performance
+        - pgnsvc-systest
+        - pgnsvc-staging
+        - pgnsvc-integration
+        - pgnsvc-performance
+        - ontmgs-systest
+        - ontmgs-staging
+        - ontmgs-performance
+        - dlchrt-systest
+        - dlchrt-staging
+        - dlchrt-integration
+        - dlchrt-performance
+        - tblent-systest
+        - tblent-staging
+        - tblent-performance
+        - refdts-systest
+        - refdts-staging
+        - refdts-performance
+        - alrthb-systest
+        - alrthb-staging
+        - alrthb-performance
+        - cvsems-systest
+        - cvsems-staging
+        - cvsems-performance
+
+
+# BACKSTAGE-COMMENT-PATTERN
+        - entapi-systest
+        - entapi-staging
+        - entapi-integration
+        - entapi-performance
+        - snkidn-systest
+        - snkidn-staging
+        - carfpt-staging
+        - cnvspt-systest
+        - cnvspt-staging
+        - cnvspt-integration
+        - cnvspt-performance
+        #- add db names above this line
+
+
+# BACKSTAGE-COMMENT-PATTERN
+        - carfpt-staging
+
+# BACKSTAGE-COMMENT-PATTERN

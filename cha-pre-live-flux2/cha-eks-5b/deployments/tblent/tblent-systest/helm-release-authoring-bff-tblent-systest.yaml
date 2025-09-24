@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-tblent-systest
+  values:
+    replicaCount: 1
+    namespace: "tblent-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|(/swagger?/*)|health|(/v1/notifications?/*)"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/tblent/authoring-tblent-bff # {"$imagepolicy": "flux-system:authoring-bff-tblent-systest:name"}
+        tag: systest-127-1.6.0-update-validator.37098 # {"$imagepolicy": "flux-system:authoring-bff-tblent-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        LOG_LEVEL: Debug
+        BASE_PATH: /tblent
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/tblent-systest?retryWrites=true&w=majority"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        DEV_MODE: true
+        CONTENT_NOTIFIER_KAFKA_TOPIC: public_systest_notifications_content_1
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/table-entry/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-tblent-systest
+      VaultK8sRoleName: "kv-tblent-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "tblent/systest/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-tblent-systest
+      VaultK8sRoleName: "kv-tblent-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

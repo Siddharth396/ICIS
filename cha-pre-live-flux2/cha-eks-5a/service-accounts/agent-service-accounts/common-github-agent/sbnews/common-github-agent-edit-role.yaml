@@ -1,0 +1,189 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent
+  namespace: sbnews-systest
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent-service-monitor
+  namespace: sbnews-systest
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sbnews-admin-vaults
+  namespace: sbnews-systest
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent
+  namespace: sbnews-staging
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent-service-monitor
+  namespace: sbnews-staging
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sbnews-admin-vaults
+  namespace: sbnews-staging
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent
+  namespace: sbnews-integ
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent-service-monitor
+  namespace: sbnews-integ
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sbnews-admin-vaults
+  namespace: sbnews-integ
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent
+  namespace: sbnews-performance
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-github-agent-service-monitor
+  namespace: sbnews-performance
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sbnews-admin-vaults
+  namespace: sbnews-performance
+subjects:
+- kind: ServiceAccount
+  name: common-github-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io

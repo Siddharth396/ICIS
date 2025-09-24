@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sbcore
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_petchem_price_assessments_specifications_2
+    database: sbcore-systest
+    collection: price_assessments_specification
+    transforms.RenameField.renames: id:_id

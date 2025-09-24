@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<AssemblyName>Subscriber</AssemblyName>
+		<RootNamespace>Subscriber</RootNamespace>
+		<Version>1.0.0-local-test+0</Version>
+		<Product>Subscriber-1.0.0-pre-test.0</Product>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="dotenv.net" />
+		<PackageReference Include="EnvSettings" />
+		<PackageReference Include="Serilog.AspNetCore" />
+		<PackageReference Include="StyleCop.Analyzers.Unstable" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj" />
+	</ItemGroup>
+
+</Project>

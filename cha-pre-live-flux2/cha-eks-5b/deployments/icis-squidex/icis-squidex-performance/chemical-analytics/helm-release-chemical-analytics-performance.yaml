@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-performance
+  namespace: icis-squidex-performance
+spec:
+  releaseName: chemical-analytics-performance
+  values:
+    projectName: "chemical-analytics"
+    replicaCount: 3
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-performance-chemical-analytics:name"}
+        tag: performance-chemical-analytics-169-5.6.43 # {"$imagepolicy": "flux-system:icis-squidex-performance-chemical-analytics:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: chemical-analytics
+        ADMIN__ADMINUSERGROUP__0: ICIS_Darwin
+        CONTENTS__MAXRESULTS: "'5000'"
+        UI__DISABLESCHEDULEDCHANGES: "'true'"
+        PLUGINS__2: ICIS.EmbargoPlugin.dll
+        PLUGINS__3: ICIS.AWFPlugin.dll
+        AWF__PUBLISHAPIURL: https://pfawf.integ.cha.eu-west-1.dev/
+        AWF__TIMEOUTINMS: "'15000'"
+      kafka:
+        enabled: True
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 256Mi
+    squidexCli:
+      enabled: true
+      schedule: "'05 7,10,13,16 * * *'"
+    vault_squidex_secrets:
+      name: chemical-analytics-squidex-performance-secret
+    vault_kafka_secrets:
+      name: chemical-analytics-squidex-kafka-performance-secret
+      VaultSecretPath: "icis-squidex/chemical-analytics/performance"   

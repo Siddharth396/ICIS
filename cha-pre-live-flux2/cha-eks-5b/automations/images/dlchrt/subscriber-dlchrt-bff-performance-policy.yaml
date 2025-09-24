@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: subscriber-bff-dlchrt-performance
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: subscriber-bff-dlchrt
+    namespace: flux-system
+  filterTags:
+    pattern: '^performance-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

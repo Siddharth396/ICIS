@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cnvspt-event-processor
+spec:
+  releaseName: cnvspt-event-processor-performance
+  values:
+    replicaCount: 1
+    namespace: "cnvspt-performance"
+    environment: "performance"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cnvspt/cnvspt-event-processor # {"$imagepolicy": "flux-system:cnvspt-event-processor-performance:name"}
+        tag: performance-7-0.0.0-main-38215 # {"$imagepolicy": "flux-system:cnvspt-event-processor-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/cnvspt-performance?retryWrites=true&w=majority"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENVIRONMENT: performance
+        QUEUE_NAME: "uat-CONTENT_STRUCTURES-changes-snapshots-perf"
+        SNOWFLAKE_USER: "SVC_CONTENT_STRUCTURES_SNAPSHOTS_USER_GOLD_UAT"
+        SNOWFLAKE_ROLE: "SVC_CONTENT_STRUCTURES_SNAPSHOTS_GOLD_UAT"
+        SNOWFLAKE_WAREHOUSE: "QRY_WH_GOLD_UAT"
+        SNOWFLAKE_DB: "ICIS_GOLD_UAT_DB"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/snapshots-processor/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: cnvspt-vault-secret-event-processor-performance
+      VaultSecretPath: "cnvspt/performance/eventprocessor"
+    vault_secrets_proxy:
+      name: cnvspt-auth-proxy-vault-secret-event-processor-performance

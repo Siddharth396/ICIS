@@ -1,0 +1,53 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-cimage-staging
+  values:
+    replicaCount: 1
+    namespace: "cimage-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cimage/authoring-bff # {"$imagepolicy": "flux-system:cimage-auth-bff-staging:name"}
+        tag: staging-58-2.6.1.19039 # {"$imagepolicy": "flux-system:cimage-auth-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/cimage-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        MUTATION: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AWS_BUCKET_NAME: icis-cc-image-capability-pre-live
+        REDIS_CONNECTION_STRING: cimage-staging.drtozh.ng.0001.euw1.cache.amazonaws.com:6379
+        REDIS_CACHE_EXPIRY_IN_DAYS: 32
+        LOG_LEVEL: Information
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        SWAGGER_OAUTH_ROLE: ICIS_Mercury
+        SWAGGER_ENABLED: true
+        WOODWING_USER: apiuser
+        WOODWING_URL: http://rbiqhscmsp002v.b2b.regn.net
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/image/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-cimage-staging
+      VaultSecretPath: "cimage/staging/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-cimage-staging

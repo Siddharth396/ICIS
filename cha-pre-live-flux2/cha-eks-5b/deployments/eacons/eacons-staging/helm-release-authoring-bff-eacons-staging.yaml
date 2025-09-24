@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-eacons-staging
+  values:
+    replicaCount: 1
+    namespace: "eacons-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/eacons/authoring-bff # {"$imagepolicy": "flux-system:eacons-auth-bff-staging:name"}
+        tag: staging-24-0.0.0.40815 # {"$imagepolicy": "flux-system:eacons-auth-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        ALLOWED_ROLE_CLAIM: ADFS-ICIS-ACCESS-CONTROL-MANAGER-PRELIVE
+        AWS_BUCKET_NAME: icis-entitlement-admin-staging-lambda-acm
+        AWS_CONNECT_WITH_IAM_ROLE: true
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .1
+        LOG_LEVEL: Debug
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SWAGGER_ENABLED: true
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        TRACE_ENABLED: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/eaconsole/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-eacons-staging
+      VaultK8sRoleName: "kv-eacons-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "eacons/staging/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-eacons-staging
+      VaultK8sRoleName: "kv-eacons-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

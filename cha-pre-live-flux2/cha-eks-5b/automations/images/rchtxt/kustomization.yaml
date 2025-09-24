@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- rchtxt-sub-bff-policy-integration.yaml
+- rchtxt-sub-bff-policy-performance.yaml
+- rchtxt-sub-bff-policy-staging.yaml
+- rchtxt-sub-bff-policy-systest.yaml
+- rchtxt-sub-bff-registry.yaml
+###############################
+- rchtxt-auth-bff-policy-integration.yaml
+- rchtxt-auth-bff-policy-performance.yaml
+- rchtxt-auth-bff-policy-staging.yaml
+- rchtxt-auth-bff-policy-systest.yaml
+- rchtxt-auth-bff-registry.yaml
+###############################
+- rchtxt-auth-bff-policy-ai-based-systest.yaml
+- rchtxt-auth-bff-registry-ai-based.yaml
+###############################
+- rchtxt-mongo-migration-policy-systest.yaml
+- rchtxt-mongo-migration-policy-staging.yaml
+- rchtxt-mongo-migration-policy-performance.yaml
+- rchtxt-mongo-migration-policy-integration.yaml
+- rchtxt-mongo-migration-registry.yaml

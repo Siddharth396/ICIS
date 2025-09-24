@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- sbmfe-spt-pilet-policy-performance.yaml
+- sbmfe-spt-pilet-policy-staging.yaml
+- sbmfe-spt-pilet-policy-systest.yaml
+- sbmfe-spt-pilet-registry.yaml
+###############################
+- spt-tile-pilet-policy-performance.yaml
+- spt-tile-pilet-policy-staging.yaml
+- spt-tile-pilet-policy-systest.yaml
+- spt-tile-pilet-registry.yaml
+###############################
+- sbmfe-sbnews-pilet-policy-integration.yaml
+- sbmfe-sbnews-pilet-policy-performance.yaml
+- sbmfe-sbnews-pilet-policy-staging.yaml
+- sbmfe-sbnews-pilet-policy-systest.yaml
+- sbmfe-sbnews-pilet-registry.yaml
+################################
+- sbmfe-rst-pilet-policy-systest.yaml
+- sbmfe-rst-pilet-policy-staging.yaml
+- sbmfe-rst-pilet-policy-performance.yaml
+- sbmfe-rst-pilet-registry.yaml
+#####################################
+- sbmfe-core-pilet-policy-performance.yaml
+- sbmfe-core-pilet-policy-integration.yaml
+- sbmfe-core-pilet-policy-staging.yaml
+- sbmfe-core-pilet-policy-systest.yaml
+- sbmfe-core-pilet-registry.yaml
+######################################
+- sbmfe-pricing-pilets-policy-performance.yaml
+- sbmfe-pricing-pilets-policy-integration.yaml
+- sbmfe-pricing-pilets-policy-systest.yaml
+- sbmfe-pricing-pilets-policy-staging.yaml
+- sbmfe-pricing-pilets-registry.yaml
+########################################
+- sbmfe-pforecast-pilet-registry.yaml
+- sbmfe-pforecast-pilet-policy-systest.yaml
+- sbmfe-pforecast-pilet-policy-staging.yaml
+######################################

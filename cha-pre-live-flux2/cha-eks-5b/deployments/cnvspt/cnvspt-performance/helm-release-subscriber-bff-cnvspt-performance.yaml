@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-cnvspt-performance
+  values:
+    replicaCount: 1
+    namespace: "cnvspt-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cnvspt/subscriber-bff # {"$imagepolicy": "flux-system:cnvspt-subscriber-bff-performance:name"}
+        tag: performance-7-0.0.1-main-43888 # {"$imagepolicy": "flux-system:cnvspt-subscriber-bff-performance:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/cnvspt-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.performance.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        LOG_LEVEL: Information
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/snapshots/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-cnvspt-performance
+      VaultSecretPath: "cnvspt/performance/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-cnvspt-performance
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 1

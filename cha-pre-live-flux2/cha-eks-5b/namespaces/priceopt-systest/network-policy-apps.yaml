@@ -1,0 +1,94 @@
+####################################################
+## Allow ingress from priceopt-systest and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-priceopt-systest
+  namespace: priceopt-systest
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: priceopt-systest
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from priceopt-systest ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-priceopt-systest
+  namespace: priceopt-systest
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: priceopt-systest
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: priceopt-systest
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: priceopt-systest
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+#################################################
+## Allow traffic to aws redis ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-redis
+  namespace: priceopt-systest
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.36.0/22
+    ports:
+    - port: 6379 
+      protocol: TCP
+
+

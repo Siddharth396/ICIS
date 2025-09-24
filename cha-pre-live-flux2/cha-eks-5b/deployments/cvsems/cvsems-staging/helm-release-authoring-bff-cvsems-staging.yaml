@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  chart:
+    spec:
+      version: 0.1.72
+  releaseName: authoring-bff-cvsems-staging
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "cvsems-staging"
+    environment: "staging"
+    deploymentStrategy: "RollingUpdate"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cvsems/mongo-migration # {"$imagepolicy": "flux-system:cvsems-mongo-migration-staging:name"}
+        tag: staging-2-0.0.0-main-61357 # {"$imagepolicy": "flux-system:cvsems-mongo-migration-staging:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cvsems/authoring-bff # {"$imagepolicy": "flux-system:cvsems-authoring-bff-staging:name"}
+        tag: staging-37-0.0.0-BugFix-TITAN-4094-ONB-64115 # {"$imagepolicy": "flux-system:cvsems-authoring-bff-staging:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: staging
+        LOG_LEVEL: Debug
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/cvsems-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/ems/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-cvsems-staging
+      VaultSecretPath: "cvsems/staging/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-cvsems-staging

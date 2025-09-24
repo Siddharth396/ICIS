@@ -1,0 +1,346 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: energy-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: amw-poc-systest 
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: lngedge-systest
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: lngedge-uat
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: tesla-kafka-systest 
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin-service-monitor
+  namespace: tesla-kafka-systest
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: tesla-kafka-automation-systest 
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin-service-monitor
+  namespace: tesla-kafka-automation-systest
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: tesla-kafka-performance
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin-service-monitor
+  namespace: tesla-kafka-performance
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: tesla-kafka-uat 
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin-service-monitor
+  namespace: tesla-kafka-uat
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: tesla-systest
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: tesla-performance
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tc-agent-admin
+  namespace: tesla-uat
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tesla-performance-service-monitor
+  namespace: tesla-performance
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tc-agent-custom 
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tesla-uat-service-monitor
+  namespace: tesla-uat
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tc-agent-custom
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-tesla-systest-service-monitor
+  namespace: tesla-systest
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tc-agent-custom
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-ensftp-dev-service-monitor
+  namespace: ensftp-dev
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tc-agent-custom
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-ensftp-systest-service-monitor
+  namespace: ensftp-systest
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tc-agent-custom
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-ensftp-performance-service-monitor
+  namespace: ensftp-performance
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tc-agent-custom
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: energy-ensftp-uat-service-monitor
+  namespace: ensftp-uat
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: tc-agent-custom
+subjects:
+- kind: ServiceAccount
+  name: energy-tc-agent
+  namespace: default

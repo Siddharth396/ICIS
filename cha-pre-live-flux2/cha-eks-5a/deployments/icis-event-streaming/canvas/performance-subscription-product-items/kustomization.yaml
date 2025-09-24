@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: -performance-subscription-product-items-v3
+resources:
+- ../common
+
+patches:
+- path: performance-subscription-product-items.yaml

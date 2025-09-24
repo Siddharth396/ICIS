@@ -1,0 +1,7 @@
+version: v1.25.0
+ignore: {}
+patch: {}
+exclude:
+  global:
+    - bff-mock-ts/**
+    - e2e-tests/**

@@ -1,0 +1,21 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-canvas"
+    ServiceAccountName: "canvas"
+    vault_secrets:    
+        VaultK8sRoleName: "kv-canvas-read"
+        VaultK8sAuthPath: "cha/eks-b"
+        VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_proxy:
+        VaultK8sRoleName: "kv-canvas-read"
+        VaultK8sAuthPath: "cha/eks-b"
+        VaultSecretMount: "kv/cha/k8s" 
+        VaultSecretPath: "authoring-auth-proxy/mongo"
+    authproxy:
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|(/swagger?/*)|health"

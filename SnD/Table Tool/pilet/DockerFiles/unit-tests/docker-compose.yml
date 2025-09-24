@@ -1,0 +1,9 @@
+version: "3.4"
+
+services:
+  unit-tests:
+    build:
+      context: ../../
+      dockerfile: ./DockerFiles/unit-tests/tests.Dockerfile
+      target: runner
+    container_name: supply-and-demand-unit-test-runner

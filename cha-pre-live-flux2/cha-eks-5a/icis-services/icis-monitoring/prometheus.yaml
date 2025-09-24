@@ -1,0 +1,49 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: icis-prometheus
+  namespace: icis-monitoring
+spec:
+  nodeSelector:
+    beta.kubernetes.io/os: linux
+  serviceAccountName: icis-monitoring
+  retention: 15d
+  securityContext:
+    fsGroup: 2000
+    runAsNonRoot: true
+    runAsUser: 1000
+  podMetadata:
+    labels:
+      app: prometheus
+  podMonitorNamespaceSelector: {}
+  podMonitorSelector:
+    matchLabels:
+      monitoring-platform: icis-monitoring
+  ruleNamespaceSelector: {}
+  ruleSelector:
+    matchLabels:
+      monitoring-platform: icis-monitoring
+  serviceMonitorNamespaceSelector: {}
+  serviceMonitorSelector:
+    matchLabels:
+      monitoring-platform: icis-monitoring
+  thanos:
+    image: quay.io/thanos/thanos:v0.25.1
+    objectStorageConfig:
+      key: config
+      name: thanos-objstore-config
+  resources:
+    limits:
+      memory: 5Gi
+    requests:
+      memory: 5Gi
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 30Gi
+        storageClassName: ebs-gp3-ext4-retain
+  enableAdminAPI: false
+  version: v2.33.4

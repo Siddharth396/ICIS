@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: cimage-performance
+nameSuffix: -cimage
+resources:
+- ../../../common/subscriber-bff/cimage/
+- ../../../common/authoring-bff/cimage/
+- helm-release-bff-authoring-deployment-scaler.yaml
+- helm-release-bff-subscriber-deployment-scaler.yaml
+patches:
+- path: helm-release-subscriber-bff-cimage-performance.yaml
+- path: helm-release-authoring-bff-cimage-performance.yaml

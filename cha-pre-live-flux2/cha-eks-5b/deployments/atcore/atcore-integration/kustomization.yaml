@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: atcore-integration
+nameSuffix: -atcore
+resources:
+- ../../../common/authoring-bff/atcore/
+- ../../../common/app-shell/authoring-app/
+- ../../../common/feed-service/authoring/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-authoring-core-bff.yaml
+- path: helm-release-authoring-core-app.yaml
+- path: helm-release-authoring-feed-service.yaml
+# BACKSTAGE-COMMENT-PATTERN2

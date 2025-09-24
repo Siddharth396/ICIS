@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  chart:
+    spec:
+      version: "0.1.75"
+  values:
+    replicaCount: 1
+    projectName: "subscriber-cnvspt"
+    vault_secrets:
+      VaultK8sRoleName: "kv-cnvspt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-subscriber-bff-cnvspt-connection"
+      VaultNamespace: dataservices/icis/nonprod
+    vault_secrets_proxy:
+      VaultK8sRoleName: "kv-cnvspt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "subscriber-auth-proxy/mongo"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-subscriber-bff-cnvspt-proxy-connection"
+      VaultNamespace: dataservices/icis/nonprod
+    ServiceAccountName: "cnvspt"    

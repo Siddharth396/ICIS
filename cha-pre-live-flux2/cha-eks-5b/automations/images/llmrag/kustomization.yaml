@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+
+# - llmrag-sub-bff-policy-performance.yaml
+- llmrag-sub-bff-policy-staging.yaml
+- llmrag-sub-bff-policy-integration.yaml
+- llmrag-sub-bff-policy-systest.yaml
+- llmrag-sub-bff-registry.yaml
+- askics-importer-policy-systest.yaml
+- askics-importer-policy-staging.yaml
+- askics-importer-policy-integration.yaml
+- askics-importer-registry.yaml

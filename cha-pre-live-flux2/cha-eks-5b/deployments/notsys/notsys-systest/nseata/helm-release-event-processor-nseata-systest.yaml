@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-nseata-systest
+  values:
+    replicaCount: 1
+    namespace: "notsys-systest"
+    environment: "systest"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/nseata/nseata-email-alerting-tracker # {"$imagepolicy": "flux-system:event-processor-nseata-systest:name"}
+        tag: systest-157-1.0.35-deployment-issue.410 # {"$imagepolicy": "flux-system:event-processor-nseata-systest:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 1000m
+          memory: 512Mi
+        requests:
+          cpu: 500m
+          memory: 256Mi
+      config_env:
+        ENVIRONMENT: systest
+        LOG_LEVEL: Debug
+        SparkPostSenderName: "ICIS Alerts"
+        SparkPostSenderEmail: "alerts@email-test.icis.com"
+        SparkPostRecipients: "sunil.chandel@nagarro.com"
+        AttachmentFilePath: "C:\\CandidateAlerts\\Alerts.xlsx"
+        MongoDbAlertingDatabase: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/c-hub-systest?retryWrites=true&w=majority&maxPoolSize=1024"
+        MongoDbEntitlementsDatabase: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/nsesvc-systest?retryWrites=true&w=majority&maxPoolSize=1024"
+        MogoDbPriceForecasetDatabase: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pf-systest?retryWrites=true&w=majority&maxPoolSize=1024"
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: email-alerting-tracker-event-processor.systest.cha.eu-west-1.dev
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        cert-manager.io/cluster-issuer: vault-issuer
+        lnrs.io/zone-type: private
+      hosts:
+        - host: email-alerting-tracker-event-processor.systest.cha.eu-west-1.dev
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - email-alerting-tracker-event-processor.systest.cha.eu-west-1.dev
+          secretName: email-alerting-tracker-event-processor.systest.cha.eu-west-1.dev
+    vault_secrets:
+      name: nseata-event-processor-vault-secret-systest
+      VaultSecretPath: "notsys/nseata/systest/eventprocessor"
+    vault_secrets_consumer:
+      name: nseata-event-processor-vault-secret-consumer-systest
+      VaultSecretPath: "notsys/nseata/systest/eventprocessor"

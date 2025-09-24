@@ -1,0 +1,148 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: prelive-connect-cluster
+  annotations:
+    strimzi.io/use-connector-resources: "true"
+  labels:
+    require-confluent-access: "true"
+  namespace: icis-event-streaming
+spec:
+  image: artifacts.cha.rbxd.ds/icis-services/kafka-connect:15
+  #version: 2.4.0
+  replicas: 3
+  bootstrapServers: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+  externalConfiguration:
+    volumes:
+      - name: pricing-mongo-uri
+        secret:
+          secretName: pricing-mongo-uri
+      - name: chempf-mongo-uri
+        secret:
+          secretName: chempf-mongo-uri
+      - name: recycling-mongo-uri
+        secret:
+          secretName: recycling-mongo-uri
+      - name: cpages-mongo-uri
+        secret:
+          secretName: cpages-mongo-uri
+      - name: nsesvc-mongo-uri
+        secret:
+          secretName: nsesvc-mongo-uri
+      - name: sbcomm-mongo-uri
+        secret:
+          secretName: sbcomm-mongo-uri
+      - name: sberdg-mongo-uri
+        secret:
+          secretName: sberdg-mongo-uri
+      - name: price-forecast-mongo-uri
+        secret:
+          secretName: price-forecast-mongo-uri
+      - name: spt-mongo-uri
+        secret:
+          secretName: spt-mongo-uri
+      - name: sbfeed-mongo-uri
+        secret:
+          secretName: sbfeed-mongo-uri
+      - name: order-postgres
+        secret:
+          secretName: order-postgres
+      - name: sboutg-mongo-uri
+        secret:
+          secretName: sboutg-mongo-uri
+      - name: sboutg-sql-connect
+        secret:
+          secretName: sboutg-sql-connect
+      - name: kafka-secret-sboutg
+        secret:
+          secretName: kafka-secret-sboutg
+      - name: kafka-secret-sboutg-pubisher
+        secret:
+          secretName: kafka-secret-sboutg-publisher
+      - name: drdcpt-mongo-uri
+        secret:
+          secretName: drdcpt-mongo-uri
+      - name: kafka-secret-order
+        secret:
+          secretName: kafka-secret-order
+      - name: drdcpt-kafka-secret
+        secret:
+          secretName: drdcpt-kafka-secret
+      - name: spt-kafka-secret
+        secret:
+          secretName: spt-kafka-secret
+      - name: sbcore-mongo-uri
+        secret:
+          secretName: sbcore-mongo-uri
+      - name: breaking-news-mongo-uri
+        secret:
+          secretName: breaking-news-mongo-uri
+      - name: newsfd-authoring-mongo-uri
+        secret:
+          secretName: newsfd-authoring-mongo-uri
+      - name: canvas-mongo-uri
+        secret:
+          secretName: canvas-mongo-uri
+      - name: schema-registry
+        secret:
+          secretName: schema-registry
+      - name: llmrag-mongo-uri
+        secret:
+          secretName: llmrag-mongo-uri
+      - name: kafka-secret-llmrag-publisher
+        secret:
+          secretName: kafka-secret-llmrag-publisher
+      - name: adchrt-mongo-uri
+        secret:
+          secretName: adchrt-mongo-uri
+      - name: adtabl-mongo-uri
+        secret:
+          secretName: adtabl-mongo-uri
+      - name: rchtxt-mongo-uri
+        secret:
+          secretName: rchtxt-mongo-uri
+      - name: dlchrt-mongo-uri
+        secret:
+          secretName: dlchrt-mongo-uri
+      - name: prcent-mongo-uri
+        secret:
+          secretName: prcent-mongo-uri
+      - name: infgrm-mongo-uri
+        secret:
+          secretName: infgrm-mongo-uri
+      - name: cnvspt-mongo-uri
+        secret:
+          secretName: cnvspt-mongo-uri
+  resources:
+    limits:
+      cpu: "1"
+      memory: "8Gi"
+    requests:
+      cpu: "500m"
+      memory: "4Gi"
+  config:
+    group.id: prelive-connect-cluster
+    config.providers: file
+    config.providers.file.class: org.apache.kafka.common.config.provider.FileConfigProvider
+    key.converter: org.apache.kafka.connect.json.JsonConverter
+    value.converter: io.confluent.connect.avro.AvroConverter
+    key.converter.schemas.enable: false
+    value.converter.schemas.enable: false
+    offset.storage.topic: private_pre_live_connect_cluster_offsets
+    config.storage.topic: private_pre_live_connect_cluster_configs
+    status.storage.topic: private_pre_live_connect_cluster_status
+    connector.client.config.override.policy: All
+  authentication:
+    type: plain
+    username: OYFLABHR26O62FUN
+    passwordSecret:
+      secretName: kafka-secret
+      password: kafka_key
+  tls:
+    trustedCertificates: []
+  metricsConfig:
+    type: jmxPrometheusExporter
+    valueFrom:
+      configMapKeyRef:
+        name: connect-metrics
+        key: metrics-config.yml

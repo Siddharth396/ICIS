@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: grn-performance
+nameSuffix: -rst
+resources:
+# - ../../../common/subscriber-mfe/rst/
+#- ../../../common/subscriber-bff/grn/
+#- ../../../common/subscriber-realm-bff/grn/
+patches:
+# - path: helm-release-subscriber-mfe-rst-performance.yaml
+##- path: helm-release-subscriber-bff-grn-performance.yaml
+#- path: helm-release-subscriber-realm-bff-grn-performance.yaml

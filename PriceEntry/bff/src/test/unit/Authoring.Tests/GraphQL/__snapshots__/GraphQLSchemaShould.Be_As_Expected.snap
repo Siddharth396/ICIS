@@ -1,0 +1,514 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+type AlternateField {
+  seriesItemTypeCodes: [String!]!
+  field: String!
+  priceDeltaField: String
+}
+
+type AuditInfo {
+  timestamp: DateTime!
+  user: String!
+}
+
+type Column {
+  field: String!
+  headerName: String!
+  cellDataType: String!
+  displayOrder: Int!
+  editable: Boolean!
+  values: [String!]
+  pinned: String
+  editableWhen: ColumnEditableWhen
+  type: String
+  customConfig: CustomConfig
+  tooltipField: String
+  cellType: String
+  columnOrder: Int!
+  hideable: Boolean!
+  hidden: Boolean!
+  forCorrectionWorkflow: Boolean
+}
+
+type ColumnEditableWhen {
+  field: String!
+  value: String!
+}
+
+type ColumnForDisplay {
+  field: String!
+  displayOrder: Int!
+  hidden: Boolean!
+}
+
+type Commentary {
+  id: String!
+  contentBlockId: String!
+  commentaryId: String!
+  version: String!
+  assessedDateTime: DateTime!
+}
+
+type CommentaryOutput {
+  commentaryId: String!
+  version: String!
+}
+
+type Commodity {
+  name: String!
+}
+
+type ContentBlockDefinition {
+  contentBlockId: String!
+  version: Int!
+  title: String
+  priceSeriesGrids: [PriceSeriesGrid!]
+  commentary: CommentaryOutput
+  dataPackageId: String!
+  nextActions: [NextAction!]
+  nmaEnabled: Boolean!
+  publicationScheduleId: String
+  workflowBusinessKey: String
+}
+
+type ContentBlockDefinitionForDisplay {
+  contentBlockId: String!
+  version: Int!
+  title: String
+  columns: [ColumnForDisplay!]
+  rows: [RowForDisplay!]
+  selectedFilters: SelectedFilters
+  assessedDateTime: DateTime
+  priceDisplayGridConfiguration: PriceDisplayGridConfiguration
+  priceSeriesItemForDisplay: [PriceSeriesResponse!]
+}
+
+type ContentBlockSaveResponse {
+  isValid: Boolean!
+  contentBlockId: String!
+  version: Int!
+  errorCodes: [String!]
+}
+
+type ContentBlockSaveResponseForDisplay {
+  contentBlockId: String!
+  version: Int!
+  errorCodes: [String!]
+}
+
+type CurrencyUnit {
+  name: String!
+  code: String!
+}
+
+type CustomConfig {
+  priceDelta: PriceDelta
+}
+
+type DataPackageStateTransitionResponse {
+  isSuccess: Boolean!
+  errorCode: String
+}
+
+type DropdownFilterItem {
+  name: String!
+  id: UUID!
+}
+
+type Filter {
+  name: String!
+  filterDetails: [FilterDetail!]!
+}
+
+type FilterDetail {
+  id: UUID
+  name: String!
+  isDefault: Boolean!
+}
+
+type GetImpactedPricesResponse {
+  isSuccess: Boolean!
+  errorCode: String
+  impactedPrices: ImpactedPrices
+}
+
+type GridConfiguration {
+  columns: [Column!]!
+  sort: Sort!
+  seriesItemTypeCode: String!
+}
+
+type ImpactedPrices {
+  seriesName: String!
+  impactedDerivedPriceSeriesIds: [String!]!
+  impactedReferencePriceSeriesIds: [String!]!
+  impactedCalculatedPriceSeriesIds: [String!]!
+}
+
+type Location {
+  name: String!
+  region: String!
+}
+
+type MeasureUnit {
+  name: String!
+  symbol: String!
+}
+
+type Mutation {
+  saveUserPreference(userPreferenceInput: UserPreferenceInput!): UserPreferenceSaveResponse!
+  updatePriceEntryGridData(priceItemInput: PriceItemInput!): PriceEntryDataSaveResponse!
+  saveContentBlockForDisplay(contentBlockInput: ContentBlockForDisplayInput!): ContentBlockSaveResponseForDisplay!
+  initiateCorrectionForDataPackage(contentBlockId: String! version: Int! assessedDateTime: DateTime! reviewPageUrl: String!): Boolean!
+  dataPackageTransitionToState(contentBlockId: String! version: Int! assessedDateTime: DateTime! nextState: String! operationType: String! = "" reviewPageUrl: String! = ""): DataPackageStateTransitionResponse!
+  saveContentBlock(contentBlockInput: ContentBlockInput!): ContentBlockSaveResponse!
+  toggleNonMarketAdjustment(contentBlockId: String! version: Int! assessedDateTime: DateTime! enabled: Boolean!): Boolean!
+  saveCommentary(commentaryInput: CommentaryInput!): Commentary!
+}
+
+type NextAction {
+  name: String!
+  displayValue: String!
+  enabled: Boolean!
+}
+
+type PeriodType {
+  name: String!
+  code: String!
+}
+
+type PriceDelta {
+  priceField: String!
+  priceDeltaField: String!
+  precisionField: String!
+}
+
+type PriceDisplayColumn {
+  field: String!
+  headerName: String!
+  cellDataType: String!
+  displayOrder: Int!
+  values: [String!]
+  pinned: String
+  type: String
+  customConfig: PriceDisplayCustomConfig
+  tooltipField: String
+  cellType: String
+  columnOrder: Int!
+  hideable: Boolean!
+  hidden: Boolean!
+  minWidth: Int
+  maxWidth: Int
+  width: Int
+  alternateFields: [AlternateField!]!
+  autoSize: Boolean!
+}
+
+type PriceDisplayCustomConfig {
+  priceDelta: PriceDisplayPriceDelta
+}
+
+type PriceDisplayGridConfiguration {
+  columns: [PriceDisplayColumn!]!
+  sort: PriceDisplaySort
+  seriesItemTypeCodes: [String!]!
+}
+
+type PriceDisplayPriceDelta {
+  priceField: String!
+  priceDeltaField: String!
+  precisionField: String!
+}
+
+type PriceDisplaySort {
+  name: String!
+  order: String!
+}
+
+type PriceEntryDataSaveResponse {
+  id: String!
+}
+
+type PriceSeries {
+  id: String!
+  seriesName: String!
+  seriesShortName: String
+  seriesItemTypeCode: String!
+  commodity: Commodity!
+  location: Location!
+  currencyUnit: CurrencyUnit!
+  measureUnit: MeasureUnit!
+  launchDate: Date!
+  terminationDate: Date
+  relativeFulfilmentPeriod: RelativeFulfilmentPeriod
+  priceSeriesName: String!
+  unitDisplay: String!
+  seriesItemId: String!
+  seriesId: String!
+  assessedDateTime: DateTime
+  dataUsed: String
+  price: Decimal
+  priceLow: Decimal
+  priceHigh: Decimal
+  priceMid: Decimal
+  adjustedPriceDelta: Decimal
+  adjustedPriceHighDelta: Decimal
+  adjustedPriceLowDelta: Decimal
+  adjustedPriceMidDelta: Decimal
+  lastAssessmentDate: String
+  lastAssessmentPrice: String
+  lastAssessmentPriceValue: Decimal
+  lastAssessmentPriceLowValue: Decimal
+  lastAssessmentPriceHighValue: Decimal
+  lastAssessmentPriceMidValue: Decimal
+  priceDelta: Decimal
+  assessmentMethod: String
+  referencePrice: ReferencePrice
+  premiumDiscount: Decimal
+  priceLowDelta: Decimal
+  priceMidDelta: Decimal
+  priceHighDelta: Decimal
+  status: String
+  isDerivedPriceSeries: Boolean!
+  lastAssessmentReferenceMarket: String
+  lastAssessmentPremiumDiscount: String
+  periodLabelTypeCode: String!
+  referencePeriod: ReferencePeriod!
+  lastAssessmentAppliesFromDateTime: DateTime
+  publicationScheduleId: String
+  hasImpactedPrices: Boolean
+  readOnly: Boolean!
+  period: String!
+  validationErrors("Set this to 'true' to get the validation errors for price series items with status 'Not Started'" includeNotStarted: Boolean! = false): Any
+}
+
+type PriceSeriesDetail {
+  id: String!
+  name: String!
+  scheduleId: String
+}
+
+type PriceSeriesDetailForDisplay {
+  id: String!
+  itemFrequencyId: UUID!
+  regionId: UUID!
+  priceSettlementTypeId: UUID!
+  priceCategoryId: UUID!
+  seriesItemTypeCode: String!
+  name: String!
+}
+
+type PriceSeriesGrid {
+  id: String!
+  title: String
+  priceSeriesIds: [String!]
+  seriesItemTypeCode: String
+  gridConfiguration: GridConfiguration
+  priceSeries: [PriceSeries!]
+}
+
+type PriceSeriesItemVersion {
+  price: Decimal
+  priceLow: Decimal
+  priceHigh: Decimal
+  priceMid: Decimal
+  lastModified: AuditInfo!
+}
+
+type PriceSeriesResponse {
+  id: String
+  unitDisplay: String
+  priceSeriesName: String
+  period: String
+  seriesItemTypeCode: String
+  seriesId: String
+  itemFrequencyName: String
+  assessedDateTime: String
+  dataUsed: String
+  price: Decimal
+  priceLow: Decimal
+  priceHigh: Decimal
+  priceMid: Decimal
+  priceDelta: Decimal
+  assessmentMethod: String
+  priceLowDelta: Decimal
+  priceMidDelta: Decimal
+  priceHighDelta: Decimal
+  status: String
+  lastModifiedDate: String
+  previousVersion: PriceSeriesItemVersion
+  priceDeltaType: String!
+}
+
+type PriceSeriesSelectionItem {
+  priceSeriesDetails: [PriceSeriesDetail!]!
+  seriesItemTypeCode: String!
+}
+
+type PriceSeriesSelectionItemForDisplay {
+  priceSeriesDetails: [PriceSeriesDetailForDisplay!]!
+  regions: [DropdownFilterItem!]!
+  priceCategories: [DropdownFilterItem!]!
+  transactionTypes: [DropdownFilterItem!]!
+  assessedFrequencies: [DropdownFilterItem!]!
+}
+
+type Query {
+  priceSeries(commodityId: UUID! priceCategoryId: UUID! regionId: UUID! priceSettlementTypeId: UUID! itemFrequencyId: UUID!): [PriceSeriesSelectionItem!]!
+  filters(selectedPriceSeriesIds: [String!]): [Filter!]!
+  commodities: [DropdownFilterItem!]!
+  priceSeriesForDisplayTool(commodities: [UUID!]! includeInactivePriceSeries: Boolean!): PriceSeriesSelectionItemForDisplay!
+  contentBlockForDisplay(contentBlockId: String! version: Int): ContentBlockDefinitionForDisplay
+  contentBlockFromInputParametersForDisplay(seriesIds: [String!]! assessedDateTime: DateTime!): ContentBlockDefinitionForDisplay!
+  impactedPrices(priceSeriesId: String! assessedDateTime: DateTime!): GetImpactedPricesResponse!
+  contentBlock(contentBlockId: String! version: Int assessedDateTime: DateTime! isReviewMode: Boolean): ContentBlockDefinition
+}
+
+type ReferencePeriod {
+  name: String!
+  code: String!
+  periodType: PeriodType!
+}
+
+type ReferencePrice {
+  market: String!
+  price: Decimal
+  datetime: DateTime
+  seriesName: String
+  periodLabel: String
+}
+
+type RelativeFulfilmentPeriod {
+  name: String!
+  code: String!
+  periodType: PeriodType!
+}
+
+type RowForDisplay {
+  priceSeriesId: String!
+  displayOrder: Int!
+  seriesItemTypeCode: String!
+}
+
+type SelectedFilters {
+  isInactiveIncluded: Boolean!
+  selectedCommodities: [String!]!
+  selectedRegions: [String!]
+  selectedPriceCategories: [String!]
+  selectedAssessedFrequencies: [String!]
+  selectedTransactionTypes: [String!]
+}
+
+type Sort {
+  name: String!
+  order: String!
+}
+
+type UserPreferenceSaveResponse {
+  id: String!
+}
+
+input ColumnForDisplayInput {
+  field: String!
+  displayOrder: Int!
+  hidden: Boolean!
+}
+
+input ColumnInput {
+  field: String!
+  displayOrder: Int!
+  hidden: Boolean!
+}
+
+input CommentaryInput {
+  contentBlockId: String!
+  commentaryId: String!
+  version: String!
+  assessedDateTime: DateTime!
+  operationType: String
+}
+
+input ContentBlockForDisplayInput {
+  contentBlockId: String!
+  title: String
+  columns: [ColumnForDisplayInput!]
+  rows: [RowForDisplayInput!]
+  selectedFilters: SelectedFiltersForDisplayInput
+}
+
+input ContentBlockInput {
+  contentBlockId: String!
+  title: String
+  priceSeriesGrids: [PriceSeriesGridInput!]
+}
+
+input PriceItemInput {
+  seriesId: String!
+  seriesItemTypeCode: String!
+  assessedDateTime: DateTime!
+  seriesItem: SeriesItemInput!
+  operationType: String
+}
+
+input PriceSeriesGridInput {
+  id: String
+  title: String
+  priceSeriesIds: [String!]
+}
+
+input RowForDisplayInput {
+  priceSeriesId: String!
+  displayOrder: Int!
+  seriesItemTypeCode: String!
+}
+
+input SelectedFiltersForDisplayInput {
+  isInactiveIncluded: Boolean!
+  selectedCommodities: [String!]!
+  selectedRegions: [String!]
+  selectedPriceCategories: [String!]
+  selectedAssessedFrequencies: [String!]
+  selectedTransactionTypes: [String!]
+}
+
+input SeriesItemInput {
+  adjustedPriceDelta: Decimal
+  adjustedPriceHighDelta: Decimal
+  adjustedPriceLowDelta: Decimal
+  assessmentMethod: String
+  dataUsed: String
+  premiumDiscount: Decimal
+  price: Decimal
+  priceHigh: Decimal
+  priceLow: Decimal
+  referenceMarketName: String
+}
+
+input UserPreferenceInput {
+  contentBlockId: String!
+  columnInput: [ColumnInput!]!
+  priceSeriesInput: [String!]!
+  priceSeriesGridId: String!
+}
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+  VALIDATION
+}
+
+scalar Any
+
+"The `Date` scalar represents an ISO-8601 compliant date type."
+scalar Date
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime @specifiedBy(url: "https:\/\/www.graphql-scalars.com\/date-time")
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
+scalar UUID @specifiedBy(url: "https:\/\/tools.ietf.org\/html\/rfc4122")

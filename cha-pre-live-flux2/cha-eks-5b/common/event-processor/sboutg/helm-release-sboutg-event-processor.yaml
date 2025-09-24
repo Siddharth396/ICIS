@@ -1,0 +1,44 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  values:
+    projectName: "sboutg"
+    ServiceAccountName: "sboutg"
+    
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.1.0-vso.1.1002
+        pullPolicy: IfNotPresent
+      config_env:
+        KafkaConsumer_Serilog__Source: "ActivityFeed"
+        KafkaConsumer_Serilog__Component: "EventProcessor"
+        KafkaConsumer_Serilog__Service: "KafkaConsumer"
+        KafkaConsumer_ElasticApm__ServiceName: "AF Generic Consumer"
+        KafkaConsumer_ElasticApm__TransactionSampleRate: 1
+        KafkaConsumer_AppSettings__Consumer__RetryMillis: 240000
+    
+    event_processor:
+      config_env:
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+  
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+
+    vault_secrets:
+      VaultK8sRoleName: "kv-sboutg-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s" 
+    vault_secrets_consumer:
+      VaultK8sRoleName: "kv-sboutg-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"    

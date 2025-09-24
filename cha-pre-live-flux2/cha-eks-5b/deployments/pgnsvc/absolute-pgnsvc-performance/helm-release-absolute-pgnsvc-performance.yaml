@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "pgnsvc-performance"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pgnsvc/absolute-period-generator-job # {"$imagepolicy": "flux-system:pgnjob-absolute-performance:name"}
+        tag: performance-24-1.13.1-feature-tsm-ENAPI-7029-43929 # {"$imagepolicy": "flux-system:pgnjob-absolute-performance:tag"}
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pgnsvc-performance?retryWrites=true&w=majority"
+    vault_secrets:
+      name: authoring-bff-vault-secret-pgnsvc-performance-job
+      VaultK8sRoleName: "kv-pgnsvc-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pgnsvc/performance/authoring/bff"

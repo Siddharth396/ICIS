@@ -1,0 +1,105 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+      strategy: rollback
+  releaseName: subscriber-bff-homepage-systest
+  values:
+    namespace: "homepage-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-bff # {"$imagepolicy": "flux-system:sbcore-bff-systest:name"}
+        tag: systest-484-1.39.0-27141 # {"$imagepolicy": "flux-system:sbcore-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        BASE_PATH: /home
+        JWT_INFO_AUTHORITY: https://id.systest.genesis.cha.rbxd.ds
+        IDS_HEALTHCHECK_URL: https://id.internal.systest.genesis.cha.rbxd.ds/version
+        DBAPI_URL: https://dbapi.systest.genesis.cha.rbxd.ds/v1
+        SQL_HOST: genesis-ups-stag.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com
+        SQL_CAT: genesis-ups-systest
+        SQL_USR: genesis-ups-systest
+        CORESERVICE_URL: https://api.subscriber.systest.genesis.cha.rbxd.ds/v1
+        IS_TOGGLE_TO_NEWHOME_ENABLED: true
+        IS_R2_TOGGLE_ENABLED: true
+        IS_R3_TOGGLE_ENABLED: true
+        IS_ASK_ICIS_ENABLED: true
+        IS_NOTIFICATION_BANNER_ENABLED: true
+        # For multiple domains separate them by comma
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds
+        # https://www.elastic.co/guide/en/apm/agent/dotnet/current/config-core.html
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        SECRET_FILE_PATH: /etc/secrets/.env
+        # MongoDb
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbcore-systest?retryWrites=true"
+        MONGO_DB_COLLECTION_PRODUCT_ITEMS: product_items
+        MONGO_DB_COLLECTION_PRICE_ASSESSMENTS_SPECIFICATION: price_assessments_specification
+        MONGO_DB_COLLECTION_SUBSCRIPTION_REQUESTS: subscription_requests
+        # Analytics toggles
+        RECYCLING_SUPPLY_TRACKER_MECHANICAL_ANALYTICS_CARD_ENABLED: true
+        RECYCLING_SUPPLY_TRACKER_CHEMICAL_ANALYTICS_CARD_ENABLED: true
+        PLANT_CE_ANALYTICS_ENABLED: true
+        HYDROGEN_PRICING_AND_ANALYTICS_CARD_ENABLED: true
+        SUPPLIER_CARBON_FOOTPRINTS_ANALYTICS_CARD_ENABLED: true
+        ENERGY_GAS_ANALYTICS_CARD_ENABLED: true
+        POWER_FORESIGHT_ANALYTICS_CARD_ENABLED: true
+        JOBS_ENABLED: true
+        JOBS_RETRY_ATTEMPTS: 2
+        JOBS_RETRY_DELAYS: 5,10
+        JOBS_SUBSCRIPTION_REQUESTS_ENABLED: true
+        JOBS_SUBSCRIPTION_REQUESTS_INTERVAL: 1
+        JOBS_SUBSCRIPTION_REQUESTS_BATCH_SIZE: 10
+        ELOQUA_URL: https://eu-west-1.aws.data.mongodb-api.com/app/eloquamock-ndzjg/endpoint/subscription
+        ELOQUA_USERNAME: fake
+        ELOQUA_PASSWORD: nothing
+        LOG_LEVEL: Warning
+        Serilog__MinimumLevel__Override__Icis.HomePage.Bff.Application.Subscription: Debug
+        NavUrls__IcisSupportHub: https://www.icis.com/support/
+        IS_AUTH0_CHANGE_PASSWORD_ENABLED: true
+        DOMAIN: systest-login.icis.com
+        IDS_URL: id.systest.genesis.cha.rbxd.ds
+        PASSWORD_CHANGE_M2M_CLIENT_ID: 9oRZY2b3zZkH1niuumbzwwpqEOUpYIHS
+        AUDIENCE: icis-eu-qa.eu.auth0.com
+        APPLICATION_CLIENT_ID: wHKg4GPY6q6sLfcokhiIZK3ClvLB7UNO
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: 100m
+        limits:
+          cpu: "200m"
+          memory: 256Mi
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/core/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+    vault_secrets:
+      name: subscriber-bff-vault-secret-homepage-systest
+      VaultSecretPath: "homepage/systest/bff"

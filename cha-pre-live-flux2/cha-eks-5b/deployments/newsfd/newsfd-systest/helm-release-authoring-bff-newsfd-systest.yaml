@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-newsfd-systest
+  values:
+    replicaCount: 1
+    namespace: "newsfd-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/newsfd/mongo-migration # {"$imagepolicy": "flux-system:newsfd-mongo-migration-systest:name"}
+        tag: systest-24-0.0.0-feature-upgrade-newsfd-bff.13086 # {"$imagepolicy": "flux-system:newsfd-mongo-migration-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/newsfd-systest?retryWrites=true&w=majority"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/newsfd/authoring-bff # {"$imagepolicy": "flux-system:newsfd-auth-bff-systest:name"}
+        tag: systest-310-1.5.3-1.3471 # {"$imagepolicy": "flux-system:newsfd-auth-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/newsfd-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        LOG_LEVEL: Warning
+        SECRET_FILE_PATH: /etc/secrets/.env
+        DOMAIN_API_BASE_URL: https://dbapi.systest.genesis.cha.rbxd.ds
+        ACM_BASE_URL: https://acm.integration.cha.rbxd.ds
+        THREE_MONTHS_LIMIT_FEATURE_FLAG: false
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/news-feed/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-newsfd-systest
+      VaultSecretPath: "newsfd/systest/authoring/bff"

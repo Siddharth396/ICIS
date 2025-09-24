@@ -1,0 +1,90 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: automations
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./cha-eks-5b/automations
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cluster-roles
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./cha-eks-5b/cluster-roles
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: core-services
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./cha-eks-5b/core-services
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: deployments
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./cha-eks-5b/deployments
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: namespaces
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./cha-eks-5b/namespaces
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: icis-services
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./cha-eks-5b/icis-services
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: service-accounts
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./cha-eks-5b/service-accounts
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system

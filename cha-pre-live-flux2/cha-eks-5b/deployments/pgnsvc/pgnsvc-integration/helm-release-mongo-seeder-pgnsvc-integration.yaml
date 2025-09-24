@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "pgnsvc-integration"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pgnsvc/mongodb-seeder # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-integration:name"}      
+        tag: integration-18-2.5.0-15892 # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-integration:tag"}
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_NAME: pgnsvc-integration
+    vault_secrets:
+      name: job-vault-secret-pgnsvc-integration
+      VaultK8sRoleName: "kv-pgnsvc-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pgnsvc/integration/authoring/bff"

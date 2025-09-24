@@ -1,0 +1,31 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: drdcpt
+  namespace: icis-event-streaming
+  labels:
+    strimzi.io/cluster: prelive-connect-cluster
+spec:
+  class: com.mongodb.kafka.connect.MongoSinkConnector
+  tasksMax: 2
+  config:
+    topics: 
+    connection.uri: ${file:/opt/kafka/external-configuration/drdcpt-mongo-uri/mongoConnection:connectionURI}
+    database:
+    collection:
+    consumer.override.bootstrap.servers: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+    consumer.override.sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username='${file:/opt/kafka/external-configuration/drdcpt-kafka-secret/drdcpt-kafka-secret:kafka_user}' password='${file:/opt/kafka/external-configuration/drdcpt-kafka-secret/drdcpt-kafka-secret:kafka_key}';
+    consumer.override.sasl.mechanism: PLAIN
+    consumer.override.security.protocol: SASL_SSL
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    key.converter.schemas.enable: false
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schemas.enable: false
+    value.converter.schema.registry.url: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:url}
+    value.converter.basic.auth.credentials.source: USER_INFO
+    value.converter.basic.auth.user.info: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:password}
+    config.action.reload: restart
+    errors.retry.timeout: 3
+    errors.retry.delay.max.ms: 60000
+    errors.log.enable: true
+    errors.log.include.messages: true

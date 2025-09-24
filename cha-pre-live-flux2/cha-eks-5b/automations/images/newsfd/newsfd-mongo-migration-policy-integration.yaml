@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: newsfd-mongo-migration-integration
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: newsfd-mongo-migration
+    namespace: flux-system
+  filterTags:
+    pattern: '^integration-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

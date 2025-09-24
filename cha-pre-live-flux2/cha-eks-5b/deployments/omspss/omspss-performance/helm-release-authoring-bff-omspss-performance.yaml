@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-omspss-performance
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "omspss-performance"
+    environment: "performance"
+    deploymentStrategy: "RollingUpdate"
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/omspss/mongo-migration # {"$imagepolicy": "flux-system:omspss-mongo-migration-performance:name"}
+        tag: performance-todo-1 # {"$imagepolicy": "flux-system:omspss-mongo-migration-performance:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/omspss/authoring-bff # {"$imagepolicy": "flux-system:omspss-authoring-bff-performance:name"}
+        tag: performance-149-1.8.2.38133 # {"$imagepolicy": "flux-system:omspss-authoring-bff-performance:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/omspss-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/price-series-oms/?(.*)
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-omspss-performance
+      VaultK8sRoleName: "kv-omspss-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "omspss/performance/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-omspss-performance
+      VaultK8sRoleName: "kv-omspss-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

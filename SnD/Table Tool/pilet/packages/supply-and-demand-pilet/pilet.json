@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "v2",
+  "piralInstances": {
+    "@icis/app-shell": {}
+  },
+  "$schema": "https://docs.piral.io/schemas/pilet-v0.json"
+}

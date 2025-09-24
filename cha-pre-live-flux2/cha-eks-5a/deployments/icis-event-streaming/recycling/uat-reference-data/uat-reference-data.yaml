@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: recycling
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_recycling_endmarket_1, public_uat_recycling_endmarket_industry_sector_1, public_uat_recycling_feedstock_source_1,  public_uat_recycling_country_1, public_uat_recycling_foodgrade_certification_1, public_uat_recycling_feedstock_type_1, public_uat_recycling_product_colour_1, public_uat_recycling_commodity_1, public_uat_recycling_polymer_feedstock_1, public_uat_recycling_product_form_1,  public_uat_recycling_region_1, public_uat_recycling_sorting_technology_1, public_uat_recycling_washline_technology_1, public_uat_recycling_other_materials_recycled_1, public_uat_recycling_site_status_1
+    database: grn-staging
+    collection: ReferenceData
+    transforms.RenameField.renames: id:_id

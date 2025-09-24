@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>BusinessLayer</AssemblyName>
+		<RootNamespace>BusinessLayer</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Copyright>Copyright © 2021 LexisNexis Risk Solutions Group</Copyright>
+		<RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+		<DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+	</PropertyGroup>
+	<ItemGroup>
+		<Content Remove="packages.lock.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="BusinessLayer\**" />
+		<EmbeddedResource Remove="BusinessLayer\**" />
+		<None Remove="BusinessLayer\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Common\Common.csproj" />
+		<ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Repositories\Domain\Models\" />
+	</ItemGroup>
+
+</Project>

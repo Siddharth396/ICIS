@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sso-auth0-verify
+spec:
+  releaseName: sso-auth0-verify-staging
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "verify-staging"
+    environment: "staging"
+    deploymentStrategy: "RollingUpdate"
+    verify:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/verify # {"$imagepolicy": "flux-system:sso-auth0-verify-staging:name"}
+        tag: staging-2-0.0.0-main-6642 # {"$imagepolicy": "flux-system:sso-auth0-verify-staging:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: staging
+        CORS_ORIGINS_DOMAINS: https://verify.staging.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        VIPER_URL: https://api.demo.coa.rbxd.ds/
+        VIPER_CONN_ESTABLISHMENT_TIMEOUT: 1000
+        VIPER_HEALTH_CHECK_INTERVAL: 5
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+    ingress:
+      enabled: true
+      host:
+        name: verify.staging.cha.rbxd.ds
+        path: /
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: sso-auth0-vault-secret-verify-staging
+      VaultSecretPath: "verify/staging/sso-auth0"

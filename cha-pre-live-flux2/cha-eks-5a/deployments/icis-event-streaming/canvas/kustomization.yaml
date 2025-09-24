@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- systest-subscription-product-items
+- systest-2-subscription-product-items
+- systest-3-subscription-product-items
+- integration-subscription-product-items
+- performance-subscription-product-items
+- staging-subscription-product-items

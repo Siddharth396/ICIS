@@ -1,0 +1,55 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: energy-exporter
+  namespace: icis-monitoring
+spec:
+  releaseName: energy-exporter
+  interval: 5m0s
+  chart:
+    spec:
+      chart: icis-monitoring-exporter
+      version: "1.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    nameOverride: "energy-check-exporter"
+    fullnameOverride: "energy-check-exporter"
+
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-monitoring/energy_checks_exporter
+      tag: "1.0.0"
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 3301
+
+    vault:
+      type: kv-v2
+      mount: kv/cha/k8s
+      path: icis-monitoring/energy-vars
+
+    serviceMonitor:
+      interval: 30s
+      namespace: icis-monitoring
+      release: energy-exporter
+
+    secrets:
+      - name: energy-vars
+        envName: BASE_URL
+        key: IDDN_BASE_URL
+      - name: energy-vars
+        envName: PASSWORD
+        key: IDDN_ML_PASSWORD
+      - name: energy-vars
+        envName: USERNAME
+        key: IDDN_ML_USERNAME
+

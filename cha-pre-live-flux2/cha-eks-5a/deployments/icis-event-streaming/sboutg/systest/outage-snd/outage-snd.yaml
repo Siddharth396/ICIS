@@ -1,0 +1,48 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+  labels:
+    strimzi.io/cluster: prelive-connect-cluster
+spec:
+  config:
+    # Connection details
+    # note the db name is present here and the other side
+    connection.url: jdbc:sqlserver://chaqhsdbst994v.cha.rbxd.ds:55001;databaseName=SupplyNDemandEditingRO
+    connection.user: ${file:/opt/kafka/external-configuration/sboutg-sql-connect/sqlconnection:username}
+    connection.password: ${file:/opt/kafka/external-configuration/sboutg-sql-connect/sqlconnection:password}
+    # the tables you want to konnect,
+    # in query mode, no table whitelist!
+    table.whitelist: ""
+    # the Db name, asked twice
+    catalog.pattern: SupplyNDemandEditingRO
+    # SQL schema (normal dbo)
+    schema.pattern: IDDN
+    mode: timestamp+incrementing
+    timestamp.column.name: UpdatedOn
+    # the column you want to use as PK
+    incrementing.column.name: outageRecordId
+    timestamp.initial: 0
+
+    transforms: createKey,removeId,extractId,headerId,headerPartitionKey
+    transforms.createKey.type: org.apache.kafka.connect.transforms.ValueToKey
+    transforms.createKey.fields: outageRecordId
+    transforms.removeId.type: org.apache.kafka.connect.transforms.ReplaceField$Value
+    transforms.removeId.blacklist: increment_id
+    transforms.extractId.type: org.apache.kafka.connect.transforms.ExtractField$Key
+    transforms.extractId.field: outageRecordId
+    transforms.headerId.type: org.apache.kafka.connect.transforms.HeaderFrom$Value
+    transforms.headerId.fields: outageRecordId
+    transforms.headerId.headers: outageRecordId
+    transforms.headerId.operation: copy
+    transforms.headerPartitionKey.type: org.apache.kafka.connect.transforms.HeaderFrom$Value
+    transforms.headerPartitionKey.fields: outageRecordId
+    transforms.headerPartitionKey.headers: partition_key
+    transforms.headerPartitionKey.operation: copy
+
+    poll.interval.ms: 60000
+    # Do not add any comments to this query, it will break kafka, do not change the tabbing or spaces!
+    query: select * from     (         SELECT             max(ov.OutageID) as OutageId,             ov.ID as outageRecordId,             max(cast(ov.EditedDate as datetime2)) as UpdatedOn,             max(pp.PhysicalPlantID) as PhysicalPlantID,             max(cast(ov.IsForceMajeureDeclared as int)) as IsForceMajeureDeclared,             max(ov.ForceMajeureEndDate) as ForceMajeureEndDate,             max(ov.ForceMajeureStartDate) as ForceMajeureStartDate,             max(oist.Description) as OutageInformationSourceType,             max(ort.Description) as ReasonType,             max(orr.Description) as Reason,             string_agg(CONVERT(VARCHAR(max), ovc.Comment), '|-|') as Comment,             string_agg(CONVERT(VARCHAR(max), ovn.URL), '|-|') as relatedNews,             string_agg(                 CONCAT(                     oist.id,                     '#',                     CONVERT(VARCHAR(max), ovdp.EndDateStart)                 ),                 '|-|'             ) as EndDateStart,             string_agg(                 CONCAT(                     oist.id,                     '#',                     CONVERT(VARCHAR(max), ovdp.EndDateEnd)                 ),                 '|-|'             ) as EndDateEnd,             string_agg(                 CONCAT(                     oist.id,                     '#',                     CONVERT(VARCHAR(max), ovdp.StartDateStart)                 ),                 '|-|'             ) as StartDateStart,             string_agg(                 CONCAT(                     oist.id,                     '#',                     CONVERT(VARCHAR(max), ovdp.StartDateEnd)                 ),                 '|-|'             ) as StartDateEnd,             string_agg(                 CONCAT(                     oist.id,                     '#',                     CONVERT(VARCHAR(max), ovdp.OutagePercentage)                 ),                 '|-|'             ) as OutagePercentage,             string_agg(                 CONCAT(                     oist.id,                     '#',                     CONVERT(VARCHAR(max), ovdp.PlantID)                 ),                 '|-|'             ) as PlantId         FROM             [SupplyNDemandEditingRO].[STDC].OutageVersion ov WITH (NOLOCK)             join [SupplyNDemandEditingRO].[STDC].OutageVersionDetail ovd WITH (NOLOCK) on ovd.OutageVersionID = ov.ID             join [SupplyNDemandEditingRO].[ENUM].OutageInformationSourceType oist WITH (NOLOCK) on oist.ID = ovd.OutageInformationSourceTypeID             join [SupplyNDemandEditingRO].[STDC].OutageVersionComment ovc on ovc.OutageVersionID = ov.ID             join [SupplyNDemandEditingRO].[STDC].OutageVersionNews ovn WITH (NOLOCK) on ovn.OutageVersionID = ov.ID             left join [SupplyNDemandEditingRO].[STDC].OutageReason orr WITH (NOLOCK) on orr.ID = ovd.OutageReasonID             left join [SupplyNDemandEditingRO].[ENUM].OutageReasonType ort WITH (NOLOCK) on ort.ID = orr.OutageReasonTypeId             join [SupplyNDemandEditingRO].[STDC].OutageVersionDetailPlant ovdp WITH (NOLOCK) on ovdp.OutageVersionDetailID = ovd.ID             join [SupplyNDemandEditingRO].[dbo].Plant pp WITH (NOLOCK) on pp.id = ovdp.PlantID         where             ovdp.EndDateEnd is not null             and ovdp.StartDateStart is not null             and ov.EditedDate > CAST(DATEADD(month, -1, GETDATE()) AS Date)         group by             ov.ID     ) as test
+    # this is the output topic
+    topic.prefix: private_systest_supplydemand_outage_poc_outage_input_1

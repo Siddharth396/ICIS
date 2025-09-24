@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: price-forecast
+  namespace: pforecast-integ
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: role-pforecast-integ-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: price-forecast
+  namespace: pforecast-integ
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,12 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-omspss"
+    ServiceAccountName: "omspss"    
+    vault:
+      VaultK8sRoleName: "kv-omspss-read"
+      VaultK8sAuthPath: "auth/cha/eks-b"

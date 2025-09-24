@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sboutg-systest
+nameSuffix: -sboutg
+resources:
+- ../../../common/event-processor/sboutg/
+- ../../../common/subscriber-realm-bff/sboutg/
+patches:
+- path: helm-release-event-processor-sboutg-systest.yaml
+- path: helm-release-subscriber-realm-bff-sboutg-systest.yaml

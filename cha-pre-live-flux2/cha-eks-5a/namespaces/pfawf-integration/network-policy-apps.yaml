@@ -1,0 +1,111 @@
+####################################################
+## Allow ingress from pfawf-integration and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-pfawf-integration
+  namespace: pfawf-integration
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: pfawf-integration
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from pfawf-integration ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-pfawf-integration
+  namespace: pfawf-integration
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: pfawf-integration
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: pfawf-integration
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#############################################
+## Allow external postgres traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-postgres-external
+  namespace: pfawf-integration
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 5432
+      protocol: TCP
+
+##################################################
+## Allow traffic to confluent cloud peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-confluent
+  namespace: pfawf-integration
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+
+##################################################
+################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: pfawf-integration
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring

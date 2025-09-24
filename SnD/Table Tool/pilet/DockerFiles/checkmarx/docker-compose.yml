@@ -1,0 +1,14 @@
+version: "3.4"
+services:
+  checkmarx:
+    build:
+      context: .
+      dockerfile: ./deploy.Dockerfile
+    environment:
+      - CHECKMARX_USER=""
+      - CHECKMARX_PASS=""
+      - CHECKMARX_PROJECT_NAME=""
+      - FILESTOEXCLUDE="!**/_cvs/**,!**/.svn/**,!**/.hg/**,!**/.git/**,!**/.bzr/**,!**/bin/**,!**/obj/**,!**/backup/**,!**/node_modules/**,!**test.*,!cleaner.js*"
+    command: Scan -projectname "CxServer\\SP\\RBI\\ICIS\\${CHECKMARX_PROJECT_NAME}"  -cxserver "https://checkmarx.rbxd.ds/" -cxuser "${CHECKMARX_USER}" -cxpassword "${CHECKMARX_PASS}" -locationtype "folder" -locationpath "/source" -v -locationfilesexclude ${FILESTOEXCLUDE}
+    volumes: 
+      - ./source:/source

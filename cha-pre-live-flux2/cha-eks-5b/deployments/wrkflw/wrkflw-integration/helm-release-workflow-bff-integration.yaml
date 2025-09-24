@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-wrkflw-integration
+  values:
+    replicaCount: 1
+    namespace: "wrkflw-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/wrkflw/bff # {"$imagepolicy": "flux-system:workflow-bff-integration:name"}
+        tag: integration-26-2.8.0-57893 # {"$imagepolicy": "flux-system:workflow-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        TRACE_ENABLED: true
+        LOG_LEVEL: Information
+        WORKFLOW_ENGINE_API_URL: https://workflow-engine.integration.cha.rbxd.ds/engine-rest
+        ACM_USER_PERMISSION_ENDPOINT: https://acm.integration.cha.rbxd.ds/v1/userpermission
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        SWAGGER_OAUTH_ROLE: ICIS_Mercury
+        SWAGGER_ENABLED: true
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live.ak0n6.mongodb.net/wrkflw-integration?retryWrites=true&w=majority"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.integration.cha.rbxd.ds
+        path: /api/workflow/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-wrkflw-integration
+      VaultSecretPath: "wrkflw/integration/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-wrkflw-integration

@@ -1,0 +1,65 @@
+apiVersion: kafka.strimzi.io/v1alpha1
+kind: KafkaConnector
+metadata:
+  name: order
+  namespace: icis-event-streaming
+  labels:
+    strimzi.io/cluster: prelive-connect-cluster
+spec:
+  class: io.confluent.connect.jdbc.JdbcSourceConnector
+  tasksMax: 1
+  config:
+    producer.override.bootstrap.servers: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+    producer.override.sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username='${file:/opt/kafka/external-configuration/kafka-secret-order/kafka-secret-order:kafka_user}' password='${file:/opt/kafka/external-configuration/kafka-secret-order/kafka-secret-order:kafka_key}';
+    producer.override.sasl.mechanism: PLAIN
+    producer.override.security.protocol: SASL_SSL
+    connector.class: io.confluent.connect.jdbc.JdbcSourceConnector
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    key.converter.schemas.enable: "false"   
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.basic.auth.credentials.source: USER_INFO
+    value.converter.basic.auth.user.info: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:password}
+    value.converter.schema.registry.url: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:url}
+    key.converter.basic.auth.credentials.source: USER_INFO
+    key.converter.basic.auth.user.info: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:password}
+    key.converter.schema.registry.url: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:url}
+    transforms: createKey,removeId,extractId,headerSource,headerId,headerPartitionKey,headerEventTime,headerEventType
+    transforms.extractId.type: org.apache.kafka.connect.transforms.ExtractField$Key
+    transforms.extractId.field: id
+    transforms.createKey.type: org.apache.kafka.connect.transforms.ValueToKey
+    transforms.createKey.fields: id
+    transforms.removeId.type: org.apache.kafka.connect.transforms.ReplaceField$Value
+    transforms.removeId.blacklist: increment_id
+    transforms.headerSource.type: org.apache.kafka.connect.transforms.InsertHeader
+    transforms.headerSource.header: source
+    transforms.headerSource.value.literal: order
+    transforms.headerId.type: org.apache.kafka.connect.transforms.HeaderFrom$Value
+    transforms.headerId.headers: id
+    transforms.headerId.operation: copy
+    transforms.headerId.fields: id
+    transforms.headerPartitionKey.type: org.apache.kafka.connect.transforms.HeaderFrom$Value
+    transforms.headerPartitionKey.headers: partition_key
+    transforms.headerPartitionKey.operation: copy
+    transforms.headerPartitionKey.fields: id
+    transforms.headerEventTime.type: org.apache.kafka.connect.transforms.HeaderFrom$Value
+    transforms.headerEventTime.headers: event_time
+    transforms.headerEventTime.operation: copy
+    transforms.headerEventTime.fields: event_time
+    transforms.headerEventType.type: org.apache.kafka.connect.transforms.HeaderFrom$Value
+    transforms.headerEventType.headers: event_type
+    transforms.headerEventType.operation: copy
+    transforms.headerEventType.fields: event_type
+    connection.user: ${file:/opt/kafka/external-configuration/order-postgres/jdbcConnector:user}
+    connection.password: ${file:/opt/kafka/external-configuration/order-postgres/jdbcConnector:password}
+    schema.pattern: kafka
+    numeric.mapping: best_fit
+    dialect.name: PostgreSqlDatabaseDialect
+    mode: timestamp+incrementing
+    timestamp.column.name: event_time
+    incrementing.column.name: increment_id
+    table.types: VIEW
+    config.action.reload: restart
+    errors.retry.timeout: 3
+    errors.retry.delay.max.ms: 60000
+    errors.log.enable: true
+    errors.log.include.messages: true

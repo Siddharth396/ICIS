@@ -1,0 +1,39 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+  labels:
+    strimzi.io/cluster: prelive-connect-cluster
+spec:
+  class: io.confluent.connect.jdbc.JdbcSourceConnector
+  tasksMax: 1
+  config:
+    connector.class: io.confluent.connect.jdbc.JdbcSourceConnector
+    tasks.max: 1
+    key.converter: org.apache.kafka.connect.storage.StringConverter
+    value.converter: io.confluent.connect.avro.AvroConverter
+    config.action.reload: restart
+    errors.retry.timeout: 3
+    dialect.name: SqlServerDatabaseDialect
+    errors.retry.delay.max.ms: 60000
+    errors.log.enable: true
+    errors.log.include.messages: true
+    numeric.mapping: best_fit
+    
+    # this should be changed once source has a datetime2 column
+    mode: incrementing
+
+    # producer setion
+    producer.override.security.protocol: SASL_SSL
+    producer.override.sasl.mechanism: PLAIN
+    producer.override.sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username='${file:/opt/kafka/external-configuration/kafka-secret-sboutg/kafka-secret-sboutg:kafka_user}' password='${file:/opt/kafka/external-configuration/kafka-secret-sboutg/kafka-secret-sboutg:kafka_key}';
+    producer.override.bootstrap.servers: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+    # schema registry section
+    value.converter.basic.auth.credentials.source: USER_INFO
+    key.converter.basic.auth.user.info: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:password}
+    key.converter.schemas.enable: false
+    value.converter.schema.registry.url: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:url}
+    key.converter.basic.auth.credentials.source: USER_INFO
+    value.converter.basic.auth.user.info: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:password}
+    key.converter.schema.registry.url: ${file:/opt/kafka/external-configuration/schema-registry/schemaRegistry:url}

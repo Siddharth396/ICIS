@@ -1,0 +1,48 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: custom-readwrite-resources
+rules:
+- apiGroups:
+  - '*'
+  resources:
+  - pods
+  - replicasets
+  - jobs
+  - cronjobs
+  - deployments
+  - deployments/scale
+  - helmreleases
+  - servicemonitors
+  - podmonitors
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - delete
+  - patch
+- apiGroups:
+  - '*'
+  resources:
+  - '*'
+  verbs:
+  - get
+  - list
+  - watch
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: custom-readwrite-resources
+subjects:
+- kind: Group
+  apiGroup: rbac.authorization.k8s.io
+  name: aws-auth:cluster:custom-readwrite-resources
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: custom-readwrite-resources

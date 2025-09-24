@@ -1,0 +1,526 @@
+name: CI/CD Pipeline
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "**" ]
+    tags: [ "**" ]
+
+jobs:
+
+  #########################
+  #        Version        #
+  #########################
+
+  determine_version:
+    name: Determine Semantic Version
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container: 
+      image: artifacts.cha.rbxd.ds/gittools/gitversion:6.0.2
+    outputs:
+      semver: ${{ steps.semver.outputs.semver }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Determine version
+        id: semver
+        run: |
+          git config --global --add safe.directory /__w/dsg-icis-capability-price-entry-pilet/dsg-icis-capability-price-entry-pilet
+          chmod +x ./ci_scripts/version.sh
+          export GITHUB_HEAD_REF=${{ github.ref_name }}
+          echo "GITHUB_HEAD_REF ${GITHUB_HEAD_REF}" 
+          SEMVER=$(./ci_scripts/version.sh)
+          echo "sem version is : $SEMVER"
+          echo "SEMVER=${SEMVER}" >> ${GITHUB_ENV}
+          echo "semver=${SEMVER}" >> ${GITHUB_OUTPUT}
+
+  #########################
+  #        Tests          #
+  #########################
+
+  run_unit_tests:
+    name: Run Unit Tests
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+    needs: determine_version
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # checkout the correct branch name
+      - name: Run Tests
+        run: |
+          sudo apt update && sudo apt install bc curl bash -y
+          chmod +x ./ci_scripts/run_unit_tests.sh
+          ./ci_scripts/run_unit_tests.sh
+      - name: Upload test reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: unit-tests-reports
+          path: test_reports
+          # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
+
+  #########################
+  #       Security        #
+  #########################
+
+  snyk_scan:
+    name: Run Snyk Code Analysis Scan
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/docker_images_proxy/snyk/snyk:node-20
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    needs: [run_unit_tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Run Snyk scan
+        run: |       
+          snyk code test --severity-threshold=${{ vars.SNYK_SEVERITY_THRESHOLD }}
+
+  whitesource_scan:
+    name: Run WhiteSource Dependency Scan
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    needs: [run_unit_tests]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # checkout the correct branch name
+      - name: Run Whitesource Scan
+        env:
+          WHITESOURCE_API_KEY: ${{ secrets.WHITESOURCE_APIKEY }}
+          WHITESOURCE_USER_KEY: ${{ secrets.WHITESOURCE_USERKEY }}
+        run: |
+          sudo apt update && sudo apt install bc curl bash -y
+          chmod +x ./ci_scripts/whitesource_run.sh
+          ./ci_scripts/whitesource_run.sh ${WHITESOURCE_API_KEY} ${WHITESOURCE_USER_KEY}
+
+  #########################
+  #        Build          #
+  #########################
+
+  build:
+    name: Build Application
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    needs: [determine_version, run_unit_tests, snyk_scan, whitesource_scan]
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+      DOCKER_REGISTRY_CHA: artifacts.cha.rbxd.ds
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # checkout the correct branch name
+      - name: Login to Docker Hub Artifacts
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.DOCKER_REGISTRY_CHA }}
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+      - name: Build Docker Image
+        run: |
+          sudo apt update && sudo apt install bc curl bash -y
+          chmod +x ./ci_scripts/docker-build.sh
+          ./ci_scripts/docker-build.sh
+            
+  #########################
+  #        Deploy         #
+  #########################
+
+  ready_to_deploy:
+    name: Prepare for Deployment
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    needs: [determine_version, build]
+    outputs:
+      semver: ${{ steps.semver_output.outputs.semver }}
+    steps:
+      - name: Cascade outputs
+        id: semver_output
+        run: |
+            echo "semver=${{ needs.determine_version.outputs.semver }}" >> $GITHUB_OUTPUT
+
+  #########################
+  #        Systest        #
+  #########################
+
+  authoring_systest_deploy:
+    name: 🔵 Systest - Deploy Authoring Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: systest-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: systest
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      PILET_TYPE: -authoring
+      FEED_SERVICE_URL: ${{secrets.AUTHORING_FEEDSERVICE_SYSTEST}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to systest
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_systest_deploy:
+    name: 🔵 Systest - Deploy Subscriber Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: systest-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: systest
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      FEED_SERVICE_URL: ${{secrets.FEEDSERVICE_SYSTEST}}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to systest
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  #########################
+  #     END: Systest      #
+  #########################
+  
+  #########################
+  #       Staging         #
+  #########################
+
+  authoring_staging_deploy:
+    name: 🟡 Staging - Deploy Authoring Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: staging-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: staging
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      PILET_TYPE: -authoring
+      FEED_SERVICE_URL: ${{secrets.AUTHORING_FEEDSERVICE_STAGING}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to staging
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_staging_deploy:
+    name: 🟡 Staging - Deploy Subscriber Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: staging-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: staging
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      FEED_SERVICE_URL: ${{secrets.FEEDSERVICE_STAGING}}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to staging
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  #########################
+  #     END: Staging      #
+  #########################
+  
+  #########################
+  #     Performance       #
+  #########################
+
+  authoring_performance_deploy:
+    name: 🟠 Performance - Deploy Authoring Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: performance-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: performance
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      PILET_TYPE: -authoring
+      FEED_SERVICE_URL: ${{secrets.AUTHORING_FEEDSERVICE_PERFORMANCE}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to performance
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_performance_deploy:
+    name: 🟠 Performance - Deploy Subscriber Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: performance-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: performance
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      FEED_SERVICE_URL: ${{secrets.FEEDSERVICE_PERFORMANCE}}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to performance
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  #########################
+  #   END: Performance    #
+  #########################
+  
+  #########################
+  #     Integration       #
+  #########################
+
+  authoring_integration_deploy:
+    name: 🟣 Integration - Deploy Authoring Pilet
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: integration-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: integration
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      PILET_TYPE: -authoring
+      FEED_SERVICE_URL: ${{secrets.AUTHORING_FEEDSERVICE_INTEGRATION}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to integration
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_integration_deploy:
+    name: 🟣 Integration - Deploy Subscriber Pilet
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: integration-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: integration
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-pre-live
+      FEED_SERVICE_URL: ${{secrets.FEEDSERVICE_INTEGRATION}}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to integration
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  #########################
+  #   END: Integration    #
+  #########################
+  
+  #########################
+  #      Onboarding       #
+  #########################
+
+  authoring_onboarding_deploy:
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    name: 🟤 Onboarding - Deploy Authoring Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: onboarding-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: onboarding
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-onboarding
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      PILET_TYPE: -authoring
+      FEED_SERVICE_URL: ${{secrets.AUTHORING_FEEDSERVICE_ONBOARDING}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to onboarding
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_onboarding_deploy:
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    name: 🟤 Onboarding - Deploy Subscriber Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: onboarding-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: onboarding
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-onboarding
+      FEED_SERVICE_URL: ${{secrets.FEEDSERVICE_ONBOARDING}}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to onboarding
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  #########################
+  #    END: Onboarding    #
+  #########################
+
+  #########################
+  #      Production       #
+  #########################
+
+  authoring_production_deploy:
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    name: 🟢 Production - Deploy Authoring Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: production-authoring
+    needs: [ready_to_deploy, authoring_integration_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: production
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-live
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      PILET_TYPE: -authoring
+      FEED_SERVICE_URL: ${{secrets.AUTHORING_FEEDSERVICE_PROD}}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to production
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_production_deploy:
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    name: 🟢 Production - Deploy Subscriber Pilet
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: production-subscriber
+    needs: [ready_to_deploy, subscriber_integration_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: production
+      ASSETID: price-entry
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-mfe-deployment-live
+      FEED_SERVICE_URL: ${{secrets.FEEDSERVICE_PROD}}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to production
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  #########################
+  #    END: Production    #
+  #########################

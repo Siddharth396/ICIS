@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-llmrag-performance
+  values:
+    replicaCount: 1
+    namespace: "llmrag-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/llmrag/subscriber-bff # {"$imagepolicy": "flux-system:llmrag-sub-bff-performance:name"} 
+        tag: performance-3-1.0.3.29158 # {"$imagepolicy": "flux-system:llmrag-sub-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/llmrag-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.performance.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AZURE_SEARCH_SERVICE: "cognitive-search-eastus"
+        AZURE_SEARCH_INDEX: "test-metadata-index"
+        AZURE_OPENAI_SERVICE: "app-llmrag-dev-northcentralus-openai"
+        AZURE_OPENAI_GPT_DEPLOYMENT: "gpt4-turbo"
+        AZURE_OPENAI_GPT_MODEL: "gpt-4-turbo"
+        AZURE_OPENAI_CHATGPT_DEPLOYMENT: "gpt4-turbo"
+        AZURE_OPENAI_CHATGPT_MODEL: "gpt-4-turbo"
+        AZURE_OPENAI_EMB_DEPLOYMENT: "ada-embeddings"
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/azure-openai-demo/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-llmrag-performance
+      VaultSecretPath: "llmrag/performance/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-llmrag-performance
+      VaultSecretPath: "subscriber-auth-proxy/mongo"

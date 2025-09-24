@@ -1,0 +1,47 @@
+# Using DPT vault role for time being. Needs to be changed with icis-squidex vault role
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: icis-squidex-cli-config
+  namespace: icis-squidex-systest
+data:
+
+  consul-template-config.hcl: |-
+    vault {
+      renew_token = false
+      vault_agent_token_file = "/home/vault/.vault-token"
+      retry {
+        backoff = "1s"
+      }
+    }
+
+    template {
+      destination = "/etc/secrets/.env"
+      contents = <<EOH
+      {{- with secret "kv/cha/k8s/data/icis-squidex/common"  }}
+      SQUIDEX_CLIENT_ID="{{ .Data.data.identityAdminClientId }}"
+      SQUIDEX_CLIENT_SECRET="{{ .Data.data.identityAdminClientSecret }}"
+      {{ end }}
+      EOH
+    }
+
+  vault-agent-config.hcl: |-
+    # Uncomment this to have Agent run once (e.g. when running as an initContainer)
+    exit_after_auth = true
+    pid_file = "/home/vault/pidfile"
+
+    auto_auth {
+        method "kubernetes" {
+            mount_path = "auth/cha/eks-a"
+            config = {
+                role = "kv-icis-squidex-read"
+            }
+        }
+
+        sink "file" {
+            config = {
+                path = "/home/vault/.vault-token"
+            }
+        }
+    }
+  

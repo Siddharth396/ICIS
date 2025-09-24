@@ -1,0 +1,224 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+###############################
+- logging/loki-querier-ingress.yaml
+###############################
+- monitoring/thanos-service.yaml
+
+###############################
+- logging/logstash-configmaps.yaml
+- logging/logstash-deployment.yaml
+- logging/logstash-hpa.yaml
+- logging/logstash-service.yaml
+- logging/logtstash-service-monitor.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+configMapGenerator:
+  - name: logstash-k8s-input-config
+    namespace: logging
+    files:
+      - 00-input-http.conf=logging/k8s-assets/input-conf/00-input-http.conf
+  - name: logstash-k8s-filter-config
+    namespace: logging
+    files:
+      - 00-filter-pipeline-input.conf=logging/k8s-assets/filter-conf/00-filter-pipeline-input.conf
+      - 01-filter-k8s-acmapi.conf=logging/k8s-assets/filter-conf/01-filter-k8s-acmapi.conf
+      - 01-filter-k8s-adchrt.conf=logging/k8s-assets/filter-conf/01-filter-k8s-adchrt.conf
+      - 01-filter-k8s-adtabl.conf=logging/k8s-assets/filter-conf/01-filter-k8s-adtabl.conf
+      - 01-filter-k8s-atcore.conf=logging/k8s-assets/filter-conf/01-filter-k8s-atcore.conf
+      - 01-filter-k8s-auth-proxy-authoring-kfkpro.conf=logging/k8s-assets/filter-conf/01-filter-k8s-auth-proxy-authoring-kfkpro.conf
+      - 01-filter-k8s-auth-proxy.conf=logging/k8s-assets/filter-conf/01-filter-k8s-auth-proxy.conf
+      - 01-filter-k8s-backstage.conf=logging/k8s-assets/filter-conf/01-filter-k8s-backstage.conf
+      - 01-filter-k8s-bff-authoring-kfkpro.conf=logging/k8s-assets/filter-conf/01-filter-k8s-bff-authoring-kfkpro.conf
+      - 01-filter-k8s-c-hub.conf=logging/k8s-assets/filter-conf/01-filter-k8s-c-hub.conf
+      - 01-filter-k8s-canvas.conf=logging/k8s-assets/filter-conf/01-filter-k8s-canvas.conf
+      - 01-filter-k8s-carfpt.conf=logging/k8s-assets/filter-conf/01-filter-k8s-carfpt.conf
+      - 01-filter-k8s-ccurve.conf=logging/k8s-assets/filter-conf/01-filter-k8s-ccurve.conf
+      - 01-filter-k8s-cimage.conf=logging/k8s-assets/filter-conf/01-filter-k8s-cimage.conf
+      - 01-filter-k8s-cms-publisher.conf=logging/k8s-assets/filter-conf/01-filter-k8s-cms-publisher.conf
+      - 01-filter-k8s-cnvsrv.conf=logging/k8s-assets/filter-conf/01-filter-k8s-cnvsrv.conf
+      - 01-filter-k8s-contnf.conf=logging/k8s-assets/filter-conf/01-filter-k8s-contnf.conf
+      - 01-filter-k8s-cvideo.conf=logging/k8s-assets/filter-conf/01-filter-k8s-cvideo.conf
+      - 01-filter-k8s-darwin-price-tool.conf=logging/k8s-assets/filter-conf/01-filter-k8s-darwin-price-tool.conf
+      - 01-filter-k8s-datapr.conf=logging/k8s-assets/filter-conf/01-filter-k8s-datapr.conf
+      - 01-filter-k8s-didens.conf=logging/k8s-assets/filter-conf/01-filter-k8s-didens.conf
+      - 01-filter-k8s-eacons.conf=logging/k8s-assets/filter-conf/01-filter-k8s-eacons.conf
+      - 01-filter-k8s-enalog.conf=logging/k8s-assets/filter-conf/01-filter-k8s-enalog.conf
+      - 01-filter-k8s-enapi1.conf=logging/k8s-assets/filter-conf/01-filter-k8s-enapi1.conf
+      - 01-filter-k8s-enavip.conf=logging/k8s-assets/filter-conf/01-filter-k8s-enavip.conf
+      - 01-filter-k8s-enfapi-backend.conf=logging/k8s-assets/filter-conf/01-filter-k8s-enfapi-backend.conf
+      - 01-filter-k8s-enfapi-kafka-consumer.conf=logging/k8s-assets/filter-conf/01-filter-k8s-enfapi-kafka-consumer.conf
+      - 01-filter-k8s-enfapi-kafka-data-processing.conf=logging/k8s-assets/filter-conf/01-filter-k8s-enfapi-kafka-data-processing.conf
+      - 01-filter-k8s-enfapi.conf=logging/k8s-assets/filter-conf/01-filter-k8s-enfapi.conf
+      - 01-filter-k8s-esvcep.conf=logging/k8s-assets/filter-conf/01-filter-k8s-esvcep.conf
+      - 01-filter-k8s-event-processor-core.conf=logging/k8s-assets/filter-conf/01-filter-k8s-event-processor-core.conf
+      - 01-filter-k8s-event-processor-nsemdp.conf=logging/k8s-assets/filter-conf/01-filter-k8s-event-processor-nsemdp.conf
+      - 01-filter-k8s-event-processor-pforecast.conf=logging/k8s-assets/filter-conf/01-filter-k8s-event-processor-pforecast.conf
+      - 01-filter-k8s-event-processor-sboutg.conf=logging/k8s-assets/filter-conf/01-filter-k8s-event-processor-sboutg.conf
+      - 01-filter-k8s-extids.conf=logging/k8s-assets/filter-conf/01-filter-k8s-extids.conf
+      - 01-filter-k8s-grn.conf=logging/k8s-assets/filter-conf/01-filter-k8s-grn.conf
+      - 01-filter-k8s-homepage.conf=logging/k8s-assets/filter-conf/01-filter-k8s-homepage.conf
+      - 01-filter-k8s-iddn-kafka.conf=logging/k8s-assets/filter-conf/01-filter-k8s-iddn-kafka.conf
+      - 01-filter-k8s-idsadm.conf=logging/k8s-assets/filter-conf/01-filter-k8s-idsadm.conf
+      - 01-filter-k8s-infgrm.conf=logging/k8s-assets/filter-conf/01-filter-k8s-infgrm.conf
+      - 01-filter-k8s-kafka-consumer-core.conf=logging/k8s-assets/filter-conf/01-filter-k8s-kafka-consumer-core.conf
+      - 01-filter-k8s-kafka-consumer-nsemdp.conf=logging/k8s-assets/filter-conf/01-filter-k8s-kafka-consumer-nsemdp.conf
+      - 01-filter-k8s-kafka-consumer-pforecast.conf=logging/k8s-assets/filter-conf/01-filter-k8s-kafka-consumer-pforecast.conf
+      - 01-filter-k8s-kafka-consumer-sboutg.conf=logging/k8s-assets/filter-conf/01-filter-k8s-kafka-consumer-sboutg.conf
+      - 01-filter-k8s-llmrag.conf=logging/k8s-assets/filter-conf/01-filter-k8s-llmrag.conf
+      - 01-filter-k8s-lngedge.conf=logging/k8s-assets/filter-conf/01-filter-k8s-lngedge.conf
+      - 01-filter-k8s-newsfd.conf=logging/k8s-assets/filter-conf/01-filter-k8s-newsfd.conf
+      - 01-filter-k8s-ontmgs.conf=logging/k8s-assets/filter-conf/01-filter-k8s-ontmgs.conf
+      - 01-filter-k8s-order-kafka-producer.conf=logging/k8s-assets/filter-conf/01-filter-k8s-order-kafka-producer.conf
+      - 01-filter-k8s-pdcast.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pdcast.conf
+      - 01-filter-k8s-petana-event-processor.conf=logging/k8s-assets/filter-conf/01-filter-k8s-petana-event-processor.conf
+      - 01-filter-k8s-petana-kafka-consumer.conf=logging/k8s-assets/filter-conf/01-filter-k8s-petana-kafka-consumer.conf
+      - 01-filter-k8s-petana.conf=logging/k8s-assets/filter-conf/01-filter-k8s-petana.conf
+      - 01-filter-k8s-pfawf.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pfawf.conf
+      - 01-filter-k8s-pforecast-app.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pforecast-app.conf
+      - 01-filter-k8s-pforecast-bff.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pforecast-bff.conf
+      - 01-filter-k8s-pforecast-kafka-consumer.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pforecast-kafka-consumer.conf
+      - 01-filter-k8s-pforecast-page-ready-notifier.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pforecast-page-ready-notifier.conf
+      - 01-filter-k8s-pforecast-price-conversion.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pforecast-price-conversion.conf
+      - 01-filter-k8s-pforecast.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pforecast.conf
+      - 01-filter-k8s-pgnsvc.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pgnsvc.conf
+      - 01-filter-k8s-prcent.conf=logging/k8s-assets/filter-conf/01-filter-k8s-prcent.conf
+      - 01-filter-k8s-prelive-kafka-connectors-monitor.conf=logging/k8s-assets/filter-conf/01-filter-k8s-prelive-kafka-connectors-monitor.conf
+      - 01-filter-k8s-priceopt.conf=logging/k8s-assets/filter-conf/01-filter-k8s-priceopt.conf
+      - 01-filter-k8s-pricing.conf=logging/k8s-assets/filter-conf/01-filter-k8s-pricing.conf
+      - 01-filter-k8s-prometheus.conf=logging/k8s-assets/filter-conf/01-filter-k8s-prometheus.conf
+      - 01-filter-k8s-rchtxt.conf=logging/k8s-assets/filter-conf/01-filter-k8s-rchtxt.conf
+      - 01-filter-k8s-rpet.conf=logging/k8s-assets/filter-conf/01-filter-k8s-rpet.conf
+      - 01-filter-k8s-sbcomm.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sbcomm.conf
+      - 01-filter-k8s-sbcore.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sbcore.conf
+      - 01-filter-k8s-sberdg.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sberdg.conf
+      - 01-filter-k8s-sbfeed.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sbfeed.conf
+      - 01-filter-k8s-sbmobl.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sbmobl.conf
+      - 01-filter-k8s-sbnews.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sbnews.conf
+      - 01-filter-k8s-sbsrch.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sbsrch.conf
+      - 01-filter-k8s-sftp-proxy.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sftp-proxy.conf
+      - 01-filter-k8s-sndctl.conf=logging/k8s-assets/filter-conf/01-filter-k8s-sndctl.conf
+      - 01-filter-k8s-snkidn.conf=logging/k8s-assets/filter-conf/01-filter-k8s-snkidn.conf
+      - 01-filter-k8s-spfeed-event-processor.conf=logging/k8s-assets/filter-conf/01-filter-k8s-spfeed-event-processor.conf
+      - 01-filter-k8s-spfeed-kafka-consumer.conf=logging/k8s-assets/filter-conf/01-filter-k8s-spfeed-kafka-consumer.conf
+      - 01-filter-k8s-spfeed.conf=logging/k8s-assets/filter-conf/01-filter-k8s-spfeed.conf
+      - 01-filter-k8s-spt.conf=logging/k8s-assets/filter-conf/01-filter-k8s-spt.conf
+      - 01-filter-k8s-squidex-event-processor.conf=logging/k8s-assets/filter-conf/01-filter-k8s-squidex-event-processor.conf
+      - 01-filter-k8s-squidex-kafka-consumer.conf=logging/k8s-assets/filter-conf/01-filter-k8s-squidex-kafka-consumer.conf
+      - 01-filter-k8s-subscriber-auth-proxy-sboutg.conf=logging/k8s-assets/filter-conf/01-filter-k8s-subscriber-auth-proxy-sboutg.conf
+      - 01-filter-k8s-subscriber-bff-rclpet.conf=logging/k8s-assets/filter-conf/01-filter-k8s-subscriber-bff-rclpet.conf
+      - 01-filter-k8s-subscriber-nginx-sboutg.conf=logging/k8s-assets/filter-conf/01-filter-k8s-subscriber-nginx-sboutg.conf
+      - 01-filter-k8s-subscriber-pricing.conf=logging/k8s-assets/filter-conf/01-filter-k8s-subscriber-pricing.conf
+      - 01-filter-k8s-subscriber.conf=logging/k8s-assets/filter-conf/01-filter-k8s-subscriber.conf
+      - 01-filter-k8s-supdem.conf=logging/k8s-assets/filter-conf/01-filter-k8s-supdem.conf
+      - 01-filter-k8s-syctcv.conf=logging/k8s-assets/filter-conf/01-filter-k8s-syctcv.conf
+      - 01-filter-k8s-tblent.conf=logging/k8s-assets/filter-conf/01-filter-k8s-tblent.conf
+      - 01-filter-k8s-wkfeng.conf=logging/k8s-assets/filter-conf/01-filter-k8s-wkfeng.conf
+      - 01-filter-k8s-wrkflw.conf=logging/k8s-assets/filter-conf/01-filter-k8s-wrkflw.conf
+      - 01-filter-k8s-refdts.conf=logging/k8s-assets/filter-conf/01-filter-k8s-refdts.conf
+      - 01-filter-k8s-notsys.conf=logging/k8s-assets/filter-conf/01-filter-k8s-notsys.conf
+      - 01-filter-k8s-cnvspt.conf=logging/k8s-assets/filter-conf/01-filter-k8s-cnvspt.conf
+      - 09-filter-pipeline-output.conf=logging/k8s-assets/filter-conf/09-filter-pipeline-output.conf
+  - name: logstash-k8s-output-config
+    namespace: logging
+    files:
+      - 00-output-pipeline-input.conf=logging/k8s-assets/output-conf/00-output-pipeline-input.conf
+      - 01-output-k8s-acmapi.conf=logging/k8s-assets/output-conf/01-output-k8s-acmapi.conf
+      - 01-output-k8s-adchrt.conf=logging/k8s-assets/output-conf/01-output-k8s-adchrt.conf
+      - 01-output-k8s-adtabl.conf=logging/k8s-assets/output-conf/01-output-k8s-adtabl.conf
+      - 01-output-k8s-atcore.conf=logging/k8s-assets/output-conf/01-output-k8s-atcore.conf
+      - 01-output-k8s-auth-proxy-authoring-kfkpro.conf=logging/k8s-assets/output-conf/01-output-k8s-auth-proxy-authoring-kfkpro.conf
+      - 01-output-k8s-auth-proxy.conf=logging/k8s-assets/output-conf/01-output-k8s-auth-proxy.conf
+      - 01-output-k8s-backstage.conf=logging/k8s-assets/output-conf/01-output-k8s-backstage.conf
+      - 01-output-k8s-bff-authoring-kfkpro.conf=logging/k8s-assets/output-conf/01-output-k8s-bff-authoring-kfkpro.conf
+      - 01-output-k8s-c-hub.conf=logging/k8s-assets/output-conf/01-output-k8s-c-hub.conf
+      - 01-output-k8s-canvas.conf=logging/k8s-assets/output-conf/01-output-k8s-canvas.conf
+      - 01-output-k8s-carfpt.conf=logging/k8s-assets/output-conf/01-output-k8s-carfpt.conf
+      - 01-output-k8s-ccurve.conf=logging/k8s-assets/output-conf/01-output-k8s-ccurve.conf
+      - 01-output-k8s-cimage.conf=logging/k8s-assets/output-conf/01-output-k8s-cimage.conf
+      - 01-output-k8s-cms-publisher.conf=logging/k8s-assets/output-conf/01-output-k8s-cms-publisher.conf
+      - 01-output-k8s-cnvsrv.conf=logging/k8s-assets/output-conf/01-output-k8s-cnvsrv.conf
+      - 01-output-k8s-contnf.conf=logging/k8s-assets/output-conf/01-output-k8s-contnf.conf
+      - 01-output-k8s-cvideo.conf=logging/k8s-assets/output-conf/01-output-k8s-cvideo.conf
+      - 01-output-k8s-darwin-price-tool.conf=logging/k8s-assets/output-conf/01-output-k8s-darwin-price-tool.conf
+      - 01-output-k8s-datapr.conf=logging/k8s-assets/output-conf/01-output-k8s-datapr.conf
+      - 01-output-k8s-didens.conf=logging/k8s-assets/output-conf/01-output-k8s-didens.conf
+      - 01-output-k8s-eacons.conf=logging/k8s-assets/output-conf/01-output-k8s-eacons.conf
+      - 01-output-k8s-enalog.conf=logging/k8s-assets/output-conf/01-output-k8s-enalog.conf
+      - 01-output-k8s-enapi1.conf=logging/k8s-assets/output-conf/01-output-k8s-enapi1.conf
+      - 01-output-k8s-enavip.conf=logging/k8s-assets/output-conf/01-output-k8s-enavip.conf
+      - 01-output-k8s-enfapi-backend.conf=logging/k8s-assets/output-conf/01-output-k8s-enfapi-backend.conf
+      - 01-output-k8s-enfapi-kafka-consumer.conf=logging/k8s-assets/output-conf/01-output-k8s-enfapi-kafka-consumer.conf
+      - 01-output-k8s-enfapi-kafka-data-processing.conf=logging/k8s-assets/output-conf/01-output-k8s-enfapi-kafka-data-processing.conf
+      - 01-output-k8s-enfapi.conf=logging/k8s-assets/output-conf/01-output-k8s-enfapi.conf
+      - 01-output-k8s-esvcep.conf=logging/k8s-assets/output-conf/01-output-k8s-esvcep.conf
+      - 01-output-k8s-event-processor-core.conf=logging/k8s-assets/output-conf/01-output-k8s-event-processor-core.conf
+      - 01-output-k8s-event-processor-nsemdp.conf=logging/k8s-assets/output-conf/01-output-k8s-event-processor-nsemdp.conf
+      - 01-output-k8s-event-processor-pforecast.conf=logging/k8s-assets/output-conf/01-output-k8s-event-processor-pforecast.conf
+      - 01-output-k8s-event-processor-sboutg.conf=logging/k8s-assets/output-conf/01-output-k8s-event-processor-sboutg.conf
+      - 01-output-k8s-extids.conf=logging/k8s-assets/output-conf/01-output-k8s-extids.conf
+      - 01-output-k8s-grn.conf=logging/k8s-assets/output-conf/01-output-k8s-grn.conf
+      - 01-output-k8s-homepage.conf=logging/k8s-assets/output-conf/01-output-k8s-homepage.conf
+      - 01-output-k8s-iddn-kafka.conf=logging/k8s-assets/output-conf/01-output-k8s-iddn-kafka.conf
+      - 01-output-k8s-idsadm.conf=logging/k8s-assets/output-conf/01-output-k8s-idsadm.conf
+      - 01-output-k8s-infgrm.conf=logging/k8s-assets/output-conf/01-output-k8s-infgrm.conf
+      - 01-output-k8s-kafka-consumer-core.conf=logging/k8s-assets/output-conf/01-output-k8s-kafka-consumer-core.conf
+      - 01-output-k8s-kafka-consumer-nsemdp.conf=logging/k8s-assets/output-conf/01-output-k8s-kafka-consumer-nsemdp.conf
+      - 01-output-k8s-kafka-consumer-pforecast.conf=logging/k8s-assets/output-conf/01-output-k8s-kafka-consumer-pforecast.conf
+      - 01-output-k8s-kafka-consumer-sboutg.conf=logging/k8s-assets/output-conf/01-output-k8s-kafka-consumer-sboutg.conf
+      - 01-output-k8s-llmrag.conf=logging/k8s-assets/output-conf/01-output-k8s-llmrag.conf
+      - 01-output-k8s-lngedge.conf=logging/k8s-assets/output-conf/01-output-k8s-lngedge.conf
+      - 01-output-k8s-newsfd.conf=logging/k8s-assets/output-conf/01-output-k8s-newsfd.conf
+      - 01-output-k8s-ontmgs.conf=logging/k8s-assets/output-conf/01-output-k8s-ontmgs.conf
+      - 01-output-k8s-order-kafka-producer.conf=logging/k8s-assets/output-conf/01-output-k8s-order-kafka-producer.conf
+      - 01-output-k8s-pdcast.conf=logging/k8s-assets/output-conf/01-output-k8s-pdcast.conf
+      - 01-output-k8s-petana-event-processor.conf=logging/k8s-assets/output-conf/01-output-k8s-petana-event-processor.conf
+      - 01-output-k8s-petana-kafka-consumer.conf=logging/k8s-assets/output-conf/01-output-k8s-petana-kafka-consumer.conf
+      - 01-output-k8s-petana.conf=logging/k8s-assets/output-conf/01-output-k8s-petana.conf
+      - 01-output-k8s-pfawf.conf=logging/k8s-assets/output-conf/01-output-k8s-pfawf.conf
+      - 01-output-k8s-pforecast-app.conf=logging/k8s-assets/output-conf/01-output-k8s-pforecast-app.conf
+      - 01-output-k8s-pforecast-bff.conf=logging/k8s-assets/output-conf/01-output-k8s-pforecast-bff.conf
+      - 01-output-k8s-pforecast-kafka-consumer.conf=logging/k8s-assets/output-conf/01-output-k8s-pforecast-kafka-consumer.conf
+      - 01-output-k8s-pforecast-page-ready-notifier.conf=logging/k8s-assets/output-conf/01-output-k8s-pforecast-page-ready-notifier.conf
+      - 01-output-k8s-pforecast-price-conversion.conf=logging/k8s-assets/output-conf/01-output-k8s-pforecast-price-conversion.conf
+      - 01-output-k8s-pforecast.conf=logging/k8s-assets/output-conf/01-output-k8s-pforecast.conf
+      - 01-output-k8s-pgnsvc.conf=logging/k8s-assets/output-conf/01-output-k8s-pgnsvc.conf
+      - 01-output-k8s-prcent.conf=logging/k8s-assets/output-conf/01-output-k8s-prcent.conf
+      - 01-output-k8s-prelive-kafka-connectors-monitor.conf=logging/k8s-assets/output-conf/01-output-k8s-prelive-kafka-connectors-monitor.conf
+      - 01-output-k8s-priceopt.conf=logging/k8s-assets/output-conf/01-output-k8s-priceopt.conf
+      - 01-output-k8s-pricing.conf=logging/k8s-assets/output-conf/01-output-k8s-pricing.conf
+      - 01-output-k8s-prometheus.conf=logging/k8s-assets/output-conf/01-output-k8s-prometheus.conf
+      - 01-output-k8s-rchtxt.conf=logging/k8s-assets/output-conf/01-output-k8s-rchtxt.conf
+      - 01-output-k8s-rpet.conf=logging/k8s-assets/output-conf/01-output-k8s-rpet.conf
+      - 01-output-k8s-sbcomm.conf=logging/k8s-assets/output-conf/01-output-k8s-sbcomm.conf
+      - 01-output-k8s-sbcore.conf=logging/k8s-assets/output-conf/01-output-k8s-sbcore.conf
+      - 01-output-k8s-sberdg.conf=logging/k8s-assets/output-conf/01-output-k8s-sberdg.conf
+      - 01-output-k8s-sbfeed.conf=logging/k8s-assets/output-conf/01-output-k8s-sbfeed.conf
+      - 01-output-k8s-sbmobl.conf=logging/k8s-assets/output-conf/01-output-k8s-sbmobl.conf
+      - 01-output-k8s-sbnews.conf=logging/k8s-assets/output-conf/01-output-k8s-sbnews.conf
+      - 01-output-k8s-sbsrch.conf=logging/k8s-assets/output-conf/01-output-k8s-sbsrch.conf
+      - 01-output-k8s-sftp-proxy.conf=logging/k8s-assets/output-conf/01-output-k8s-sftp-proxy.conf
+      - 01-output-k8s-sndctl.conf=logging/k8s-assets/output-conf/01-output-k8s-sndctl.conf
+      - 01-output-k8s-snkidn.conf=logging/k8s-assets/output-conf/01-output-k8s-snkidn.conf
+      - 01-output-k8s-spfeed-event-processor.conf=logging/k8s-assets/output-conf/01-output-k8s-spfeed-event-processor.conf
+      - 01-output-k8s-spfeed-kafka-consumer.conf=logging/k8s-assets/output-conf/01-output-k8s-spfeed-kafka-consumer.conf
+      - 01-output-k8s-spfeed.conf=logging/k8s-assets/output-conf/01-output-k8s-spfeed.conf
+      - 01-output-k8s-spt.conf=logging/k8s-assets/output-conf/01-output-k8s-spt.conf
+      - 01-output-k8s-squidex-event-processor.conf=logging/k8s-assets/output-conf/01-output-k8s-squidex-event-processor.conf
+      - 01-output-k8s-squidex-kafka-consumer.conf=logging/k8s-assets/output-conf/01-output-k8s-squidex-kafka-consumer.conf
+      - 01-output-k8s-subscriber-auth-proxy-sboutg.conf=logging/k8s-assets/output-conf/01-output-k8s-subscriber-auth-proxy-sboutg.conf
+      - 01-output-k8s-subscriber-bff-rclpet.conf=logging/k8s-assets/output-conf/01-output-k8s-subscriber-bff-rclpet.conf
+      - 01-output-k8s-subscriber-nginx-sboutg.conf=logging/k8s-assets/output-conf/01-output-k8s-subscriber-nginx-sboutg.conf
+      - 01-output-k8s-subscriber-pricing.conf=logging/k8s-assets/output-conf/01-output-k8s-subscriber-pricing.conf
+      - 01-output-k8s-subscriber.conf=logging/k8s-assets/output-conf/01-output-k8s-subscriber.conf
+      - 01-output-k8s-supdem.conf=logging/k8s-assets/output-conf/01-output-k8s-supdem.conf
+      - 01-output-k8s-syctcv.conf=logging/k8s-assets/output-conf/01-output-k8s-syctcv.conf
+      - 01-output-k8s-tblent.conf=logging/k8s-assets/output-conf/01-output-k8s-tblent.conf
+      - 01-output-k8s-wkfeng.conf=logging/k8s-assets/output-conf/01-output-k8s-wkfeng.conf
+      - 01-output-k8s-wrkflw.conf=logging/k8s-assets/output-conf/01-output-k8s-wrkflw.conf
+      - 01-output-k8s-refdts.conf=logging/k8s-assets/output-conf/01-output-k8s-refdts.conf
+      - 01-output-k8s-notsys.conf=logging/k8s-assets/output-conf/01-output-k8s-notsys.conf
+      - 01-output-k8s-cnvspt.conf=logging/k8s-assets/output-conf/01-output-k8s-cnvspt.conf
+      - 01-output-k8s-streamsets.conf=logging/k8s-assets/output-conf/01-output-k8s-streamsets.conf

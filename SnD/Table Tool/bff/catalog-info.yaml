@@ -1,0 +1,85 @@
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: auth-proxy
+  description: An application which handles the authentication for any react app or BFF API
+spec:
+  type: console-application
+  owner: core
+  system: subscriber-platform
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: internal-auth-proxy
+  description: An application which handles the internal ADFS users authentication for any react app or BFF API 
+spec:
+  type: console-application
+  owner: core
+  system: authoring-platform
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: mongodb
+  description: Document-oriented NoSQL database which uses a JSON-like format to store data
+spec:
+  type: database
+  owner: sre
+  system: infrastructure
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "supply-and-demand"
+  description: "Supply And Demand"
+  tags: 
+    - dotnet
+    - csharp
+    - mongodb
+  annotations:
+    gitlab.com/project-slug: 'Icis/capabilities/supply-and-demand/bff'
+    'backstage.io/kubernetes-id': subscriber-bff-sndctl
+  links:
+    - url: http://logs.icis.rbi.web.ds/_plugin/kibana/app/kibana#/discover
+      title: Live - Kibana
+      icon: dashboard
+    
+    - url: https://kibana.eks-4.genesis.chp.eu-west-1.prod/app/apm/services
+      title: Live - APM
+      icon: dashboard
+      
+    - url: https://grafana.icis.rbi.web.ds/login
+      title: Live - Grafana
+      icon: dashboard
+    
+    - url: http://logs.cha.rbxd.ds/_plugin/kibana/app/kibana#/discover
+      title: PreLive - Kibana
+      icon: dashboard
+      
+    - url: https://kibana.eks-4.genesis.cha.eu-west-1.dev/app/apm/services
+      title: PreLive - APM
+      icon: dashboard
+    
+    - url: https://grafana.cha.rbxd.ds/login
+      title: PreLive - Grafana
+      icon: dashboard
+      
+    - url: https://jira.tools.cha.rbxd.ds/secure/RapidBoard.jspa?rapidView=358&projectKey=ATP&view=planning&issueLimit=100
+      title: Dev - Jira Board
+      icon: web
+      
+    - url: https://confluence.tools.cha.rbxd.ds/display/SE/Backstage
+      title: Dev - Confluence Page
+      icon: web
+spec:
+  type: service
+  owner: "SnD"
+  lifecycle: production
+  system: "Supply And Demand"
+  dependsOn:
+    - resource:default/auth-proxy
+    - resource:default/mongodb

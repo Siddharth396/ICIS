@@ -1,0 +1,139 @@
+####################################################
+## Allow ingress from tesla-acceptance and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-tesla-acceptance
+  namespace: tesla-acceptance
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: tesla-acceptance
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from tesla-acceptance ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-tesla-acceptance
+  namespace: tesla-acceptance
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: tesla-acceptance
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: tesla-acceptance
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#################################################
+
+---
+
+################
+## ICIS monitoring ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: tesla-acceptance
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+## Allow SQL Server egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-sql-server
+  namespace: tesla-acceptance
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 1433
+      protocol: TCP
+
+#################################################
+## Allow external http traffic egress to IDDN  ##
+#################################################
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-iddn
+  namespace: tesla-acceptance
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: "tesla-tardis"
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/22
+    ports:
+    - port: 9000
+      protocol: TCP
+    - port: 9100
+      protocol: TCP
+
+##################################################
+## Allow traffic to confluent cloud peered VPC  ##
+##################################################
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-confluent
+  namespace: tesla-acceptance
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: "tesla-kafkapublisher"
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP

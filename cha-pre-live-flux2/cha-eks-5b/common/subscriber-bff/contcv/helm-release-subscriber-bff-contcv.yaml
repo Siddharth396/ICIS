@@ -1,0 +1,15 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  chart:
+    version: 0.1.23
+  values:
+    replicaCount: 1
+    projectName: "contcv"
+    ServiceAccountName: "contcv"
+
+    vault:
+      VaultK8sRoleName: "kv-contcv-read"

@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: bdo
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_performance_petchem_price_assessments_2
+    database: spt-performance
+    collection: price_assessments
+    transforms.RenameField.renames: id:_id
+    transforms.FilterValue.filter.condition: $[?(@.created_for < 1651406400000)]
+    transforms.FilterValue.filter.type: exclude

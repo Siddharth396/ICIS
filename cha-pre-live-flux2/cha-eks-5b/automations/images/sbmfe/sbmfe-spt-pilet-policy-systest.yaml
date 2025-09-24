@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: sbmfe-spt-pilet-systest
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sbmfe-spt-pilet
+    namespace: flux-system
+  filterTags:
+    pattern: '^systest-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

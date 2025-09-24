@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: dlchrt-performance
+nameSuffix: -dlchrt
+resources:
+- ../../../common/subscriber-bff/dlchrt/
+- ../../../common/authoring-bff/dlchrt/
+patches:
+- path: helm-release-subscriber-bff-dlchrt-performance.yaml
+- path: helm-release-authoring-bff-dlchrt-performance.yaml

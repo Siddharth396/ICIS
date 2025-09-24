@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: newsfd-performance
+nameSuffix: -newsfd
+resources:
+- ../../../common/subscriber-bff/newsfd/
+- ../../../common/authoring-bff/newsfd/
+- helm-release-bff-subscriber-newsfd-deployment-scaler.yaml
+- helm-release-bff-authoring-newsfd-deployment-scaler.yaml
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-newsfd-performance.yaml
+- path: helm-release-authoring-bff-newsfd-performance.yaml
+
+# BACKSTAGE-COMMENT-PATTERN2

@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: atlas-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin
+  namespace: sbmobl-systest
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin
+  namespace: sbmobl-staging
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin
+  namespace: sbmobl-performance
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin-service-monitor
+  namespace: sbmobl-systest
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin-service-monitor
+  namespace: sbmobl-staging
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin-service-monitor
+  namespace: sbmobl-performance
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin
+  namespace: sbmobl-integration
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: atlas-agent-admin-service-monitor
+  namespace: sbmobl-integration
+subjects:
+- kind: ServiceAccount
+  name: atlas-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+

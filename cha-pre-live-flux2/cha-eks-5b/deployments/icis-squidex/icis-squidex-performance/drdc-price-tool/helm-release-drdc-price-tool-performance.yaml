@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-performance
+  namespace: icis-squidex-performance
+spec:
+  releaseName: drdc-price-tool-performance
+  values:
+    projectName: "drdc-price-tool"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-performance-drdc-price-tool:name"}
+        tag: performance-drdc-price-tool-287-7.7.35 # {"$imagepolicy": "flux-system:icis-squidex-performance-drdc-price-tool:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: drdc-price-tool
+        ADMIN__ADMINUSERGROUP__0: ICIS_Darwin
+        CONTENTS__MAXRESULTS: "'5000'"
+        CONTENTS__TIMEOUTQUERY: "'00:00:55'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'10000'"
+        PLUGINS__2: ICIS.EmbargoEtlPlugin.dll
+    squidexCli:
+      enabled: True
+      schedule: "'20 7,10,13,16 * * *'"
+    vault_squidex_secrets:
+      name: drdc-price-tool-squidex-performance-secret

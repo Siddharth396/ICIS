@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki-gateway
+  namespace: logging
+  labels:
+    app.kubernetes.io/instance: loki-gateway
+    app.kubernetes.io/name: loki-gateway
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+    lnrs.io/zone-type: private
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/proxy-body-size: 8m
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 64k
+    nginx.ingress.kubernetes.io/ssl-ciphers: ALL:!aNULL:!EXPORT56:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP
+spec:
+  ingressClassName: icis-nginx-ingress
+  tls:
+  - hosts:
+    - loki-eks-5a.cha.eu-west-1.dev
+    secretName: loki-eks-5a.cha.eu-west-1.dev
+  rules:
+    - host: loki-eks-5a.cha.eu-west-1.dev
+      http:
+        paths:
+          - path: /loki/api/v1/
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: loki-gateway
+                port:
+                  name: http-metrics
+

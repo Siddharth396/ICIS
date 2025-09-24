@@ -1,0 +1,86 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+  namespace: icis-squidex-systest
+spec:
+  releaseName: chemical-analytics-event-processor-systest
+  values:
+    replicaCount: 3
+    namespace: "icis-squidex-systest"
+    environment: "systest"
+    projectName: "chemical-analytics"
+    ServiceAccountName: "icis-squidex"
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.1.0-vso.1.1002
+        pullPolicy: IfNotPresent
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "systest"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__private_systest_petchem_model_forecast_price_1: "http://localhost:80/api/1.0/messageHandler"
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "chemical-analytics-consumer-systest-4"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_systest_chemical_analytics_consumer_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_systest_chemical_analytics_consumer_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "private_systest_petchem_model_forecast_price_1"
+    event_processor:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/icis-squidex/event-processor" # {"$imagepolicy": "flux-system:icis-squidex-event-processor-systest-chemical-analytics:name"}
+        tag: systest-chemical-analytics-17-0.1.15-vega-2262.36-363 # {"$imagepolicy": "flux-system:icis-squidex-event-processor-systest-chemical-analytics:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        ASPNETCORE_ENVIRONMENT: systest
+        SchemaRegistry__Url: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud/
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__SchemaName: "analyst-adjustments"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__0: "model_run_uid"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__1: "model_name"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__2: "version_datetime"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__3: "series_items"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__4: "event_trigger"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__5: "publication_status"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__6: "scenario_name"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__Fields__7: "metadata"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__0: "applies_from"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__1: "output_1_forecast_series_code"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__2: "output_1_forecast_short_name"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__3: "output_1_forecast_long_name"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__4: "output_1_forecast_unadjusted_forecast"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__5: "output_1_forecast_adjustment"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__6: "output_1_forecast_adjusted_forecast"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__7: "output_1_forecast_adjustment_comment"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__8: "output_1_forecast_latest_published_adjusted_forecast"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__9: "total_input_cost"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__10: "input_1_forecast_series_code"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__11: "input_1_forecast_short_name"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__ComplexFields__series_items__12: "input_1_forecast_price"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__FieldsInLists__0: "meta.createdBy.avatar"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__FieldsInLists__1: "meta.status.color"
+        Processor__TopicToSchemaMapping__private_systest_petchem_model_forecast_price_1__FieldsInLists__2: "meta.lastModified"
+        Squidex__Url: https://chemical-analytics.cosmos.systest.cha.eu-west-1.dev/
+        Squidex__AppName: "chemical-analytics"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: icis-nginx-ingress
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        external-dns.alpha.kubernetes.io/hostname: chemical-analytics-event-processor.systest.cha.eu-west-1.dev
+        cert-manager.io/cluster-issuer: vault-issuer
+      hosts:
+        - host: chemical-analytics-event-processor.systest.cha.eu-west-1.dev
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - chemical-analytics-event-processor.systest.cha.eu-west-1.dev
+          secretName: chemical-analytics-analytics-event-processor-systest-cha-eu-west-1-dev
+    vault_secrets:
+      name: chemical-analytics-event-processor-vault-secret-systest
+    vault_secrets_consumer:
+      name: chemical-analytics-event-processor-vault-secret-consumer-systest
+      VaultSecretPath: "icis-squidex/chemical-analytics/systest"    
+
+

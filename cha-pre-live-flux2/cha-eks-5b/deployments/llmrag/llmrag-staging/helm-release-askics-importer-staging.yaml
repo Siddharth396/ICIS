@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: askics-importer # Change to a unique resource name
+spec:
+  releaseName: askics-importer-staging # Ensure a unique release name
+  values:
+    replicaCount: 1
+    namespace: llmrag-staging # same namespace as before
+    environment: staging
+    importer:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/llmrag/askicis-importer # {"$imagepolicy": "flux-system:askics-importer-staging:name"}
+        tag: staging-167-1.9.2-ASKICIS-574-new-content-collection.1.2717 # {"$imagepolicy": "flux-system:askics-importer-staging:tag"}
+        pullPolicy: IfNotPresent
+      container:
+        name: http
+        port: 80
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/llmrag-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: "https://*.cha.rbxd.ds,https://*cha.eu-west-1.dev,http://localhost:5000,https://localhost:8050,http://127.0.0.1:5000,http://0.0.0.0:5000"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AZURE_OPENAI_SERVICE: "app-askicis-nonprod-eastus2-openai"
+        AZURE_OPENAI_CHATGPT_35_SERVICE: "app-askicis-nonprod-eastus2-openai"
+        AZURE_OPENAI_CHATGPT_35_DEPLOYMENT: "gpt-4o-mini"
+        AZURE_OPENAI_CHATGPT_35_MODEL_NAME: "gpt-4o-mini"
+        AZURE_OPENAI_CHATGPT_35_MODEL_VERSION: "2024-07-18"
+        PRIMARY_AZURE_OPENAI_SERVICE: "app-askicis-nonprod-eastus2-openai"
+        BACKUP_AZURE_OPENAI_SERVICE: "app-askicis-nonprod-swedencentral-openai"
+        AZURE_OPENAI_EMB_DEPLOYMENT: "ada-embeddings"
+        AZURE_OPENAI_EMB_LARGE_DEPLOYMENT: "text-embedding-3-large"
+        OPENAI_API_VERSION: "2023-05-15"
+        RUN_IMPORT_DATA_TASK: true
+        DB_URL: "https://dbapi.systest.genesis.cha.rbxd.ds/"
+        CHARTING_DATABASE: pricing-staging
+        RUN_EXPORT_USAGE_TASK: false
+        USAGE_S3_BUCKET: "icis-bdaplogs-prelive"
+        USAGE_S3_BUCKET_REGION: "eu-west-1"
+    vault_secrets:
+      name: subscriber-bff-risk-vault-secret-llmrag-staging
+      VaultSecretPath: "llmrag/staging/subscriber/bff"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-connection"
+      VaultNamespace: dataservices/icis/nonprod
+      # vault_secrets_proxy:
+      #   name: subscriber-bff-vault-secret-proxy-llmrag-systest
+      #   VaultSecretPath: "subscriber-auth-proxy/mongo"

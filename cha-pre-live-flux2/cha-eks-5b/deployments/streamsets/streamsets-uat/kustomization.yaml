@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: streamsets-uat
+nameSuffix: -streamsets-uat
+resources:
+- helm-release-streamsets-uat-deployer.yaml
+- helm-release-streamsets-uat-env-agent.yaml
+- helm-release-streamsets-uat-deployer-2.yaml
+- helm-release-streamsets-uat-deployer-3.yaml
+
+

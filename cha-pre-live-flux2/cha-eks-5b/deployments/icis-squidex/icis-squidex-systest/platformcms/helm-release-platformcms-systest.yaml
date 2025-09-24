@@ -1,0 +1,32 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: platformcms-systest
+  values:
+    projectName: "platformcms"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-platformcms:name"}
+        tag: systest-platformcms-1387-7.7.33 # {"$imagepolicy": "flux-system:icis-squidex-systest-platformcms:tag"}
+      kafka:
+        enabled: True
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: platformcms
+        ADMIN__ADMINUSERGROUP__0: ICIS_Genesis
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'200'"
+        CONTENTS__MAXRESULTS: "'200'"
+        PLUGINS__2: ICIS.PlatformCMS.dll
+    squidexCli:
+      enabled: True
+      schedule: "'30 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-platformcms:name"}
+        tag: systest-platformcms-93-8.0.1-master-24677 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-platformcms:tag"}
+    vault_squidex_secrets:
+      name: platformcms-systest-secret
+    vault_kafka_secrets:
+      name: platformcms-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/platformcms/systest"

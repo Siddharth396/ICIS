@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- alrthb-subscriber-bff-policy-integration.yaml
+- alrthb-subscriber-bff-policy-systest.yaml
+- alrthb-subscriber-bff-policy-performance.yaml
+- alrthb-subscriber-bff-policy-staging.yaml
+- alrthb-subscriber-bff-registry.yaml
+########
+- alrthb-authoring-bff-policy-integration.yaml
+- alrthb-authoring-bff-policy-systest.yaml
+- alrthb-authoring-bff-policy-performance.yaml
+- alrthb-authoring-bff-policy-staging.yaml
+- alrthb-authoring-bff-registry.yaml
+########
+- alrthb-mongo-migration-policy-integration.yaml
+- alrthb-mongo-migration-policy-systest.yaml
+- alrthb-mongo-migration-policy-performance.yaml
+- alrthb-mongo-migration-policy-staging.yaml
+- alrthb-mongo-migration-registry.yaml

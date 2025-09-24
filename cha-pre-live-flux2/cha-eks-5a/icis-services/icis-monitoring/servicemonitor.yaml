@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    monitoring-platform: icis-monitoring
+  name: icis-prometheus
+  namespace: icis-monitoring
+spec:
+  endpoints:
+  - path: /metrics
+    port: web
+  namespaceSelector:
+    matchNames:
+    - icis-monitoring
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prometheus
+      self-monitor: "true"

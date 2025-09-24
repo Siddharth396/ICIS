@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- infgrm-subscriber-bff-policy-integration.yaml
+- infgrm-subscriber-bff-policy-systest.yaml
+- infgrm-subscriber-bff-policy-performance.yaml
+- infgrm-subscriber-bff-policy-staging.yaml
+- infgrm-subscriber-bff-registry.yaml
+########
+- infgrm-authoring-bff-policy-integration.yaml
+- infgrm-authoring-bff-policy-systest.yaml
+- infgrm-authoring-bff-policy-performance.yaml
+- infgrm-authoring-bff-policy-staging.yaml
+- infgrm-authoring-bff-registry.yaml
+########
+# - infgrm-mongo-migration-policy-integration.yaml
+# - infgrm-mongo-migration-policy-systest.yaml
+# - infgrm-mongo-migration-policy-performance.yaml
+# - infgrm-mongo-migration-policy-staging.yaml
+# - infgrm-mongo-migration-registry.yaml

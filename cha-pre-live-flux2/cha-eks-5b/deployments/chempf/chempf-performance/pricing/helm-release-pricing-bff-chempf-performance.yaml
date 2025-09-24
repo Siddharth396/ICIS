@@ -1,0 +1,60 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-pricing-bff-chempf-performance
+  values:
+    replicaCount: 3
+    namespace: "chempf-performance"
+    environment: "performance"
+    ServiceAccountName: "chempf"
+ 
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/chempf/pricing/pricing-bff # {"$imagepolicy": "flux-system:chempf-pricing-bff-performance:name"}
+        tag: performance-1-1.35.0-MARS-2993.2363 # {"$imagepolicy": "flux-system:chempf-pricing-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        DEV_MODE: true
+        ENVIRONMENT: performance
+        BASE_PATH: /pricing
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pricing-pfe-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.performance.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        ENERGY_SERIES_VALID_MONTHS: 120
+        HOT_CHOCOLATE_REQUEST_TIMEOUT: 60
+        PETCHEM_SERIES_VALID_MONTHS: 60
+        FeatureToggles__RestrictSeriesByLatestSeriesItem: true
+        FeatureToggles__HidePetchemSpecsWithNoPrices: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+      resources:
+        limits:
+          cpu: "2"
+
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/chempf-pricing/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+
+    vault:
+      VaultSecretPath: "kv/cha/k8s/data/chempf/performance/subscriber/bff"
+      VaultK8sRoleName: "kv-chempf-read"
+
+    autoscaling:
+      enabled: false
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

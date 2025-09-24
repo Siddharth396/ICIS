@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: bdo
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: private_uat_petchem_spt_commodity_page_mapping_1
+    database: spt-staging
+    collection: commodity_page_mapping
+    transforms.RenameField.renames: id:_id

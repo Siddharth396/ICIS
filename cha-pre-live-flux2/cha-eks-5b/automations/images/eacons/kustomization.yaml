@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- eacons-auth-bff-policy-integration.yaml
+- eacons-auth-bff-policy-performance.yaml
+- eacons-auth-bff-policy-staging.yaml
+- eacons-auth-bff-policy-systest.yaml
+- eacons-auth-bff-registry.yaml

@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-prcent-integration
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "prcent-integration"
+    environment: "integration"
+    deploymentStrategy: "RollingUpdate"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/mongodb-seeder # {"$imagepolicy": "flux-system:prcent-mongo-seeder-integration:name"}
+        tag: integration-18-5.1.1.49437 # {"$imagepolicy": "flux-system:prcent-mongo-seeder-integration:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/authoring-bff # {"$imagepolicy": "flux-system:prcent-authoring-bff-integration:name"}
+        tag: integration-43-7.3.0-18382 # {"$imagepolicy": "flux-system:prcent-authoring-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/prcent-integration?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.integration.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        PeriodGeneratorService__BaseUrl: https://authoring.integration.cha.rbxd.ds/api/period-generator
+        Workflow__BaseUrl: https://authoring.integration.cha.rbxd.ds/api/workflow
+        OAUTH_AUTHORITY_URL: https://domainidentity.integration.cha.rbxd.ds
+        PUBNUB_ENABLED: true
+        LOG_LEVEL: Debug
+        CANVAS_API_URL: https://authoring.integration.cha.rbxd.ds/api/canvas
+        IS_AUTHORING: true
+        DLH_RECORD_SOURCE: canvas-prcent-integration
+    ingress:
+      enabled: true
+      host:
+        name: authoring.integration.cha.rbxd.ds
+        path: /api/price-entry/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-prcent-integration
+      VaultSecretPath: "prcent/integration/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-prcent-integration

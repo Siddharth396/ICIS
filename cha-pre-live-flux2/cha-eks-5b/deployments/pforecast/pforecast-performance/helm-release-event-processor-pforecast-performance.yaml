@@ -1,0 +1,62 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-pforecast-performance
+  values:
+    replicaCount: 1
+    namespace: "pforecast-performance"
+    environment: "performance"
+    ServiceAccountName: "price-forecast"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "performance"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_performance_petchem_price_forecast_ready_2: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_performance_alerting_preferences_2: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "activity_feed_price_forecast_event_processor"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_performance_activity_feed_price_forecast_event_processor_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_performance_activity_feed_price_forecast_event_processor_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_performance_petchem_price_forecast_ready_2"
+        KafkaConsumer_AppSettings__Consumer__Topics__1: "public_performance_alerting_preferences_2"
+        KafkaConsumer_Serilog__MinimumLevel__Override__KafkaConsumer.Consumers: Information
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pforecast/pforecast-activity-feed-producer # {"$imagepolicy": "flux-system:pforecast-ep-performance:name"}
+        tag: performance-33-13.17.0.553 # {"$imagepolicy": "flux-system:pforecast-ep-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        LOG_LEVEL: Debug
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live.ak0n6.mongodb.net/pf-performance?retryWrites=true&w=majority"
+        MONGO_DB_COLLECTIONS_ALERT_PREFERENCE: "activity_feed.alert_preference"
+        MONGO_DB_COLLECTIONS_ALERT_PREFERENCE_CONSUMPTION: "activity_feed.alert_preference.consumption"
+        MongoDb__DbCollections__PriceForecastMapping: "mapping"
+        ELASTIC_APM_CAPTURE_BODY: all
+        TraceEnabled: true
+        VIPER_BACK_OFFICE_ENDPOINT: https://backoffice.demo.coa.rbxd.ds/sites/icis
+        KAFKA_BROKER_URLS: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KAFKA_BROKER_SECURITY_PROTOCOL: 3
+        KAFKA_BROKER_SASL_MECHANISM: 1
+        KAFKA_SCHEMA_REGISTRY_URL: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KAFKA_TOPICS_ALERTING_NOTIFICATIONS: public_performance_alerting_notifications_2
+        COMMODITY_PAGES_URL_TEMPLATE: "https://subscriber.performance.genesis.cha.rbxd.ds/commodity/{forecastKey}/forecast"
+        PRICING_INSIGHT_PAGES_URL_TEMPLATE: "https://subscriber.performance.genesis.cha.rbxd.ds/commodity/{forecastKey}/report/pricing-insight"
+        EMAIL_TEMPLATE_PATH_ENGLISH: "mars/mars_alert_template"
+        EMAIL_TEMPLATE_PATH_CHINESE: "mars/mars_alert_template_zh"
+        CommodityRegionSplits__302__OriginalRegion: "1035"
+        CommodityRegionSplits__302__SplitRegions__0: "1"
+        CommodityRegionSplits__302__SplitRegions__1: "14"
+        CommodityRegionSplits__302__SplitRegions__2: "9"
+        CommodityRegionSplits__319__OriginalRegion: "1035"
+        CommodityRegionSplits__319__SplitRegions__0: "1"
+        CommodityRegionSplits__319__SplitRegions__1: "14"
+        Serilog__WriteTo__0__Args__formatter: "Serilog.Formatting.Json.JsonFormatter, Serilog"
+    vault_secrets:
+      name: pforecast-event-processor-vault-secret-performance
+      VaultSecretPath: "pf/eventprocessor"
+    vault_secrets_consumer:
+      name: pforecast-event-processor-vault-secret-consumer-performance
+      VaultSecretPath: "pf/eventprocessor"

@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sbfeed-performance
+nameSuffix: -sbfeed
+resources:
+- ../../../common/subscriber-bff/sbfeed/
+- ../../../common/event-processor/sbfeed/
+- ../../../common/job/sbfeed/
+patches:
+- path: helm-release-subscriber-bff-sbfeed-performance.yaml
+- path: helm-release-event-processor-sbfeed-performance.yaml
+- path: helm-release-mongo-migrator-sbfeed-performance.yaml

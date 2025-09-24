@@ -1,0 +1,358 @@
+####################################################
+## Allow ingress from icis-github-runner-scale-set and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-icis-github-runner-scale-set
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: icis-gh-arc-runners
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+###################################
+## Allow egress from icis-github-runner-scale-set ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-icis-github-runner-scale-set
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: icis-gh-arc-runners
+
+#########################################
+## Allow github-scale-set b2b egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-github-scale-set-b2b
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+    - ports:
+        - protocol: TCP
+          port: 22
+      to:
+        - ipBlock:
+            cidr: 10.55.32.232/32
+  policyTypes:
+    - Ingress
+    - Egress
+
+#########################################
+## Allow github-scale-set to ssh  gitlab cha ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-ssh 
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+    - ports:
+        - protocol: TCP
+          port: 22
+      to:
+        - ipBlock:
+            cidr: 10.52.32.0/21
+  policyTypes:
+    - Ingress
+    - Egress
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#########################################
+## Allow genesis components egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-genesis-servers
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/21
+    ports:
+    - port: 8050
+      protocol: TCP
+    - port: 8051
+      protocol: TCP
+    - port: 8052
+      protocol: TCP
+    - port: 8053
+      protocol: TCP
+    - port: 8054
+      protocol: TCP
+    - port: 8055
+      protocol: TCP
+    - port: 8056
+      protocol: TCP
+    - port: 8057
+      protocol: TCP
+    - port: 8058
+      protocol: TCP
+
+#####################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+## Allow traffic to nexus and iddn servers##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-nexus-cha
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/22
+    ports:
+    - protocol: TCP
+      port: 8001
+    - protocol: TCP
+      port: 8002
+    - protocol: TCP
+      port: 8000
+
+#################################################
+## Allow traffic to checkmarx  ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-checkmarx
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.16.33/32
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 80
+      
+#################################################
+## Allow traffic to mongo db atlas peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-mongodb
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.248.0/21
+    ports:
+    - port: 27015
+      protocol: TCP
+    - port: 27016
+      protocol: TCP
+    - port: 27017
+      protocol: TCP
+    - port: 27015
+      protocol: UDP
+    - port: 27016
+      protocol: UDP
+    - port: 27017
+      protocol: UDP
+
+##################################################
+## Allow traffic to confluent cloud peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-confluent
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+
+#################################################
+## Allow traffic to CHA QHS CIDR for CHA Consul  ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-cha-consul
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/24
+    ports:
+    - protocol: TCP
+      port: 8079
+
+#################################################
+## Allow traffic to port 8080 for event processor of sbnews-* namespace for smoke tests ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-sbnews-service
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+
+#################################################
+## Allow traffic to port 1433 of sql servers ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-sqldb
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 1433
+      protocol: TCP
+
+---
+##################################################
+## Allow external http traffic egress to CHA IDDN  ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-iddn-cha
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/22
+    ports:
+    - port: 9100
+      protocol: TCP
+    - port: 9000
+      protocol: TCP
+
+#########################################
+## Allow Analytics database ports egress  ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-analytics-dbs
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  policyTypes:
+  - Egress
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/21
+    ports:
+    - port: 5432
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+    - port: 3306
+      protocol: TCP
+    - port: 3128
+      protocol: TCP
+#########################################
+## Allow SND database ports egress  ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-to-snd-db
+  namespace: icis-gh-arc-runners
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.33.72/32
+    ports:
+    - protocol: TCP
+      port: 55001
+  policyTypes:
+  - Egress

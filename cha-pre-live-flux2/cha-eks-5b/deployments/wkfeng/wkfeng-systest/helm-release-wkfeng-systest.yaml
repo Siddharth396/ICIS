@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: workflow-engine
+spec:
+  values:
+    replicaCount: 1
+    serviceAccountName: wkfeng
+    namespace: "wkfeng-systest"
+    app:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/wkfeng/workflow-engine # {"$imagepolicy": "flux-system:workflow-engine-systest:name"}
+        tag: systest-92-2.2.1-CC-132-Bundling.1.20410 # {"$imagepolicy": "flux-system:workflow-engine-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        DB_URL: "jdbc:postgresql://icis-camunda-db-prelive.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com/camunda-systest"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1.0
+        ELASTIC_APM_ENABLED: true
+        ELASTIC_APM_ENVIRONMENT: systest
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      hosts:
+        - host: workflow-engine.systest.cha.rbxd.ds
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - workflow-engine.systest.cha.rbxd.ds
+          secretName: workflow-engine.systest.cha.rbxd.ds
+    secrets:
+      name: workflow-engine.systest.cha.rbxd.ds
+    vault_secrets:
+      name: wkfeng-vault-secret-systest
+      VaultSecretPath: "wkfeng/systest"

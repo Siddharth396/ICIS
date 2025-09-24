@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: platformcms-
+resources:
+- ../common/
+- ../common/event-processor
+- ../common/lakehouse-event-processor
+patches:
+- path: helm-release-platformcms-uat.yaml
+- path: helm-release-platformcms-event-processor-uat.yaml
+- path: helm-release-platformcms-lakehouse-event-processor-uat.yaml

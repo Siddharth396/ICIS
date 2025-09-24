@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<AssemblyName>Infrastructure</AssemblyName>
+	<RootNamespace>Infrastructure</RootNamespace>
+ </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="AspNetCore.HealthChecks.MongoDb" />
+	  <PackageReference Include="AspNetCore.HealthChecks.Uris" />
+	  <PackageReference Include="Elastic.Apm.AspNetCore" />
+	  <PackageReference Include="Elastic.Apm.MongoDb" />
+	  <PackageReference Include="HotChocolate.AspNetCore.Authorization" />
+	  <PackageReference Include="HotChocolate.Data" />
+	  <PackageReference Include="Icis.Workflow" />
+	  <PackageReference Include="JSNLog" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" />
+	  <PackageReference Include="Microsoft.Extensions.DiagnosticAdapter" />
+	  <PackageReference Include="Microsoft.Extensions.Http.Polly" />
+	  <PackageReference Include="Microsoft.Identity.Client" />
+	  <PackageReference Include="MongoDB.Driver" />
+	  <PackageReference Include="prometheus-net.AspNetCore" />
+	  <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" />
+	  <PackageReference Include="PubnubPCL" />
+	  <PackageReference Include="Serilog" />
+	  <PackageReference Include="StyleCop.Analyzers.Unstable" />
+	  <PackageReference Include="Subscriber.Auth" />
+	  <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+</Project>

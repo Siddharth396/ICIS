@@ -1,0 +1,22 @@
+﻿{
+  "errors": [
+    {
+      "message": "Exception occurred while executing the GraphQL request",
+      "locations": [
+        {
+          "line": 2,
+          "column": 13
+        }
+      ],
+      "path": [
+        "publishedVersion"
+      ],
+      "extensions": {
+        "code": "EXCEPTION_THROWN"
+      }
+    }
+  ],
+  "data": {
+    "publishedVersion": null
+  }
+}

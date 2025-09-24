@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "prcent-systest"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/mongo-migration # {"$imagepolicy": "flux-system:prcent-mongo-migration-systest:name"}
+        tag: systest-184-5.4.1-1-57874 # {"$imagepolicy": "flux-system:prcent-mongo-migration-systest:tag"}
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_NAME: prcent-systest
+    vault_secrets:
+      name: job-vault-secret-prcent-systest
+      VaultK8sRoleName: "kv-prcent-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "prcent/systest/authoring/bff"

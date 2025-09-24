@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- pdcast-sub-bff-policy-integration.yaml
+- pdcast-sub-bff-policy-performance.yaml
+- pdcast-sub-bff-policy-staging.yaml
+- pdcast-sub-bff-policy-systest.yaml
+- pdcast-sub-bff-registry.yaml
+###############################
+- pdcast-auth-bff-policy-integration.yaml
+- pdcast-auth-bff-policy-performance.yaml
+- pdcast-auth-bff-policy-staging.yaml
+- pdcast-auth-bff-policy-systest.yaml
+- pdcast-auth-bff-registry.yaml

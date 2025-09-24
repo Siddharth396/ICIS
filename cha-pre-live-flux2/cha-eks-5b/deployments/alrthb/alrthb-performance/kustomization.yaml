@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: alrthb-performance
+nameSuffix: -alrthb
+resources:
+- ../../../common/authoring-bff/alrthb/
+- ../../../common/subscriber-bff/alrthb/
+- helm-release-subscriber-bff-deployment-scaler.yaml
+- helm-release-authoring-bff-deployment-scaler.yaml
+  
+patches:
+- path: helm-release-subscriber-bff-alrthb-performance.yaml
+- path: helm-release-authoring-bff-alrthb-performance.yaml
+# BACKSTAGE-COMMENT-PATTERN1
+

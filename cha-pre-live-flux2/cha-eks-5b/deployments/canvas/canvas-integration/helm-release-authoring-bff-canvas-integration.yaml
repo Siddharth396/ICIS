@@ -1,0 +1,63 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-canvas-integration
+  values:
+    replicaCount: 1
+    namespace: "canvas-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: false
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/canvas/authoring-bff # {"$imagepolicy": "flux-system:canvas-authoring-bff-integration:name"}
+        tag: integration-140-1.112.0-58490 # {"$imagepolicy": "flux-system:canvas-authoring-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/canvas-integration?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.integration.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        ID_CLAIM: user_id
+        ENCRYPTED_ID_CLAIM: user_id_encrypted
+        NAME_CLAIM: given_name
+        EMAIL_CLAIM: email
+        ALLOWED_ROLES: "RBI-GLO-ICIS-APPLICATION-SECURITY-CANVAS-ALPHA"
+        ACS_URL: "https://acm.integration.cha.rbxd.ds/v1/userpermission"
+        IS_NEW_AUTH: true
+        DOMAIN_IDENTITY_URL: "https://domainidentity.integration.cha.rbxd.ds/v1"
+        SUBSCRIBER_URL: "https://subscriber.integration.genesis.cha.rbxd.ds"
+        CLIENT_ID_CLAIM: client_id
+        ENCRYPTED_CLIENT_ID_CLAIM: client_id_encrypted
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        SWAGGER_ENABLED: true
+        DOMAIN_IDENTITY_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        DOMAIN_IDENTITY_CLIENT_ID: canvas.bff
+        SCOPE_OPTIONS: all
+        RICH_TEXT_URL: /api/richtext/v1/publish
+    ingress:
+      enabled: true
+      host:
+        name: authoring.integration.cha.rbxd.ds
+        path: /api/canvas/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-canvas-integration
+      VaultSecretPath: "canvas/integration/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-canvas-integration

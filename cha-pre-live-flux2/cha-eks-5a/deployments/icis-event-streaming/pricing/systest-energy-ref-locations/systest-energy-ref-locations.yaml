@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: pricing
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_energy_locations_1
+    database: pricing-systest
+    collection: energy_ref_locations_1
+    post.processor.chain: com.mongodb.kafka.connect.sink.processor.BlockListValueProjector
+    value.projection.type: BlockList
+    value.projection.list: metadata.created_for

@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-uat
+  namespace: icis-squidex-uat
+spec:
+  releaseName: recyclers-supply-tracker-uat
+  values:
+    projectName: "recyclers-supply-tracker"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-uat:name"}
+        tag: uat-211-7.7.35 # {"$imagepolicy": "flux-system:icis-squidex-uat:tag"}
+      kafka:
+        enabled: True
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: recyclers-supply-tracker
+        ADMIN__ADMINUSERGROUP__0: ICIS_Titan
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'200'"
+        CONTENTS__MAXRESULTS: "'200'"
+        PLUGINS__2: ICIS.CustomId.dll
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 256Mi
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-connect-timeout: "120"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    squidexCli:
+      enabled: True
+      schedule: "'35 8,11,14,15,17 * * *'"
+    vault_squidex_secrets:
+      name: recyclers-supply-tracker-squidex-uat-secret
+    vault_kafka_secrets:
+      name: recyclers-supply-tracker-squidex-kafka-uat-secret
+      VaultSecretPath: "icis-squidex/recyclers-supply-tracker/uat"

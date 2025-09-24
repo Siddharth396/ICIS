@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: energy-commentary-systest
+
+  values:
+    projectName: "energy-commentary"
+
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex  # {"$imagepolicy": "flux-system:icis-squidex-systest-energy-commentary:name"}
+        tag: 5.6.30  # {"$imagepolicy": "flux-system:icis-squidex-systest-energy-commentary:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: energy-commentary
+        ADMIN__ADMINUSERGROUP__0: ICIS_Tesseract
+      kafka:
+        enabled: True
+
+    squidexCli:
+      enabled: True
+      schedule: "'35 9,12,15,18 * * *'"
+    vault_squidex_secrets:
+      name: energy-commentary-squidex-systest-secret
+    vault_kafka_secrets:
+      name: energy-commentary-squidex-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/energy-commentary/systest"          

@@ -1,0 +1,55 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: iddn-exporter
+  namespace: icis-monitoring
+spec:
+  releaseName: iddn-exporter
+  interval: 5m0s
+  chart:
+    spec:
+      chart: icis-monitoring-exporter
+      version: "1.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    nameOverride: "iddn-check-exporter"
+    fullnameOverride: "iddn-check-exporter"
+
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-monitoring/iddn_checks_exporter
+      tag: "1.1.0"
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 3301
+
+    vault:
+      type: kv-v2
+      mount: kv/cha/k8s
+      path: icis-monitoring/iddn-vars
+
+    serviceMonitor:
+      interval: 30s
+      namespace: icis-monitoring
+      release: iddn-exporter
+
+    secrets:
+      - name: iddn-vars
+        envName: BASE_URL
+        key: IDDN_BASE_URL
+      - name: iddn-vars
+        envName: PASSWORD
+        key: IDDN_ML_PASSWORD
+      - name: iddn-vars
+        envName: USERNAME
+        key: IDDN_ML_USERNAME
+

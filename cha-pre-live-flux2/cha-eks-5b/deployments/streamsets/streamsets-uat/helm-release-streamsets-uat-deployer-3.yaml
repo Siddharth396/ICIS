@@ -1,0 +1,58 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: streamsets-uat-release-v3
+  namespace: streamsets-uat
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: streamsets
+      version: 0.0.15
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    ServiceAccountName: "streamsets"
+    namespace: "streamsets-uat"
+    LOAD_BALANCER_HOSTNAME: streamsets-uat-deployment-v3.cha.eu-west-1.dev
+    SMTP_HOST: chamailrelay.cha.rbxd.ds
+    SMTP_FROM_HOST: streamsets-uat@cha.rbxd.ds
+    properties_configmap:
+      name: properties-configs-v3
+    SDC_REPO: "artifacts.cha.rbxd.ds/ds/streamsets-dc-generic"
+    SDC_TAG: "1.0.22"
+    SDC_VERSION: "5.11.0"
+    REQUESTS_MEMORY: 3Gi
+    REQUESTS_CPU: "0.5"
+    LIMITS_MEMORY: 6Gi
+    LIMITS_CPU: "1"
+    USER_STAGE_LIBS: kinesis,apache-kafka_3_4,aws,aws-secrets-manager-credentialstore,jdbc,jython_2_7,sdc-snowflake,vault-credentialstore,mongodb-atlas,webclient-impl-okhttp
+    streamsets:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/streamsets" # {"$imagepolicy": "flux-system:streamsets-deployer:name"}
+        tag: "streamsets-20-0.0.0.20" # {"$imagepolicy": "flux-system:streamsets-deployer:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: uat
+      argument:
+        arg1: deployment.properties
+        arg2: streamsets-uat
+        arg3: deployment-v3
+    vault_secrets:
+      name: streamsets-uat-secrets-deployer-v3
+      VaultK8sRoleName: "kv-streamsets-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "streamsets/uat"
+    vault_secrets_streamsets:
+      name: streamsets-uat-job-deployer-v3
+      VaultK8sRoleName: "kv-streamsets-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "streamsets/common"

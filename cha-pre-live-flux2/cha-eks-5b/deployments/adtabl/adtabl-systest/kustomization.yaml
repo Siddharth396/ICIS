@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: adtabl-systest
+nameSuffix: -adtabl
+resources:
+- ../../../common/subscriber-bff/adtabl/
+- ../../../common/authoring-bff/adtabl/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-adtabl-systest.yaml
+- path: helm-release-authoring-bff-adtabl-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN2

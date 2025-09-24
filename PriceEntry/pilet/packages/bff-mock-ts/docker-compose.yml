@@ -1,0 +1,12 @@
+version: "3.4"
+
+services:
+  price-entry-mock-bff:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: builder
+    command: yarn start
+    container_name: price-entry-mock-bff
+    ports:
+      - "4200:4200"

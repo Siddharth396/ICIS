@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- cnvspt-event-processor-policy-integration.yaml
+- cnvspt-event-processor-policy-systest.yaml
+- cnvspt-event-processor-policy-performance.yaml
+- cnvspt-event-processor-policy-staging.yaml
+- cnvspt-event-processor-registry.yaml
+########
+- cnvspt-subscriber-bff-policy-integration.yaml
+- cnvspt-subscriber-bff-policy-systest.yaml
+- cnvspt-subscriber-bff-policy-performance.yaml
+- cnvspt-subscriber-bff-policy-staging.yaml
+- cnvspt-subscriber-bff-registry.yaml
+########
+- cnvspt-authoring-bff-policy-integration.yaml
+- cnvspt-authoring-bff-policy-systest.yaml
+- cnvspt-authoring-bff-policy-performance.yaml
+- cnvspt-authoring-bff-policy-staging.yaml
+- cnvspt-authoring-bff-registry.yaml
+########
+- cnvspt-mongo-migration-policy-integration.yaml
+- cnvspt-mongo-migration-policy-systest.yaml
+- cnvspt-mongo-migration-policy-performance.yaml
+- cnvspt-mongo-migration-policy-staging.yaml
+- cnvspt-mongo-migration-registry.yaml
+########
+- cnvspt-mongo-migration-bff-policy-integration.yaml
+- cnvspt-mongo-migration-bff-policy-systest.yaml
+- cnvspt-mongo-migration-bff-policy-performance.yaml
+- cnvspt-mongo-migration-bff-policy-staging.yaml
+- cnvspt-mongo-migration-bff-registry.yaml

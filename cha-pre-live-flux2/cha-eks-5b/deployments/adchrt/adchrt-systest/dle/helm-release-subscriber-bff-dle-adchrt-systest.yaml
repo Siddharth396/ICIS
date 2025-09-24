@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-adchrt-dle-systest
+  values:
+    projectName: "subscriber-adchrt-dle"
+    replicaCount: 1
+    namespace: "adchrt-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/adchrt-dle/subscriber-bff # {"$imagepolicy": "flux-system:adchrt-sub-bff-dle-systest:name"}
+        tag: systest-4-0.0.0-feature-embeddable.41494 # {"$imagepolicy": "flux-system:adchrt-sub-bff-dle-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/adchrt-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.systest.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SQL_SNOWFLAKE_CONNECTION_STRING: scheme=https;account=ex99616;host=ex99616.eu-west-1.snowflakecomputing.com;port=443;user=${sql_snowflake_user_uat};password=${sql_snowflake_pwd_uat};warehouse=QRY_WH_GOLD_UAT;
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/adhoc-dle-chart/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-adchrt-dle-systest
+      # we are reusing the same vault secrets, but we need new names
+      VaultSecretPath: "adchrt/systest/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-adchrt-dle-systest

@@ -1,0 +1,60 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mfe-feed-service
+spec:
+  releaseName: subscriber-mfe-feed-service-integration
+  values:
+    namespace: "homepage-integration"
+    environment: "integration"
+    feedservice:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-mfe-feed-service # {"$imagepolicy": "flux-system:authoring-mfe-feed-service-integration:name"}
+        tag: integration-4-1.3.0.704 # {"$imagepolicy": "flux-system:authoring-mfe-feed-service-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        GENESIS_MONGO_DB__CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net?retryWrites=true&w=majority"
+        GENESIS_MONGO_DB__DATABASE: subscriber-mfe-prelive
+        GENESIS_MONGO_DB__COLLECTION_NAME: integration-mfe
+        GENESIS_BUCKET_NAME: subscriber-mfe-feed-service-pre-live
+        GENESIS_BUCKET_ROOT: integration/
+        GENESIS_OLD_ASSET_LINK_HOST: https://de0dhusqna834.cloudfront.net
+        GENESIS_ASSET_LINK_HOST: https://subscriber.integration.genesis.cha.rbxd.ds/mfe/mfe-feed-service/api/v1/mfe/
+        GENESIS_SELF_HOSTED_PILETS_TOGGLE: true
+    ingress:
+      enabled: true
+      name: subscriber-mfe-feed-service-integration-ingress
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/proxy-body-size: 8m
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        external-dns.alpha.kubernetes.io/hostname: subscriber-mfe-feed-service.integration.cha.eu-west-1.dev
+        lnrs.io/zone-type: private
+      hosts:
+        - host: subscriber-mfe-feed-service.integration.cha.eu-west-1.dev
+          paths:
+            - /mfe/mfe-feed-service/?(.*)
+          tls: "true"
+        - host: subscriber.integration.genesis.cha.rbxd.ds
+          paths:
+            - /mfe/mfe-feed-service/?(.*)
+          tls: "true"
+      tls:
+        - hosts:
+            - subscriber-mfe-feed-service.integration.cha.eu-west-1.dev
+          secretName: subscriber-mfe-feed-service-internal
+        - hosts:
+            - subscriber.integration.genesis.cha.rbxd.ds
+          secretName: subscriber-mfe-feed-service
+    secrets:
+      enabled: true
+      name: subscriber-mfe-feed-service
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80

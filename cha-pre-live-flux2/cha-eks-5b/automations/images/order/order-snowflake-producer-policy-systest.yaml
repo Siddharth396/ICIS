@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: order-snowflake-producer-qa
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: order-snowflake-producer
+    namespace: flux-system
+  filterTags:
+    pattern: '^qa-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

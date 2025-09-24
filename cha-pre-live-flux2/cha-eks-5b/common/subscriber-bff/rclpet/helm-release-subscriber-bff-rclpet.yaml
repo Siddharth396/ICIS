@@ -1,0 +1,85 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "rclpet"
+    ServiceAccountName: "rclpet"
+    
+    bff:
+      port: 80
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        periodSeconds: 30 
+  
+    nginx:
+      config: |-
+        server {
+          listen 443 ssl;
+          server_name  localhost;
+
+          proxy_read_timeout 300;
+          proxy_connect_timeout 300;
+          proxy_send_timeout 300;
+
+          access_log /dev/stdout main;
+          error_log /dev/stdout warn;
+
+          ssl_certificate /etc/ssl/tls.crt;
+          ssl_certificate_key /etc/ssl/tls.key;
+
+          client_header_buffer_size    8k;
+          large_client_header_buffers  4 32k;
+        
+          server_tokens off;
+          
+          #Reverse Proxy rules to serve the BFF from other container
+          
+          location ~* ^/internal/metrics {
+            deny all;
+            return 403;
+            server_tokens off;
+          }
+          
+          location / {
+            add_header Strict-Transport-Security "max-age=31536000";
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_buffers 4 64k;
+            proxy_buffer_size 32k; 
+            proxy_busy_buffers_size 64k;
+
+            proxy_pass http://localhost:8090;
+          }
+        }
+
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 8090
+          scheme: http
+    
+    vault_secrets:
+      VaultK8sRoleName: "kv-rclpet-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_proxy:
+      VaultK8sRoleName: "kv-rclpet-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "subscriber-auth-proxy/mongo"      

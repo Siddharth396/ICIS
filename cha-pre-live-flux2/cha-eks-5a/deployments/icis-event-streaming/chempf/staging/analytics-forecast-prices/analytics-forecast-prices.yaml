@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: chempf
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_petchem_analytics_forecast_prices_1
+    database: chempf-staging
+    collection: raw_analytics_forecast_prices
+    transforms.RenameField.renames: model_run_uid:modelRunId

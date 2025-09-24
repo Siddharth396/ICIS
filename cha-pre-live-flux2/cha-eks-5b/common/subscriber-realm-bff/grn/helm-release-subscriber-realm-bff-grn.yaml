@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-realm-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "grn"
+    ServiceAccountName: "grn"
+    vault:
+      VaultK8sRoleName: "kv-grn-read"
+    vault_secrets:
+      VaultK8sRoleName: "kv-grn-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "grn/realm"
+    vault_secrets_proxy:
+      VaultK8sRoleName: "kv-grn-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "subscriber-auth-proxy/mongo"

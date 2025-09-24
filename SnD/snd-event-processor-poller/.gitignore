@@ -1,0 +1,34 @@
+# User-specific files
+*.suo
+*.user
+*.vs
+*.log
+
+.vscode
+.awcache
+.awCache
+
+# Build results
+bin/
+build/
+obj/
+out/
+publish/
+
+# secrets
+secrets/
+
+# configuration files
+conf/
+
+# certificates
+certificates/
+
+# settings files
+launchSettings.json
+
+
+/SnD.EventProcessor.Poller/Logs/
+/src/SnD.EventProcessor.Poller/Logs
+*.bat
+/src/SnD.EventProcessor.Poller/conf/appsettings.development.json

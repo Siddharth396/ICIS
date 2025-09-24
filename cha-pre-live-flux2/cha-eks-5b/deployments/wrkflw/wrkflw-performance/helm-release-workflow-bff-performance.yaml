@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-wrkflw-performance
+  values:
+    replicaCount: 3
+    namespace: "wrkflw-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/wrkflw/bff # {"$imagepolicy": "flux-system:workflow-bff-performance:name"}
+        tag: performance-43-2.8.0-CC-132-Bundling-43314 # {"$imagepolicy": "flux-system:workflow-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        TRACE_ENABLED: true
+        LOG_LEVEL: Information
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1.0
+        ELASTIC_APM_CAPTURE_BODY: all
+        WORKFLOW_ENGINE_API_URL: https://workflow-engine.performance.cha.rbxd.ds/engine-rest
+        ACM_USER_PERMISSION_ENDPOINT: https://acm.integration.cha.rbxd.ds/v1/userpermission
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.performance.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.performance.cha.rbxd.ds/connect/token
+        SWAGGER_OAUTH_ROLE: ICIS_Mercury
+        SWAGGER_ENABLED: true
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live.ak0n6.mongodb.net/wrkflw-performance?retryWrites=true&w=majority"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/workflow/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-wrkflw-performance
+      VaultSecretPath: "wrkflw/performance/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-wrkflw-performance
+    autoscaling:
+      enabled: false
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

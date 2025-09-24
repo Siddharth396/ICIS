@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- cimage-sub-bff-policy-integration.yaml
+- cimage-sub-bff-policy-performance.yaml
+- cimage-sub-bff-policy-staging.yaml
+- cimage-sub-bff-policy-systest.yaml
+- cimage-sub-bff-registry.yaml
+###############################
+- cimage-auth-bff-policy-integration.yaml
+- cimage-auth-bff-policy-performance.yaml
+- cimage-auth-bff-policy-staging.yaml
+- cimage-auth-bff-policy-systest.yaml
+- cimage-auth-bff-registry.yaml

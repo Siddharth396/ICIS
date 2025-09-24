@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cronjob
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: cronjob
+      version: 0.0.11
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    ServiceAccountName: ""
+    projectName: ""
+    namespace: ""
+    vault_agent:
+      repository: "artifacts.cha.rbxd.ds/base-image/vault"
+      tag: "latest"
+    consul_template:
+      repository: "artifacts.cha.rbxd.ds/base-image/consul-template"
+      tag: "alpine"
+    
+    cronjob:
+      # schedule: '"*/10 * * * *"' # every 10 minutes
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 1
+      concurrencyPolicyAllow: false
+      image:
+        repository: ""
+        tag: ""
+        pullPolicy: IfNotPresent
+      config_env:
+        SECRET_FILE_PATH: /etc/secrets/.env
+
+    vault:
+      # secretPaths:
+      # - basePath: "kv/cha/k8s/data/<asset_id>/<environment>/<asset_type>"
+      #   secrets:
+      #     - key: mongoUser
+      #       subPath: "mongo_user"
+      #     - key: mongoPassword
+      #       subPath: "mongo_password"
+      url: "https://vault_eu_prod.b2b.regn.net"
+      VaultK8sRoleName: ""
+      VaultK8sAuthPath: "auth/cha/eks-b"

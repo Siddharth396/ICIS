@@ -1,0 +1,54 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: event-processor
+  annotations:
+    repository.fluxcd.io/event_processor: event_processor.image.repository
+    tag.fluxcd.io/event_processor: event_processor.image.tag
+    filter.fluxcd.io/event_processor: glob:systest-*
+spec:
+  releaseName: event-processor-pfawf-systest
+  values:
+    replicaCount: 1
+    namespace: "pfawf-systest"
+    environment: "systest"
+    
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.1.0-vso.1.1002
+        pullPolicy: IfNotPresent
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "systest" 
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__private_systest_petchem_analyst_adjustments_forecast_price_1: "http://localhost:80/v1/message_handler"
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "price-forecasts-awf-consumer"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_systest_adp_price_forecast_consumer_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_systest_adp_price_forecast_consumer_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "private_systest_petchem_analyst_adjustments_forecast_price_1"
+      
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/dsm/awf/adjustment_event_processor
+        tag: systest-3-0.1
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: "systest"
+        DEV_SCHEMA: v2_08b_prices
+        ADP_HOST: "adp.cha.rbxd.ds"
+        ADP_PORT: 5432
+        COMPONENT: "KafkaEventProcessor"
+        SOURCE: "AWF"
+        MACHINE_NAME: "systest"
+        SECURITY_CONTEXT: "RBI\\SYSTEM"
+        SECRET_FILE_PATH: /etc/secrets/.env
+      
+    vault_secrets:
+      name: pfawf-event-processor-vault-secret-systest
+      VaultSecretPath: "pfawf/systest/event-processor"
+    vault_secrets_consumer:
+      name: pfawf-event-processor-vault-secret-consumer-systest
+      VaultSecretPath: "pfawf/systest/event-processor"
+

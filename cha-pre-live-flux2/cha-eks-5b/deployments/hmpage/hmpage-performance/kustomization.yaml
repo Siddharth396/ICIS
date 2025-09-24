@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: hmpage-performance
+nameSuffix: -hmpage
+resources:
+  - ../../../common/hmpage/hmpage-app/
+  - ../../../common/hmpage/hmpage-bff/
+patches:
+  - path: helm-release-hmpage-app-performance.yaml
+  - path: helm-release-hmpage-bff-performance.yaml

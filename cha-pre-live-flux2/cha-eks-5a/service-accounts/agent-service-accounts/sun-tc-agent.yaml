@@ -1,0 +1,262 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sun-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbsrch-systest
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbsrch-staging
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbsrch-performance
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbsrch-systest
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbsrch-staging
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbsrch-performance
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbsrch-integration
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbsrch-integration
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbcore-systest
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbcore-staging
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbcore-performance
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbcore-systest
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbcore-staging
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbcore-performance
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin
+  namespace: sbcore-integration
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sun-admin-service-monitor
+  namespace: sbcore-integration
+subjects:
+- kind: ServiceAccount
+  name: sun-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+

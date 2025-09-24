@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace-icis-squidex-performance.yaml
+  - network-policy-apps.yaml
+  - network-policy-defaults.yaml
+  - vault-access.yaml
+  - squidex-configmap.yaml
+  - squidex-cli-configmap.yaml
+  - vault-secret.yaml
+  - stash-ssh-secret.yaml
+  - squidex-pod-reader-role-binding-performance.yaml
+  
+

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sbcomm
+  namespace: sbcomm-integration
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: role-sbcomm-integration-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: sbcomm
+  namespace: sbcomm-integration
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

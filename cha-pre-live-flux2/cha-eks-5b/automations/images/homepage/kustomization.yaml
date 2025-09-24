@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- homepage-migration-policy-integration.yaml
+- homepage-migration-policy-systest.yaml
+- homepage-migration-policy-performance.yaml
+- homepage-migration-policy-staging.yaml
+- homepage-migration-registry.yaml

@@ -1,0 +1,2 @@
+source .env
+/opt/CxConsolePlugin/runCxConsole.sh Scan -projectname "CxServer\\SP\\RBI\\ICIS\\snd-table-pilet"  -cxserver "https://checkmarx.rbxd.ds/" -cxuser "${CHECKMARX_USER}" -cxpassword "${CHECKMARX_PASSWORD}" -locationtype "folder" -locationpath "/source" -v -locationfilesexclude "!**/.vs/**,!**/.git/**,!**/bin/**,!**/obj/**,!**/backup/**,!**test.*"

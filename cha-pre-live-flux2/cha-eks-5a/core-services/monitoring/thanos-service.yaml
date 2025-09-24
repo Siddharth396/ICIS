@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: thanos
+  namespace: monitoring
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: instance
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0d51a2aa909b1d523,subnet-0a7d104e1b322f246,subnet-0d1b6a85a4628ff58
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+  labels:
+    app: thanos-query
+    self-monitor: "true"
+spec:
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+  - "10.0.0.0/8"
+  ports:
+  - name: thanos
+    port: 10901
+    protocol: TCP
+    targetPort: grpc
+  selector:
+    app.kubernetes.io/component: query
+    app.kubernetes.io/name: thanos

@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: msteams-webhook
+  namespace: flux-system
+type: Opaque
+data:
+    address: aHR0cHM6Ly9yZWVkZWxzZXZpZXIud2ViaG9vay5vZmZpY2UuY29tL3dlYmhvb2tiMi81ODdmMjcxMy1iMDVkLTQ2NDItODQ0MC1mYTAyZjY0YThlMTdAOTI3NGVlM2YtOTQyNS00MTA5LWEyN2YtOWZiMTVjMTA2NzVkL0luY29taW5nV2ViaG9vay8zZjA2YzJlNDNkMjI0ZDlkYWM1ZTFlYzY3ZmYxMWVmMC81OTZkOGRmYi0xZmIyLTRlOGEtYTJiYS04MjRhNGQ5NDljMWM=
+
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta2
+kind: Provider
+metadata:
+  name: msteams
+  namespace: flux-system
+spec:
+  type: msteams
+  secretRef:
+    name: msteams-webhook
+---
+
+apiVersion: notification.toolkit.fluxcd.io/v1beta2
+kind: Alert
+metadata:
+  name: flux-alert
+  namespace: flux-system
+spec:
+  summary: "An Error Occurred in cha-eks-5a"
+  providerRef:
+    name: msteams
+  eventSeverity: error
+  eventSources:
+    - kind: GitRepository
+      name: '*'
+    - kind: Kustomization
+      name: '*'
+    - kind: HelmRelease
+      name: '*'
+    - kind: HelmRepository
+      name: '*'
+    - kind: ImageUpdateAutomation
+      name: '*'
+    # - kind: ImagePolicy
+    #   name: '*'
+    - kind: ImageRepository
+      name: '*'

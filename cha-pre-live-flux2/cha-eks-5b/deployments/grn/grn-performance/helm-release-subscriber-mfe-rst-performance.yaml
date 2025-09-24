@@ -1,0 +1,18 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-mfe
+spec:
+  releaseName: subscriber-mfe-rst-performance
+  values:
+    namespace : "grn-performance"
+    mfe:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/sbmfe/sbmfe-rst-pilet" # {"$imagepolicy": "flux-system:sbmfe-rst-pilet-performance:name"}
+        tag: "performance-2-2.7.0-659" # {"$imagepolicy": "flux-system:sbmfe-rst-pilet-performance:tag"}
+        pullPolicy: IfNotPresent
+    
+    feedServiceUrl: "https://subscriber-mfe-feed-service.performance.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe"
+    vault_secrets:
+      name: "grn-subscriber-mfe-secret-performance"

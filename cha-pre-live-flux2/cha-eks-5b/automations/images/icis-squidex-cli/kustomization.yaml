@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- icis-squidex-cli-policy-systest.yaml
+- icis-squidex-cli-policy-uat.yaml
+- icis-squidex-cli-policy-performance.yaml
+- icis-squidex-cli-registry.yaml
+###############################
+# - icis-squidex-cli-policy-systest-chemical-analytics.yaml
+# - icis-squidex-cli-policy-systest-contact-records.yaml
+- icis-squidex-cli-policy-systest-elisa.yaml
+- icis-squidex-cli-policy-systest-recyclers-supply-tracker.yaml
+- icis-squidex-cli-policy-systest-core.yaml
+- icis-squidex-cli-policy-systest-drdc-price-tool.yaml
+- icis-squidex-cli-policy-systest-iddn-news.yaml
+- icis-squidex-cli-policy-systest-price-forecasts.yaml
+- icis-squidex-cli-policy-systest-platformcms.yaml
+- icis-squidex-cli-policy-systest-spot-price.yaml

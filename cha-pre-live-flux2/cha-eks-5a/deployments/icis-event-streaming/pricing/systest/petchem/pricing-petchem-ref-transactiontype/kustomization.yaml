@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: -systest-pricing-petchem-ref-transactiontype
+resources:
+- ../../../common
+
+patches:
+- path: pricing-petchem-ref-transactiontype.yaml

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: chempf-systest
+nameSuffix: -chempf
+resources:
+#- authoring-bff
+#- subscriber-bff
+# - event-processor
+#- pricing
+#- pricing-author
+- ai-researcher

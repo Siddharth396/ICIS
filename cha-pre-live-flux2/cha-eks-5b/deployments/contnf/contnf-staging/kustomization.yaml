@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: contnf-staging
+nameSuffix: -contnf
+resources:
+- ../../../common/event-processor/contnf/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-event-processor-contnf-staging.yaml
+# BACKSTAGE-COMMENT-PATTERN2

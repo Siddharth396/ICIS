@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+-  tc-agent-clusterrole.yaml
+-  custom-clusterrole.yaml
+-  flux-deployer-custom-clusterrole.yaml
+-  custom-readwrite-resources-clusterrole.yaml
+-  view-crds-custom-clusterrole.yaml
+-  opstribe-deployment-scaler-rbac.yaml

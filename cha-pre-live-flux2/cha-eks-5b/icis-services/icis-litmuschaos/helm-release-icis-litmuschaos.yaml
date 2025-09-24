@@ -1,0 +1,61 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: litmus
+  namespace: icis-litmuschaos
+spec:
+  releaseName: litmus
+  interval: 5m0s
+  chart:
+    spec:
+      chart: litmus
+      version: "3.1.0"
+      sourceRef:
+        kind: HelmRepository
+        name: litmuschaos
+        namespace: icis-litmuschaos
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    chaosEngine:
+      resources:
+        requests:
+          cpu: 100m
+          memory: 100Mi
+      serviceType: NodePort
+    portal:
+      enabled: true
+      frontend:
+        serviceType: ClusterIP
+        port: 9091
+    ingress:
+      enabled: true
+      name: litmuschaos-ingress
+      ingressClassName: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        lnrs.io/zone-type: private
+        nginx.ingress.kubernetes.io/backend-protocol: HTTP
+        external-dns.alpha.kubernetes.io/hostname: litmuschaos.cha.eu-west-1.dev
+      host:
+        name: litmuschaos.cha.eu-west-1.dev
+        frontend:
+          path: /(.*)
+        backend:
+          path: /backend/(.*)
+      tls:
+        - secretName: litmuschaos-tls-secret
+          hosts: 
+          - litmuschaos.cha.eu-west-1.dev
+    mongodb:
+      global:
+        storageClass: "ebs-gp3-retain"
+      enabled: true
+      auth:
+        enabled: true
+        rootUser: "root"
+        rootPassword: "abcd1234"

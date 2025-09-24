@@ -1,0 +1,18 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cronjob
+spec:
+  values:
+    # Commented values have to be overriden in the environment specific helm-release files
+    projectName: "watcher"
+    ServiceAccountName: "watcher"
+
+    cronjob:
+      concurrencyPolicyAllow: false
+      config_env:
+        SECRET_FILE_PATH: /etc/secrets/.env
+        
+    vault:
+      VaultK8sRoleName: "kv-watcher-read"

@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sbnews
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_refdata_commodity_families_2
+    database: sbnews-breaking-news-systest
+    collection: order_commodity_families_v2
+    transforms.RenameField.renames: id:_id

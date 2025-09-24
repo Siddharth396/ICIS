@@ -1,0 +1,88 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: generic-event-processor-kafka-consumer
+      version: "0.13.13"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  
+  values:
+    replicaCount: 1
+
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.1.0-vso.1.1002
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      securityContext:
+        readOnlyRootFilesystem: true
+        privileged: false
+      config_env:
+        KafkaConsumer_AppSettings__Consumer__SecurityProtocol: 3
+        KafkaConsumer_AppSettings__Consumer__SaslMechanism: 1
+        KafkaConsumer_ElasticApm__ServerUrl: https://apm.genesis.cha.eu-west-1.dev/
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+
+    event_processor:
+      image:
+        registry: "artifacts.cha.rbxd.ds"
+        repo_path: ""
+        tag: ""
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        initialDelaySeconds: 60
+        periodSeconds: 30
+      securityContext:
+        readOnlyRootFilesystem: true
+        privileged: false
+      config_env:
+        ELASTIC_APM_TRANSACTION_IGNORE_URLS: /internal/*
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        KAFKA_SCHEMA_REGISTRY_URL:  "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"  
+        KAFKA_BROKER_URLS: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+    
+    service:
+      port: 8080
+      type: ClusterIP
+  
+    autoscaling:
+      enabled: false
+
+    vault_secrets:
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_consumer:
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"    

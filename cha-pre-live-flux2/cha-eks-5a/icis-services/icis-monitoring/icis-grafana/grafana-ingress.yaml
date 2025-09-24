@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana
+  namespace: icis-monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    lnrs.io/zone-type: private
+    cert-manager.io/cluster-issuer: vault-issuer
+spec:
+  ingressClassName: icis-nginx-ingress
+  tls:
+    - hosts:
+        - grafana-eks.cha.eu-west-1.dev
+      secretName: icis-grafana-cert
+  rules:
+    - host: grafana-eks.cha.eu-west-1.dev
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: icis-grafana
+                port:
+                  number: 80

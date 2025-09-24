@@ -1,0 +1,66 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 3
+
+namespace: supdem-prod
+environment: prod
+ServiceAccountName: supdem
+
+
+vault_agent:
+  repository: nexus.icis.rbi.web.ds/base-image/vault
+  tag: latest
+
+
+consul_template:
+  repository: nexus.icis.rbi.web.ds/base-image/consul-template
+  tag: alpine
+
+
+processor:
+  image:
+    repository: nexus.icis.rbi.web.ds/supdem/processor
+    tag: 0.1.0-beta.1.258-322-PROD
+    pullPolicy: Always 
+  env_vars:
+    ASPNETCORE_ENVIRONMENT: prod
+
+
+poller:
+  image:
+    repository: nexus.icis.rbi.web.ds/supdem/snd-eventprocessor-poller
+    tag: 0.1.0-alpha.82-170-PROD
+    pullPolicy: Always 
+  env_vars:
+    ASPNETCORE_ENVIRONMENT: prod
+
+nginx:
+  image:
+    repository: nexus.icis.rbi.web.ds/base-image/nginx-unprivileged
+    tag: 1.19-alpine
+    pullPolicy: Always   
+
+
+ingress:
+  enabled: true
+  className: icis-nginx-ingress
+  annotations:
+    lnrs.io/zone-type: private
+    external-dns.alpha.kubernetes.io/hostname: supply-demand.processor.icis.chp.eu-west-1.prod
+    cert-manager.io/cluster-issuer: vault-issuer
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+  hosts:
+    - host: supply-demand.processor.icis.chp.eu-west-1.prod
+      paths:  
+      - /
+      tls: "true"
+  tls:
+    - hosts:
+      - supply-demand.processor.icis.chp.eu-west-1.prod
+      secretName: supply-demand.processor.icis.chp.eu-west-1.prod
+
+vault:
+  VaultSecretPath: "kv/chp/k8s/data/supdem/prod/processor"
+  VaultK8sRoleName: "kv-supdem-read"
+  VaultK8sAuthPath: "auth/chp/eks-b"  

@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-performance
+  namespace: icis-squidex-performance
+spec:
+  releaseName: spot-price-performance
+  values:
+    projectName: "spot-price"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-performance-spot-price:name"}
+        tag: performance-spot-price-275-6.7.52 # {"$imagepolicy": "flux-system:icis-squidex-performance-spot-price:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: spot-price
+        ADMIN__ADMINUSERGROUP__0: ICIS_Mercury
+        CONTENTS__MAXRESULTS: "'6000'"
+        CONTENTS__DEFAULTPAGESIZE: "'6000'"
+        SCRIPTING__TIMEOUTEXECUTION: "'00:05:00'"
+        SCRIPTING__TIMEOUTSCRIPT: "'00:05:00'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+        PLUGINS__2: ICIS.ExportPlugin.dll
+        PLUGINS__3: ICIS.SpotPrices.dll
+        EXPORT__MAXEXPORTCOUNT: "'500'"
+        EXPORT__ENABLEROLEPERMISSION: "'true'"
+      kafka:
+        enabled: True
+      envValues:
+        ELASTIC_APM_SERVICE_NAME: "SpotPrices - CMS"
+        ELASTIC_APM_CENTRAL_CONFIG: "'false'"
+        ELASTIC_APM_CAPTURE_BODY: "all"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: "'1.0'"
+        ELASTIC_APM_ENABLED: "'true'"
+    squidexCli:
+      enabled: True
+      schedule: "'45 7,10,13,16 * * *'"
+    vault_squidex_secrets:
+      name: spot-price-squidex-performance-secret
+    vault_kafka_secrets:
+      name: spot-price-squidex-kafka-performance-secret
+      VaultK8sRoleName: "kv-icis-squidex-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "icis-squidex/spot-price/performance"     

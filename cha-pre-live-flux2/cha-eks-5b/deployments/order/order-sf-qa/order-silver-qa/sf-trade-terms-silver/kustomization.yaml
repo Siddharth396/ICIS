@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: order-systest
+nameSuffix: -trade-silver-terms-qa
+resources:
+- ../../../../../common/order-snowflake-producer/
+patches:
+- path: helm-release-order-snowflake-producer-trade-term-silver-qa.yaml
+

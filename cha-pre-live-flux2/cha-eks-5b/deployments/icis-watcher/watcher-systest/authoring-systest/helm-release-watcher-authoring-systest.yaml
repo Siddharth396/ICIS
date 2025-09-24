@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cronjob
+spec:
+  values:
+    namespace: icis-watcher-systest
+    cronjob:
+      schedule: '"*/5 * * * *"' # every 1 hour at 0 minute
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/watcher/watcher-tester # {"$imagepolicy": "flux-system:watcher-bff-systest:name"}
+        tag: systest-6-1.0.0-8356230755 # {"$imagepolicy": "flux-system:watcher-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        TEST_FILE_NAME: authoring.systest.test
+    vault:
+      secretPaths:
+        - basePath: "kv/cha/k8s/data/watcher/systest/watcher"
+          secrets:
+            - key: AUTHORING_SYSTEST_USER
+              subPath: "authoringSystestUser"
+            - key: AUTHORING_SYSTEST_PASS
+              subPath: "authoringSystestPass"

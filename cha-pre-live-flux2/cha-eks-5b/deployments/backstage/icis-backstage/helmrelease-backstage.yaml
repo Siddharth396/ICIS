@@ -1,0 +1,145 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-backstage
+  namespace: icis-backstage
+spec:
+  releaseName: icis-backstage
+  interval: 5m0s
+  chart:
+    spec:
+      chart: backstage
+      version: "0.1.20"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 1
+    ServiceAccountName: "backstage"
+    namespace: "icis-backstage"
+    initContainers:
+      enabled: true
+    vault_agent:
+      repository: "artifacts.cha.rbxd.ds/base-image/vault"
+      tag: "latest"
+    consul_template:
+      repository: "artifacts.cha.rbxd.ds/base-image/consul-template"
+      tag: "alpine"
+    backend:
+      port: 7007
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/backstage/backend" # {"$imagepolicy": "flux-system:icis-backstage-backend-policy:name"}
+        tag: "stable-182-0.0.1-16113132574" # {"$imagepolicy": "flux-system:icis-backstage-backend-policy:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "100m"
+        limits:
+          memory: "2Gi"
+          cpu: "1"
+      config_env:
+        SECRET_FILE_PATH: /etc/secrets/.env
+        LOG_LEVEL: debug
+        BACKSTAGE_URL: https://backstage.cha.eu-west-1.dev
+        GITLAB_URL: gitlab.cha.rbxd.ds
+        B2B_GITLAB_URL: gitlab.b2b.regn.net
+        POSTGRES_HOST: icis-backstage-tooling-db.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com
+        SUBSCRIBER_PILET_TEMPLATE_URL: https://gitlab.cha.rbxd.ds/tooling/backstage/templates/subscriber-pilet/-/blob/main/template.yaml
+        SUBSCRIBER_REALM_BFF_TEMPLATE_URL: https://gitlab.cha.rbxd.ds/tooling/backstage/templates/subscriber-realm-bff/-/blob/main/template.yaml
+        SUBSCRIBER_DOTNET_BFF_TEMPLATE_URL: https://gitlab.cha.rbxd.ds/tooling/backstage/templates/subscriber-dotnet-bff/-/blob/main/template.yaml
+        KAFKA_EVENT_PROCESSOR_TEMPLATE_URL: https://gitlab.cha.rbxd.ds/tooling/backstage/templates/kafka-event-processor/-/blob/main/template.yaml
+        NOTIFICATION_EVENT_PROCESSOR_TEMPLATE_URL: https://gitlab.cha.rbxd.ds/tooling/backstage/templates/notifications-event-processor/-/blob/main/template.yaml
+        FEEDSERVICE_SYSTEST: https://subscriber-mfe-feed-service.systest.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe
+        FEEDSERVICE_STAGING: https://subscriber-mfe-feed-service.staging.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe
+        FEEDSERVICE_PERFORMANCE: https://subscriber-mfe-feed-service.performance.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe
+        FEEDSERVICE_INTEGRATION: https://subscriber-mfe-feed-service.integration.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe
+        FEEDSERVICE_PROD: https://subscriber-mfe-feed-service.chp.eu-west-1.prod/mfe/mfe-feed-service/api/v1/mfe
+        TEAMS_WEBHOOK_URL: https://reedelsevier.webhook.office.com/webhookb2/5734d94d-f60c-4603-9ffb-1e88fa88e282@9274ee3f-9425-4109-a27f-9fb15c10675d/IncomingWebhook/b50e0f12c24a46cbafb843965358be5c/88679644-e69b-43fa-b6d8-b975d8983503
+        PROJECT_DEPLOYERPATH: https://gitlab.cha.rbxd.ds/api/v4/projects/649/trigger/pipeline
+        PROJECT_DEPLOYERPATH_FLUX: https://gitlab.cha.rbxd.ds/api/v4/projects/733
+        HTTP_PROXY_URL: http://outboundproxycha.cha.rbxd.ds:3128
+        HTTP_PROXY_HOST: http://outboundproxycha.cha.rbxd.ds
+        HTTP_PROXY_PORT: 3128
+        SONAR_HOST: https://sonarqube.cha.eu-west-1.dev
+        VAULT_PATH: cha/k8s/data/backstage/cha
+    nginx:
+      port: 8080
+      image:
+        repository: artifacts.cha.rbxd.ds/base-image/nginx
+        tag: alpine
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+      config: |-
+        worker_processes 1;
+
+        events { worker_connections 1024; }
+
+        http {
+          sendfile on;
+          proxy_buffering off;
+          server {
+            listen 8080 ssl;
+            server_name  localhost;
+            error_log /dev/stdout warn;
+            ssl_certificate /etc/ssl/tls.crt;
+            ssl_certificate_key /etc/ssl/tls.key;
+            client_header_buffer_size    8k;
+            large_client_header_buffers  4 32k;
+            server_tokens off;
+
+            location / {
+            proxy_ssl_session_reuse off;
+            proxy_buffers 4 64k;
+            proxy_buffer_size 32k;
+            proxy_busy_buffers_size 64k;
+            proxy_ssl_server_name on;
+            proxy_read_timeout 120s;
+            add_header Access-Control-Allow-Origin *;
+            proxy_pass http://localhost:7007;
+            }
+          }
+        }
+    container:
+      lifecycle:
+        preStop:
+          exec:
+            command: ["/bin/sh", "-c", "sleep 20"]
+    service:
+      port: 443
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        lnrs.io/zone-type: private
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/proxy-buffer-size: "64k"
+        nginx.ingress.kubernetes.io/proxy-body-size: 8m
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/ssl-ciphers: "ALL:!aNULL:!EXPORT56:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP"
+      host:
+        name: backstage.cha.eu-west-1.dev
+        path: /
+    vault_secrets:
+      name: "backstage-cha"
+      VaultK8sRoleName: "kv-backstage-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "backstage/cha"
+    serviceMonitor:
+      enabled: false
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+    autoscaling:
+      enabled: false

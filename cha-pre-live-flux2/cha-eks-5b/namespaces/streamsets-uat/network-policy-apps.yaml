@@ -1,0 +1,203 @@
+###################################
+## Allow egress from streamsets-uat ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-streamsets-uat
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: streamsets-uat
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+    - port: 9000
+      protocol: TCP
+    - port: 9100
+      protocol: TCP
+    - port: 10000
+      protocol: TCP
+
+#####################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+#####################
+## Egress to Nexus ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-nexus-cha
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/22
+    ports:
+    - protocol: TCP
+      port: 8001
+
+#####################################
+## Ingress from Ingress Controller ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-streamsets-uat
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: streamsets-uat
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################################
+## Allow traffic to mongo db atlas peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-mongodb
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.248.0/21
+    ports:
+    - port: 27015
+      protocol: TCP
+    - port: 27016
+      protocol: TCP
+    - port: 27017
+      protocol: TCP
+    - port: 27015
+      protocol: UDP
+    - port: 27016
+      protocol: UDP
+    - port: 27017
+      protocol: UDP
+
+##################################################
+## Allow traffic to confluent cloud peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-confluent
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+
+#########################################
+## Allow external smtp traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-smtp
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 465
+      protocol: TCP
+    - port: 25
+      protocol: TCP
+
+#################################################
+## Allow sql traffic egress including postgres ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-sql
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 1433
+      protocol: TCP
+    - port: 5432
+      protocol: TCP
+    - port: 55001
+      protocol: TCP
+
+##################################
+## Allow egress traffic to iddn ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-iddn
+  namespace: streamsets-uat
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 9100
+      protocol: TCP

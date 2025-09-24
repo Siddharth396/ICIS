@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: pricing
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_subscription_product_items_1
+    database: pricing-systest
+    collection: product_item_catalogue_test_upgrade
+    transforms.RenameField.renames: id:_id

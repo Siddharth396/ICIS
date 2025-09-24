@@ -1,0 +1,95 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+###############################
+- icis-monitoring/clusterrole.yaml
+- icis-monitoring/clusterrolebinding.yaml
+- icis-monitoring/ingress.yaml
+- icis-monitoring/namespace-icis-monitoring.yaml
+- icis-monitoring/prometheus.yaml
+- icis-monitoring/service-account.yaml
+- icis-monitoring/service.yaml
+- icis-monitoring/servicemonitor.yaml
+- icis-monitoring/thanos-service.yaml
+- icis-monitoring/vault_secrets.yaml
+- icis-monitoring/sa-aws-services-grafana.yaml
+
+- icis-monitoring/icis-grafana/grafana-ingress.yaml
+- icis-monitoring/icis-grafana/network-rules.yaml
+- icis-monitoring/icis-grafana/helm-release.yaml
+
+- icis-monitoring/custom-exporters/elasticsearch-exporter/elasticsearch-exporter-deployment.yaml
+- icis-monitoring/custom-exporters/elasticsearch-exporter/elasticsearch-exporter-secrets.yaml
+- icis-monitoring/custom-exporters/elasticsearch-exporter/elasticsearch-exporter-service.yaml
+- icis-monitoring/custom-exporters/elasticsearch-exporter/elasticsearch-exporter-servicemonitor.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-darwin-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-dashboard-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-iddn-cpf-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-iddn-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-lngedge-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-newsarticles-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-sissjobs-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-tesla-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-energy-exporter.yaml
+- icis-monitoring/custom-exporters/icis-services-exporters/helm-release-subnet-exporter.yaml
+###############################
+- icis-gitlab-runner/namespace-icis-gitlab-runner.yaml
+- icis-gitlab-runner/helm-release-icis-gitlab-runner.yaml
+- icis-gitlab-runner/network-policy-apps.yaml
+- icis-gitlab-runner/network-policy-defaults.yaml
+- icis-gitlab-runner/podmonitor-gitlab-runner.yaml
+##################################
+###############################
+- icis-backup/namespace-icis-backup.yaml
+- icis-backup/network-policy-apps.yaml
+- icis-backup/network-policy-defaults.yaml
+- icis-backup/vault-access.yaml
+##############################
+- icis-backstage/namespace-icis-backstage.yaml
+- icis-backstage/network-policy-apps.yaml
+- icis-backstage/network-policy-defaults.yaml
+- icis-backstage/vault-access.yaml
+###############################
+- icis-event-streaming/namespace-icis-event-streaming.yaml
+- icis-event-streaming/network-policy-apps.yaml
+- icis-event-streaming/network-policy-defaults.yaml
+- icis-event-streaming/vault-serviceaccount-clusterrolebinding.yaml
+- icis-event-streaming/helmrelease-kafka-connect.yaml
+- icis-event-streaming/crd-kafka-connect.yaml
+- icis-event-streaming/configmap-connect-metrics.yaml
+- icis-event-streaming/podmonitor-connect.yaml
+- icis-event-streaming/helmrelease-confluent-haproxy.yaml
+- icis-event-streaming/helmrelease-atlantis.yaml
+##- icis-event-streaming/helmrelease-atlantisgithub.yaml
+##############################################
+- icis-vault-secret-operator/helm-release-icis-vault-secret-operator.yaml
+- icis-vault-secret-operator/namespace-icis-vault-secret-operator.yaml
+- icis-vault-secret-operator/network-policy-apps.yaml
+- icis-vault-secret-operator/network-policy-defaults.yaml
+- icis-vault-secret-operator/vault-ca-crt.yaml
+#########################################################
+#Github action controller
+- icis-github-runner/gh-arc-controller/helm-release-icis-gh-runner-controller.yaml
+- icis-github-runner/gh-arc-controller/namespace-icis-gh-runner-controller.yaml
+- icis-github-runner/gh-arc-controller/network-policy-controller-apps.yaml
+- icis-github-runner/gh-arc-controller/network-policy-controller-defaults.yaml
+- icis-github-runner/gh-arc-controller/podmonitor-github-runner-controller.yaml
+####### ICIS GitHub Action Runner Scale Set ######################################
+- icis-github-runner/gh-arc-runner-scale-set/helm-release-icis-gh-runner-scale-set.yaml
+- icis-github-runner/gh-arc-runner-scale-set/helm-release-icis-gh-runner-scale-set-deployment.yaml
+- icis-github-runner/gh-arc-runner-scale-set/helm-release-icis-gh-runner-scale-set-build.yaml
+- icis-github-runner/gh-arc-runner-scale-set/helm-release-icis-gh-runner-scale-set-security-scans.yaml
+- icis-github-runner/gh-arc-runner-scale-set/helm-release-icis-gh-runner-scale-set-e2e-heavyload.yaml
+- icis-github-runner/gh-arc-runner-scale-set/namespace-icis-gh-runner.yaml
+- icis-github-runner/gh-arc-runner-scale-set/network-policy-runner-apps.yaml
+- icis-github-runner/gh-arc-runner-scale-set/network-policy-runner-defaults.yaml
+- icis-github-runner/gh-arc-runner-scale-set/podmonitor-github-runner.yaml
+###############################
+- icis-streamsets/namespace-icis-streamsets.yaml
+- icis-streamsets/network-policy-apps.yaml
+- icis-streamsets/network-policy-defaults.yaml
+- icis-streamsets/sa-icis-streamsets.yaml
+####### Risk Vault Secrets Operator ##############################
+- icis-risk-vault-secrets-operator/helm-release-icis-risk-vso.yaml
+- icis-risk-vault-secrets-operator/network-policy-apps.yaml
+- icis-risk-vault-secrets-operator/network-policy-defaults.yaml

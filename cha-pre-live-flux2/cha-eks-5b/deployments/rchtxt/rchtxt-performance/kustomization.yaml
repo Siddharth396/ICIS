@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: rchtxt-performance
+nameSuffix: -rchtxt
+resources:
+- ../../../common/subscriber-bff/rchtxt/
+- ../../../common/authoring-bff/rchtxt/
+- helm-release-bff-subscriber-rchtxt-deployment-scaler.yaml
+- helm-release-bff-authoring-rchtxt-deployment-scaler.yaml
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-rchtxt-performance.yaml
+- path: helm-release-authoring-bff-rchtxt-performance.yaml
+# BACKSTAGE-COMMENT-PATTERN2

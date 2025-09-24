@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.configmap.name }}
+  namespace: {{ .Values.namespace }}
+data:
+
+  consul-template-config.hcl: |-
+    vault {
+      renew_token = false
+      vault_agent_token_file = "/home/vault/.vault-token"
+      retry {
+        backoff = "1s"
+      }
+    }
+    
+    template {
+      destination = "/etc/secrets/appsettings.secrets.json"
+      contents = <<EOH
+      {
+        "ConnectionStrings": {
+          {{ "{{- with secret " }}{{ .Values.vault.VaultSecretPath | quote }} }}
+          "SnDEditingDb": {{ "{{ .Data.data.SnDEditingDbConnectionString }}" | quote }}
+          {{ "{{ end }}" }}
+        },
+        "CosmosConfig": {
+              {{ "{{- with secret " }}{{ .Values.vault.VaultSecretPath | quote }} }}
+              "ClientId": {{ "{{ .Data.data.CosmosClientId }}" | quote }},
+              "Secret": {{ "{{ .Data.data.CosmosSecret }}" | quote }}
+              {{ "{{ end }}" }}
+            },
+        "AuthorizationRequestDetail": {
+              {{ "{{- with secret " }}{{ .Values.vault.VaultSecretPath | quote }} }}
+              "AuthClientId": {{ "{{ .Data.data.AuthClientId }}" | quote }},
+              "AuthClientSecret": {{ "{{ .Data.data.AuthClientSecret }}" | quote }}
+             {{ "{{ end }}" }}
+            }            
+      }
+      EOH
+    }
+
+  vault-agent-config.hcl: |-
+    # Uncomment this to have Agent run once (e.g. when running as an initContainer)
+    exit_after_auth = true
+    pid_file = "/home/vault/pidfile"
+
+    auto_auth {
+        method "kubernetes" {
+            mount_path = {{ .Values.vault.VaultK8sAuthPath | quote }}
+            config = {
+                role = {{ .Values.vault.VaultK8sRoleName | quote }}
+            }
+        }
+
+        sink "file" {
+            config = {
+                path = "/home/vault/.vault-token"
+            }
+        }
+    }

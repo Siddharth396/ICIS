@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-uat
+  namespace: icis-squidex-uat
+spec:
+  releaseName: chemical-analytics-uat
+
+  values:
+    projectName: "chemical-analytics"
+
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex
+        tag: uat-1-5.6.30
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: chemical-analytics
+        ADMIN__ADMINUSERGROUP__0: ICIS_Darwin
+        UI__DISABLESCHEDULEDCHANGES: "'true'"
+        CONTENTS__MAXRESULTS: "'5000'"
+        PLUGINS__2: ICIS.EmbargoPlugin.dll
+        PLUGINS__3: ICIS.AWFPlugin.dll
+        AWF__PUBLISHAPIURL: https://pfawf.staging.cha.eu-west-1.dev/
+        AWF__TIMEOUTINMS: "'15000'"
+      kafka:
+        enabled: True
+
+    squidexCli:
+      enabled: True
+      schedule: "'00 8,11,14,15,17 * * *'"
+    vault_squidex_secrets:
+      name: chemical-analytics-squidex-uat-secret
+    vault_kafka_secrets:
+      name: chemical-analytics-squidex-kafka-uat-secret
+      VaultSecretPath: "icis-squidex/chemical-analytics/uat"      

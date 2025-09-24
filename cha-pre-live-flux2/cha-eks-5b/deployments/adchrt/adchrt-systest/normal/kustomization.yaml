@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../../../common/subscriber-bff/adchrt/
+- ../../../../common/authoring-bff/adchrt/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-adchrt-systest.yaml
+- path: helm-release-authoring-bff-adchrt-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN2

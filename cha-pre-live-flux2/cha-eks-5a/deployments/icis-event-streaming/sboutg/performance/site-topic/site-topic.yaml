@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_performance_supplydemand_site_1
+    database: sboutg-performance
+    collection: raw_site

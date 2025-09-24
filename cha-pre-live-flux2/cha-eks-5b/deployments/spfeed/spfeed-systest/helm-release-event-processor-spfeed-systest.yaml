@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-spfeed-systest
+  values:
+    replicaCount: 1
+    namespace: "spfeed-systest"
+    environment: "systest"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "systest"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_systest_petchem_transactions_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_systest_alerting_preferences_2: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "activity_feed_spot_price_event_processor_systest_v2"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_systest_activity_feed_spot_price_event_processor_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_systest_activity_feed_spot_price_event_processor_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_systest_petchem_transactions_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__1: "public_systest_alerting_preferences_2"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/spot-price/spfeed-event-processor # {"$imagepolicy": "flux-system:spfeed-event-processor-systest:name"}
+        tag: systest-159-3.13.1-1-204 # {"$imagepolicy": "flux-system:spfeed-event-processor-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live.ak0n6.mongodb.net/spt-systest?retryWrites=true&w=majority"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        KAFKA_BROKER_URLS: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KAFKA_BROKER_SECURITY_PROTOCOL: 3
+        KAFKA_BROKER_SASL_MECHANISM: 1
+        KAFKA_SCHEMA_REGISTRY_URL: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KAFKA_TOPICS_ALERTING_NOTIFICATIONS: public_systest_alerting_notifications_2
+        KAFKA_TOPICS_NOTIFICATIONS_CONTENT: public_systest_notifications_content_1
+        MESSAGE_EXPIRE_IN_MINUTES: 21600
+        STOP_NOTIFICATION: false
+        ENABLE_CONTENT_NOTIFIER: true
+        NOTIFICATION_URL: https://subscriber.systest.genesis.cha.rbxd.ds/commodity/{querystring}/bdo-tracker/{pricespecification-id}/{transaction-id}/{latest-assessment-date}?intcmp=myalertsfeed-transactions
+    vault_secrets:
+      name: spfeed-event-processor-vault-secret-systest
+      VaultSecretPath: "spfeed/systest/eventprocessor"
+    vault_secrets_consumer:
+      name: spfeed-event-processor-vault-secret-consumer-systest
+      VaultSecretPath: "spfeed/systest/eventprocessor"

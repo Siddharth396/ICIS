@@ -1,0 +1,54 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  chart:
+    spec:
+      version: 0.1.75
+  releaseName: authoring-bff-sndctl-staging
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "supdem-staging"
+    environment: "staging"
+    deploymentStrategy: "RollingUpdate"
+    migration_init_script:
+      enabled: false
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/snd/sndctl/authoring-bff # {"$imagepolicy": "flux-system:sndctl-authoring-bff-staging:name"}
+        tag: staging-62-2.7.2-22013 # {"$imagepolicy": "flux-system:sndctl-authoring-bff-staging:tag"}
+        pullPolicy: Always
+      config_env:
+        ASPNETCORE_ENVIRONMENT: staging
+        ENVIRONMENT: staging
+        CONNECTION_STRING: server=CHAQHSDBST993V.cha.rbxd.ds,55001;database=SupplyNDemandEditing;user id=${SQL_USER};password=${SQL_PWD};Integrated Security=False;Connection Timeout=60
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/supply-demand/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-risk-vault-secret-sndctl-staging
+      VaultSecretPath: "sndctl/staging/authoring/bff"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-supdem-sndctl-authoring-connection"
+      VaultNamespace: dataservices/icis/nonprod
+    vault_secrets_proxy:
+      name: authoring-bff-risk-vault-secret-proxy-sndctl-staging
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-proxy-supdem-sndctl-authoring-connection"
+      VaultNamespace: dataservices/icis/nonprod

@@ -1,0 +1,98 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-homepage-performance
+  values:
+    namespace: "homepage-performance"
+    environment: "performance"
+    replicaCount: 6
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+    nginx:
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-bff # {"$imagepolicy": "flux-system:sbcore-bff-performance:name"}
+        tag: performance-75-1.39.0-27141 # {"$imagepolicy": "flux-system:sbcore-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        BASE_PATH: /home
+        JWT_INFO_AUTHORITY: https://id.performance.genesis.cha.rbxd.ds
+        IDS_HEALTHCHECK_URL: https://id.internal.performance.genesis.cha.rbxd.ds/version
+        DBAPI_URL: https://dbapi.performance.genesis.cha.rbxd.ds/v1
+        SQL_HOST: icis-genesis-ups-performance.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com
+        SQL_CAT: genesis-ups-performance
+        SQL_USR: genesis-ups-performance
+        CORESERVICE_URL: https://api.subscriber.internal.performance.genesis.cha.rbxd.ds/v1
+        IS_TOGGLE_TO_NEWHOME_ENABLED: true
+        IS_R2_TOGGLE_ENABLED: true
+        IS_R3_TOGGLE_ENABLED: true
+        IS_ASK_ICIS_ENABLED: true
+        IS_NOTIFICATION_BANNER_ENABLED: false
+        # For multiple domains separate them by comma
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds
+        # https://www.elastic.co/guide/en/apm/agent/dotnet/current/config-core.html
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        TRACE_ENABLED: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        SECRET_FILE_PATH: /etc/secrets/.env
+        # MongoDb
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbcore-performance?retryWrites=true"
+        MONGO_DB_COLLECTION_PRODUCT_ITEMS: product_items
+        MONGO_DB_COLLECTION_PRICE_ASSESSMENTS_SPECIFICATION: price_assessments_specification
+        MONGO_DB_COLLECTION_SUBSCRIPTION_REQUESTS: subscription_requests
+        # Analytic toggles
+        RECYCLING_SUPPLY_TRACKER_MECHANICAL_ANALYTICS_CARD_ENABLED: true
+        RECYCLING_SUPPLY_TRACKER_CHEMICAL_ANALYTICS_CARD_ENABLED: true
+        PLANT_CE_ANALYTICS_ENABLED: true
+        HYDROGEN_PRICING_AND_ANALYTICS_CARD_ENABLED: true
+        SUPPLIER_CARBON_FOOTPRINTS_ANALYTICS_CARD_ENABLED: true
+        ENERGY_GAS_ANALYTICS_CARD_ENABLED: true
+        POWER_FORESIGHT_ANALYTICS_CARD_ENABLED: true
+        JOBS_ENABLED: true
+        JOBS_RETRY_ATTEMPTS: 2
+        JOBS_RETRY_DELAYS: 5,10
+        JOBS_SUBSCRIPTION_REQUESTS_ENABLED: true
+        JOBS_SUBSCRIPTION_REQUESTS_INTERVAL: 1
+        JOBS_SUBSCRIPTION_REQUESTS_BATCH_SIZE: 100
+        ELOQUA_URL: https://eu-west-1.aws.data.mongodb-api.com/app/eloquamock-ndzjg/endpoint/subscription
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/core/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    vault_secrets:
+      name: subscriber-bff-vault-secret-homepage-performance
+      VaultSecretPath: "homepage/performance/bff"
+    autoscaling:
+      enabled: true
+      minReplicas: 6
+      maxReplicas: 12
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80

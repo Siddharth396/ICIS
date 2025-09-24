@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: chempf
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_petchem_reference_series_metadata_1
+    database: chempf-systest
+    collection: mv_reference_series_meta
+    transforms.RenameField.renames: series_id:_id

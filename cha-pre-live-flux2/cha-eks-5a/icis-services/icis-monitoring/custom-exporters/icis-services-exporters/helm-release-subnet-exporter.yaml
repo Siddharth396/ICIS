@@ -1,0 +1,51 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subnet-exporter
+  namespace: icis-monitoring
+spec:
+  releaseName: subnet-exporter
+  interval: 5m0s
+  chart:
+    spec:
+      chart: icis-monitoring-exporter
+      version: "1.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    nameOverride: "subnet-check-exporter"
+    fullnameOverride: "subnet-check-exporter"
+
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-monitoring/available_ip_exporter
+      tag: "1.0.0"
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 8000
+
+    serviceMonitor:
+      interval: 30s
+      namespace: icis-monitoring
+      release: subnet-exporter
+
+
+    vault:
+      type: kv-v2
+      mount: kv/cha/k8s
+      path: icis-monitoring/subnet-vars
+
+    secrets:
+      - name: subnet-vars
+        envName: subnet
+        key: SUBNET
+      

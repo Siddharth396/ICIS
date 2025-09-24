@@ -1,0 +1,38 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: order-kafka-producer
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: order-kafka-producer
+      version: "0.1.7"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    ServiceAccountName: order
+    kafka_producer:
+      env:
+        LOGGING_LEVEL: INFO
+        postgres_host: order.prelive.data.cha.rbxd.ds
+        postgres_port: 5432
+        registry_url: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud
+        registry_basic_auth_cred_source: USER_INFO
+        client_bootstrap_servers: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+        client_sasl_mechanism: PLAIN
+        client_security_protocol: SASL_SSL
+        client_ssl_id_algorithm: https
+        client_socket_keepalive_enable: True
+        client_transaction_timeout_ms: 60000
+        client_enable_idempotence: True
+        
+## vault secret for order is created in the namespace folder: cha-eks-5b/namespaces/order-<env specific>      

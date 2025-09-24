@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- systest-price-assessments
+- systest-commodity-page-mapping
+- systest-transactions
+- systest-transaction-series
+- systest-denormalized-price-specifications
+- systest-order-mappings
+- performance-price-assessments
+- performance-commodity-page-mapping
+- performance-transactions
+- performance-transaction-series
+- performance-denormalized-price-specifications
+# Topic does not exist
+# - performance-order-mappings
+- uat-price-assessments
+- uat-commodity-page-mapping
+- uat-transactions
+- uat-transaction-series
+# Topic does not exist
+# - uat-denormalized-price-specifications

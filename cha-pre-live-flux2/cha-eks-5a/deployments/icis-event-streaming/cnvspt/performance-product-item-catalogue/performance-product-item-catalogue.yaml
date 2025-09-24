@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: cnvspt
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_subscription_product_items_1
+    database: cnvspt-performance
+    collection: product_item_catalogue
+    transforms.RenameField.renames: id:_id

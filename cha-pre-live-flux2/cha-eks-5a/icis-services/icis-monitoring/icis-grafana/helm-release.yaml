@@ -1,0 +1,100 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-grafana
+  namespace: icis-monitoring
+spec:
+  releaseName: icis-grafana
+  targetNamespace: icis-monitoring
+  interval: 5m0s
+  chart:
+    spec:
+      chart: grafana
+      version: 9.2.2
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: icis-monitoring 
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    image:
+      registry: artifacts.cha.rbxd.ds
+      repository: custom-grafana #includes b2b cert bundle.
+      tag: 12.0.1
+      pullPolicy: IfNotPresent
+      pullSecrets: []
+      debug: true
+    serviceAccount:
+      create: false
+      name: aws-services-monitoring   
+
+    replicaCount: 2
+    
+    serviceMonitor:
+      enabled: true
+    
+    grafana.ini:
+      server:
+        root_url: https://grafana-eks.cha.eu-west-1.dev
+      database:
+        type: postgres
+        host: $__file{/etc/secrets/db/db-host}
+        name: grafana
+        user: $__file{/etc/secrets/db/db-username}
+        password: $__file{/etc/secrets/db/db-password}
+        ssl_mode: disable
+
+      auth.azuread:
+        enabled: true
+        name: AzureAD
+        client_id: $__file{/etc/secrets/oauth/client-id}
+        client_secret_file: $__file{/etc/secrets/oauth/client-secret}
+        scopes: openid email profile
+        auth_url: https://login.microsoftonline.com/$__file{/etc/secrets/oauth/tenant-id}/oauth2/v2.0/authorize
+        token_url: https://login.microsoftonline.com/$__file{/etc/secrets/oauth/tenant-id}/oauth2/v2.0/token
+        api_url: https://graph.microsoft.com/v1.0/me
+        allow_sign_up: true
+        auto_login: false
+
+      auth:
+        disable_login_form: false
+        disable_signout_menu: false
+
+      smtp:
+        enabled: true
+        host: chamailrelay.cha.rbxd.ds:25
+        from_address: grafana-eks@cha.rbxd.ds
+        from_name: ICIS Grafana CHA EKS
+        skip_verify: true
+        startTLS_policy: "NoStartTLS"
+
+    # Mount Vault-generated secrets
+    extraSecretMounts:
+      - name: grafana-db-secret
+        secretName: grafana-db-secret
+        mountPath: /etc/secrets/db
+        defaultMode: 0444
+        readOnly: true
+      - name: grafana-sso-auth-secret
+        secretName: grafana-sso-auth-secret
+        mountPath: /etc/secrets/oauth
+        defaultMode: 0444
+        readOnly: true
+
+    # Grafana plugins
+    #plugins:
+    #  - grafana-direct-input-datasource
+      #- marcusolsson-json-datasource
+      #- grafana-github-datasource
+      #- grafana-image-renderer
+      #- yesoreyeram-infinity-datasource
+      #- digrich-bubblechart-panel
+      #- simplesql-datasource
+      #- grafana-graphql-datasource
+      #- grafana-mongodb-atlas-datasource
+      #- grafana-worldmap-panel
+      #- grafana-nodegraph-api

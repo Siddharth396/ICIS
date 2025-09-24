@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-rclpet-staging
+  values:
+    replicaCount: 1
+    namespace: "rclpet-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/rclpet/rclpet-bff # {"$imagepolicy": "flux-system:rclpet-bff-staging:name"}
+        tag: staging-131-9.0.0-main.51489 # {"$imagepolicy": "flux-system:rclpet-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        CORS_ORIGINS_DOMAINS: https://subscriber.staging.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        PUBLICATIONS_ENDPOINT_URL: https://dbapi.staging.genesis.cha.rbxd.ds/v1/publications
+        PRICES_ENDPOINT_URL: https://dbapi.staging.genesis.cha.rbxd.ds/v1/prices
+        BINARY_ENDPOINT_URL: https://dbapi.staging.genesis.cha.rbxd.ds/v1/binary
+        REPORT_BASE_URL: https://dbapi.staging.genesis.cha.rbxd.ds/v1/
+        CMS_BASE_URL: https://api.rclpet.cms.systest.mars.cha.eu-west-1.dev
+        DEPENDENCY_HEALTHCHECK_GENESIS_DB_API: https://dbapi.staging.genesis.cha.rbxd.ds/v1/health
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/commodity/rpet/europe/v2/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /v2/$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-rclpet-staging
+      VaultSecretPath: "rclpet/staging/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-rclpet-staging

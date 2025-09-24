@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+########
+- ontmgs-authoring-bff-policy-performance.yaml
+- ontmgs-authoring-bff-policy-staging.yaml
+- ontmgs-authoring-bff-policy-systest.yaml
+- ontmgs-authoring-bff-registry.yaml

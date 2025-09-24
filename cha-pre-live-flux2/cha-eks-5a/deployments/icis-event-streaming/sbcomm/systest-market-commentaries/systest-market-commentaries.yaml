@@ -1,0 +1,10 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sbcomm
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_energy_market_commentaries_1
+    database: sbcomm-systest
+    collection: MarketCommentaries

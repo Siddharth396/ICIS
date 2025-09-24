@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: supdem
+  namespace: supdem-performance
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::512544833523:role/SUPPLY-DEMAND-APP-PERFORMANCE"
+
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: role-supdem-performance-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: supdem
+  namespace: supdem-performance
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io
+

@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-kfkpro"
+    ServiceAccountName: "supdem"
+    vault_secrets:
+      VaultK8sRoleName: "kv-supdem-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_proxy:
+      VaultK8sRoleName: "kv-supdem-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"   
+    authproxy:
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|(/swagger?/*)|health"
+    bff:
+      config_env:
+        ENABLE_SWAGGER: true
+        LOG_LEVEL: Information
+        PartitionCount: 6
+        BOOTSTRAPSERVERS: pkc-l568n.eu-west-1.aws.confluent.cloud:9092
+        SCHEMA_REGISTRY_URL: https://psrc-4xrp1.eu-central-1.aws.confluent.cloud
+        CancellationTokenTimeInSeconds: 60
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        HOSTINGS_URLS: http://*:80
+        DEV_MODE: false
+        SERILOG_OUTPUT_TEMPLATE: "[{Timestamp:yyyy-MM-dd HH:mm:ss}] [{Level:u3}] [{CorrelationId}] [{RequestId}] {EventId} {Message:lj}{NewLine}{Exception}"
+        ELASTIC_APM_TRANSACTION_IGNORE_URLS: /internal/*
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ENABLE_AUTHORIZATION: true
+        SWAGGER_AUTHORIZATION_SCOPE: "{ 'offline_access': 'offline_access', 'openid': 'openid', 'profile': 'profile' }"
+        SWAGGER_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize 
+        SWAGGER_AUTHORIZATION_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token       

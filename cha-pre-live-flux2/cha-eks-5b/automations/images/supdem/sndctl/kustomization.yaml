@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- sndctl-subscriber-bff-policy-integration.yaml
+- sndctl-subscriber-bff-policy-systest.yaml
+- sndctl-subscriber-bff-policy-performance.yaml
+- sndctl-subscriber-bff-policy-staging.yaml
+- sndctl-subscriber-bff-registry.yaml
+########
+- sndctl-authoring-bff-policy-integration.yaml
+- sndctl-authoring-bff-policy-systest.yaml
+- sndctl-authoring-bff-policy-performance.yaml
+- sndctl-authoring-bff-policy-staging.yaml
+- sndctl-authoring-bff-registry.yaml
+########
+- sndctl-mongo-migration-policy-integration.yaml
+- sndctl-mongo-migration-policy-systest.yaml
+- sndctl-mongo-migration-policy-performance.yaml
+- sndctl-mongo-migration-policy-staging.yaml
+- sndctl-mongo-migration-registry.yaml

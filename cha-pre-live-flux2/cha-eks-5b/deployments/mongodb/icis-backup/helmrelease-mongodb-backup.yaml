@@ -1,0 +1,72 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-mongodb-backup
+  namespace: icis-backup
+spec:
+  releaseName: mongo-backup
+  interval: 5m0s
+  chart:
+    spec:
+      chart: mongodb-backups
+      version: "0.1.13"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 1
+    namespace : icis-backup
+    environment: cha
+    init_containers: true
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-services/mongotools
+      tag: 5
+      pullPolicy: Always
+    ServiceAccountName: mongodb-backup
+    container:
+      name: mongobackup
+
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+    env_values:
+      mongo_host: cha-pre-live-ak0n6.mongodb.net
+      mail_to: <to-be-updated@xyz.com>
+      s3_bucket: icis-atlas-mongodb-pre-live-backups
+      upload: 0
+      retention: 2
+      TERM: xterm
+
+    debug:
+      enabled: false
+
+    cronJob:
+      enabled: true
+      schedule: '"50 23 * * *"'
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 1
+
+    vault_secrets:
+      name: mongo-secrets
+      VaultK8sRoleName: "kv-mongobackup-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "core-sre/mongodb/backup"
+
+    mongo_configmap:
+      name: mongo-configs
+
+    persistence:
+      name: pvc-mongobackup
+      size: 100Gi
+      class: ebs-gp3-ext4-retain
+
+    resources:
+      limits:
+        cpu: "1"
+        memory: "3Gi"
+      requests:
+        cpu: "500m"
+        memory: "2Gi"

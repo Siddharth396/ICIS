@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: icis-watcher-systest
+  name: icis-watcher-systest

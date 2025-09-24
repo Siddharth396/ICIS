@@ -1,0 +1,262 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: homepage-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: homepage-systest
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: homepage-systest
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: homepage-staging
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: homepage-performance
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: homepage-staging
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: homepage-performance
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: homepage-integration
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: homepage-integration
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+  
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: atcore-systest
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: atcore-systest
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: atcore-staging
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: atcore-performance
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: atcore-staging
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: atcore-performance
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin
+  namespace: atcore-integration
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: homepage-tc-agent-admin-service-monitor
+  namespace: atcore-integration
+subjects:
+- kind: ServiceAccount
+  name: homepage-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io  

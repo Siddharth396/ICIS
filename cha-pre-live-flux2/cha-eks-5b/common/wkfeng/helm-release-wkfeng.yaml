@@ -1,0 +1,170 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: workflow-engine
+
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: wkfeng
+      version: "0.0.11"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    replicaCount: 1
+    serviceAccountName: wkfeng
+    initContainers: true
+
+    vault_agent:
+      repository: "artifacts.cha.rbxd.ds/base-image/vault"
+      tag: "latest"
+
+    consul_template:
+      repository: "artifacts.cha.rbxd.ds/base-image/consul-template"
+      tag: "alpine"
+
+    app:
+      port: 8080
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/camunda/customized/camunda-bpm-platform
+        tag: systest-2-0.1.0.5496
+        pullPolicy: IfNotPresent
+      livenessProbe:
+        httpGet:
+          path: /engine-rest/engine
+          port: 8080
+        initialDelaySeconds: 30
+        periodSeconds: 30
+      resources: 
+        requests:
+          memory: "512Mi"
+          cpu: "300m"
+        limits:
+          memory: "800Mi"
+          cpu: "1"
+      config_env:
+        DB_DRIVER: "org.postgresql.Driver"
+        JMX_PROMETHEUS: "true"
+        SECRET_FILE_PATH: /etc/secrets/.env
+        DATABASE_SCHEMA_UPDATE: false
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        ELASTIC_APM_SERVICE_NAME: "Workflow Engine"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        ELASTIC_APM_LOG_LEVEL: "Error"
+        
+    nginx:
+        port: 443
+        image:
+          repository: artifacts.cha.rbxd.ds/base-image/nginx
+          tag: alpine
+        readinessProbe:
+          httpGet:
+            path: /engine-rest/engine
+            port: 443
+            scheme: HTTPS
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 2
+        livenessProbe:
+          httpGet:
+            path: /engine-rest/engine
+            port: 443
+            scheme: HTTPS
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "64Mi"
+            cpu: "100m"
+        configmap:
+          name: wkfeng-nginx-config
+        config: |-
+          server {
+            listen 443 ssl;
+            server_name  localhost;
+
+            access_log /dev/stdout main;
+            error_log /dev/stdout warn;
+
+            ssl_certificate /etc/ssl/tls.crt;
+            ssl_certificate_key /etc/ssl/tls.key;
+
+            client_header_buffer_size    8k;
+            large_client_header_buffers  4 32k;
+
+            server_tokens off;
+
+            #Reverse Proxy rules to serve the app from other container
+
+            location / {
+                proxy_set_header Host $http_host;
+                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                proxy_set_header X-Forwarded-Proto $scheme;
+
+                proxy_buffers 4 64k;
+                proxy_buffer_size 32k;
+                proxy_busy_buffers_size 64k;
+
+                proxy_pass http://127.0.0.1:8080;
+            }
+
+          }
+
+    lifecycle:
+      preStop:
+        exec:
+          command: ["/bin/sh", "-c", "sleep 20"]
+
+    service:
+      port_name: https
+      port: 443
+
+    autoscaling:
+      enabled: false
+
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /
+          targetPort: 9404
+          scheme: http
+
+    ingress:
+      enabled: false
+      className: icis-nginx-ingress
+      annotations: {}
+        # kubernetes.io/ingress.class: nginx
+        # kubernetes.io/tls-acme: "true"
+      hosts:
+        - host: chart-example.local
+          paths: []
+      tls: []
+      #  - secretName: chart-example-tls
+      #    hosts:
+      #      - chart-example.local
+      secrets:
+        enabled: false
+        name:
+        cert:
+        key:
+
+    vault_secrets:
+      VaultK8sRoleName: "kv-wkfeng-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"

@@ -1,0 +1,205 @@
+[
+  {
+    "_id": "267-M1-20240110",
+    "specification_id": 267,
+    "specification_name": "ICIS Heren® Natural Gas EoD Assessment - TTF Conv. USD/MMBtu",
+    "market_code": "TTF",
+    "assessed_datetime": {
+      "$date": "2024-01-10T00:00:00.000Z"
+    },
+    "creation_datetime": {
+      "$date": "2024-01-10T03:12:41.002Z"
+    },
+    "status": "Published",
+    "period_label": "February '24",
+    "fulfilment_from_datetime": {
+      "$date": "2024-02-01T00:00:00.000Z"
+    },
+    "fulfilment_until_datetime": {
+      "$date": "2024-02-29T00:00:00.000Z"
+    },
+    "bid": {
+      "$numberDecimal": "9.675"
+    },
+    "offer": {
+      "$numberDecimal": "9.675"
+    },
+    "mid": {
+      "$numberDecimal": "9.675"
+    }
+  },
+  {
+    "_id": "267-HM2-20240109",
+    "specification_id": 267,
+    "specification_name": "ICIS Heren® Natural Gas EoD Assessment - TTF Conv. USD/MMBtu",
+    "market_code": "TTF",
+    "assessed_datetime": {
+      "$date": "2024-01-09T00:00:00.000Z"
+    },
+    "creation_datetime": {
+      "$date": "2024-01-09T03:12:41.002Z"
+    },
+    "status": "Published",
+    "period_label": "February 2024",
+    "fulfilment_from_datetime": {
+      "$date": "2024-02-01T00:00:00.000Z"
+    },
+    "fulfilment_until_datetime": {
+      "$date": "2024-02-15T00:00:00.000Z"
+    },
+    "bid": {
+      "$numberDecimal": "9.757"
+    },
+    "offer": {
+      "$numberDecimal": "9.757"
+    },
+    "mid": {
+      "$numberDecimal": "9.757"
+    }
+  },
+  {
+    "_id": "267-HM2-20240110",
+    "specification_id": 267,
+    "specification_name": "ICIS Heren® Natural Gas EoD Assessment - TTF Conv. USD/MMBtu",
+    "market_code": "TTF",
+    "assessed_datetime": {
+      "$date": "2024-01-10T00:00:00.000Z"
+    },
+    "creation_datetime": {
+      "$date": "2024-01-10T03:12:41.002Z"
+    },
+    "status": "Published",
+    "period_label": "February '24",
+    "fulfilment_from_datetime": {
+      "$date": "2024-02-01T00:00:00.000Z"
+    },
+    "fulfilment_until_datetime": {
+      "$date": "2024-02-15T00:00:00.000Z"
+    },
+    "bid": {
+      "$numberDecimal": "9.875"
+    },
+    "offer": {
+      "$numberDecimal": "9.875"
+    },
+    "mid": {
+      "$numberDecimal": "9.875"
+    }
+  },
+  {
+    "_id": "267-HM3-20240110",
+    "specification_id": 267,
+    "specification_name": "ICIS Heren® Natural Gas EoD Assessment - TTF Conv. USD/MMBtu",
+    "market_code": "TTF",
+    "assessed_datetime": {
+      "$date": "2024-01-10T00:00:00.000Z"
+    },
+    "creation_datetime": {
+      "$date": "2024-01-10T03:12:41.002Z"
+    },
+    "status": "Published",
+    "period_label": "February '24",
+    "fulfilment_from_datetime": {
+      "$date": "2024-02-16T00:00:00.000Z"
+    },
+    "fulfilment_until_datetime": {
+      "$date": "2024-02-29T00:00:00.000Z"
+    },
+    "bid": {
+      "$numberDecimal": "9.865"
+    },
+    "offer": {
+      "$numberDecimal": "9.865"
+    },
+    "mid": {
+      "$numberDecimal": "9.865"
+    }
+  },
+  {
+    "_id": "267-HM4-20240110",
+    "specification_id": 267,
+    "specification_name": "ICIS Heren® Natural Gas EoD Assessment - TTF Conv. USD/MMBtu",
+    "market_code": "TTF",
+    "assessed_datetime": {
+      "$date": "2024-01-10T00:00:00.000Z"
+    },
+    "creation_datetime": {
+      "$date": "2024-01-10T03:12:41.002Z"
+    },
+    "status": "Published",
+    "period_label": "March '24",
+    "fulfilment_from_datetime": {
+      "$date": "2024-03-01T00:00:00.000Z"
+    },
+    "fulfilment_until_datetime": {
+      "$date": "2024-03-15T00:00:00.000Z"
+    },
+    "bid": {
+      "$numberDecimal": "9.865"
+    },
+    "offer": {
+      "$numberDecimal": "9.865"
+    },
+    "mid": {
+      "$numberDecimal": "9.865"
+    }
+  },
+  {
+    "_id": "267-M1-20240111",
+    "specification_id": 267,
+    "specification_name": "ICIS Heren® Natural Gas EoD Assessment - TTF Conv. USD/MMBtu",
+    "market_code": "TTF",
+    "assessed_datetime": {
+      "$date": "2024-01-11T00:00:00.000Z"
+    },
+    "creation_datetime": {
+      "$date": "2024-01-11T03:12:41.002Z"
+    },
+    "status": "Published",
+    "period_label": "February '24",
+    "fulfilment_from_datetime": {
+      "$date": "2024-02-01T00:00:00.000Z"
+    },
+    "fulfilment_until_datetime": {
+      "$date": "2024-02-29T00:00:00.000Z"
+    },
+    "bid": {
+      "$numberDecimal": "9.880"
+    },
+    "offer": {
+      "$numberDecimal": "9.885"
+    },
+    "mid": {
+      "$numberDecimal": "9.882"
+    }
+  },
+  {
+    "_id": "267-MM1-20240109",
+    "specification_id": 267,
+    "specification_name": "ICIS Heren® Natural Gas EoD Assessment - TTF Conv. USD/MMBtu",
+    "market_code": "TTF",
+    "assessed_datetime": {
+      "$date": "2024-01-09T00:00:00.000Z"
+    },
+    "creation_datetime": {
+      "$date": "2024-01-09T03:12:41.002Z"
+    },
+    "status": "Published",
+    "period_label": "February 2024",
+    "fulfilment_from_datetime": {
+      "$date": "2024-02-01T00:00:00.000Z"
+    },
+    "fulfilment_until_datetime": {
+      "$date": "2024-02-29T00:00:00.000Z"
+    },
+    "bid": {
+      "$numberDecimal": "100"
+    },
+    "offer": {
+      "$numberDecimal": "200"
+    },
+    "mid": {
+      "$numberDecimal": "150"
+    }
+  }
+]

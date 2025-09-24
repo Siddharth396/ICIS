@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: gitlab-runner-gitlab-runner
+  namespace: icis-gitlab-runner
+  labels:
+    monitoring-platform: icis-monitoring
+    namespace: icis-gitlab-runner
+spec:
+  selector:
+    matchLabels:
+      app: gitlab-runner-gitlab-runner
+  podMetricsEndpoints:
+  - honorLabels: true
+    path: /metrics
+    targetPort: 9252
+    scheme: http

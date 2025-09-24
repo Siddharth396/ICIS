@@ -1,0 +1,3198 @@
+[
+	{
+		"_id": "2a23cc01-919d-464b-8880-047bec97f934",
+		"series_name": {
+			"en": "Melamine USG Contract FOB Quarter US CTS/lb Quarterly",
+			"zh": "三聚氰胺 中间体 散货 美国墨西哥湾 合约 FOB 美分/磅 季度"
+		},
+		"series_short_name": {
+			"en": "Melamine USG Contract FOB Quarter",
+			"zh": "三聚氰胺 中间体 散货 美国墨西哥湾 合约 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "5dfc239d-0d7c-4988-98ff-112cd57e5bb7",
+			"name": {
+				"en": "US Gulf Coast",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2002-01-24T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "e9ac3ee0-c915-4102-afd6-239cb70dd863",
+			"name": {
+				"en": "quarter with irregular frequency",
+				"zh": null
+			},
+			"code": "QIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "945cce94-76f9-4cf7-a153-c8cf8344b6ea",
+		"series_name": {
+			"en": "Melamine United States Contract FOB Quarter US CTS/lb Quarterly",
+			"zh": "三聚氰胺 中间体 散货 美国 合约 FOB 美分/磅 季度"
+		},
+		"series_short_name": {
+			"en": "Melamine United States Contract FOB Quarter",
+			"zh": "三聚氰胺 中间体 散货 美国 合约 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "b1910f15-7075-47dc-8df9-49406ecf4c36",
+			"name": {
+				"en": "United States",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2000-11-17T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2011-12-14T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "f470488b-dde0-4ef3-81f5-9905b8d06e4c",
+			"name": {
+				"en": "quarter",
+				"zh": null
+			},
+			"code": "Q0",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "0da57e2e-8b47-4998-ac68-212087bc35e7",
+		"series_name": {
+			"en": "Melamine US Gulf Coast Contract FOB Quarter USD/MT Quarterly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Melamine US Gulf Coast Contract FOB Quarter",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "5dfc239d-0d7c-4988-98ff-112cd57e5bb7",
+			"name": {
+				"en": "US Gulf Coast",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2002-01-24T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "f470488b-dde0-4ef3-81f5-9905b8d06e4c",
+			"name": {
+				"en": "quarter",
+				"zh": null
+			},
+			"code": "Q0",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "2a23cc01-919d-464b-8880-047bec97f934",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-OnboardAllSeriesFromUAT-1.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T22:36:33.702Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "42e8130b-455d-4f1b-a5a7-8bb71d07a755",
+		"series_name": {
+			"en": "Melamine Asia North East CFR 4-6 Weeks USD/MT Weekly",
+			"zh": "三聚氰胺 东北亚 现货 CFR 4-6周 美元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine Asia North East CFR 4-6 Weeks",
+			"zh": "三聚氰胺 东北亚 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "281b707d-10f7-446d-b5d1-4cc7beee0fe3",
+			"name": {
+				"en": "Asia North East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2000-06-27T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2019-12-24T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "ae627238-67d8-44d8-8004-da24d68e741b",
+		"series_name": {
+			"en": "Melamine Asia South East CFR 2-6 Weeks USD/MT Weekly",
+			"zh": "三聚氰胺 东南亚 现货 CFR 2-6周 美元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine Asia South East CFR 2-6 Weeks",
+			"zh": "三聚氰胺 东南亚 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+			"name": {
+				"en": "Asia South East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "1998-02-04T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+			"name": {
+				"en": "2-6 weeks",
+				"zh": null
+			},
+			"code": "2-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "efdd4dd0-f3a3-43c4-9fe4-a13423043e56",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Wednesday 1700 SG time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "6f7b9216-4fa4-40d2-a461-d83af60a4621",
+		"series_name": {
+			"en": "Melamine Asia South East CIF 2-6 Weeks USD/MT Weekly",
+			"zh": "三聚氰胺 东南亚 现货 CIF 2-6周 美元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine Asia South East CIF 2-6 Weeks",
+			"zh": "三聚氰胺 东南亚 现货 CIF"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+			"name": {
+				"en": "Asia South East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "1998-01-28T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "419505af-b3c4-48d9-96c2-7e380f50d52b",
+			"name": {
+				"en": "cost, insurance and freight",
+				"zh": null
+			},
+			"code": "CIF"
+		},
+		"relative_fulfilment_period": {
+			"guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+			"name": {
+				"en": "2-6 weeks",
+				"zh": null
+			},
+			"code": "2-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "efdd4dd0-f3a3-43c4-9fe4-a13423043e56",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Wednesday 1700 SG time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "34ff13c7-b522-4bd9-9dbe-b4de33131b6f",
+		"series_name": {
+			"en": "Melamine China CFR 4-6 Weeks USD/MT Weekly",
+			"zh": "三聚氰胺 中国 现货 CFR 4-6周 美元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine China CFR 4-6 Weeks",
+			"zh": "三聚氰胺 中国 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+			"name": {
+				"en": "China",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2000-06-27T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2013-08-27T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "5791d89e-3cb4-4f56-99b2-bdc9a95baf8a",
+		"series_name": {
+			"en": "Melamine China FOB 2-6 Weeks USD/MT Weekly",
+			"zh": "三聚氰胺 中国 现货 FOB 2-6周 美元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine China FOB 2-6 Weeks",
+			"zh": "三聚氰胺 中国 现货 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+			"name": {
+				"en": "China",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2002-01-24T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+			"name": {
+				"en": "2-6 weeks",
+				"zh": null
+			},
+			"code": "2-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "efdd4dd0-f3a3-43c4-9fe4-a13423043e56",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Wednesday 1700 SG time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "1a69cc46-25ec-4aec-abc2-6483e804cb56",
+		"series_name": {
+			"en": "Melamine Asia South East CFR 2-6 Weeks US CTS/lb Weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Melamine Asia South East CFR 2-6 Weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+			"name": {
+				"en": "Asia South East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "1998-02-04T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+			"name": {
+				"en": "2-6 weeks",
+				"zh": null
+			},
+			"code": "2-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "ae627238-67d8-44d8-8004-da24d68e741b",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-OnboardAllSeriesFromUAT-1.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T22:36:33.702Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "49d49dbc-a320-4aee-960a-84b202e7777d",
+		"series_name": {
+			"en": "Melamine Asia South East CIF 2-6 Weeks US CTS/lb Weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Melamine Asia South East CIF 2-6 Weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+			"name": {
+				"en": "Asia South East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "1998-01-28T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "419505af-b3c4-48d9-96c2-7e380f50d52b",
+			"name": {
+				"en": "cost, insurance and freight",
+				"zh": null
+			},
+			"code": "CIF"
+		},
+		"relative_fulfilment_period": {
+			"guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+			"name": {
+				"en": "2-6 weeks",
+				"zh": null
+			},
+			"code": "2-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "6f7b9216-4fa4-40d2-a461-d83af60a4621",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-OnboardAllSeriesFromUAT-1.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T22:36:33.702Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "388724c7-fe79-4c33-8ffa-23f2d442e5ad",
+		"series_name": {
+			"en": "Melamine China FOB 2-6 Weeks US CTS/lb Weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Melamine China FOB 2-6 Weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+			"name": {
+				"en": "China",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2002-01-24T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+			"name": {
+				"en": "2-6 weeks",
+				"zh": null
+			},
+			"code": "2-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "5791d89e-3cb4-4f56-99b2-bdc9a95baf8a",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-OnboardAllSeriesFromUAT-1.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T22:36:33.702Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "e2db67fc-f9f9-4934-8d5f-449adbef6bbc",
+		"series_name": {
+			"en": "Melamine European standard 99.8% NWE Contract FD Month EUR/MT Monthly",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约 欧元/吨 月"
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% NWE Contract FD Month",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2023-01-25T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+			"name": {
+				"en": "month with irregular frequency",
+				"zh": null
+			},
+			"code": "MIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "3e7b1157-f83b-4749-a858-57f276d2ee74",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FOB Quarter DM/kg Quarterly",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约 德国马克/千克 季度"
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FOB Quarter",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "d6ae7c0b-e5c1-415b-9af5-e1d088387091",
+			"name": {
+				"en": "Deutsche Mark",
+				"zh": null
+			},
+			"code": "DM"
+		},
+		"measure_unit": {
+			"guid": "a565f944-1b75-4a5b-b6f7-ee9e94ae647a",
+			"name": {
+				"en": "kilogram",
+				"zh": null
+			},
+			"symbol": "kg"
+		},
+		"launch_date": {
+			"$date": "2003-01-06T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2001-10-01T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "f470488b-dde0-4ef3-81f5-9905b8d06e4c",
+			"name": {
+				"en": "quarter",
+				"zh": null
+			},
+			"code": "Q0",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-UpdateReleaseStatus-Melamine.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T21:40:13.416Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "9c59e1d2-e6d9-4811-b95d-015654ac4312",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FOB Quarter EUR/kg Quarterly",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约 欧元/千克 季度"
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FOB Quarter",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "a565f944-1b75-4a5b-b6f7-ee9e94ae647a",
+			"name": {
+				"en": "kilogram",
+				"zh": null
+			},
+			"symbol": "kg"
+		},
+		"launch_date": {
+			"$date": "2011-12-21T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2014-02-10T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "f470488b-dde0-4ef3-81f5-9905b8d06e4c",
+			"name": {
+				"en": "quarter",
+				"zh": null
+			},
+			"code": "Q0",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-UpdateReleaseStatus-Melamine.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T21:40:13.416Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "1e1a7909-9c12-4866-9b98-4b82eadd5bf3",
+		"series_name": {
+			"en": "Melamine European standard 99.8% NWE Contract FD Quarter EUR/MT Quarterly",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约 欧元/吨 季度"
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% NWE Contract FD Quarter",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2022-07-06T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "e9ac3ee0-c915-4102-afd6-239cb70dd863",
+			"name": {
+				"en": "quarter with irregular frequency",
+				"zh": null
+			},
+			"code": "QIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "26b5f994-8d75-411d-8b4e-4e5049192060",
+		"series_name": {
+			"en": "Melamine Europe CIF 4-6 Weeks EUR/MT Weekly",
+			"zh": "三聚氰胺 欧洲 现货 CIF 4-6周 欧元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine Europe CIF 4-6 Weeks",
+			"zh": "三聚氰胺 欧洲 现货 CIF"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+			"name": {
+				"en": "Europe",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2003-01-06T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2003-03-19T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "419505af-b3c4-48d9-96c2-7e380f50d52b",
+			"name": {
+				"en": "cost, insurance and freight",
+				"zh": null
+			},
+			"code": "CIF"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "cef3dfa3-a3c0-4362-80da-2bda560cf736",
+		"series_name": {
+			"en": "Melamine Europe CIF 4-6 Weeks USD/MT Weekly",
+			"zh": "三聚氰胺 欧洲 现货 CIF 4-6周 美元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine Europe CIF 4-6 Weeks",
+			"zh": "三聚氰胺 欧洲 现货 CIF"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+			"name": {
+				"en": "Europe",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2003-03-24T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2014-02-26T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "419505af-b3c4-48d9-96c2-7e380f50d52b",
+			"name": {
+				"en": "cost, insurance and freight",
+				"zh": null
+			},
+			"code": "CIF"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "d2dca036-68c8-4c1f-96bb-a71c2196bba3",
+		"series_name": {
+			"en": "Melamine Europe CIF 4-6 Weeks USD/kg Weekly",
+			"zh": "三聚氰胺 欧洲 现货 CIF 4-6周 美元/千克 周"
+		},
+		"series_short_name": {
+			"en": "Melamine Europe CIF 4-6 Weeks",
+			"zh": "三聚氰胺 欧洲 现货 CIF"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+			"name": {
+				"en": "Europe",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "a565f944-1b75-4a5b-b6f7-ee9e94ae647a",
+			"name": {
+				"en": "kilogram",
+				"zh": null
+			},
+			"symbol": "kg"
+		},
+		"launch_date": {
+			"$date": "1998-04-29T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2013-08-27T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "419505af-b3c4-48d9-96c2-7e380f50d52b",
+			"name": {
+				"en": "cost, insurance and freight",
+				"zh": null
+			},
+			"code": "CIF"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "b302d315-77f3-4b72-9b93-f388359cdf2f",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West FD 4-6 Weeks EUR/MT Weekly",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 现货 4-6周 欧元/吨 周"
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West FD 4-6 Weeks",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 现货"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2003-01-06T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "1762cc30-5027-4345-9f2a-5035c4e43905",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Wednesday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "dc90f8dc-c14a-484a-8c7c-09859a8ac9b2",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West FOB 4-6 Weeks DM/kg Weekly",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 现货 4-6周 德国马克/千克 周"
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West FOB 4-6 Weeks",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 现货"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "d6ae7c0b-e5c1-415b-9af5-e1d088387091",
+			"name": {
+				"en": "Deutsche Mark",
+				"zh": null
+			},
+			"code": "DM"
+		},
+		"measure_unit": {
+			"guid": "a565f944-1b75-4a5b-b6f7-ee9e94ae647a",
+			"name": {
+				"en": "kilogram",
+				"zh": null
+			},
+			"symbol": "kg"
+		},
+		"launch_date": {
+			"$date": "2000-06-27T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2002-01-23T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-UpdateReleaseStatus-Melamine.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T21:40:13.416Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "8daa4119-a46a-4571-a3db-f5c81b1fd625",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West FOB 4-6 Weeks EUR/kg Weekly",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 现货 4-6周 欧元/千克 周"
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West FOB 4-6 Weeks",
+			"zh": "三聚氰胺 欧洲标准99.8% 西北欧 现货"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "a565f944-1b75-4a5b-b6f7-ee9e94ae647a",
+			"name": {
+				"en": "kilogram",
+				"zh": null
+			},
+			"symbol": "kg"
+		},
+		"launch_date": {
+			"$date": "2007-03-30T00:00:00.000Z"
+		},
+		"termination_date": {
+			"$date": "2013-08-27T00:00:00.000Z"
+		},
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-UpdateReleaseStatus-Melamine.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T21:40:13.416Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "27e0bc07-869b-443d-87c9-6f81af2653e9",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FD Month US CTS/lb Monthly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FD Month",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2023-01-25T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+			"name": {
+				"en": "month",
+				"zh": null
+			},
+			"code": "M0",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "e2db67fc-f9f9-4934-8d5f-449adbef6bbc",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-OnboardAllSeriesFromUAT-1.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T22:36:33.702Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "03b6e90f-8724-4abc-87a8-084a695b1f8d",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FD Quarter US CTS/lb Quarterly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West Contract FD Quarter",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2022-07-06T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "f470488b-dde0-4ef3-81f5-9905b8d06e4c",
+			"name": {
+				"en": "quarter",
+				"zh": null
+			},
+			"code": "Q0",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "1e1a7909-9c12-4866-9b98-4b82eadd5bf3",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-OnboardAllSeriesFromUAT-1.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T22:36:33.702Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "fddfa26c-e4bf-4f70-b4dc-6a6cb167eb71",
+		"series_name": {
+			"en": "Melamine European standard 99.8% Europe North West FD 4-6 Weeks US CTS/lb Weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Melamine European standard 99.8% Europe North West FD 4-6 Weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "9261bd6e-bfe6-4d5f-805d-2966bd41a06b",
+			"name": {
+				"en": "melamine",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2003-01-06T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "b302d315-77f3-4b72-9b93-f388359cdf2f",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250521-OnboardAllSeriesFromUAT-2.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-21T22:41:16.184Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	}
+]

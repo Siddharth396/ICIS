@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: sbsrch-systest
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: sbsrch
+    namespace: flux-system
+  filterTags:
+    pattern: '^systest-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

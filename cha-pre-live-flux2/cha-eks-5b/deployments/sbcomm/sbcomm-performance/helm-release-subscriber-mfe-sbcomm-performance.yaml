@@ -1,0 +1,23 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: subscriber-mfe
+  annotations:
+    repository.fluxcd.io/mfe: mfe.image.repository
+    tag.fluxcd.io/mfe: mfe.image.tag
+    filter.fluxcd.io/mfe: glob:performance-*
+spec:
+  releaseName: subscriber-mfe-sbcomm-performance
+  values:
+    namespace : "sbcomm-performance"
+    mfe:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/sbmfe/sbmfe-commentary-pilets"
+        tag: performance-1-0.4.0-alpha.0-21
+        pullPolicy: IfNotPresent
+    
+    feedServiceUrl: "https://subscriber-mfe-feed-service.performance.cha.eu-west-1.dev/mfe/mfe-feed-service/api/v1/mfe"
+    vault_secrets:
+      name: "sbcomm-subscriber-mfe-secret-performance"
+

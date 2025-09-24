@@ -1,0 +1,73 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-pricing-staging
+  values:
+    replicaCount: 1
+    namespace: "pricing-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    cronJob:
+      enabled: true
+      name: iddn-sync-job
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/c-hub-iddn-to-mongo # {"$imagepolicy": "flux-system:iddn-sync-job-staging:name"}
+        tag: staging-8-1.0.1-master-28446 # {"$imagepolicy": "flux-system:iddn-sync-job-staging:tag"}
+        pullPolicy: IfNotPresent
+      schedule: '"0 */2 * * *"'
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 1
+      concurrencyPolicy: Forbid
+      appsettings:
+        IDDN_ENDPOINT: http://core.uat.iddn.cha.rbxd.ds:9000/search?etoken=iddnlivereleased
+        MONGO_URL: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pricing-staging?retryWrites=true&w=majority"
+        SECRET_FILE_PATH: /etc/secrets/.env
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pricing/pricing-bff # {"$imagepolicy": "flux-system:subscriber-bff-pricing-staging:name"}
+        tag: staging-505-1.85.0.3539 # {"$imagepolicy": "flux-system:subscriber-bff-pricing-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        LOG_LEVEL: Debug
+        BASE_PATH: /pricing
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pricing-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.staging.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        ENABLE_ENTITLEMENTS: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        ENERGY_SERIES_VALID_MONTHS: 120
+        PETCHEM_SERIES_VALID_MONTHS: 120
+        FeatureToggles__RestrictSeriesByLatestSeriesItem: true
+        FeatureToggles__HidePetchemSpecsWithNoPrices: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/pricing/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    vault_secrets:
+      name: subscriber-bff-vault-secret-pricing-staging
+      VaultK8sRoleName: "kv-pricing-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pricing/staging/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-pricing-staging
+      VaultK8sRoleName: "kv-pricing-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "subscriber-auth-proxy/mongo"

@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: order-snowflake-producer
+spec:
+  values:
+    namespace: order-systest
+    snowflake_producer:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/ds/order-custom-snowflake-producer # {"$imagepolicy": "flux-system:order-snowflake-producer-dev:name"}
+        tag: dev-65-1.9.0 # {"$imagepolicy": "flux-system:order-snowflake-producer-dev:tag"}
+        pullPolicy: IfNotPresent
+      schedule: '45 9 1-7 * 2'
+      custom_command: python producers/sf_income_factor_type_producer.py
+      topic_reference: silver-income-fctr
+      env:
+        ENVIRONMENT: DEV
+        SOURCE_CONTEXT: order_income_fctr_producer
+        postgres_database: order_dev
+        topic_name: refdata_income_fctr
+        topic_environment: systest
+        zone_regency: publishing.hwm_silver_zone
+        snowflake_database: ICIS_SILVER_DEV_DB
+        snowflake_role: SVC_REF_DATA_PUBLISHER_SILVER_DEV
+        snowflake_warehouse: QRY_WH_SILVER_DEV
+    vault_secrets:
+      name: "order-snowflake-producer-silver-dev-secret"

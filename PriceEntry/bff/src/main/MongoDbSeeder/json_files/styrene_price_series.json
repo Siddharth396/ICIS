@@ -1,0 +1,7965 @@
+[
+  {
+    "_id": "018510d1-74cd-4ec0-91a1-f14080c61f08",
+    "series_name": {
+      "en": "Dagu chemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Dagu chemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "490a2083-7abd-43ea-ad5d-c1cca6bf357b",
+      "name": {
+        "en": "China North",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "b08f22be-c657-406f-91af-ec7dd4564647",
+    "series_name": {
+      "en": "Daqing Petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Daqing Petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "c8d5d57a-27f3-4fed-9a30-0b9a0004e268",
+      "name": {
+        "en": "China North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "324a4cd7-59ec-4295-8761-6d07cdb2f030",
+    "series_name": {
+      "en": "Guangzhou Petrochemical Monomer Spot Ex-Works China S Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Guangzhou Petrochemical Monomer Spot Ex-Works China S Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "ad73b32d-46b3-4f3c-a9be-a0522bc98d1b",
+      "name": {
+        "en": "China South",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "5080b519-59a5-4042-9ba7-a2113ceb6c64",
+    "series_name": {
+      "en": "ICIS  Styrene Monomer Fujian Gulei petrochemical China S (GZ) Spot Ex-Works Non-specific  CNY Day",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "ICIS  Styrene Monomer Fujian Gulei petrochemical China S (GZ) Spot Ex-Works Non-specific  CNY Day",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "b32aa27c-c815-4891-bb9a-e128390a50f4",
+      "name": {
+        "en": "China South (Guangzhou)",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-08T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "621053c6-9ffa-40e7-890d-e8778fe669dc",
+    "series_name": {
+      "en": "ICIS  Styrene Shandong Spot Ex-Works 7 days   CNY/mt Day",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "ICIS  Styrene Shandong Spot Ex-Works 7 days   CNY/mt Day",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "d44d244c-a59c-4dcd-bcfb-b08e937eb441",
+      "name": {
+        "en": "Shandong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2023-10-23T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "bc99ed92-ba84-455d-97f2-071f663a1c9b",
+    "series_name": {
+      "en": "ICIS  Styrene Shandong Spot Ex-Works 7 days   CNY/mt Week",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "ICIS  Styrene Shandong Spot Ex-Works 7 days   CNY/mt Week",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "d44d244c-a59c-4dcd-bcfb-b08e937eb441",
+      "name": {
+        "en": "Shandong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2023-10-27T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "b3239ab6-7544-4ba0-afae-3ff5ae65bfca",
+    "series_name": {
+      "en": "Jilin Petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Jilin Petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "c8d5d57a-27f3-4fed-9a30-0b9a0004e268",
+      "name": {
+        "en": "China North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2018-10-09T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "b5416fc5-5c64-44a9-bbb4-e0e0fa0d84a9",
+    "series_name": {
+      "en": "Maoming Petrochemical Monomer Spot Ex-Works China S Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Maoming Petrochemical Monomer Spot Ex-Works China S Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "ad73b32d-46b3-4f3c-a9be-a0522bc98d1b",
+      "name": {
+        "en": "China South",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "01b012fa-4294-49b3-ab2f-42d383bde3fb",
+    "series_name": {
+      "en": "Panjin Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Panjin Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "c8d5d57a-27f3-4fed-9a30-0b9a0004e268",
+      "name": {
+        "en": "China North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2011-06-03T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2022-02-18T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "574a27c9-99bf-4b92-9490-f78098f24777",
+    "series_name": {
+      "en": "PetroChina Jinxi petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "PetroChina Jinxi petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "c8d5d57a-27f3-4fed-9a30-0b9a0004e268",
+      "name": {
+        "en": "China North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "a2cbb897-8101-4aa9-a367-81a84e5c5588",
+    "series_name": {
+      "en": "PetroChina Jinzhou petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "PetroChina Jinzhou petrochemical Monomer Spot Ex-Works China NE Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "c8d5d57a-27f3-4fed-9a30-0b9a0004e268",
+      "name": {
+        "en": "China North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "f7923263-2f50-4c80-b21f-244b45fc72bf",
+    "series_name": {
+      "en": "Qilu Petrochemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Qilu Petrochemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "490a2083-7abd-43ea-ad5d-c1cca6bf357b",
+      "name": {
+        "en": "China North",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "10bd7de7-e4b9-49d7-a8d6-b8586e336e16",
+    "series_name": {
+      "en": "Sinopec China E Monomer Spot Ex-Works China E Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Sinopec China E Monomer Spot Ex-Works China E Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "b1c750bb-28ce-42c5-8fdf-1a9f1a241b87",
+    "series_name": {
+      "en": "Sinopec Qingdao REF AND CH Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Sinopec Qingdao REF AND CH Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "490a2083-7abd-43ea-ad5d-c1cca6bf357b",
+      "name": {
+        "en": "China North",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "9e7d60f8-c225-47ac-b411-f4250c65b29e",
+    "series_name": {
+      "en": "Styrene (CDI) Tank Car Contract FOB US Month Large Buyer",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene (CDI) Tank Car Contract FOB US Month Large Buyer",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-single",
+    "period_label_type_code": "plt-ref-time",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "b1910f15-7075-47dc-8df9-49406ecf4c36",
+      "name": {
+        "en": "United States",
+        "zh": null
+      },
+      "region": {
+        "guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+        "name": {
+          "en": "Americas",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+      "name": {
+        "en": "pound",
+        "zh": null
+      },
+      "symbol": "lb"
+    },
+    "launch_date": {
+      "$date": "1979-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+      "name": {
+        "en": "monthly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      },
+      "code": "M",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M"
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+      "name": {
+        "en": "month with irregular frequency",
+        "zh": null
+      },
+      "code": "MIRF0",
+      "type": {
+        "name": {
+          "en": "irregular",
+          "zh": null
+        },
+        "code": "I",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "576a1dbf-6e76-4998-a024-c7f9a546e0a6",
+    "series_name": {
+      "en": "Styrene Barges Contract FD NWE Month",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+      "name": {
+        "en": "Europe North West",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2011-06-03T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2011-06-24T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+      "name": {
+        "en": "monthly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+      "name": {
+        "en": "free delivered",
+        "zh": null
+      },
+      "code": "FD"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "578d8c91-e6a8-48b9-b92f-bddbde4a3143",
+    "series_name": {
+      "en": "Styrene Barges Contract FD NWE Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Barges Contract FD NWE Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+      "name": {
+        "en": "Europe North West",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2003-04-17T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2012-09-01T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+      "name": {
+        "en": "free delivered",
+        "zh": null
+      },
+      "code": "FD"
+    },
+    "relative_fulfilment_period": {
+      "guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+      "name": {
+        "en": "month with irregular frequency",
+        "zh": null
+      },
+      "code": "MIRF0",
+      "type": {
+        "name": {
+          "en": "irregular",
+          "zh": null
+        },
+        "code": "I",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "0156fc17-6994-4510-820c-8b1093a77975",
+    "series_name": {
+      "en": "Styrene Barges Contract FOB ARA Month",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "period_label_type_code": "plt-ref-time",
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "7841ad96-e29c-4c50-be78-1388d07037fe",
+      "name": {
+        "en": "ARA",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2013-04-12T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+      "name": {
+        "en": "monthly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      },
+      "code": "M",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M"
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "6ca76645-1a4b-4e03-995d-078e6f738bd2",
+    "series_name": {
+      "en": "Styrene Barges Contract FOB ARA Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Barges Contract FOB ARA Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "7841ad96-e29c-4c50-be78-1388d07037fe",
+      "name": {
+        "en": "ARA",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2013-04-12T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+      "name": {
+        "en": "month with irregular frequency",
+        "zh": null
+      },
+      "code": "MIRF0",
+      "type": {
+        "name": {
+          "en": "irregular",
+          "zh": null
+        },
+        "code": "I",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "4f6ade63-8c5a-4e64-b7a8-96bd4e0a3970",
+    "series_name": {
+      "en": "Styrene Cargoes Spot Midpoint CFR China All Origins Monthly Settlement Price",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "pi-single",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+      "name": {
+        "en": "China",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2017-10-27T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+      "name": {
+        "en": "monthly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+      "name": {
+        "en": "derived",
+        "zh": null
+      },
+      "code": "DERIVED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "da6c5970-8efc-4383-8efd-3e2b44be88fb",
+    "series_name": {
+      "en": "Styrene China E Forward Spot Ex-Tank 21ST M1-END M2  CNY Day",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene China E Spot Ex-Tank",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2012-01-09T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "0c494d77-af14-478a-a642-82df09af9580",
+      "name": {
+        "en": "21st m1-end m2",
+        "zh": null
+      },
+      "code": "M1M2",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "6fb97e2a-f6ed-4283-a145-49841bfd0dfe",
+    "series_name": {
+      "en": "Styrene China Spot  FOB 2-6 Weeks  USD Week",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene China Spot  FOB 2-6 Weeks  USD Week",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+      "name": {
+        "en": "China",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2022-05-13T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+      "name": {
+        "en": "2-6 weeks",
+        "zh": null
+      },
+      "code": "2-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "138e510d-216a-43c5-8ca5-45a8aff680ec",
+    "series_name": {
+      "en": "Styrene Contract CFR Asia NE Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Contract CFR Asia NE Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "281b707d-10f7-446d-b5d1-4cc7beee0fe3",
+      "name": {
+        "en": "Asia North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "1990-02-09T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+      "name": {
+        "en": "month with irregular frequency",
+        "zh": null
+      },
+      "code": "MIRF0",
+      "type": {
+        "name": {
+          "en": "irregular",
+          "zh": null
+        },
+        "code": "I",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "38d609dc-7861-4549-8705-b44201ea3ee6",
+    "series_name": {
+      "en": "Styrene Contract FCA Rotterdam Month",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2003-04-17T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2019-04-05T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+      "name": {
+        "en": "monthly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "f29d8751-91cc-4952-b882-4fd75e9151ea",
+      "name": {
+        "en": "free carrier",
+        "zh": null
+      },
+      "code": "FCA"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "0ae019f2-29d8-4ece-8649-494bb498d069",
+    "series_name": {
+      "en": "Styrene Contract FD NWE 4-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Contract FD NWE 4-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+      "name": {
+        "en": "Europe North West",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2008-01-30T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2004-01-01T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+      "name": {
+        "en": "1 quarter",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+      "name": {
+        "en": "free delivered",
+        "zh": null
+      },
+      "code": "FD"
+    },
+    "relative_fulfilment_period": {
+      "guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+      "name": {
+        "en": "4-6 weeks",
+        "zh": null
+      },
+      "code": "4-6 WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "91e52b51-d0af-4c9e-a47f-d825477b5d0d",
+    "series_name": {
+      "en": "Styrene Contract FOB US Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Contract FOB US Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "b1910f15-7075-47dc-8df9-49406ecf4c36",
+      "name": {
+        "en": "United States",
+        "zh": null
+      },
+      "region": {
+        "guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+        "name": {
+          "en": "Americas",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+      "name": {
+        "en": "US Dollar cent",
+        "zh": null
+      },
+      "code": "USX"
+    },
+    "measure_unit": {
+      "guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+      "name": {
+        "en": "pound",
+        "zh": null
+      },
+      "symbol": "lb"
+    },
+    "launch_date": {
+      "$date": "2005-04-26T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2024-06-07T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+      "name": {
+        "en": "month with irregular frequency",
+        "zh": null
+      },
+      "code": "MIRF0",
+      "type": {
+        "name": {
+          "en": "irregular",
+          "zh": null
+        },
+        "code": "I",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:38:48.824Z"
+    }
+  },
+  {
+    "_id": "24feee72-220e-42a2-b21b-e78fe64eb042",
+    "series_name": {
+      "en": "Styrene Monomer China E Spot  Ex-Tank 21ST M1-END M2  CNY Week",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer China E Spot  Ex-Tank 21ST M1-END M2  CNY Week",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2008-01-30T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2023-12-22T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "0c494d77-af14-478a-a642-82df09af9580",
+      "name": {
+        "en": "21st m1-end m2",
+        "zh": null
+      },
+      "code": "M1M2",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "188ba7f8-fc2b-4d47-93ac-20cbf5cf6d6f",
+    "series_name": {
+      "en": "Styrene Monomer China E Spot Ex-Tank 21ST M1-END M2  CNY Week",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer China E Spot Ex-Tank 21ST M1-END M2  CNY Week",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-04-10T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "0c494d77-af14-478a-a642-82df09af9580",
+      "name": {
+        "en": "21st m1-end m2",
+        "zh": null
+      },
+      "code": "M1M2",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "dc088de8-f5c8-4c92-89f9-4c78b7eee9b2",
+    "series_name": {
+      "en": "Styrene Monomer Guangdong Spot  DEL 7 days  CNY Week",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Guangdong Spot  DEL 7 days  CNY Week",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a00a88e6-2646-4902-85ce-5d5f082f1629",
+      "name": {
+        "en": "Guangdong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2015-01-30T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2023-12-22T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "c750f8de-c90e-4670-b7f8-cefbf8d6c2d8",
+      "name": {
+        "en": "delivered",
+        "zh": null
+      },
+      "code": "DEL"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "0b7a0be1-be9c-46ef-a72d-8938d98a93e9",
+    "series_name": {
+      "en": "Styrene Monomer Guangdong Spot  Ex-Tank 7 days  CNY Day",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Guangdong Spot  Ex-Tank 7 days  CNY Day",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a00a88e6-2646-4902-85ce-5d5f082f1629",
+      "name": {
+        "en": "Guangdong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2023-12-22T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "3fc79316-4f21-4787-a34e-da54a61e2384",
+    "series_name": {
+      "en": "Styrene Monomer Guangdong Spot  Ex-Tank 7 days  CNY Week",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Guangdong Spot  Ex-Tank 7 days  CNY Week",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a00a88e6-2646-4902-85ce-5d5f082f1629",
+      "name": {
+        "en": "Guangdong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2015-01-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "848d3795-f968-45a9-bcce-d56620798877",
+    "series_name": {
+      "en": "Styrene Monomer Guangdong Spot DEL 7 days  CNY Week",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Guangdong Spot DEL 7 days  CNY Week",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a00a88e6-2646-4902-85ce-5d5f082f1629",
+      "name": {
+        "en": "Guangdong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2008-01-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "c750f8de-c90e-4670-b7f8-cefbf8d6c2d8",
+      "name": {
+        "en": "delivered",
+        "zh": null
+      },
+      "code": "DEL"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "af9031c5-5ccb-496b-b411-232985180020",
+    "series_name": {
+      "en": "Styrene Monomer Spot  CFR China 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot  CFR China 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+      "name": {
+        "en": "China",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2006-10-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "3d3826a4-3f9f-4ffc-aaff-e24b35b407b7",
+    "series_name": {
+      "en": "Styrene Monomer Spot  Close CFR China 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot  Close CFR China 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+      "name": {
+        "en": "China",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-04-10T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "2bf2eec8-f284-4489-86da-8ae9806ee541",
+    "series_name": {
+      "en": "Styrene Monomer Spot  DEL Shandong 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot  DEL Shandong 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "d44d244c-a59c-4dcd-bcfb-b08e937eb441",
+      "name": {
+        "en": "Shandong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "c750f8de-c90e-4670-b7f8-cefbf8d6c2d8",
+      "name": {
+        "en": "delivered",
+        "zh": null
+      },
+      "code": "DEL"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "52600578-615c-4560-ae1d-c36949d7a79a",
+    "series_name": {
+      "en": "Styrene Monomer Spot  DEL Tianjin 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot  DEL Tianjin 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "4124533a-1308-4742-a29e-06408035bcda",
+      "name": {
+        "en": "Tianjin",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "c750f8de-c90e-4670-b7f8-cefbf8d6c2d8",
+      "name": {
+        "en": "delivered",
+        "zh": null
+      },
+      "code": "DEL"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "07f0c62e-bbc4-41ea-9b47-a37d0c04976a",
+    "series_name": {
+      "en": "Styrene Monomer Spot CFR China 0-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot CFR China 0-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+      "name": {
+        "en": "China",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2008-01-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+      "name": {
+        "en": "0-6 weeks",
+        "zh": null
+      },
+      "code": "0-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "a50e96e4-ca4b-4fdd-bcfd-d82453662c27",
+    "series_name": {
+      "en": "Styrene Monomer Spot Close CFR China 0-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot Close CFR China 0-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+      "name": {
+        "en": "China",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2008-01-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+      "name": {
+        "en": "0-6 weeks",
+        "zh": null
+      },
+      "code": "0-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "cec85d73-3ba5-4355-b884-bec3b4234052",
+    "series_name": {
+      "en": "Styrene Monomer Spot Close ex-tank China E 0-10 Days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot Close ex-tank China E 0-10 Days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2008-01-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "6c7cd920-6a0d-45c4-b791-f9ec8ed7785c",
+      "name": {
+        "en": "0-10 days",
+        "zh": null
+      },
+      "code": "0-10D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "2a70a197-0282-4233-8801-29c5d7384055",
+    "series_name": {
+      "en": "Styrene Monomer Spot ex-tank China E 0-10 Days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Monomer Spot ex-tank China E 0-10 Days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2012-01-13T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "6c7cd920-6a0d-45c4-b791-f9ec8ed7785c",
+      "name": {
+        "en": "0-10 days",
+        "zh": null
+      },
+      "code": "0-10D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "2c497226-ea2f-4332-af31-44bf5e7c2a60",
+    "series_name": {
+      "en": "Styrene Spot  CFR Asia NE 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  CFR Asia NE 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "281b707d-10f7-446d-b5d1-4cc7beee0fe3",
+      "name": {
+        "en": "Asia North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2006-10-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "5d37470e-d70c-45da-9d51-f190f87568a4",
+    "series_name": {
+      "en": "Styrene Spot  CFR Asia SE 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  CFR Asia SE 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+      "name": {
+        "en": "Asia South East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2006-10-30T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "76a25752-f4f0-4411-8c66-02d2d68f90df",
+    "series_name": {
+      "en": "Styrene Spot  CFR China 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  CFR China 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+      "name": {
+        "en": "China",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-05-22T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:38:48.824Z"
+    }
+  },
+  {
+    "_id": "27d0f590-0f70-42c2-bdca-46a5e0e32559",
+    "series_name": {
+      "en": "Styrene Spot  Close CFR Asia NE 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  Close CFR Asia NE 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "281b707d-10f7-446d-b5d1-4cc7beee0fe3",
+      "name": {
+        "en": "Asia North East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-04-10T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "5e7848ac-cdea-4418-8915-4cbdd204300c",
+    "series_name": {
+      "en": "Styrene Spot  Close CFR Asia SE 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  Close CFR Asia SE 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+      "name": {
+        "en": "Asia South East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-04-10T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+      "name": {
+        "en": "cost and freight",
+        "zh": null
+      },
+      "code": "CFR"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "3033cfe3-9568-40d7-83bf-58c4f8372435",
+    "series_name": {
+      "en": "Styrene Spot  Close Ex-Tank China E 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  Close Ex-Tank China E 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2000-05-12T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2023-12-22T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "fd14feb6-80f0-470e-92c0-8ebd00cd24e4",
+    "series_name": {
+      "en": "Styrene Spot  Close FOB South Korea 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  Close FOB South Korea 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "453c4ff1-e246-4130-b65a-97ef04e44b6b",
+      "name": {
+        "en": "South Korea",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-04-10T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "d0d9168c-3a5b-4938-945d-c06512f058cb",
+    "series_name": {
+      "en": "Styrene Spot  DEL Guangdong 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  DEL Guangdong 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a00a88e6-2646-4902-85ce-5d5f082f1629",
+      "name": {
+        "en": "Guangdong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-05-21T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "c750f8de-c90e-4670-b7f8-cefbf8d6c2d8",
+      "name": {
+        "en": "delivered",
+        "zh": null
+      },
+      "code": "DEL"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "9e54a900-7699-4022-9e98-801fe1b9f95c",
+    "series_name": {
+      "en": "Styrene Spot  DEL Shandong 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  DEL Shandong 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "d44d244c-a59c-4dcd-bcfb-b08e937eb441",
+      "name": {
+        "en": "Shandong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-05-21T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "c750f8de-c90e-4670-b7f8-cefbf8d6c2d8",
+      "name": {
+        "en": "delivered",
+        "zh": null
+      },
+      "code": "DEL"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "d68f7079-b88f-4925-aede-37f122a1d34f",
+    "series_name": {
+      "en": "Styrene Spot  DEL Tianjin 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  DEL Tianjin 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "4124533a-1308-4742-a29e-06408035bcda",
+      "name": {
+        "en": "Tianjin",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-05-21T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "c750f8de-c90e-4670-b7f8-cefbf8d6c2d8",
+      "name": {
+        "en": "delivered",
+        "zh": null
+      },
+      "code": "DEL"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "9d846cf2-7a2f-4912-9aad-f072ebea79e5",
+    "series_name": {
+      "en": "Styrene Spot  Ex-Tank China E 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  Ex-Tank China E 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2012-01-13T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "8daeb797-9c1c-41c4-a11d-bb00f9302ac8",
+    "series_name": {
+      "en": "Styrene Spot  Ex-Tank China E 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  Ex-Tank China E 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-05-22T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "ef9ed96d-e37c-45d0-8e5e-4f4bd4480f1f",
+    "series_name": {
+      "en": "Styrene Spot  Ex-Tank Guangdong 7 days",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  Ex-Tank Guangdong 7 days",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a00a88e6-2646-4902-85ce-5d5f082f1629",
+      "name": {
+        "en": "Guangdong",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-05-21T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+      "name": {
+        "en": "ex tank",
+        "zh": null
+      },
+      "code": "EX TANK"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ec3a4596-f12e-424b-983a-5c363c13a752",
+      "name": {
+        "en": "7 days",
+        "zh": null
+      },
+      "code": "7D",
+      "type": {
+        "name": {
+          "en": "calendar week day",
+          "zh": null
+        },
+        "code": "D",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "1fbd8b0b-3c1d-43a9-8ad8-d9c488b87b91",
+    "series_name": {
+      "en": "Styrene Spot  FOB South Korea 3-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot  FOB South Korea 3-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "453c4ff1-e246-4130-b65a-97ef04e44b6b",
+      "name": {
+        "en": "South Korea",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-04-10T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ae073798-fc87-454c-8907-ff58817a6143",
+      "name": {
+        "en": "3-6 weeks",
+        "zh": null
+      },
+      "code": "3-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "0ea20bed-21b2-4be3-82b4-cf1f2f61beb9",
+    "series_name": {
+      "en": "Styrene Spot Bid-offer range FOB R'dam Current Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot Bid-offer range FOB R'dam Current Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2008-04-21T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "243b0ac6-5db2-4eb9-8463-f9375d774cd0",
+    "series_name": {
+      "en": "Styrene Spot CIF R'dam Current Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot CIF R'dam Current Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2000-09-19T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "419505af-b3c4-48d9-96c2-7e380f50d52b",
+      "name": {
+        "en": "cost, insurance and freight",
+        "zh": null
+      },
+      "code": "CIF"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "f9da05b0-860c-4052-9d0b-9624dd4418a2",
+    "series_name": {
+      "en": "Styrene Spot Close FOB R'dam Current Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot Close FOB R'dam Current Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "1986-01-03T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "0b122a6a-8d5b-4081-a825-20a7f99a2419",
+    "series_name": {
+      "en": "Styrene Spot Close FOB R'dam Next Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot Close FOB R'dam Next Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2006-10-31T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "f6b0e39c-1afd-4c93-8acf-7f93ddbbc128",
+      "name": {
+        "en": "month +1",
+        "zh": null
+      },
+      "code": "M1",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "0a97d06b-d81f-4e3b-a948-39ff4d3d2dc4",
+    "series_name": {
+      "en": "Styrene Spot Close FOB US Export 4-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot Close FOB US Export 4-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "b1910f15-7075-47dc-8df9-49406ecf4c36",
+      "name": {
+        "en": "United States",
+        "zh": null
+      },
+      "region": {
+        "guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+        "name": {
+          "en": "Americas",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+      "name": {
+        "en": "US Dollar cent",
+        "zh": null
+      },
+      "code": "USX"
+    },
+    "measure_unit": {
+      "guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+      "name": {
+        "en": "pound",
+        "zh": null
+      },
+      "symbol": "lb"
+    },
+    "launch_date": {
+      "$date": "1989-12-01T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2024-01-13T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+      "name": {
+        "en": "4-6 weeks",
+        "zh": null
+      },
+      "code": "4-6 WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "e96d9925-b430-4fe8-8b22-7e3b3e65bb55",
+    "series_name": {
+      "en": "Styrene Spot FOB R'dam Current Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot FOB R'dam Current Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2005-11-18T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "2a03f694-4d17-40dd-91e6-22808b9715a9",
+    "series_name": {
+      "en": "Styrene Spot FOB R'dam Next Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot FOB R'dam Next Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2006-12-14T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "f6b0e39c-1afd-4c93-8acf-7f93ddbbc128",
+      "name": {
+        "en": "month +1",
+        "zh": null
+      },
+      "code": "M1",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "2de444e9-a0e7-4715-852d-beb6df7d041e",
+    "series_name": {
+      "en": "Styrene Spot FOB South Korea 2-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot FOB South Korea 2-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "453c4ff1-e246-4130-b65a-97ef04e44b6b",
+      "name": {
+        "en": "South Korea",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-05-22T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2020-12-24T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "c071e5cd-f002-4723-9ff9-ec201c921a55",
+      "name": {
+        "en": "2-6 weeks",
+        "zh": null
+      },
+      "code": "2-6WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "3bc35e50-64d2-44e8-a8b5-f46dcb35d8e8",
+    "series_name": {
+      "en": "Styrene Spot Full Week FOB US 4-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Spot Full Week FOB US 4-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "b1910f15-7075-47dc-8df9-49406ecf4c36",
+      "name": {
+        "en": "United States",
+        "zh": null
+      },
+      "region": {
+        "guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+        "name": {
+          "en": "Americas",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+      "name": {
+        "en": "US Dollar cent",
+        "zh": null
+      },
+      "code": "USX"
+    },
+    "measure_unit": {
+      "guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+      "name": {
+        "en": "pound",
+        "zh": null
+      },
+      "symbol": "lb"
+    },
+    "launch_date": {
+      "$date": "2002-01-28T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+      "name": {
+        "en": "4-6 weeks",
+        "zh": null
+      },
+      "code": "4-6 WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "40a07cf3-34cb-447b-8a06-ec9baca67be7",
+    "series_name": {
+      "en": "Styrene Truck Contract FD NWE Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Truck Contract FD NWE Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+      "name": {
+        "en": "Europe North West",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2004-05-17T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2012-09-01T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+      "name": {
+        "en": "free delivered",
+        "zh": null
+      },
+      "code": "FD"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "30d08ece-4e42-49a7-9bbd-e820c4b1a331",
+    "series_name": {
+      "en": "Styrene Truck Contract FOB ARA Month",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Truck Contract FOB ARA Month",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "7841ad96-e29c-4c50-be78-1388d07037fe",
+      "name": {
+        "en": "ARA",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2013-04-12T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2017-01-01T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+      "name": {
+        "en": "1 month",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+      "name": {
+        "en": "contract",
+        "zh": null
+      },
+      "code": "CONTRACT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+      "name": {
+        "en": "free on board",
+        "zh": null
+      },
+      "code": "FOB"
+    },
+    "relative_fulfilment_period": {
+      "guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+      "name": {
+        "en": "month",
+        "zh": null
+      },
+      "code": "M0",
+      "type": {
+        "name": {
+          "en": "calendar month",
+          "zh": null
+        },
+        "code": "M",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "90ff9e28-835a-4be5-9116-808c38c1fb66",
+    "series_name": {
+      "en": "Styrene Truck Spot FCA R'dam 4-6 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Truck Spot FCA R'dam 4-6 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "d6ae7c0b-e5c1-415b-9af5-e1d088387091",
+      "name": {
+        "en": "Deutsche Mark",
+        "zh": null
+      },
+      "code": "DM"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2000-01-14T00:00:00Z"
+    },
+    "termination_date": {
+      "$date": "2002-01-25T00:00:00Z"
+    },
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "f29d8751-91cc-4952-b882-4fd75e9151ea",
+      "name": {
+        "en": "free carrier",
+        "zh": null
+      },
+      "code": "FCA"
+    },
+    "relative_fulfilment_period": {
+      "guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+      "name": {
+        "en": "4-6 weeks",
+        "zh": null
+      },
+      "code": "4-6 WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "72939fa8-b3bf-407c-98ee-b1325ab3252c",
+    "series_name": {
+      "en": "Styrene Truck Spot FCA Rotterdam 0-4 Weeks",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Styrene Truck Spot FCA Rotterdam 0-4 Weeks",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "0f5dbe43-5311-46a4-b245-a9b6a5884858",
+      "name": {
+        "en": "Rotterdam",
+        "zh": null
+      },
+      "region": {
+        "guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+        "name": {
+          "en": "Europe",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+      "name": {
+        "en": "Euro",
+        "zh": null
+      },
+      "code": "EUR"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+      "name": {
+        "en": "1 week",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "f29d8751-91cc-4952-b882-4fd75e9151ea",
+      "name": {
+        "en": "free carrier",
+        "zh": null
+      },
+      "code": "FCA"
+    },
+    "relative_fulfilment_period": {
+      "guid": "ef4c2c38-9482-4da3-a125-f2a60f6e0eee",
+      "name": {
+        "en": "0-4 weeks",
+        "zh": null
+      },
+      "code": "0-4WK",
+      "type": {
+        "name": {
+          "en": "calendar week",
+          "zh": null
+        },
+        "code": "WK",
+        "has_relative_def_perspective": false
+      }
+    },
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "fe3766f2-7fd1-40cc-bd3f-5becaa155d98",
+    "series_name": {
+      "en": "Yanshan Petrochemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Yanshan Petrochemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "490a2083-7abd-43ea-ad5d-c1cca6bf357b",
+      "name": {
+        "en": "China North",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "09b9997d-14a6-441b-89b4-72a30273e983",
+    "series_name": {
+      "en": "Yuhuang Chemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Yuhuang Chemical Monomer Spot Ex-Works China N Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "490a2083-7abd-43ea-ad5d-c1cca6bf357b",
+      "name": {
+        "en": "China North",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "dc6f4331-8aec-4667-ae00-c7111f77d3b3",
+    "series_name": {
+      "en": "Zhejiang Petrochemical Styrene Monomer Spot Posted Price Ex-Warehouse China E Jiangyin Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Zhejiang Petrochemical Styrene Monomer Spot Posted Price Ex-Warehouse China E Jiangyin Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2018-08-20T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "0eb76973-14bb-474c-9917-8a1c369d4157",
+      "name": {
+        "en": "ex warehouse",
+        "zh": null
+      },
+      "code": "EXWH"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  },
+  {
+    "_id": "83bb325b-6bfc-4062-85eb-893dc3b41b72",
+    "series_name": {
+      "en": "Zhejiang Petrochemical Styrene Monomer Spot Posted Price Ex-Works China E Yushan Non-specific",
+      "zh": null
+    },
+    "series_short_name": {
+      "en": "Zhejiang Petrochemical Styrene Monomer Spot Posted Price Ex-Works China E Yushan Non-specific",
+      "zh": null
+    },
+    "series_unique_name": null,
+    "series_item_type_code": "pi-range",
+    "commodity": {
+      "guid": "5470f074-6fb7-48a1-aa13-18cbf3f99686",
+      "name": {
+        "en": "styrene",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "e8d70b69-80f5-49d5-af9b-0983d46198b4",
+      "name": {
+        "en": "China East",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "59c50fdf-342b-4c6e-9d49-e7581d68cbd5",
+      "name": {
+        "en": "Yuan Renminbi",
+        "zh": null
+      },
+      "code": "CNY"
+    },
+    "measure_unit": {
+      "guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+      "name": {
+        "en": "tonne",
+        "zh": null
+      },
+      "symbol": "MT"
+    },
+    "launch_date": {
+      "$date": "2007-04-10T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+      "name": {
+        "en": "weekly",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "c5e89ac6-4a7e-4908-89ff-bc083c262c52",
+      "name": {
+        "en": "market reported",
+        "zh": null
+      },
+      "code": "MKTRPT"
+    },
+    "price_settlement_type": {
+      "guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+      "name": {
+        "en": "spot",
+        "zh": null
+      },
+      "code": "SPOT"
+    },
+    "price_derivation_type": null,
+    "trade_terms": {
+      "guid": "3672ceb5-2aa0-4fda-a273-3c4e26818851",
+      "name": {
+        "en": "ex works",
+        "zh": null
+      },
+      "code": "EXW"
+    },
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-UAT-20240913.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-13T12:43:38.304Z"
+    }
+  }
+]

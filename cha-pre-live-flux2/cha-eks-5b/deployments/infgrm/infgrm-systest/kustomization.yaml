@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: infgrm-systest
+nameSuffix: -infgrm
+resources:
+- ../../../common/subscriber-bff/infgrm/
+- ../../../common/authoring-bff/infgrm/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-infgrm-systest.yaml
+- path: helm-release-authoring-bff-infgrm-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN2

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- atcore-auth-proxy-policy-stable.yaml  
+- atcore-auth-proxy-registry.yaml
+###############################
+- atcore-bff-policy-systest.yaml
+- atcore-bff-policy-integration.yaml
+- atcore-bff-policy-performance.yaml
+- atcore-bff-policy-staging.yaml
+- atcore-bff-registry.yaml

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- artifacts-ca-crt.yaml
+- elastic-helmrepository.yaml
+- helmrepository.yaml
+- image-automation.yaml
+- gitlab-runner-repository.yaml
+- vault-secrets-operator-repository.yaml
+- risk-vault-secrets-operator-repository.yaml
+- grafana-helmrepository.yaml

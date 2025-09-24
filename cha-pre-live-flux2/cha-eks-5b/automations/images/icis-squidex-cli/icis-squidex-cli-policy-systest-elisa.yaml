@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: icis-squidex-cli-systest-elisa
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: icis-squidex-cli
+    namespace: flux-system
+  filterTags:
+    pattern: '^systest-elisa-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

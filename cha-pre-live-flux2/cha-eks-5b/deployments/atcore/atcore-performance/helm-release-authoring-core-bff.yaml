@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-core-bff
+  values:
+    replicaCount: 1
+    namespace: "atcore-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/atcore/atcore-bff # {"$imagepolicy": "flux-system:atcore-bff-performance:name"}
+        tag: performance-55-1.39.0-27141 # {"$imagepolicy": "flux-system:atcore-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/atcore-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ID_CLAIM: user_id
+        ENCRYPTED_ID_CLAIM: user_id_encrypted
+        NAME_CLAIM: given_name
+        EMAIL_CLAIM: email
+        ACCESS_CONTROL_BASE_URL: https://acm.performance.cha.rbxd.ds/v1
+        ACCESS_CONTROL_PERMISION_PATH: /userpermission
+        ACCESS_CONTROL_ENABLED: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/core/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS

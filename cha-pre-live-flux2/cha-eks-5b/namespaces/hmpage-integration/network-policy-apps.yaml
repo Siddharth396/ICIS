@@ -1,0 +1,151 @@
+####################################################
+## Allow ingress from hmpage-integration and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-hmpage-integration
+  namespace: hmpage-integration
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: hmpage-integration
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from hmpage-integration ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-hmpage-integration
+  namespace: hmpage-integration
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: hmpage-integration
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: hmpage-integration
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#########################################
+## Allow mongo db to peered atlas vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-mongodb
+  namespace: hmpage-integration
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.248.0/21
+    ports:
+    - port: 27015
+      protocol: TCP
+    - port: 27016
+      protocol: TCP
+    - port: 27017
+      protocol: TCP
+    - port: 27015
+      protocol: UDP
+    - port: 27016
+      protocol: UDP
+    - port: 27017
+      protocol: UDP
+
+##################################
+## Allow SQL Server egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-sql-server
+  namespace: hmpage-integration
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 1433
+      protocol: TCP
+
+########################################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: hmpage-integration
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+##################################################
+## allow access to kube2iam to assume iam roles ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: default-allow-iam-access
+  namespace: hmpage-integration
+spec:
+  podSelector:
+    matchLabels:
+      require-iam-access: "true"
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.53.60.0/24
+    ports:
+    - port: 8181
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.53.61.0/24
+    ports:
+    - port: 8181
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.53.62.0/24
+    ports:
+    - port: 8181
+      protocol: TCP

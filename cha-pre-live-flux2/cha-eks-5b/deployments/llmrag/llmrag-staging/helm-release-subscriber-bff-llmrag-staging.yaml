@@ -1,0 +1,77 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-llmrag-staging
+  values:
+    replicaCount: 1
+    namespace: "llmrag-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/llmrag/subscriber-bff # {"$imagepolicy": "flux-system:llmrag-sub-bff-staging:name"}
+        tag: staging-162-1.21.1-ASKICIS-10-be-switch-from-motor-to-pymongo.566 # {"$imagepolicy": "flux-system:llmrag-sub-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "256Mi"
+          cpu: "10m"
+        limits:
+          memory: "768Mi"
+          cpu: "100m"
+      config_env:
+        ENVIRONMENT: staging
+        USE_CHART_TOOLS: true
+        CHARTING_DATABASE: pricing-staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/llmrag-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: "https://*.cha.rbxd.ds,https://*cha.eu-west-1.dev,http://localhost:5000,https://localhost:8050,http://127.0.0.1:5000,http://0.0.0.0:5000"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AZURE_OPENAI_SERVICE: "app-askicis-nonprod-eastus2-openai"
+        AZURE_OPENAI_CHATGPT_35_SERVICE: "app-askicis-nonprod-eastus2-openai"
+        PRIMARY_AZURE_OPENAI_SERVICE: "app-askicis-nonprod-eastus2-openai"
+        BACKUP_AZURE_OPENAI_SERVICE: "app-askicis-nonprod-swedencentral-openai"
+        AZURE_OPENAI_CHATGPT_35_DEPLOYMENT: "gpt-4o-mini"
+        AZURE_OPENAI_CHATGPT_35_MODEL_NAME: "gpt-4o-mini"
+        AZURE_OPENAI_CHATGPT_35_MODEL_VERSION: "2024-07-18"
+        AZURE_OPENAI_CHATGPT_SMALL_DEPLOYMENT: "gpt-4o-mini"
+        AZURE_OPENAI_CHATGPT_SMALL_MODEL_NAME: "gpt-4o-mini"
+        AZURE_OPENAI_CHATGPT_SMALL_MODEL_VERSION: "2024-07-18"
+        AZURE_OPENAI_CHATGPT_DEPLOYMENT: "gpt-4o"
+        AZURE_OPENAI_CHATGPT_MODEL_NAME: "gpt-4o"
+        AZURE_OPENAI_CHATGPT_MODEL_VERSION: "2024-05-13"
+        AZURE_OPENAI_EMB_DEPLOYMENT: "ada-embeddings"
+        AZURE_OPENAI_EMB_LARGE_DEPLOYMENT: "text-embedding-3-large"
+        AZURE_CONTENT_SAFETY_URL: "https://eastus2.api.cognitive.microsoft.com/"
+        OPENAI_API_VERSION: "2023-05-15"
+        RUN_IMPORT_DATA_TASK: false
+        DB_URL: "https://dbapi.systest.genesis.cha.rbxd.ds/"
+        ALLOW_ALL_USERS_WITHOUT_AUTH: false
+        ALLOW_INTERNAL_USERS: true
+        ALLOWED_ROLES: CHAN-CHATBOT-EXPERIMENT
+        SUBSCRIBER_DOMAIN: "https://subscriber.staging.genesis.cha.rbxd.ds/"
+        DATABRICKS_SPACY_MODEL_URL: "https://icis-analytics-platform-dev.cloud.databricks.com/serving-endpoints/askicis-ner/invocations"
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/askicis/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/proxy-buffering: "off"
+    vault_secrets:
+      name: subscriber-bff-vault-secret-llmrag-staging
+      VaultSecretPath: "llmrag/staging/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-llmrag-staging
+      VaultSecretPath: "subscriber-auth-proxy/mongo"

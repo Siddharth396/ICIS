@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_refdata_mappings_1
+    database: sboutg-staging
+    collection: order_mappings
+    transforms.RenameField.renames: id:_id
+    transforms.FilterValue.filter.condition: $[?(@.data_producer == "Supply and Demand")]
+    transforms.FilterValue.filter.type: include

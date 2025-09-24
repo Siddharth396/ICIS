@@ -1,0 +1,5 @@
+dotnet test "Authoring.Tests\Authoring.Tests.csproj" --test-adapter-path:. --logger:"junit;LogFilePath=/artifacts/{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose" --verbosity=minimal /p:AltCover=true /p:AltCoverReportFormat="OpenCover" /p:AltCoverReport="c:\app\coverage\Authoring\coverage.xml" /p:AltCoverAttributeFilter=ExcludeFromCodeCoverage /p:AltCoverAssemblyExcludeFilter="^(?!(Authoring$||BusinessLayer||Infrastructure)).*" /p:AltCoverForce=true /p:RestoreLockedMode=true
+
+dotnet test "Subscriber.Tests\Subscriber.Tests.csproj" --test-adapter-path:. --logger:"junit;LogFilePath=/artifacts/{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose" --verbosity=minimal /p:AltCover=true   /p:AltCoverReportFormat="OpenCover" /p:AltCoverReport="c:\app\coverage\Subscriber\coverage.xml" /p:AltCoverAttributeFilter=ExcludeFromCodeCoverage /p:AltCoverAssemblyExcludeFilter="^(?!(Subscriber$||BusinessLayer||Infrastructure)).*"   /p:AltCoverForce=true /p:RestoreLockedMode=true
+
+reportgenerator "-reports:c:\app\coverage\*\coverage.xml" "-targetdir:c:\app\coverage\report" "-reporttypes:Cobertura;HTMLInline;XmlSummary" "-verbosity:Error"

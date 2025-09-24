@@ -1,0 +1,50 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- performance-petchem-price-forecast
+- performance-petchem-price-forecast-commodity-mapping
+- performance-petchem-price-forecast-commodity-mapping-1a
+- performance-product-item-catalogue
+- performance-refdata-commodity-families
+- performance-refdata-locations
+- performance-petchem-price-assessments-specification-names
+- performance-energy-basis-prices-corrections
+- performance-energy-basis-specifications
+
+- staging-petchem-price-forecast
+- staging-petchem-price-forecast-commodity-mapping
+- staging-petchem-price-forecast-commodity-mapping-1a
+- staging-product-item-catalogue
+- staging-refdata-commodity-families
+- staging-refdata-locations
+- staging-petchem-price-assessments-specification-names
+- staging-energy-basis-prices-corrections
+- staging-energy-basis-specifications
+
+
+- systest-petchem-price-forecast
+- systest-petchem-price-forecast-commodity-mapping
+- systest-petchem-price-forecast-commodity-mapping-1a
+- systest-product-item-catalogue
+- systest-product-item-catalogue-test-upgrade
+- systest-energy-vwap-indices-specifications
+- systest-energy-vwap-indices
+- systest-energy-vwap-indices-corrections
+- systest-energy-spreads-specifications
+- systest-energy-spreads-prices
+- systest-energy-basis-specifications
+- systest-energy-basis-prices-corrections
+- systest-energy-spreads-prices-corrections
+- systest-energy-price-assessments-specifications
+- systest-energy-price-assessments-prices
+- systest-energy-price-assessments-prices-corrections
+- systest-petchem-price-assessments-specification-names
+- systest-energy-ref-currencies
+- systest-energy-ref-locations
+- systest-energy-ref-markets
+- systest-energy-ref-measure-units
+- systest-refdata-commodity-families
+- systest-refdata-locations
+- systest
+- staging
+- performance

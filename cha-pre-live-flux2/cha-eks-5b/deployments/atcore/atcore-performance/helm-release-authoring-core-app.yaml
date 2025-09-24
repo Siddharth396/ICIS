@@ -1,0 +1,75 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: homepage-app
+spec:
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+      strategy: rollback
+  releaseName: authoring-app-performance
+  values:
+    namespace: "atcore-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    app:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-app # {"$imagepolicy": "flux-system:authoring-app-performance:name"}
+        tag: performance-88-1.56.0-51163 # {"$imagepolicy": "flux-system:authoring-app-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        REACT_APP_ANALYTICS_ACCOUNT: rbiuk-icis-genesis-dev
+        REACT_APP_ANALYTICS_SCRIPT_SRC: //assets.adobedtm.com/c89af706acda/906d7140be39/launch-3c41f40d121d-development.min.js
+        REACT_APP_BFF_URL: https://authoring.performance.cha.rbxd.ds/api/core/v1
+        REACT_APP_BYPASS_VERSION_CHECK: 'false'
+        REACT_APP_AUTH_DOMAIN: .cha.rbxd.ds
+        REACT_APP_OIDC_LOG_LEVEL: '4'
+        REACT_APP_SHARED_HEADER_ROOT: https://subscriber.performance.genesis.cha.rbxd.ds
+        REACT_APP_MFE_FEED_SERVICE_URL: https://authoring.performance.cha.rbxd.ds/mfe/mfe-feed-service/api/v1/mfe
+        REACT_APP_ENVIRONMENT: performance
+        REACT_APP_ENABLE_APM: true
+        REACT_APP_APM_URL: https://authoring.performance.cha.rbxd.ds/api/apm
+        REACT_APP_IS_AUTHORING: 'true'
+        REACT_APP_CONTENT_NOTIFIER_PUBNUB_SUBSCRIBE_KEY: 'sub-c-e9bec542-d964-485e-b8f1-46f59969eb37'
+        REACT_APP_CONTENT_NOTIFIER_PUBNUB_CHANNELS: WorkflowEvents,PriceAuthoringEvents,TableEntryEvents
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: 100m
+        limits:
+          cpu: "200m"
+          memory: 256Mi
+    ingress:
+      enabled: true
+      name: authoring-appshell-performance-ingress
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      hosts:
+      - host: authoring.performance.cha.rbxd.ds
+        paths:
+        - /
+        tls: "true"
+      tls:
+      - hosts:
+        - authoring.performance.cha.rbxd.ds
+        secretName: authoring.performance.cha.rbxd.ds
+    secrets:
+      name: authoring.performance.cha.rbxd.ds
+    nginx:
+      csp_domains:
+      - "*.cha.rbxd.ds"
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80

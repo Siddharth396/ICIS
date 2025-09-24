@@ -1,0 +1,14 @@
+<Project>
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <TargetFramework>net8.0</TargetFramework>
+        <Company>LexisNexis Risk Solutions Group</Company>
+        <Authors>LexisNexis Risk Solutions Group</Authors>
+        <Copyright>Copyright © 2024 LexisNexis Risk Solutions Group</Copyright>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+        <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+	    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+        <ImplicitUsings>disable</ImplicitUsings>
+    </PropertyGroup>
+</Project>

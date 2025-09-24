@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: prelive-connect-cluster-connect
+  namespace: icis-event-streaming
+  labels:
+    monitoring-platform: icis-monitoring
+    namespace: icis-event-streaming
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kafka-connect
+  podMetricsEndpoints:
+  - honorLabels: true
+    path: /metrics
+    targetPort: 9404
+    scheme: http
+    scrapeTimeout: 20s

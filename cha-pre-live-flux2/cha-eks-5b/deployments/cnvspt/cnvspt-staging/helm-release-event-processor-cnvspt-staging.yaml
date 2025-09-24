@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cnvspt-event-processor
+spec:
+  releaseName: cnvspt-event-processor-staging
+  values:
+    replicaCount: 1
+    namespace: "cnvspt-staging"
+    environment: "staging"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/cnvspt/cnvspt-event-processor # {"$imagepolicy": "flux-system:cnvspt-event-processor-staging:name"}
+        tag: staging-11-0.0.0-feature-NEP-11532-process-new-trigger-entity-fields-35537 # {"$imagepolicy": "flux-system:cnvspt-event-processor-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/cnvspt-staging?retryWrites=true&w=majority"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENVIRONMENT: staging
+        QUEUE_NAME: "qa-CONTENT_STRUCTURES-changes-snapshots-staging"
+        SNOWFLAKE_USER: "SVC_CONTENT_STRUCTURES_SNAPSHOTS_USER_GOLD_QA"
+        SNOWFLAKE_ROLE: "SVC_CONTENT_STRUCTURES_SNAPSHOTS_GOLD_QA"
+        SNOWFLAKE_WAREHOUSE: "QRY_WH_GOLD_QA"
+        SNOWFLAKE_DB: "ICIS_GOLD_QA_DB"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/snapshots-processor/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: cnvspt-vault-secret-event-processor-staging
+      VaultSecretPath: "cnvspt/staging/eventprocessor"
+    vault_secrets_proxy:
+      name: cnvspt-auth-proxy-vault-secret-event-processor-staging

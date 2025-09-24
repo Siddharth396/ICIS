@@ -1,0 +1,30 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ai-researcher-auth-bff-policy-systest.yaml
+- ai-researcher-auth-bff-registry.yaml
+# - chempf-auth-bff-policy-systest.yaml
+# - chempf-auth-bff-registry.yaml
+# - chempf-sub-bff-registry.yaml
+# - chempf-pricing-auth-bff-registry.yaml
+# - chempf-pricing-bff-registry.yaml
+# - chempf-event-processor-registry.yaml
+# - chempf-auth-bff-policy-integration.yaml
+# - chempf-auth-bff-policy-performance.yaml
+# - chempf-auth-bff-policy-staging.yaml
+# - chempf-event-processor-policy-integration.yaml
+# - chempf-event-processor-policy-performance.yaml
+# - chempf-event-processor-policy-systest.yaml
+# - chempf-sub-bff-policy-systest.yaml
+# - chempf-sub-bff-policy-staging.yaml
+# - chempf-sub-bff-policy-performance.yaml
+# - chempf-sub-bff-policy-integration.yaml
+# - chempf-pricing-bff-policy-systest.yaml
+# - chempf-pricing-bff-policy-staging.yaml
+# - chempf-pricing-bff-policy-performance.yaml
+# - chempf-pricing-bff-policy-integration.yaml
+# - chempf-pricing-auth-bff-policy-systest.yaml
+# - chempf-pricing-auth-bff-policy-staging.yaml
+# - chempf-pricing-auth-bff-policy-performance.yaml
+# - chempf-pricing-auth-bff-policy-integration.yaml
+# - chempf-event-processor-policy-staging.yaml

@@ -1,0 +1,77 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+###############################
+- icis-monitoring/clusterrole.yaml
+- icis-monitoring/clusterrolebinding.yaml
+- icis-monitoring/ingress.yaml
+- icis-monitoring/namespace-icis-monitoring.yaml
+- icis-monitoring/prometheus.yaml
+- icis-monitoring/service-account.yaml
+- icis-monitoring/service.yaml
+- icis-monitoring/servicemonitor.yaml
+- icis-monitoring/thanos-service.yaml
+##############################
+- icis-backup/namespace-icis-backup.yaml
+- icis-backup/network-policy-apps.yaml
+- icis-backup/network-policy-defaults.yaml
+- icis-backup/vault-access.yaml
+# ##############################
+# - icis-backstage/namespace-icis-backstage.yaml
+# - icis-backstage/network-policy-apps.yaml
+# - icis-backstage/network-policy-defaults.yaml
+# - icis-backstage/vault-access.yaml
+###############################
+- icis-gitlab-runner/namespace-icis-gitlab-runner.yaml
+- icis-gitlab-runner/network-policy-apps.yaml
+- icis-gitlab-runner/network-policy-defaults.yaml
+- icis-gitlab-runner/helm-release-icis-gitlab-runner.yaml
+- icis-gitlab-runner/podmonitor-gitlab-runner.yaml
+###############################
+- icis-vault-secret-operator/helm-release-icis-vault-secret-operator.yaml
+- icis-vault-secret-operator/namespace-icis-vault-secret-operator.yaml
+- icis-vault-secret-operator/network-policy-apps.yaml
+- icis-vault-secret-operator/network-policy-defaults.yaml
+- icis-vault-secret-operator/vault-ca-crt.yaml
+###############################
+#- icis-litmus/namespace-icis-litmus.yaml
+#- icis-litmus/network-policy-apps.yaml
+#- icis-litmus/network-policy-defaults.yaml
+#- icis-litmus/helm-release-icis-litmus.yaml
+#########################################################
+#Github action controller
+- icis-github-runner/gh-arc-controller/helm-release-icis-gh-runner-controller-5b.yaml
+- icis-github-runner/gh-arc-controller/namespace-icis-gh-runner-controller.yaml
+- icis-github-runner/gh-arc-controller/network-policy-controller-apps.yaml
+- icis-github-runner/gh-arc-controller/network-policy-controller-defaults.yaml
+- icis-github-runner/gh-arc-controller/podmonitor-github-runner-controller.yaml
+####### ICIS GitHub Action Runner Scale Set ######################################
+- icis-github-runner/gh-arc-runner-scale-set/helm-release-analytics-scale-set.yaml
+- icis-github-runner/gh-arc-runner-scale-set/helm-release-icis-gh-runner-scale-set.yaml
+- icis-github-runner/gh-arc-runner-scale-set/namespace-icis-gh-runner.yaml
+- icis-github-runner/gh-arc-runner-scale-set/network-policy-runner-apps.yaml
+- icis-github-runner/gh-arc-runner-scale-set/network-policy-runner-defaults.yaml
+- icis-github-runner/gh-arc-runner-scale-set/podmonitor-github-runner.yaml
+- icis-github-runner/gh-arc-runner-scale-set/analytics-local-docker-registry-deployment.yml
+- icis-github-runner/gh-arc-runner-scale-set/analytics-local-docker-registry-pvc.yml
+- icis-github-runner/gh-arc-runner-scale-set/docker-registry-cleanup-cronjob.yaml
+###############################
+- icis-streamsets/namespace-icis-streamsets.yaml
+- icis-streamsets/network-policy-apps.yaml
+- icis-streamsets/network-policy-defaults.yaml
+- icis-streamsets/sa-icis-streamsets.yaml
+- icis-streamsets/streamsets-agent.yaml
+###############################
+#- icis-litmuschaos/namespace-icis-litmuschaos.yaml
+#- icis-litmuschaos/network-policy-apps.yaml
+#- icis-litmuschaos/network-policy-defaults.yaml
+#- icis-litmuschaos/helm-release-icis-litmuschaos.yaml
+# ##############################
+- icis-devops-dashboard/namespace-icis-devops-dashboard.yaml
+- icis-devops-dashboard/network-policy-apps.yaml
+- icis-devops-dashboard/network-policy-defaults.yaml
+- icis-devops-dashboard/vault-access.yaml
+####### Risk Vault Secrets Operator ##############################
+- icis-risk-vault-secrets-operator/helm-release-icis-risk-vso.yaml
+- icis-risk-vault-secrets-operator/network-policy-apps.yaml
+- icis-risk-vault-secrets-operator/network-policy-defaults.yaml

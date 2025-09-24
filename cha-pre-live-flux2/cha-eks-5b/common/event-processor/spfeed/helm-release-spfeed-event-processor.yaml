@@ -1,0 +1,49 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  values:
+    projectName: "spfeed"
+    ServiceAccountName: "spfeed"
+    
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.1.0-vso.1.1002
+        pullPolicy: IfNotPresent
+      config_env:
+        KafkaConsumer_Serilog__Source: "SpotPrices"
+        KafkaConsumer_Serilog__Component: "NotificationEventProcessor.GenericConsumer"
+        KafkaConsumer_Serilog__Service: "SpotPrices.NotificationEventProcessor.GenericConsumer"
+        KafkaConsumer_ElasticApm__ServiceName: "NS - SpotPrices - Generic Consumer"
+        KafkaConsumer_ElasticApm__TransactionSampleRate: 1
+
+    event_processor:
+      config_env:
+        Serilog__Source: "SpotPrices"
+        Serilog__Component: "NotificationEventProcessor.EventProcessor"
+        Serilog__Service: "SpotPrices.NotificationEventProcessor.EventProcessor"
+        ElasticApm__ServiceName: "NS - SpotPrices - Event Processor"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+    
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+  
+    vault_secrets:
+      VaultK8sRoleName: "kv-spfeed-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s" 
+
+    vault_secrets_consumer:
+      VaultK8sRoleName: "kv-spfeed-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s" 
+    

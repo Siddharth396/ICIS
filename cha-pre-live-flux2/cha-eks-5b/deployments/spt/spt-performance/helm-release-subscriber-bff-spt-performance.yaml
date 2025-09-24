@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+      strategy: rollback
+  releaseName: subscriber-bff-spt-performance
+  values:
+    replicaCount: 3
+    namespace: "spt-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/spot-price/spt-bff # {"$imagepolicy": "flux-system:spt-bff-performance:name"}
+        tag: performance-25-2.2.1-59 # {"$imagepolicy": "flux-system:spt-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/spt-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds,https://localhost:8083
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        DEV_MODE: false
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ENABLED_OVERRIDE_OFFERINGS: true
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/spot-price-tracker/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-spt-performance
+      VaultSecretPath: "spt/performance/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-spt-performance

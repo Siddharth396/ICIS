@@ -1,0 +1,65 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-prcent-systest
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "prcent-systest"
+    environment: "systest"
+    deploymentStrategy: "RollingUpdate"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/mongodb-seeder # {"$imagepolicy": "flux-system:prcent-mongo-seeder-systest:name"}
+        tag: systest-204-6.1.0-feature-SD-3595-editing-selection.29232 # {"$imagepolicy": "flux-system:prcent-mongo-seeder-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/authoring-bff # {"$imagepolicy": "flux-system:prcent-authoring-bff-systest:name"}
+        tag: systest-578-7.3.0-feature-VIK-1493-data-package-creation-alternative-solution-28463 # {"$imagepolicy": "flux-system:prcent-authoring-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/prcent-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        PeriodGeneratorService__BaseUrl: https://authoring.systest.cha.rbxd.ds/api/period-generator
+        Workflow__BaseUrl: https://authoring.systest.cha.rbxd.ds/api/workflow
+        OAUTH_AUTHORITY_URL: https://domainidentity.integration.cha.rbxd.ds
+        PUBNUB_ENABLED: true
+        LOG_LEVEL: Debug
+        CANVAS_API_URL: https://authoring.systest.cha.rbxd.ds/api/canvas
+        IS_AUTHORING: true
+        DEV_MODE: true
+        DLH_RECORD_SOURCE: canvas-prcent-systest
+        Workflow__Versions__Overrides__LNG: simple
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/price-entry/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-prcent-systest
+      VaultSecretPath: "prcent/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-prcent-systest
+    pdb:
+      minAvailable: 1

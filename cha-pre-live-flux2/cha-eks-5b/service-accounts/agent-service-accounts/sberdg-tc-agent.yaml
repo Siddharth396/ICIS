@@ -1,0 +1,253 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sberdg-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sberdg-systest
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sberdg-staging
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sberdg-performance
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sberdg-systest
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sberdg-staging
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sberdg-performance
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sberdg-integration
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sberdg-integration
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sbcomm-systest
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sbcomm-staging
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sbcomm-performance
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sbcomm-systest
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sbcomm-staging
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sbcomm-performance
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin
+  namespace: sbcomm-integration
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: sberdg-tc-agent-admin-service-monitor
+  namespace: sbcomm-integration
+subjects:
+- kind: ServiceAccount
+  name: sberdg-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,4082 @@
+[
+	{
+		"_id": "865546da-0701-4a3b-816e-c9fd26c5df48",
+		"series_name": {
+			"en": "Caustic soda liquid USG contract FOB USD/dst monthly",
+			"zh": "烧碱 液体 美国墨西哥湾 合约 FOB 美元/干短吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid USG contract FOB",
+			"zh": "烧碱 液体 美国墨西哥湾 合约 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "5dfc239d-0d7c-4988-98ff-112cd57e5bb7",
+			"name": {
+				"en": "US Gulf Coast",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "808272b3-0d8e-453d-8068-1e47e447965a",
+			"name": {
+				"en": "dry short tonne",
+				"zh": null
+			},
+			"symbol": "dst"
+		},
+		"launch_date": {
+			"$date": "2014-04-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+			"name": {
+				"en": "month with irregular frequency",
+				"zh": null
+			},
+			"code": "MIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "e1a1a03c-ad8e-4dc9-b8e4-2d7dcafe0ff7",
+		"series_name": {
+			"en": "Caustic soda Argentina EX TANK 20-40 days USD/dmt monthly",
+			"zh": "烧碱 阿根廷 国内 出罐价 4-6周 美元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda Argentina EX TANK 20-40 days",
+			"zh": "烧碱 阿根廷 国内 出罐价"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "4f7643f2-b5b8-4ed5-a95c-8e3a480e2ea2",
+			"name": {
+				"en": "Argentina",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2023-06-30T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+			"name": {
+				"en": "ex tank",
+				"zh": null
+			},
+			"code": "EX TANK"
+		},
+		"relative_fulfilment_period": {
+			"guid": "99222298-0f01-454f-b7e0-0eb8cfd545c1",
+			"name": {
+				"en": "20-40 days",
+				"zh": null
+			},
+			"code": "20-40D",
+			"type": {
+				"name": {
+					"en": "calendar week day",
+					"zh": null
+				},
+				"code": "D",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "559d39ec-8421-443d-80b2-1fb3792330d9",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "27816829-be72-46df-8b91-36b15d0bba8f",
+		"series_name": {
+			"en": "Caustic soda Brazil CFR 4-6 weeks USD/dmt monthly",
+			"zh": "烧碱 巴西 现货 CFR 4-6周 美元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda Brazil CFR 4-6 weeks",
+			"zh": "烧碱 巴西 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "10dec12f-e981-478a-9ec6-ddda1cb406d1",
+			"name": {
+				"en": "Brazil",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2023-06-30T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "559d39ec-8421-443d-80b2-1fb3792330d9",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "13330ecf-e965-4f06-afdd-18e3bb0c7004",
+		"series_name": {
+			"en": "Caustic soda Brazil EX TANK 20-40 days USD/dmt monthly",
+			"zh": "烧碱 巴西 国内 出罐价 4-6周 美元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda Brazil EX TANK 20-40 days",
+			"zh": "烧碱 巴西 国内 出罐价"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "10dec12f-e981-478a-9ec6-ddda1cb406d1",
+			"name": {
+				"en": "Brazil",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2023-06-30T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+			"name": {
+				"en": "ex tank",
+				"zh": null
+			},
+			"code": "EX TANK"
+		},
+		"relative_fulfilment_period": {
+			"guid": "99222298-0f01-454f-b7e0-0eb8cfd545c1",
+			"name": {
+				"en": "20-40 days",
+				"zh": null
+			},
+			"code": "20-40D",
+			"type": {
+				"name": {
+					"en": "calendar week day",
+					"zh": null
+				},
+				"code": "D",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "559d39ec-8421-443d-80b2-1fb3792330d9",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "294fce87-6a07-4be4-badc-3bcf12ae784d",
+		"series_name": {
+			"en": "Caustic soda Colombia CFR 4-6 weeks USD/dmt monthly",
+			"zh": "烧碱 哥伦比亚 现货 CFR 4-6周 美元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda Colombia CFR 4-6 weeks",
+			"zh": "烧碱 哥伦比亚 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "d095d2a7-6e43-4f57-a244-621193b549aa",
+			"name": {
+				"en": "Colombia",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2023-06-30T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "559d39ec-8421-443d-80b2-1fb3792330d9",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "6d17ec15-c289-48a4-8751-3d19290b7a49",
+		"series_name": {
+			"en": "Caustic soda Mexico CFR 4-6 weeks USD/dmt monthly",
+			"zh": "烧碱 墨西哥 现货 CFR 4-6周 美元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda Mexico CFR 4-6 weeks",
+			"zh": "烧碱 墨西哥 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "95d572ae-70d7-4dc5-8cf5-377f63471f26",
+			"name": {
+				"en": "Mexico",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2023-06-30T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "559d39ec-8421-443d-80b2-1fb3792330d9",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "90e592c3-1489-4759-8d11-38af517aea57",
+		"series_name": {
+			"en": "Caustic soda Mexico EX TANK 20-40 days USD/dmt monthly",
+			"zh": "烧碱 墨西哥 国内 出罐价 4-6周 美元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda Mexico EX TANK 20-40 days",
+			"zh": "烧碱 墨西哥 国内 出罐价"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "95d572ae-70d7-4dc5-8cf5-377f63471f26",
+			"name": {
+				"en": "Mexico",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2023-06-30T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "e8106e82-9480-4d94-a868-c9664652b3e1",
+			"name": {
+				"en": "ex tank",
+				"zh": null
+			},
+			"code": "EX TANK"
+		},
+		"relative_fulfilment_period": {
+			"guid": "99222298-0f01-454f-b7e0-0eb8cfd545c1",
+			"name": {
+				"en": "20-40 days",
+				"zh": null
+			},
+			"code": "20-40D",
+			"type": {
+				"name": {
+					"en": "calendar week day",
+					"zh": null
+				},
+				"code": "D",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "559d39ec-8421-443d-80b2-1fb3792330d9",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "29ea8a43-13ca-45b8-a846-7cfb543542bd",
+		"series_name": {
+			"en": "Caustic soda liquid USG export FOB 4-6 weeks USD/mt weekly",
+			"zh": "烧碱 液体 美国墨西哥湾 现货 FOB 4-6周 美元/干吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid USG export FOB 4-6 weeks",
+			"zh": "烧碱 液体 美国墨西哥湾 现货 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "5dfc239d-0d7c-4988-98ff-112cd57e5bb7",
+			"name": {
+				"en": "US Gulf Coast",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "3da58c02-d24d-4741-a1f0-6fe79685f58f",
+			"name": {
+				"en": "tonne",
+				"zh": null
+			},
+			"symbol": "MT"
+		},
+		"launch_date": {
+			"$date": "2003-02-21T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "5014a6ae-eccb-4f1d-aced-826d2d50576f",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "9b00ea38-1aad-4115-b8a0-624cd69ec7fd",
+		"series_name": {
+			"en": "Caustic soda liquid barges USG FOB 4-6 weeks USD/st weekly",
+			"zh": "烧碱 液体 驳船 美国墨西哥湾 现货 FOB 4-6周 美元/干短吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid barges USG FOB 4-6 weeks",
+			"zh": "烧碱 液体 驳船 美国墨西哥湾 现货 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "5dfc239d-0d7c-4988-98ff-112cd57e5bb7",
+			"name": {
+				"en": "US Gulf Coast",
+				"zh": null
+			},
+			"region": {
+				"guid": "819d5022-a2d8-41b2-8b1c-b48e368e1766",
+				"name": {
+					"en": "Americas",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "ffc6ce59-bad1-40ad-a2e5-92527bcb30d3",
+			"name": {
+				"en": "short tonne",
+				"zh": null
+			},
+			"symbol": "st"
+		},
+		"launch_date": {
+			"$date": "2003-02-21T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "5014a6ae-eccb-4f1d-aced-826d2d50576f",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 US time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "f79478ad-4adb-4dd3-8f68-641d625ba70c",
+		"series_name": {
+			"en": "Caustic soda liquid Asia NE FOB 4-6 weeks USD/dmt weekly",
+			"zh": "烧碱 液体 东北亚 现货 FOB 4-6周 美元/干吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Asia NE FOB 4-6 weeks",
+			"zh": "烧碱 液体 东北亚 现货 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "281b707d-10f7-446d-b5d1-4cc7beee0fe3",
+			"name": {
+				"en": "Asia North East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2006-12-08T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "272a3b10-e3ec-4373-96c8-ff111373868a",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 SG time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "f97786ce-d79e-47a0-9780-81391dda953f",
+		"series_name": {
+			"en": "Caustic soda liquid Asia SE CFR 4-6 weeks USD/dmt weekly",
+			"zh": "烧碱 液体 东南亚 现货 CFR 4-6周 美元/干吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Asia SE CFR 4-6 weeks",
+			"zh": "烧碱 液体 东南亚 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+			"name": {
+				"en": "Asia South East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2006-12-08T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "272a3b10-e3ec-4373-96c8-ff111373868a",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 SG time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "46f6cb78-9c22-48d5-a579-3927a16e95e6",
+		"series_name": {
+			"en": "Caustic soda liquid China FOB 4-6 weeks USD/dmt weekly",
+			"zh": "烧碱 液体 货物 中国 现货 FOB 4-6周 美元/干吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid China FOB 4-6 weeks",
+			"zh": "烧碱 液体 货物 中国 现货 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+			"name": {
+				"en": "China",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2017-08-04T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "272a3b10-e3ec-4373-96c8-ff111373868a",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 SG time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "b0b53f39-2fc3-40ad-a1c8-5194bb0a1c4e",
+		"series_name": {
+			"en": "Caustic soda liquid Med E/Turkey CFR 0-6 weeks USD/dmt weekly",
+			"zh": "烧碱 液体 东地中海地区和土耳其 现货 CFR 0-6周 美元/干吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Med E/Turkey CFR 0-6 weeks",
+			"zh": "烧碱 液体 东地中海地区和土耳其 现货 CFR"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "20020095-51c1-4ad0-9a66-5be3e802bd89",
+			"name": {
+				"en": "Mediterranean East/Turkey",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2020-05-15T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+			"name": {
+				"en": "0-6 weeks",
+				"zh": null
+			},
+			"code": "0-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "1f4788a3-f58f-4041-a3ed-b91020e797a2",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "3adababe-f239-40e7-af2b-9e843cf52f96",
+		"series_name": {
+			"en": "Caustic soda liquid Asia NE FOB 4-6 weeks US CTS/lb weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Asia NE FOB 4-6 weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "281b707d-10f7-446d-b5d1-4cc7beee0fe3",
+			"name": {
+				"en": "Asia North East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2006-12-08T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "f79478ad-4adb-4dd3-8f68-641d625ba70c",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "ba75c3fa-acaa-4b0a-a910-d9c2fe153c27",
+		"series_name": {
+			"en": "Caustic soda liquid Asia SE CFR 4-6 weeks US CTS/lb weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Asia SE CFR 4-6 weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "996a41fc-2250-440e-a308-2dbe1d7cb236",
+			"name": {
+				"en": "Asia South East",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2006-12-08T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "f97786ce-d79e-47a0-9780-81391dda953f",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "6b833468-66e2-4707-98e5-9a339cab5895",
+		"series_name": {
+			"en": "Caustic soda liquid China FOB 4-6 weeks US CTS/lb weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid China FOB 4-6 weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "56a26ae2-6bf0-42e6-8fb5-894d64ee1230",
+			"name": {
+				"en": "China",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2017-08-04T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "599e22fc-e862-4478-9063-b1c1eb824bdc",
+			"name": {
+				"en": "4-6 weeks",
+				"zh": null
+			},
+			"code": "4-6 WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "46f6cb78-9c22-48d5-a579-3927a16e95e6",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "1e770e11-3017-4560-adb0-868d1b6bed56",
+		"series_name": {
+			"en": "Caustic soda liquid Med E/Turkey CFR 0-6 weeks US CTS/lb weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Med E/Turkey CFR 0-6 weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "20020095-51c1-4ad0-9a66-5be3e802bd89",
+			"name": {
+				"en": "Mediterranean East/Turkey",
+				"zh": null
+			},
+			"region": {
+				"guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+				"name": {
+					"en": "Asia-Pacific",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2020-05-15T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "4444aa40-5d34-4ef4-9816-5629f1ff4f0b",
+			"name": {
+				"en": "cost and freight",
+				"zh": null
+			},
+			"code": "CFR"
+		},
+		"relative_fulfilment_period": {
+			"guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+			"name": {
+				"en": "0-6 weeks",
+				"zh": null
+			},
+			"code": "0-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "b0b53f39-2fc3-40ad-a1c8-5194bb0a1c4e",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "74dee409-1ead-4f44-af07-b2d629fbb597",
+		"series_name": {
+			"en": "Caustic soda liquid truck Iberia contract FD EUR/dmt monthly",
+			"zh": "烧碱 液体 卡车 伊比利亚半岛 合约 欧元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid truck Iberia contract FD",
+			"zh": "烧碱 液体 卡车 伊比利亚半岛 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "05e273f6-c854-4fd9-b613-d2e89b83c327",
+			"name": {
+				"en": "Iberia",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2017-05-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+			"name": {
+				"en": "month with irregular frequency",
+				"zh": null
+			},
+			"code": "MIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250711-FixDoubleSpaceInName.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-07-11T14:22:47.850Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "5eb62b9a-3247-4a06-a4cd-f757ce4ce48a",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "01d0449e-956c-4eb9-8251-34c917d42ebe",
+		"series_name": {
+			"en": "Caustic soda liquid truck Italy contract FD EUR/dmt monthly",
+			"zh": "烧碱 液体 卡车 意大利 合约 欧元/干吨 月"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid truck Italy contract FD EUR/dmt",
+			"zh": "烧碱 液体 卡车 意大利 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "df297bdc-44ce-442c-b14c-db4282106c1a",
+			"name": {
+				"en": "Italy",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2019-07-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "d48383ed-7acc-40ea-b016-d602d80853ae",
+			"name": {
+				"en": "month with irregular frequency",
+				"zh": null
+			},
+			"code": "MIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "5eb62b9a-3247-4a06-a4cd-f757ce4ce48a",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Month Last Friday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+					"name": {
+						"en": "monthly",
+						"zh": "月度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "228d8ed2-ed5e-4b99-babf-929aa8aed039",
+		"series_name": {
+			"en": "Caustic soda liquid UK contract FD GBP/dmt quarterly",
+			"zh": "烧碱 液体 英国 合约 英镑/干吨 季度"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid UK contract FD",
+			"zh": "烧碱 液体 英国 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "89d5eec2-caaa-467e-8ea4-f8521cfe77d6",
+			"name": {
+				"en": "United Kingdom",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "ca5b697a-3165-4c2e-ab6b-597d6de66215",
+			"name": {
+				"en": "Pound Sterling",
+				"zh": null
+			},
+			"code": "GBP"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2022-04-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "e9ac3ee0-c915-4102-afd6-239cb70dd863",
+			"name": {
+				"en": "quarter with irregular frequency",
+				"zh": null
+			},
+			"code": "QIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "64f253ae-67bd-47ab-aa04-20f6fdd23511",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Qtr Last Friday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+					"name": {
+						"en": "quarterly",
+						"zh": "季度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "d34eba31-4fee-435e-a2c1-51bd67bda772",
+		"series_name": {
+			"en": "Caustic soda liquid truck NWE contract FD EUR/dmt quarterly",
+			"zh": "烧碱 液体 卡车 西北欧 合约 欧元/干吨 季度"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid truck NWE contract FD",
+			"zh": "烧碱 液体 卡车 西北欧 合约"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "9e413979-e958-413b-88f9-42e7b11f5093",
+			"name": {
+				"en": "Euro",
+				"zh": null
+			},
+			"code": "EUR"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2017-04-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "e9ac3ee0-c915-4102-afd6-239cb70dd863",
+			"name": {
+				"en": "quarter with irregular frequency",
+				"zh": null
+			},
+			"code": "QIRF0",
+			"type": {
+				"name": {
+					"en": "irregular",
+					"zh": null
+				},
+				"code": "I",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "64f253ae-67bd-47ab-aa04-20f6fdd23511",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Qtr Last Friday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+					"name": {
+						"en": "quarterly",
+						"zh": "季度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "863dbb39-d228-4d90-aa32-a9b609957f22",
+		"series_name": {
+			"en": "Caustic soda liquid Med FOB 0-6 weeks USD/dmt weekly",
+			"zh": "烧碱 液体 地中海地区 现货 FOB 0-6周 美元/干吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Med FOB 0-6 weeks",
+			"zh": "烧碱 液体 地中海地区 现货 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "a606fcfa-2f7b-4be5-8377-98fd64877025",
+			"name": {
+				"en": "Mediterranean",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2003-02-21T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+			"name": {
+				"en": "0-6 weeks",
+				"zh": null
+			},
+			"code": "0-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "1f4788a3-f58f-4041-a3ed-b91020e797a2",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "4b13788f-2101-43da-8a53-efa635203359",
+		"series_name": {
+			"en": "Caustic soda liquid NWE FOB 0-6 weeks USD/dmt weekly",
+			"zh": "烧碱 液体 西北欧 现货 FOB 0-6周 美元/干吨 周"
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid NWE FOB 0-6 weeks",
+			"zh": "烧碱 液体 西北欧 现货 FOB"
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+			"name": {
+				"en": "US Dollar",
+				"zh": null
+			},
+			"code": "USD"
+		},
+		"measure_unit": {
+			"guid": "2a7f79a6-62d1-4628-b0fa-84066429333f",
+			"name": {
+				"en": "dry metric tonne",
+				"zh": null
+			},
+			"symbol": "dmt"
+		},
+		"launch_date": {
+			"$date": "2003-02-21T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+			"name": {
+				"en": "assessed",
+				"zh": null
+			},
+			"code": "ASSESSED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": null,
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+			"name": {
+				"en": "0-6 weeks",
+				"zh": null
+			},
+			"code": "0-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": null,
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250604-DTN-539.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-06-05T15:20:46.961Z"
+		},
+		"publication_schedules": [
+			{
+				"guid": "1f4788a3-f58f-4041-a3ed-b91020e797a2",
+				"applies_from_date": null,
+				"applies_until_date": null,
+				"name": {
+					"en": "Friday 1700 UK time",
+					"zh": null
+				},
+				"frequency": {
+					"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+					"name": {
+						"en": "weekly",
+						"zh": "周度"
+					}
+				}
+			}
+		],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "cce14388-759d-4292-9acc-97bcdee8c8d2",
+		"series_name": {
+			"en": "Caustic soda liquid truck Iberia contract FD Month US CTS/lb monthly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid truck Iberia contract FD Month",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "05e273f6-c854-4fd9-b613-d2e89b83c327",
+			"name": {
+				"en": "Iberia",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2017-05-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+			"name": {
+				"en": "month",
+				"zh": null
+			},
+			"code": "M0",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "74dee409-1ead-4f44-af07-b2d629fbb597",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "959bc697-05d2-45cf-a2e4-ad625498fd0b",
+		"series_name": {
+			"en": "Caustic soda liquid truck Italy contract FD Month US CTS/lb monthly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid truck Italy contract FD Month",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "df297bdc-44ce-442c-b14c-db4282106c1a",
+			"name": {
+				"en": "Italy",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2019-07-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "d646efc6-dc10-4148-8f6e-ec7ed0d4acac",
+			"name": {
+				"en": "monthly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "58d5845a-cff4-41f8-b513-0b9bb7d6a905",
+			"name": {
+				"en": "1 month",
+				"zh": null
+			},
+			"code": "M",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "7ae54ee3-858b-495d-93e9-240b869f7fdb",
+			"name": {
+				"en": "month",
+				"zh": null
+			},
+			"code": "M0",
+			"type": {
+				"name": {
+					"en": "calendar month",
+					"zh": null
+				},
+				"code": "M",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "01d0449e-956c-4eb9-8251-34c917d42ebe",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "09c35e9f-4875-41ea-87c6-ec1f94106469",
+		"series_name": {
+			"en": "Caustic soda liquid UK contract FD Quarter US CTS/lb quarterly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid UK contract FD Quarter",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "89d5eec2-caaa-467e-8ea4-f8521cfe77d6",
+			"name": {
+				"en": "United Kingdom",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2022-04-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "f470488b-dde0-4ef3-81f5-9905b8d06e4c",
+			"name": {
+				"en": "quarter",
+				"zh": null
+			},
+			"code": "Q0",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "228d8ed2-ed5e-4b99-babf-929aa8aed039",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "7a944e53-e44f-43e6-8285-1459bcdec2b4",
+		"series_name": {
+			"en": "Caustic soda liquid truck NWE contract FD Quarter US CTS/lb quarterly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid truck NWE contract FD Quarter",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2017-04-01T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "9929ba54-a743-4e1c-8ad0-aec3ddfc0afe",
+			"name": {
+				"en": "quarterly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "5d8a189b-f56f-45eb-9b2a-3496e23ccb5b",
+			"name": {
+				"en": "1 quarter",
+				"zh": null
+			},
+			"code": "Q",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "1600a1f5-bb8f-4af0-9e2c-550dda299207",
+			"name": {
+				"en": "contract",
+				"zh": null
+			},
+			"code": "CONTRACT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "05d05a79-9b51-4f28-99d5-9c24624c9b58",
+			"name": {
+				"en": "free delivered",
+				"zh": null
+			},
+			"code": "FD"
+		},
+		"relative_fulfilment_period": {
+			"guid": "f470488b-dde0-4ef3-81f5-9905b8d06e4c",
+			"name": {
+				"en": "quarter",
+				"zh": null
+			},
+			"code": "Q0",
+			"type": {
+				"name": {
+					"en": "calendar quarter",
+					"zh": null
+				},
+				"code": "Q",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "d34eba31-4fee-435e-a2c1-51bd67bda772",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-ref-time"
+	},
+	{
+		"_id": "d46b8ae6-083f-4b09-9617-f50325cdcf62",
+		"series_name": {
+			"en": "Caustic soda liquid Med FOB 0-6 weeks US CTS/lb weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid Med FOB 0-6 weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "a606fcfa-2f7b-4be5-8377-98fd64877025",
+			"name": {
+				"en": "Mediterranean",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2003-02-21T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+			"name": {
+				"en": "0-6 weeks",
+				"zh": null
+			},
+			"code": "0-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "863dbb39-d228-4d90-aa32-a9b609957f22",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	},
+	{
+		"_id": "e8b8a77d-e186-48b0-90a7-f5bf976f2431",
+		"series_name": {
+			"en": "Caustic soda liquid NWE FOB 0-6 weeks US CTS/lb weekly",
+			"zh": null
+		},
+		"series_short_name": {
+			"en": "Caustic soda liquid NWE FOB 0-6 weeks",
+			"zh": null
+		},
+		"series_unique_name": null,
+		"series_item_type_code": "pi-range",
+		"commodity": {
+			"guid": "29a87b28-0664-4264-84d8-393af9932c79",
+			"name": {
+				"en": "caustic soda",
+				"zh": null
+			}
+		},
+		"location": {
+			"guid": "fe50d5a9-f34c-47f2-b4fc-8873d56272a4",
+			"name": {
+				"en": "Europe North West",
+				"zh": null
+			},
+			"region": {
+				"guid": "636bd012-eadf-4c22-a4d7-5578de437ec6",
+				"name": {
+					"en": "Europe",
+					"zh": null
+				}
+			}
+		},
+		"currency_unit": {
+			"guid": "6f2c4d0f-a909-4393-a440-ed87f0a2a37e",
+			"name": {
+				"en": "US Dollar cent",
+				"zh": null
+			},
+			"code": "US CTS"
+		},
+		"measure_unit": {
+			"guid": "cefd349d-f379-4ea1-a8ab-4cff9dd09bf5",
+			"name": {
+				"en": "pound",
+				"zh": null
+			},
+			"symbol": "lb"
+		},
+		"launch_date": {
+			"$date": "2003-02-21T00:00:00.000Z"
+		},
+		"termination_date": null,
+		"item_frequency": {
+			"guid": "7c7cb127-5828-4923-8f43-f37b86696c2c",
+			"name": {
+				"en": "weekly",
+				"zh": null
+			}
+		},
+		"ref_period": {
+			"guid": "6d22dd3c-af92-4b53-b41e-ac08acc1ab85",
+			"name": {
+				"en": "1 week",
+				"zh": null
+			},
+			"code": "WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"price_category": {
+			"guid": "241fa0cd-06de-4691-814b-7b8bc208f4f8",
+			"name": {
+				"en": "derived",
+				"zh": null
+			},
+			"code": "DERIVED"
+		},
+		"price_settlement_type": {
+			"guid": "8cd8f6cf-a7fb-4afa-a421-d05c5855df22",
+			"name": {
+				"en": "spot",
+				"zh": null
+			},
+			"code": "SPOT"
+		},
+		"price_derivation_type": {
+			"guid": "ff3d592c-d638-4d68-9ceb-7f9bbabb8090",
+			"name": {
+				"en": "converted",
+				"zh": "转换"
+			},
+			"code": "CONVERTED"
+		},
+		"trade_terms": {
+			"guid": "b14f3ee5-00cf-41f4-879a-40df6532b1f2",
+			"name": {
+				"en": "free on board",
+				"zh": null
+			},
+			"code": "FOB"
+		},
+		"relative_fulfilment_period": {
+			"guid": "788738ee-4f1b-46f9-ad95-8d8b4d568cbf",
+			"name": {
+				"en": "0-6 weeks",
+				"zh": null
+			},
+			"code": "0-6WK",
+			"type": {
+				"name": {
+					"en": "calendar week",
+					"zh": null
+				},
+				"code": "WK",
+				"has_relative_def_perspective": false
+			}
+		},
+		"derivation_inputs": null,
+		"price_series_link": [
+			{
+				"object_series_id": "4b13788f-2101-43da-8a53-efa635203359",
+				"series_link_reason_code": "is-conversion-of"
+			}
+		],
+		"dlh_record_source": "pricing_schema_data_upload/PRICE_SERIES-PROD-20250527-DTN-524-AND-DTN-525.csv",
+		"dlh_load_timestamp": {
+			"$date": "2025-05-27T18:18:35.166Z"
+		},
+		"publication_schedules": [],
+		"period_label_type_code": "plt-none"
+	}
+]

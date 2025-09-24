@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-wrkflw-staging
+  values:
+    replicaCount: 1
+    namespace: "wrkflw-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/wrkflw/bff # {"$imagepolicy": "flux-system:workflow-bff-staging:name"}
+        tag: staging-92-2.8.0-CC-132-Bundling-6472 # {"$imagepolicy": "flux-system:workflow-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        TRACE_ENABLED: true
+        LOG_LEVEL: Information
+        WORKFLOW_ENGINE_API_URL: https://workflow-engine.staging.cha.rbxd.ds/engine-rest
+        ACM_USER_PERMISSION_ENDPOINT: https://acm.integration.cha.rbxd.ds/v1/userpermission
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        SWAGGER_OAUTH_ROLE: ICIS_Mercury
+        SWAGGER_ENABLED: true
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live.ak0n6.mongodb.net/wrkflw-staging?retryWrites=true&w=majority"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/workflow/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-wrkflw-staging
+      VaultSecretPath: "wrkflw/staging/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-wrkflw-staging

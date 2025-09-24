@@ -1,0 +1,16 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mfe-feed-service
+
+spec:  
+  values:
+    projectName: authoring-mfe-feed-service
+    ServiceAccountName: "atcore"
+    vault_secrets:
+      name: "mfe-feed-service-atcore"
+      VaultK8sRoleName: "kv-atcore-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "atcore/mfe"

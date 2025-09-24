@@ -1,0 +1,62 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-pgnsvc-systest
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 1
+    namespace: "pgnsvc-systest"
+    environment: "systest"
+    deploymentStrategy: "RollingUpdate"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    #    migration_init_script:
+    #      enabled: false
+    #      image:
+    #        repository: artifacts.cha.rbxd.ds/automated/pgnsvc/mongo-migration # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-systest:name"}
+    #        tag: systest-1-todo # {"$imagepolicy": "flux-system:pgnsvc-mongo-migration-systest:tag"}
+    #        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pgnsvc/authoring-bff # {"$imagepolicy": "flux-system:pgnsvc-authoring-bff-systest:name"}
+        tag: systest-52-1.13.0-bugfix-VIK-1714-update-irregular-schedule-id-52243 # {"$imagepolicy": "flux-system:pgnsvc-authoring-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pgnsvc-systest?retryWrites=true&w=majority"
+        AWS_TOPIC_ARN: arn:aws:sns:eu-west-1:512544833523:systest-calendar_service-events.fifo
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        Hangfire__Enabled: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/period-generator/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-pgnsvc-systest
+      VaultK8sRoleName: "kv-pgnsvc-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pgnsvc/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-pgnsvc-systest
+      VaultK8sRoleName: "kv-pgnsvc-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

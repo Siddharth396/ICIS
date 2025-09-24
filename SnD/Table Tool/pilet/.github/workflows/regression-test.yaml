@@ -1,0 +1,17 @@
+name: Regression Test
+
+on:
+    workflow_dispatch:
+  
+jobs:
+  regression-test:
+    runs-on: ubuntu-latest
+    env:
+        GH_TOKEN: ${{ secrets.GH_AUTOMATION_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Execute Regression tests
+        run: |
+          chmod +x ./github_scripts/gh_regression_tests.sh
+          ./github_scripts/gh_regression_tests.sh

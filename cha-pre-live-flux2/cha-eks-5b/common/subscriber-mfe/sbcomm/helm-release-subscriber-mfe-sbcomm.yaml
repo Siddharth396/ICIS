@@ -1,0 +1,14 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: subscriber-mfe
+spec:  
+  values:
+    projectName : "sbcomm"
+    serviceAccountName : "sbcomm"
+    vault_secrets:
+      VaultK8sRoleName: "kv-sbcomm-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+

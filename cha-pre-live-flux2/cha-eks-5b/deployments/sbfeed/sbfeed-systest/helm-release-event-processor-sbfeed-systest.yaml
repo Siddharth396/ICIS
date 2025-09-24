@@ -1,0 +1,50 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-sbfeed-systest
+  values:
+    replicaCount: 1
+    namespace: "sbfeed-systest"
+    environment: "systest"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "systest"
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "activity_feed_notifications_consumer_systest"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "public_systest_alerting_notifications_retry_1"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "public_systest_alerting_notifications_failed_1"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_uat_subscription_product_items_1"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_subscription_product_items_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__Topics__1: "public_uat_petchem_location_1"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_petchem_location_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__Topics__2: "public_uat_petchem_commodity_group_1"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_petchem_commodity_group_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__Topics__3: "public_systest_alerting_notifications_2"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_systest_alerting_notifications_2: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__Topics__4: "public_integration_subscription_user_product_items_1"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_integration_subscription_user_product_items_1: "http://localhost:80/v1/messageHandler"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbfeed/sbfeed-event-processor # {"$imagepolicy": "flux-system:sbfeed-event-processor-systest:name"}
+        tag: systest-162-1.4.41-atl-4590-fix-event-proc-healthcheck.1-87 # {"$imagepolicy": "flux-system:sbfeed-event-processor-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/sbfeed-systest?retryWrites=true&w=majority"
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        PubNub__Enabled: true
+        EntitlementsProcessing__EnableEntitlementChangePublishing: true
+        EntitlementsProcessing__BaseAddressOfBFF: http://subscriber-bff-sbfeed.sbfeed-systest.svc.cluster.local:80
+        MongoDb__CollectionNames__OrderCommodities: order_commodities_2
+        MongoDb__CollectionNames__OrderLocations: order_locations_2
+        MongoDb__CollectionNames__OrderCommodityFamilies: order_commodity_families_2
+    vault_secrets:
+      name: sbfeed-event-processor-vault-secret-systest
+      VaultSecretPath: "sbfeed/systest/eventprocessor"
+    vault_secrets_consumer:
+      name: sbfeed-event-processor-vault-secret-consumer-systest
+      VaultSecretPath: "sbfeed/systest/eventprocessor"

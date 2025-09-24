@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-realm-bff
+spec:
+  values:
+    namespace: "sboutg-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: Always
+    realm_deployer:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sboutg-realm-deployer # {"$imagepolicy": "flux-system:sboutg-realm-bff-integration:name"}
+        tag: integration-1-0.0.1-212781 # {"$imagepolicy": "flux-system:sboutg-realm-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      appsettings:
+        REALMID: sboutg-integration-hhfod
+        REALMDATABASE: sboutg-integration
+        REALMCLUSTERNAME: cha-pre-live
+        AUDIENCE: id.integration.genesis.cha.rbxd.ds
+        ENVVALUE: integration
+        SECRET_FILE_PATH: /etc/secrets/.env
+    data_deployer:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sboutg-realm-data-deployer # {"$imagepolicy": "flux-system:sboutg-realm-data-integration:name"}
+        tag: integration-1-0.0.1-212781 # {"$imagepolicy": "flux-system:sboutg-realm-data-integration:tag"}
+        pullPolicy: IfNotPresent
+      appsettings:
+        REALMDATABASE: sboutg-integration
+        DEPLOYENV: integration
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MONGODB_SERVER: cha-pre-live-ak0n6.mongodb.net
+        # no ingress here
+    vault_secrets:
+      name: subscriber-realm-bff-vault-secret-sboutg-integration
+      VaultSecretPath: "sboutg/integration/realm"
+    vault_secrets_proxy:
+      name: subscriber-realm-bff-vault-secret-proxy-sboutg-integration

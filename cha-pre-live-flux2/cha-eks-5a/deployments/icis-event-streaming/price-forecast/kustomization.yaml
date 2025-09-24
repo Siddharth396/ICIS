@@ -1,0 +1,43 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- performance-alerting-notifications-v2
+- performance-price-forecast-price-assessment
+- performance-price-forecast-price-assessments-specification
+- performance-currency
+- performance-frequency
+- performance-measure-unit
+- performance-price-type
+# topic does not exist
+# - performance-refdata-mappings
+- performance-transaction-type
+- staging-price-forecast-price-assessment
+- staging-price-forecast-price-assessments-specification
+- staging-currency
+- staging-frequency
+- staging-market-driver
+- staging-measure-unit
+- staging-price-type
+- staging-price-outlook
+- staging-refdata-mappings
+- staging-transaction-type
+- systest-price-forecast-price-assessment
+- systest-price-forecast-price-assessments-specification
+- systest-currency
+- systest-frequency
+- systest-market-driver
+- systest-measure-unit
+- systest-price-outlook
+- systest-price-type
+- systest-refdata-mappings
+- systest-transaction-type
+- uat-price-forecast-price-assessment
+- uat-price-forecast-price-assessments-specification
+- uat-currency
+- uat-frequency
+- uat-market-driver
+- uat-measure-unit
+- uat-price-type
+- uat-price-outlook
+- uat-refdata-mappings
+- uat-transaction-type

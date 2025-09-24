@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: opsadm-systest
+nameSuffix: -opsadm
+resources:
+- ../../../common/authoring-bff/opsadm/
+  
+patches:
+- path: helm-release-authoring-bff-opsadm-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN1
+

@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: helm-charts
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  secretRef:
+    name: artifacts-ca-crt
+  url: https://artifacts.cha.rbxd.ds/repository/helm_charts/

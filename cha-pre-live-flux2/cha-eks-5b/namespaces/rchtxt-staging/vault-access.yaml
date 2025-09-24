@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: rchtxt
+  namespace: rchtxt-staging
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-rchtxt-staging-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: rchtxt
+  namespace: rchtxt-staging
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

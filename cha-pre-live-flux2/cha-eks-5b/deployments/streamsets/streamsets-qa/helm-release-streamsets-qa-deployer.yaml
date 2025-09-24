@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: streamsets-qa-release
+  namespace: streamsets-qa
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: streamsets
+      version: 0.0.15
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    ServiceAccountName: "streamsets"
+    namespace: "streamsets-qa"
+    LOAD_BALANCER_HOSTNAME: streamsets-qa-deployment.cha.eu-west-1.dev
+    SMTP_HOST: chamailrelay.cha.rbxd.ds
+    SMTP_FROM_HOST: streamsets-qa@cha.rbxd.ds
+    SDC_REPO: "artifacts.cha.rbxd.ds/ds/streamsets-dc-generic"
+    SDC_TAG: "1.0.21"
+    SDC_VERSION: "5.10.0"
+    REQUESTS_MEMORY: 3Gi
+    REQUESTS_CPU: "1"
+    LIMITS_MEMORY: 6Gi
+    LIMITS_CPU: "2"
+    USER_STAGE_LIBS: apache-kafka_3_4,aws,aws-secrets-manager-credentialstore,jdbc,jython_2_7,sdc-snowflake,vault-credentialstore,mongodb-atlas
+    streamsets:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/streamsets" # {"$imagepolicy": "flux-system:streamsets-deployer:name"}
+        tag: "streamsets-20-0.0.0.20" # {"$imagepolicy": "flux-system:streamsets-deployer:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: qa
+      argument:
+        arg1: deployment.properties
+        arg2: streamsets-qa
+        arg3: deployment
+    vault_secrets:
+      name: streamsets-qa-secrets-deployer
+      VaultK8sRoleName: "kv-streamsets-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "streamsets/qa"
+    vault_secrets_streamsets:
+      name: streamsets-qa-job-deployer
+      VaultK8sRoleName: "kv-streamsets-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "streamsets/common"

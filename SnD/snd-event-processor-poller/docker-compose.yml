@@ -1,0 +1,14 @@
+---
+version: '3.8'
+services:
+  poller:
+    container_name: poller
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Dev  
+    volumes:
+      - ~/projects/poller/logs:/logs
+      - ~/.aws/credentials:/root/.aws/credentials:ro

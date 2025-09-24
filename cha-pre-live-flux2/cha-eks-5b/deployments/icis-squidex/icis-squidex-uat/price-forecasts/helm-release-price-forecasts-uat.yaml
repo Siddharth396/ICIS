@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-uat
+  namespace: icis-squidex-uat
+spec:
+  releaseName: price-forecasts-uat
+  values:
+    projectName: "price-forecasts"
+    vault:
+      authPath: "auth/cha/eks-b"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-uat:name"}
+        tag: uat-211-7.7.35 # {"$imagepolicy": "flux-system:icis-squidex-uat:tag"}
+      vault:
+        authPath: "auth/cha/eks-b"
+        role: "kv-icis-squidex-read"
+        secretPath: "kv/cha/k8s/data/icis-squidex"
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: price-forecasts
+        ADMIN__ADMINUSERGROUP__0: ICIS_Mars
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'500'"
+        CONTENTS__MAXRESULTS: "'500'"
+        PLUGINS__2: ICIS.ExportPlugin.dll
+        EXPORT__MAXEXPORTCOUNT: "'500'"
+        EXPORT__ENABLEROLEPERMISSION: "'true'"
+        ELASTIC_APM_SERVICE_NAME: "PriceForecast - CMS"
+        ELASTIC_APM_CENTRAL_CONFIG: "'false'"
+        ELASTIC_APM_CAPTURE_BODY: "all"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: "'0.5'"
+        ELASTIC_APM_ENABLED: "'true'"
+      kafka:
+        enabled: True
+    squidexCli:
+      enabled: True
+      schedule: "'00 9,12,15,17,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-uat:name"}
+        tag: uat-91-8.0.39 # {"$imagepolicy": "flux-system:icis-squidex-cli-uat:tag"}
+        pullPolicy: IfNotPresent
+    vault_squidex_secrets:
+      name: price-forecasts-squidex-uat-secret
+    vault_kafka_secrets:
+      name: price-forecasts-squidex-kafka-uat-secret
+      VaultSecretPath: "icis-squidex/price-forecasts/uat"

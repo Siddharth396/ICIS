@@ -1,0 +1,40 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- canvas-subscriber-bff-policy-integration.yaml
+- canvas-subscriber-bff-policy-systest.yaml
+- canvas-subscriber-bff-policy-performance.yaml
+- canvas-subscriber-bff-policy-staging.yaml
+- canvas-subscriber-bff-registry.yaml
+########
+- canvas-authoring-bff-policy-integration.yaml
+- canvas-authoring-bff-policy-systest.yaml
+- canvas-authoring-bff-policy-performance.yaml
+- canvas-authoring-bff-policy-staging.yaml
+- canvas-authoring-bff-registry.yaml
+########
+- canvas-yjs-websockets-server-policy-integration.yaml
+- canvas-yjs-websockets-server-policy-systest.yaml
+- canvas-yjs-websockets-server-policy-performance.yaml
+- canvas-yjs-websockets-server-policy-staging.yaml
+- canvas-yjs-websockets-server-registry.yaml
+########
+- canvas-mongo-migration-policy-integration.yaml
+- canvas-mongo-migration-policy-systest.yaml
+- canvas-mongo-migration-policy-performance.yaml
+- canvas-mongo-migration-policy-staging.yaml
+- canvas-mongo-migration-registry.yaml
+########
+- systest-three/canvas-subscriber-bff-policy-systest-three.yaml
+- systest-three/canvas-authoring-bff-policy-systest-three.yaml
+- systest-three/canvas-mongo-migration-policy-systest-three.yaml
+- systest-three/canvas-authoring-three-bff-registry.yaml
+- systest-three/canvas-mongo-three-migration-registry.yaml
+- systest-three/canvas-subscriber-three-bff-registry.yaml
+########
+- systest-two/canvas-subscriber-bff-policy-systest-two.yaml
+- systest-two/canvas-authoring-bff-policy-systest-two.yaml
+- systest-two/canvas-mongo-migration-policy-systest-two.yaml
+- systest-two/canvas-authoring-two-bff-registry.yaml
+- systest-two/canvas-mongo-two-migration-registry.yaml
+- systest-two/canvas-subscriber-two-bff-registry.yaml

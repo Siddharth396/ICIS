@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- omspss-subscriber-bff-policy-integration.yaml
+- omspss-subscriber-bff-policy-systest.yaml
+- omspss-subscriber-bff-policy-performance.yaml
+- omspss-subscriber-bff-policy-staging.yaml
+- omspss-subscriber-bff-registry.yaml
+########
+- omspss-authoring-bff-policy-integration.yaml
+- omspss-authoring-bff-policy-systest.yaml
+- omspss-authoring-bff-policy-performance.yaml
+- omspss-authoring-bff-policy-staging.yaml
+- omspss-authoring-bff-registry.yaml
+########
+- omspss-mongo-migration-policy-integration.yaml
+- omspss-mongo-migration-policy-systest.yaml
+- omspss-mongo-migration-policy-performance.yaml
+- omspss-mongo-migration-policy-staging.yaml
+- omspss-mongo-migration-registry.yaml

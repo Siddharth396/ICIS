@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  annotations:
+  name: docker-registry-cleanup
+  namespace: icis-gh-arc-runners
+spec:
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          # securityContext:
+          #   fsGroup: 65534
+          serviceAccountName: svc-docker-registry-cleanup
+          containers:
+          - image: artifacts.cha.rbxd.ds/kubectl-ops:1.0.4
+            imagePullPolicy: IfNotPresent
+            name: docker-registry-cleanup
+            command:
+            - /bin/sh
+            - -c
+            - |-
+              NAMESPACE=icis-gh-arc-runners
+              APP_NAME=docker-registry
+              POD_NAME=$(kubectl get --no-headers=true pods -l app=$APP_NAME -n $NAMESPACE -o custom-columns=:metadata.name)
+              echo "Registry garbage collection in progress"
+
+              before_disk_size=$(kubectl exec -n $NAMESPACE $POD_NAME -- /bin/sh -c "df /var/lib/registry | tail -1 | awk '{print \$4}'")
+              kubectl exec -it -n $NAMESPACE $POD_NAME -- registry garbage-collect /etc/docker/registry/config.yml -m
+              after_disk_size=$(kubectl exec -n $NAMESPACE $POD_NAME -- /bin/sh -c "df /var/lib/registry | tail -1 | awk '{print \$4}'")
+
+              if [ "$after_disk_size" -le "$before_disk_size" ]; then
+                exit 1
+              else
+                echo "Registry garbage collecton is complete"
+              fi
+            resources: {}
+            securityContext:
+              capabilities: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          restartPolicy: Never
+          #schedulerName: default-scheduler
+          terminationGracePeriodSeconds: 120
+  schedule: "0 2 * * 0" # Every Sunday at 2:00 AM
+  successfulJobsHistoryLimit: 3
+  suspend: false

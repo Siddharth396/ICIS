@@ -1,0 +1,62 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-idsadm-systest
+  values:
+    replicaCount: 1
+    namespace: "idsadm-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/idsadm/authoring-bff # {"$imagepolicy": "flux-system:idsadm-auth-bff-systest:name"}
+        tag: systest-69-2.0.0.47702 # {"$imagepolicy": "flux-system:idsadm-auth-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .1
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        VIPER_GET_USER_DETAILS_URL_ENDPOINT: https://api.demo.coa.rbxd.ds/sites/icis/users
+        VIPER_HEALTHCHECK_URL: https://api.demo.coa.rbxd.ds/healthcheck
+        SQL_IDS_DB_HOST: genesis-ids-stag.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com
+        SQL_IDS_DB_NAME: genesis-ids-duende-systest
+        DEV_MODE: false
+        LOG_LEVEL: Information
+        MUTATION: true
+        VIPER_HEALTHCHECK_INTERVAL: 5
+        ALLOWED_ROLE: ADFS-ICIS-IDS-ADMIN-PRELIVE
+        ROLE_SUPER_ADMIN: ADFS-ICIS-IDSADM-SUPER-ADMIN-PRELIVE
+        ROLE_SESSION_ADMIN: ADFS-ICIS-IDSADM-SESSION-ADMIN-PRELIVE
+        ROLE_OBSERVER: ADFS-ICIS-IDSADM-OBSERVER-PRELIVE
+        IDS_URL_ENDPOINT: https://id.systest.genesis.cha.rbxd.ds
+        EXCLUDED_EMAIL_DOMAINS: icis.com,lexisnexisrisk.com
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/ids-admin/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-idsadm-systest
+      VaultK8sRoleName: "kv-idsadm-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "idsadm/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-idsadm-systest
+      VaultK8sRoleName: "kv-idsadm-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

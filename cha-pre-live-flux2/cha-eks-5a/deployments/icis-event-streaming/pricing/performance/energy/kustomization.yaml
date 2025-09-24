@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- energy-price-assessments-prices
+- energy-price-assessments-prices-corrections
+- energy-price-assessments-specifications
+- energy-ref-currencies
+- energy-ref-locations
+- energy-ref-markets
+- energy-ref-measure-units
+- energy-spreads-prices
+- energy-spreads-prices-corrections
+- energy-spreads-specifications
+- energy-vwap-indices
+- energy-vwap-indices-corrections
+- energy-vwap-indices-specifications

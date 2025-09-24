@@ -1,0 +1,57 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tesla-exporter
+  namespace: icis-monitoring
+spec:
+  releaseName: tesla-exporter
+  interval: 5m0s
+  chart:
+    spec:
+      chart: icis-monitoring-exporter
+      version: "1.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    nameOverride: "tesla-check-exporter"
+    fullnameOverride: "tesla-check-exporter"
+
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-monitoring/tesla_checks_exporter
+      tag: "1.0.0"
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 3301
+
+    vault:
+      type: kv-v2
+      mount: kv/cha/k8s
+      path: icis-monitoring/tesla-vars
+
+    serviceMonitor:
+      interval: 30s
+      namespace: icis-monitoring
+      release: tesla-exporter
+
+    secrets:
+      - name: tesla-vars
+        envName: COLLECTORS_SERVERS
+        key: COLLECTORS_SERVERS
+      - name: tesla-vars
+        envName: EXPORTSERVICES_SERVERS
+        key: EXPORTSERVICES_SERVERS
+      - name: tesla-vars
+        envName: NORMALISERS_SERVERS
+        key: NORMALISERS_SERVERS
+      - name: tesla-vars
+        envName: PROCESSORS_SERVERS
+        key: PROCESSORS_SERVERS

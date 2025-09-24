@@ -1,0 +1,14 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: price-forecast
+  namespace: icis-event-streaming
+  labels:
+    strimzi.io/cluster: prelive-connect-cluster
+spec:
+  config:
+    transforms: RenameField,FilterValue
+    transforms.RenameField.renames:
+    transforms.RenameField.type: org.apache.kafka.connect.transforms.ReplaceField$Value
+    transforms.FilterValue.type: io.confluent.connect.transforms.Filter$Value
+    document.id.strategy: com.mongodb.kafka.connect.sink.processor.id.strategy.ProvidedInValueStrategy

@@ -1,0 +1,151 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: cp-control-center
+  namespace: icis-event-streaming
+spec:
+  releaseName: cp-control-center
+  interval: 5m0s
+  chart:
+    spec:
+      chart: cp-control-center
+      version: "0.1.0"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 1
+
+    ## Image Info
+    ## ref: https://hub.docker.com/r/confluentinc/cp-kafka/
+    image: confluentinc/cp-enterprise-control-center
+    imageTag: 5.4.1
+
+    ## Specify a imagePullPolicy
+    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    imagePullPolicy: IfNotPresent
+
+    ## Specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/concepts/containers/images/#specifying-imagepullsecrets-on-a-pod
+    imagePullSecrets:
+
+    service:
+      port: 9021
+    #  type: LoadBalancer
+    ingress:
+      ingressClass: icis-nginx-ingress
+      annotations:
+        lnrs.io/zone-type: private
+        cert-manager.io/cluster-issuer: vault-issuer
+        external-dns.alpha.kubernetes.io/hostname: cp-control-center.cha.eu-west-1.dev
+      enabled: true
+      hosts:
+      - host: cp-control-center.cha.eu-west-1.dev
+        paths:
+        - /
+        tls: "true"
+      tls:
+      - hosts:
+        - cp-control-center.cha.eu-west-1.dev
+        secretName: cp-control-center-cha-eu-west-1-dev
+
+
+    ## Control Center properties
+    ## ref: 
+    configurationOverrides:
+      #"id": "99"
+      "name": "_confluent-controlcenter"
+      "replication.factor": "3"
+      "streams.security.protocol": "SASL_SSL"
+      "streams.sasl.mechanism": "PLAIN"
+      "streams.sasl.jaas.config": >
+            org.apache.kafka.common.security.plain.PlainLoginModule required
+            username=<"to-be-entered">
+            password=<"to-be-entered">;
+      
+      "streams.ssl.endpoint.identification.algorithm": "https"
+      "internal.topics.replication": "3"
+      "monitoring.interceptor.topic.replication": "3"
+      "metrics.topic.replication": "3"
+      "metrics.topic.max.message.bytes": "8388608"
+      "command.topic.replication": "3"
+      "streams.num.stream.threads": "2"
+      "streams.consumer.request.timeout.ms": "960032"
+      "schema.registry.basic.auth.credentials.source": "USER_INFO"
+      "schema.registry.basic.auth.user.info": <"key:secret" to-be-entered>
+      # "rest.listeners": "http://0.0.0.0:9021"
+      "confluent.license": <"to-be-entered">
+
+    ## Kafka Connect JVM Heap Option
+    heapOptions: "-Xms3072M -Xmx4096M"
+
+    ## Additional env variables
+    customEnv: 
+      "confluent.metrics.topic.max.message.bytes": "8388608"
+
+    resources: {}
+      # We usually recommend not to specify default resources and to leave this as a conscious
+      # choice for the user. This also increases chances charts run on environments with little
+      # resources, such as Minikube. If you do want to specify resources, uncomment the following
+      # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+      #limits:
+      #  cpu: 100m
+      #  memory: 512Mi
+      #requests:
+      #  cpu: 100m
+      #  memory: 512Mi
+
+    ## Custom pod annotations
+    podAnnotations: {}
+
+    ## Node labels for pod assignment
+    ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    nodeSelector: {}
+
+    ## Taints to tolerate on node assignment:
+    ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+    tolerations: {}
+
+    ## Monitoring
+    ## Kafka JMX Settings
+    ## ref: https://docs.confluent.io/current/kafka/monitoring.html
+    jmx:
+      port: 5555
+
+    ## Prometheus Exporter Configuration
+    ## ref: https://prometheus.io/docs/instrumenting/exporters/
+    prometheus:
+      ## JMX Exporter Configuration
+      ## ref: https://github.com/prometheus/jmx_exporter
+      jmx:
+        enabled: true
+        image: solsson/kafka-prometheus-jmx-exporter@sha256
+        imageTag: 6f82e2b0464f50da8104acd7363fb9b995001ddff77d248379f8788e78946143
+        port: 5556
+
+        ## Resources configuration for the JMX exporter container.
+        ## See the `resources` documentation above for details.
+        resources: {}
+
+    ## You can list load balanced service endpoint, or list of all brokers (which is hard in K8s).  e.g.:
+    ## bootstrapServers: "PLAINTEXT://dozing-prawn-kafka-headless:9092"
+    kafka:
+      bootstrapServers: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+
+    ## If the Kafka Chart is disabled a URL and port are required to connect
+    ## e.g. gnoble-panther-cp-schema-registry:8081
+    cp-schema-registry:
+      url: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+
+    cp-kafka-connect:
+      url: "http://prelive-connect-cluster-connect-api:8083"
+
+    cp-ksql-server:
+      url: ""
+
+    cp-zookeeper:
+      ## If the Zookeeper Chart is disabled a URL and port are required to connect
+      url: ""  
+

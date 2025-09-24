@@ -1,0 +1,18 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-rchtxt"
+    ServiceAccountName: "rchtxt"    
+    bff:
+      config_env:
+        MUTATION: true
+        RTT_SANITIZER_ALLOWED_TAGS: a,blockquote,h2,h3,h6,i,li,ol,p,strong,u,ul,suggestion-start,suggestion-end,svg,path,figure,figcaption,table,tbody,thead,tr,td,th,colgroup,col
+        RTT_SANITIZER_ALLOWED_ATTRIBUTES: class,href,target,rel,name,data-suggestion-start-before,contenteditable,style,rowspan,colspan
+        IIT_SANITIZER_ALLOWED_TAGS: p,a
+        IIT_SANITIZER_ALLOWED_ATTRIBUTES: href,class,target,rel
+        COMMENT_SANITIZER_ALLOWED_TAGS: p

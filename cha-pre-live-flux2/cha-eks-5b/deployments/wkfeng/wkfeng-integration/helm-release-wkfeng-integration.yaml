@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: workflow-engine
+spec:
+  values:
+    replicaCount: 1
+    serviceAccountName: wkfeng
+    namespace: "wkfeng-integration"
+    app:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/wkfeng/workflow-engine # {"$imagepolicy": "flux-system:workflow-engine-integration:name"}
+        tag: integration-25-2.2.0.6848 # {"$imagepolicy": "flux-system:workflow-engine-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        DB_URL: "jdbc:postgresql://icis-camunda-db-prelive.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com/camunda-integration"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_ENABLED: true
+        ELASTIC_APM_ENVIRONMENT: integration
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      hosts:
+        - host: workflow-engine.integration.cha.rbxd.ds
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - workflow-engine.integration.cha.rbxd.ds
+          secretName: workflow-engine.integration.cha.rbxd.ds
+    secrets:
+      name: workflow-engine.integration.cha.rbxd.ds
+    vault_secrets:
+      name: wkfeng-vault-secret-integration
+      VaultSecretPath: "wkfeng/integration"

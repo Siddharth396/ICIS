@@ -1,0 +1,180 @@
+{
+  "name": "supply-and-demand-pilet",
+  "version": "0.1.0",
+  "private": true,
+  "sideEffects": false,
+  "scripts": {
+    "authoring:app-shell": "node ./scripts/switchAppShellType.js authoring",
+    "build": "pilet build",
+    "build:authoring": "pilet build ./src/authoring-index",
+    "debug": "concurrently  -k -n web,bff,shell,socket -c green,blue,red,yellow  \"yarn start:mock\"  \"yarn start:mock-bff\"",
+    "debug:authoring": "concurrently  -k -n web,bff,shell,socket -c green,blue,red,yellow  \"yarn start:authoring-mock\"  \"yarn start:mock-bff\"",
+    "eject": "react-scripts eject",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,md,json}' --config ./.prettierrc",
+    "package": "pilet pack --target pilet-package.tgz",
+    "publish:local": "pilet build && pilet pack && pilet publish --url http://localhost:8090/api/v1/mfe --api-key df133a512569cbc85f69788d1b7ff5a909f6bcfe1c9a2794283a2fc35175882c && rm *.tgz",
+    "upgrade:pilet": "pilet upgrade",
+    "start": "yarn subscriber:app-shell && yarn open-cli https://localhost:8050/mfe/supply-demand-pilet && pilet debug ./src/index --port 8083 --env",
+    "start:authoring": "yarn authoring:app-shell && yarn open-cli https://localhost:8050/mfe/supply-demand-pilet/authoring && pilet debug ./src/authoring-index --port 8083 --env",
+    "start:app-shell-mock": "docker pull artifacts.cha.rbxd.ds/sbcore/sbcore-app-mockbff:latest && docker run -p 4200:4200 -d artifacts.cha.rbxd.ds/sbcore/sbcore-app-mockbff:latest",
+    "start:docker": "../../dockerup.sh",
+    "start:docker:all": "../../dockerup.sh -all",
+    "stop:docker": "docker-compose -f ../../docker-compose.yml down",
+    "start:mock": "yarn open-cli https://localhost:8083/mfe/supply-demand-pilet && pilet debug ./src/index --port 8083 --env",
+    "start:authoring-mock": "yarn open-cli https://localhost:8083/mfe/supply-demand-pilet/authoring && pilet debug ./src/authoring-index --port 8083 --env",
+    "start:mock-bff": "yarn --cwd ./packages/bff-mock start",
+    "subscriber:app-shell": "node ./scripts/switchAppShellType.js",
+    "test:tsc": "tsc",
+    "test:unit": "react-scripts test",
+    "test:lint": "eslint \"src/**/*.{js,tsx,ts,json}\"",
+    "test:lint:fix": "eslint --fix \"src/**/*.{js,tsx,ts,json}\"",
+    "test:unit:tc": "react-scripts test --testPathIgnorePatterns='TestData.*' --detectOpenHandles --testResultsProcessor jest-teamcity-reporter --watchAll=false --coverage && echo \"Coverage: $(lcov-total coverage/lcov.info)\"",
+    "test": "yarn test:lint && yarn test:tsc && yarn test:unit",
+    "test:tc": "yarn test:lint && yarn test:tsc && yarn test:unit:tc"
+  },
+  "dependencies": {
+    "@icis/app-shell-apis": "1.38.1-5632",
+    "lodash": "^4.17.21",
+    "open-cli": "^8.0.0"
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.1.3",
+    "@babel/runtime": "^7.24.4",
+    "@dbeining/react-atom": "4.1.21",
+    "@icis/app-shell": "1.38.1-5632",
+    "@icis/ui-kit": "^1.1.2237",
+    "@testing-library/dom": "^10.0.0",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.3.0",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/enzyme-adapter-react-16": "^1.0.9",
+    "@types/jest": "^29.5.12",
+    "@types/lodash": "^4.17.0",
+    "@types/node": "^20.12.6",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.9",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.2",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "apollo-cache-inmemory": "^1.6.6",
+    "babel-loader": "^9.1.3",
+    "concurrently": "^8.2.2",
+    "dotenv-webpack": "^8.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.28.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "graphql": "^15.3.0",
+    "graphql-tag": "^2.11.0",
+    "jest-styled-components": "^7.0.8",
+    "jest-teamcity-reporter": "^0.9.0",
+    "lcov-total": "^2.1.1",
+    "path-to-regexp": "6.2.1",
+    "piral-cli": "1.5.5",
+    "piral-cli-dotenv": "^0.2.0",
+    "piral-cli-webpack5": "1.5.6",
+    "prettier": "^3.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-loading-skeleton": "^3.4.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^5.0.1",
+    "replace-in-file": "^7.1.0",
+    "styled-components": "^5.1.1",
+    "tsconfig-paths-webpack-plugin": "^3.3.0",
+    "tslib": "^2.2.0",
+    "typescript": "^5.4.4"
+  },
+  "peerDependencies": {
+    "@apollo/client": "*",
+    "@dbeining/react-atom": "*",
+    "@fortawesome/fontawesome-pro": "*",
+    "@fortawesome/fontawesome-svg-core": "*",
+    "@fortawesome/react-fontawesome": "*",
+    "@icis/app-shell": "*",
+    "@icis/ui-kit": "*",
+    "@libre/atom": "*",
+    "date-fns": "*",
+    "graphql": "*",
+    "graphql-tag": "*",
+    "history": "*",
+    "path-to-regexp": "*",
+    "react": "*",
+    "react-dom": "*",
+    "react-loading-skeleton": "*",
+    "react-router": "*",
+    "react-router-dom": "*",
+    "styled-components": "*",
+    "tslib": "*"
+  },
+  "resolutions": {
+    "**/@typescript-eslint/eslint-plugin": "^6.7.4",
+    "**/@typescript-eslint/parser": "^6.7.4",
+    "cross-spawn": "7.0.5",
+    "http-proxy-middleware": "2.0.7",
+    "rollup": "2.79.2",
+    "nth-check": "^2.0.1",
+    "body-parser": "1.20.3",
+    "path-to-regexp": "0.1.12",
+    "path-to-regexp@1": "1.9.0",
+    "path-to-regexp@6": "6.3.0",
+    "ws": "8.17.1",
+    "ws@7": "7.5.10"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "ie 11",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "index.ts",
+      "./src/test-utils",
+      ".style.ts",
+      "./src/typings",
+      "TestHarness.tsx",
+      "types.ts"
+    ],
+    "transformIgnorePatterns": [
+      "/node_modules/(?!@icis).+\\.js$"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      }
+    }
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "piral": {
+    "comment": "Keep this section to use the Piral CLI.",
+    "name": "@icis/app-shell"
+  },
+  "peerModules": [],
+  "importmap": {
+    "imports": {},
+    "inherit": [
+      "@icis/app-shell"
+    ]
+  }
+}

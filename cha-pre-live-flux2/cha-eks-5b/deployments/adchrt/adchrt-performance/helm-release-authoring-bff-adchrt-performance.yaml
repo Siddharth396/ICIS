@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-adchrt-performance
+  values:
+    replicaCount: 3
+    namespace: "adchrt-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/adchrt/authoring-bff # {"$imagepolicy": "flux-system:adchrt-auth-bff-performance:name"}
+        tag: performance-20-1.18.0-main-58355 # {"$imagepolicy": "flux-system:adchrt-auth-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/adchrt-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        MUTATION: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SQL_SNOWFLAKE_CONNECTION_STRING: scheme=https;account=ex99616;host=ex99616.eu-west-1.snowflakecomputing.com;port=443;user=${sql_snowflake_user_uat};password=${sql_snowflake_pwd_uat};warehouse=DATA_CANVAS_WH_UAT;
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/adhoc-chart/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-adchrt-performance
+      VaultSecretPath: "adchrt/performance/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-adchrt-performance
+    autoscaling:
+      enabled: false
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

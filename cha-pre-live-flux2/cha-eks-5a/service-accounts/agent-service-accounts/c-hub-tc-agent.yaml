@@ -1,0 +1,104 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: c-hub-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-tc-agent-admin
+  namespace: c-hub-systest
+subjects:
+- kind: ServiceAccount
+  name: c-hub-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-tc-agent-admin-service-monitor
+  namespace: c-hub-systest
+subjects:
+- kind: ServiceAccount
+  name: c-hub-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-tc-agent-admin
+  namespace: c-hub-staging
+subjects:
+- kind: ServiceAccount
+  name: c-hub-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-tc-agent-admin-service-monitor
+  namespace: c-hub-staging
+subjects:
+- kind: ServiceAccount
+  name: c-hub-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-tc-agent-admin-service-monitor
+  namespace: c-hub-performance
+subjects:
+- kind: ServiceAccount
+  name: c-hub-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-tc-agent-admin
+  namespace: c-hub-performance
+subjects:
+- kind: ServiceAccount
+  name: c-hub-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io

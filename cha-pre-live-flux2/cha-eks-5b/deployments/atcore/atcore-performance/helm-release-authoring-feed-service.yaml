@@ -1,0 +1,60 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mfe-feed-service
+spec:
+  releaseName: authoring-mfe-feed-service-performance
+  values:
+    namespace: "atcore-performance"
+    environment: "performance"
+    feedservice:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-mfe-feed-service # {"$imagepolicy": "flux-system:authoring-mfe-feed-service-performance:name"}
+        tag: performance-8-1.3.1-feature-GEN-13973-mfe-feed-service-cicd-github-mig-depl-fix-39177 # {"$imagepolicy": "flux-system:authoring-mfe-feed-service-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        GENESIS_MONGO_DB__CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net?retryWrites=true&w=majority"
+        GENESIS_MONGO_DB__DATABASE: subscriber-mfe-prelive
+        GENESIS_MONGO_DB__COLLECTION_NAME: authoring-performance-mfe
+        GENESIS_BUCKET_NAME: subscriber-mfe-feed-service-pre-live
+        GENESIS_BUCKET_ROOT: authoring-performance/
+        GENESIS_ASSET_LINK_HOST: https://de0dhusqna834.cloudfront.net/
+        GENESIS_SELF_HOSTED_PILETS_TOGGLE: false
+        GENESIS_IS_AUTHORING: true
+    ingress:
+      enabled: true
+      name: authoring-mfe-feed-service-performance-ingress
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/proxy-body-size: 8m
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        external-dns.alpha.kubernetes.io/hostname: authoring-mfe-feed-service.performance.cha.eu-west-1.dev
+        lnrs.io/zone-type: private
+      hosts:
+        - host: authoring-mfe-feed-service.performance.cha.eu-west-1.dev
+          paths:
+            - /mfe/mfe-feed-service/?(.*)
+          tls: "true"
+        - host: authoring.performance.cha.rbxd.ds
+          paths:
+            - /mfe/mfe-feed-service/?(.*)
+          tls: "true"
+      tls:
+        - hosts:
+            - authoring-mfe-feed-service.performance.cha.eu-west-1.dev
+          secretName: authoring-mfe-feed-service-internal
+        - hosts:
+            - authoring.performance.cha.rbxd.ds
+          secretName: authoring-mfe-feed-service
+    secrets:
+      enabled: true
+      name: authoring-mfe-feed-service
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 3
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80

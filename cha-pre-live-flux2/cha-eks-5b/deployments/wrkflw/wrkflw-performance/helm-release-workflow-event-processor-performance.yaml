@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: workflow-event-processor
+spec:
+  releaseName: workflow-event-processor-performance
+  values:
+    replicaCount: 3
+    namespace: wrkflw-performance
+    environment: performance
+    wrkflw:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/wrkflw/event-processor # {"$imagepolicy": "flux-system:workflow-event-processor-performance:name"}
+        tag: performance-38-2.9.0-CC-132-Bundling-21656 # {"$imagepolicy": "flux-system:workflow-event-processor-performance:tag"}
+        pullPolicy: IfNotPresent
+      container:
+        name: http
+        port: 80
+      config_env:
+        ENVIRONMENT: performance
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1.0
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        WORKFLOW_ENGINE_API_URL: https://workflow-engine.performance.cha.rbxd.ds/engine-rest
+        WORKFLOW_ENGINE_COCKPIT_URL: https://workflow-engine.performance.cha.rbxd.ds/camunda/app/cockpit
+        REST_API_HANDLER_BASE_API_URL: https://authoring.performance.cha.rbxd.ds
+        DOMAIN_IDENTITY_TOKEN_URL: https://domainidentity.performance.cha.rbxd.ds/connect/token
+        CONTENT_NOTIFIER_KAFKA_TOPIC: public_performance_notifications_content_1
+        WORKFLOW_NOTIFICATION_KAFKA_TOPIC: public_performance_workflow_notifications_1
+        ALERT_NOTIFICATIONS_KAFKA_TOPIC: public_performance_alerting_notifications_2
+        COPY_DESK_EMAIL: rbi.dashboard@nagarro.com
+        ERROR_NOTIFICATION_EMAIL: rbi.dashboard@nagarro.com
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live.ak0n6.mongodb.net/wrkflw-performance?retryWrites=true&w=majority"
+        Domain_Identity_URL: https://domainidentity.integration.cha.rbxd.ds/v1/
+    vault_secrets:
+      name: wrkflw-eventprocessor-vault-secret-performance
+      VaultSecretPath: "wrkflw/performance/eventprocessor"

@@ -1,0 +1,17 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: authoring-socket-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-socket-chempf"
+    ServiceAccountName: "chempf"
+    vault:
+      VaultK8sRoleName: "kv-chempf-read"
+      VaultK8sAuthPath: "auth/cha/eks-a"
+
+    authproxy:
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|(/swagger?/*)|(/socket?/*)|health"

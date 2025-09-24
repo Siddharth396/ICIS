@@ -1,0 +1,71 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-realm-bff
+spec:
+  values:
+    namespace: "sboutg-systest"
+    environment: "systest"
+    authproxy:
+      resources:
+        requests:
+          memory: "16Mi"
+          cpu: "10m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+    realm_deployer:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sboutg-realm-deployer # {"$imagepolicy": "flux-system:sboutg-realm-bff-systest:name"}
+        tag: systest-93-4.0.1-MARS-5655.1-35790 # {"$imagepolicy": "flux-system:sboutg-realm-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      appsettings:
+        REALMID: sboutg-systest-eamse
+        REALMDATABASE: sboutg-systest
+        REALMCLUSTERNAME: cha-pre-live
+        AUDIENCE: id.systest.genesis.cha.rbxd.ds
+        ENVVALUE: systest
+        SECRET_FILE_PATH: /etc/secrets/.env
+    data_deployer:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sboutg-realm-data-deployer # {"$imagepolicy": "flux-system:sboutg-realm-data-systest:name"}
+        tag: systest-56-0.0.1-956024 # {"$imagepolicy": "flux-system:sboutg-realm-data-systest:tag"}
+        pullPolicy: IfNotPresent
+      appsettings:
+        REALMDATABASE: sboutg-systest
+        DEPLOYENV: systest
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MONGODB_SERVER: cha-pre-live-ak0n6.mongodb.net
+    nginx:
+      resources:
+        requests:
+          memory: "16Mi"
+          cpu: "10m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+      reverse_proxy:
+        port: 8087
+        appsettings:
+          REALM_WEBHOOK_URL: https://eu-west-1.aws.data.mongodb-api.com/app/sboutg-systest-eamse/endpoint/webhooks/context_initializer
+          REALM_NORMAL_URL: https://eu-west-1.aws.realm.mongodb.com/api/client/v2.0/app/sboutg-systest-eamse/graphql
+        #this config has to be ovverriden by indvidual components using this chart
+        config: "access_log  /dev/stdout  main;\ninclude /etc/nginx/mime.types;\nclient_header_buffer_size 8k;\nlarge_client_header_buffers 4 32k;\n\nupstream eu-west-1.aws.realm.mongodb.com {\n    server eu-west-1.aws.realm.mongodb.com:443;\n}\nupstream eu-west-1.aws.webhooks.mongodb-realm.com {\n    server eu-west-1.aws.webhooks.mongodb-realm.com:443;\n}\n\nmap $http_authorization $jwtToken {\n    ~*^bearer(\\s*)(?<token>(.*))$ $token;\n    default $http_authorization;\n}\nmap $http_x_icis_user_roles $roles {\n    default $http_x_icis_user_roles;\n}\nserver {\n    listen 8087;\n    proxy_buffering off;\n    proxy_buffers 8 8k;\n    \n    location /webhooks/ {\n        proxy_ssl_session_reuse off;\n        proxy_buffers 4 64k;\n        proxy_buffer_size 32k;\n        proxy_busy_buffers_size 64k;\n        proxy_ssl_server_name on;\n        proxy_set_header Host $host;\n        proxy_method POST;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header jwttokenstring $jwtToken;\n        proxy_set_header roles $roles;\n        proxy_set_header authorization \"\";\n        proxy_hide_header \"Access-Control-Allow-Origin\";\n        proxy_pass \"https://eu-west-1.aws.webhooks.mongodb-realm.com/api/client/v2.0/app/sboutg-systest-eamse/service/webhooks/incoming_webhook/context_initializer\";\n        if ($http_origin ~ '^https?://(.*rbxd\\.ds)') {\n            add_header Access-Control-Allow-Origin \"$http_origin\" always;     \n        }\n    }\n    location /health {\n        return 200 'Healthly';\n    }\n    location /internal/health {\n        return 200 'Healthly';\n    }\n    location /pce-graphql/ {\n        proxy_http_version 1.1;\n        proxy_ssl_session_reuse off;\n        proxy_buffers 4 64k;\n        proxy_buffer_size 32k;\n        proxy_busy_buffers_size 64k;\n        proxy_read_timeout 120s;\n        proxy_connect_timeout 120s;\n        proxy_ssl_server_name on;\n        proxy_set_header Host $host;\n        proxy_method POST;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header jwttokenstring $jwtToken;\n        proxy_set_header roles $roles;\n        proxy_set_header authorization \"\";\n        proxy_hide_header \"Access-Control-Allow-Origin\";\n        proxy_pass \"https://eu-west-1.aws.realm.mongodb.com/api/client/v2.0/app/sboutg-systest-eamse/graphql\";\n        if ($http_origin ~ '^https?://(.*rbxd\\.ds)') {\n            add_header Access-Control-Allow-Origin \"$http_origin\" always;     \n        }\n    }\n    location / {\n        proxy_http_version 1.1;\n        proxy_ssl_session_reuse off;\n        proxy_buffers 4 64k;\n        proxy_buffer_size 32k;\n        proxy_busy_buffers_size 64k;\n        proxy_read_timeout 120s;\n        proxy_connect_timeout 120s;\n        proxy_ssl_server_name on;\n        proxy_set_header Host $host;\n        proxy_method POST;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header jwttokenstring $jwtToken;\n        proxy_set_header roles $roles;\n        proxy_set_header authorization \"\";\n        proxy_hide_header \"Access-Control-Allow-Origin\";\n        proxy_pass \"https://eu-west-1.aws.realm.mongodb.com/api/client/v2.0/app/sboutg-systest-eamse/graphql\";\n        if ($http_origin ~ '^https?://(.*rbxd\\.ds)') {\n            add_header Access-Control-Allow-Origin \"$http_origin\" always;     \n        }\n    }\n}"
+    ingress:
+      enabled: false
+      className: icis-nginx-ingress
+      name: ccurve-realm-performance-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/analytics/outages(/|$)(.*)
+    vault_secrets:
+      name: subscriber-realm-bff-vault-secret-sboutg-systest
+      VaultSecretPath: "sboutg/systest/realm"
+    vault_secrets_proxy:
+      name: subscriber-realm-bff-vault-secret-proxy-sboutg-systest

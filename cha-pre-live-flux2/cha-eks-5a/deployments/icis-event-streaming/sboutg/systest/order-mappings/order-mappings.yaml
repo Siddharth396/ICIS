@@ -1,0 +1,12 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sboutg
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_refdata_mappings_1
+    database: sboutg-systest
+    collection: order_mappings
+    transforms.RenameField.renames: id:_id
+    transforms.FilterValue.filter.type: include

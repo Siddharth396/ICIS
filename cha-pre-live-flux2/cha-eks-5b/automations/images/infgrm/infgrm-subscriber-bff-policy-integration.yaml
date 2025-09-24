@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: infgrm-subscriber-bff-integration
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: infgrm-subscriber-bff
+    namespace: flux-system
+  filterTags:
+    pattern: '^integration-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

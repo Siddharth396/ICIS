@@ -1,0 +1,121 @@
+####################################################
+## Allow ingress from snkidn-integration and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-snkidn-integration
+  namespace: snkidn-integration
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: snkidn-integration
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from snkidn-integration ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-snkidn-integration
+  namespace: snkidn-integration
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: snkidn-integration
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: snkidn-integration
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: snkidn-integration
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+#################################################
+## Allow traffic to mongo db atlas peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-mongodb
+  namespace: snkidn-integration
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.248.0/21
+    ports:
+    - port: 27015
+      protocol: TCP
+    - port: 27016
+      protocol: TCP
+    - port: 27017
+      protocol: TCP
+    - port: 27015
+      protocol: UDP
+    - port: 27016
+      protocol: UDP
+    - port: 27017
+      protocol: UDP
+
+
+##################################################
+## Allow external http traffic egress to IDDN  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-iddn
+  namespace: snkidn-integration
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 9000
+      protocol: TCP
+    - port: 9100
+      protocol: TCP

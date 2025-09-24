@@ -1,0 +1,326 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: genesis-tc-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin
+  namespace: extids-systest
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin-service-monitor
+  namespace: extids-systest
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin
+  namespace: extids-staging
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin-service-monitor
+  namespace: extids-staging
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin
+  namespace: extids-performance
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin-service-monitor
+  namespace: extids-performance
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin
+  namespace: extids-performance2
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole 
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin-service-monitor
+  namespace: extids-performance2
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin
+  namespace: extids-integration
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin-service-monitor
+  namespace: extids-integration
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+ 
+--- 
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin
+  namespace: extids-sysdev1
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent-admin-service-monitor
+  namespace: extids-sysdev1
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent
+  namespace: extids-systest
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: extids-admin-vaults
+  namespace: extids-systest
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent
+  namespace: extids-integration
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: extids-admin-vaults
+  namespace: extids-integration
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent
+  namespace: extids-performance
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: extids-admin-vaults
+  namespace: extids-performance
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+  
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: genesis-tc-agent
+  namespace: extids-staging
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: extids-admin-vaults
+  namespace: extids-staging
+subjects:
+- kind: ServiceAccount
+  name: genesis-tc-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+

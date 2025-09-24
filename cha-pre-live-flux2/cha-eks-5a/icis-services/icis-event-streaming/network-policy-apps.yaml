@@ -1,0 +1,317 @@
+####################################################
+## Allow ingress from icis-event-streaming and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-icis-event-streaming
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: icis-event-streaming
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+###################################
+## Allow egress from icis-event-streaming ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-icis-event-streaming
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: icis-event-streaming
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#####################
+## ICIS monitoring ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+
+##########################################################################
+## Allow ingress to confluent HAproxy and egress to confluent cloud vpc ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-confluent-ingress-egress
+  namespace: icis-event-streaming
+spec:
+  podSelector:
+    matchLabels:
+      app: confluent-haproxy
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.52.160.0/22
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 9092
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+      
+############################################################################
+## Allow ingress to Atlantis pod and egress to Bitbucket and confluent cloud
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-atlantis-ingress-egress
+  namespace: icis-event-streaming
+spec:
+  podSelector:
+    matchLabels:
+      app: atlantis
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: icis-event-streaming
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.70/32
+    ports:
+    - port: 80
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/21
+    ports:
+    - port: 80
+      protocol: TCP      
+  - to:
+    - ipBlock:
+        cidr: 10.52.160.0/24
+    ports:
+    - port: 8181
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.161.0/24
+    ports:
+    - port: 8181
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.162.0/24
+    ports:
+    - port: 8181
+      protocol: TCP
+
+############################################################################
+## Allow ingress and egress confluent cloud (Kafka)
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-confluent-control-center-ingress-egress
+  namespace: icis-event-streaming
+spec:
+  podSelector:
+    matchLabels:
+      app: cp-control-center
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: icis-event-streaming
+  egress:
+  - {}
+
+## Common NP to allow ingress and egress confluent cloud (Kafka)
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-confluent-cloud-ingress-egress
+  namespace: icis-event-streaming
+spec:
+  podSelector:
+    matchLabels:
+      require-confluent-access: "true"
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 10.52.160.0/22
+    ports:
+    - protocol: TCP
+      port: 443
+    - protocol: TCP
+      port: 9092
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+
+############################################################################
+## Allow traffic to mongo db atlas peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-mongodb
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 192.168.248.0/21
+    ports:
+    - port: 27015
+      protocol: TCP
+    - port: 27016
+      protocol: TCP
+    - port: 27017
+      protocol: TCP
+    - port: 27015
+      protocol: UDP
+    - port: 27016
+      protocol: UDP
+    - port: 27017
+      protocol: UDP
+
+#########################################
+## Allow Postgres egress  ##
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-postgres-server
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 5432
+      protocol: TCP
+
+#################################################
+## Allow traffic to snd database ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-snddb
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.33.72/21
+    ports:
+    - port: 55001
+      protocol: TCP
+  - to:
+    - ipBlock:
+        cidr: 10.52.33.58/21
+    ports:
+    - port: 55001
+      protocol: TCP
+
+      
+#################################################
+## Allow traffic to snd performance database ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-snddb-perf
+  namespace: icis-event-streaming
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.38.22/21
+    ports:
+    - port: 1433
+      protocol: TCP
+      

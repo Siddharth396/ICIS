@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: syctcv-event-processor
+spec:
+  releaseName: syctcv-event-processor-systest
+  values:
+    replicaCount: 1
+    namespace: "syctcv-systest"
+    environment: "systest"
+    migration_init_script:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/syctcv/mongo-migration # {"$imagepolicy": "flux-system:syctcv-mongo-migration-systest:name"}
+        tag: systest-29-6.0.0-auto-publish.30707 # {"$imagepolicy": "flux-system:syctcv-mongo-migration-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/syctcv-systest?retryWrites=true&w=majority"
+        ENVIRONMENT: systest
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/syctcv/syctcv-event-processor # {"$imagepolicy": "flux-system:syctcv-event-processor-systest:name"}
+        tag: systest-116-11.0.0-1644 # {"$imagepolicy": "flux-system:syctcv-event-processor-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net?retryWrites=true&w=majority"
+        MONGO_DB_NAME: "syctcv-systest"
+        PF_MONGO_DB_NAME: "pf-staging"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENVIRONMENT: systest
+        QUEUE_NAME: "sync_to_canvas_systest_report_event"
+        DB_API_URL: "https://dbapi.staging.genesis.cha.rbxd.ds/v1"
+        CANVAS_CORE_API_URL: "https://authoring.systest.cha.rbxd.ds/api/canvas/v1"
+        SNAPSHOTS_SYSTEM_API_URL: "https://authoring.systest.cha.rbxd.ds/api/snapshots/v1"
+        IMAGE_API_URL: "https://authoring.systest.cha.rbxd.ds/api/image/v1"
+        RICHTEXT_API_URL: "https://authoring.systest.cha.rbxd.ds/api/richtext/v1"
+        ADHOC_TABLE_API_URL: "https://authoring.systest.cha.rbxd.ds/api/adhoc-table/v1"
+        WORKFLOW_API_URL: "https://authoring.systest.cha.rbxd.ds/api/workflow/v1"
+    yjs_messaging_api:
+      config_env:
+        YJS_SERVER_URL: "wss://authoring.systest.cha.rbxd.ds/api/canvas-yjs/ws"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/sync-to-canvas/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: syctcv-vault-secret-event-processor-systest
+      VaultSecretPath: "syctcv/systest/eventprocessor"
+    vault_secrets_proxy:
+      name: syctcv-auth-proxy-vault-secret-event-processor-systest

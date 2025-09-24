@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- sboutg-realm-bff-policy-performance.yaml
+- sboutg-realm-data-policy-performance.yaml
+
+- sboutg-realm-bff-policy-staging.yaml
+- sboutg-realm-data-policy-staging.yaml
+
+- sboutg-realm-bff-policy-systest.yaml
+- sboutg-realm-data-policy-systest.yaml
+
+- sboutg-realm-bff-registry.yaml
+- sboutg-realm-data-registry.yaml
+
+- sboutg-policy-staging.yaml
+- sboutg-registry.yaml
+
+- sboutg-policy-systest.yaml
+- sboutg-policy-performance.yaml
+
+###############################

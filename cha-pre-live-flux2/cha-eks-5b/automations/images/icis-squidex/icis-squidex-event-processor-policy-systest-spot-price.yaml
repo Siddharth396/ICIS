@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: icis-squidex-event-processor-systest-spot-price
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: icis-squidex-event-processor
+    namespace: flux-system
+  filterTags:
+    pattern: '^systest-spotprice-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

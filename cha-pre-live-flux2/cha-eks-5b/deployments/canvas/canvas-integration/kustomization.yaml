@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: canvas-integration
+nameSuffix: -canvas
+resources:
+  - ../../../common/subscriber-bff/canvas/
+  - ../../../common/authoring-bff/canvas/
+  - ../../../common/job/canvas/
+  # BACKSTAGE-COMMENT-PATTERN1
+  - yjs-socket
+patches:
+  - path: helm-release-subscriber-bff-canvas-integration.yaml
+  - path: helm-release-authoring-bff-canvas-integration.yaml
+  - path: helm-release-mongo-canvas-integration.yaml
+# BACKSTAGE-COMMENT-PATTERN2

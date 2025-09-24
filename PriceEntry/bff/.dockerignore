@@ -1,0 +1,12 @@
+.idea/
+.vs/
+.vscode/
+tools/
+build/
+charts/
+**/obj/
+**/bin/
+src/skaffold/
+*.yaml
+*.xml
+*.md

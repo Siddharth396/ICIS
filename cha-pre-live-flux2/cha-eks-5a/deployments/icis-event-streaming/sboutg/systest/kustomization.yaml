@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+  # this pushes data from SnD Sql to Kafka
+  # this pushes the above data into mongo
+resources:
+- company
+- country
+- order-mappings
+- physical-plant
+- product
+- region
+- price-assessments
+- site_topic
+- user-product-items
+- plant-capacity
+- plant-allocation
+- virtual-plant
+- plant-ownership
+- user-preferences
+- alerting-notifications
+- outage-snd
+- outage-snd-perf
+- outage

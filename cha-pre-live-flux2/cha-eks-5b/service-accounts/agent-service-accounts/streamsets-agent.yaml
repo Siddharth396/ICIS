@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: streamsets-agent
+  namespace: default
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: streamsets-secret
+  namespace: default
+  annotations:
+    kubernetes.io/service-account.name: streamsets-agent
+type: kubernetes.io/service-account-token   
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: steamset-agent-role
+    
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "create", "patch", "delete"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get", "list", "create", "patch", "delete"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "replicasets"]
+    verbs: ["get", "list", "create", "patch", "delete"]
+  - apiGroups: ["autoscaling"]
+    resources: ["horizontalpodautoscalers"]
+    verbs: ["get", "list", "create", "patch", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: ssplat-agent-rb
+  namespace: ssplat-dev
+    
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: streamsets-agent-role
+subjects:
+  - kind: ServiceAccount
+    name: streamsets-agent
+    namespace: default

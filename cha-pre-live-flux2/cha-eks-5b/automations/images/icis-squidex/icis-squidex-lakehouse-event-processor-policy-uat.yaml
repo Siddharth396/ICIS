@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: icis-squidex-lakehouse-event-processor-uat
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: icis-squidex-lakehouse-event-processor
+    namespace: flux-system
+  filterTags:
+    pattern: '^uat-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

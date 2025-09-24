@@ -1,0 +1,74 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-github-arc-controller
+  namespace: icis-gh-arc-systems
+spec:
+  releaseName: icis-github-arc-controller
+  interval: 5m0s
+  chart:
+    spec:
+      chart: gha-runner-scale-set-controller
+      version: "0.9.3"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    # Declare variables to be passed into your templates.
+    labels: {}
+    # leaderElectionId will be set to {{ define gha-runner-scale-set-controller.fullname }}.
+    replicaCount: 1  
+
+    imagePullSecrets: []
+    nameOverride: ""
+    fullnameOverride: ""
+
+    serviceAccount:
+      # Specifies whether a service account should be created for running the controller pod
+      create: true
+      # Annotations to add to the service account
+      annotations: {}
+      # The name of the service account to use.
+      # If not set and create is true, a name is generated using the fullname template
+      # You can not use the default service account for this.
+      name: ""
+
+    podAnnotations: {}
+
+    podLabels: {}
+
+    podSecurityContext: {}
+    # fsGroup: 2000
+
+    securityContext: {}
+    # capabilities:
+    #   drop:
+    #   - ALL
+    # readOnlyRootFilesystem: true
+    # runAsNonRoot: true
+    # runAsUser: 1000
+
+    resources: 
+      limits:
+        cpu: 200m
+        memory: 256Mi
+      requests:
+      cpu: 200m
+      memory: 256Mi
+
+    nodeSelector: {}
+
+    tolerations: []
+
+    affinity: {}
+    
+    ## Restricts the controller to only watch resources in the desired namespace.
+    ## Defaults to watch all namespaces when unset.
+    watchSingleNamespace: "icis-gh-arc-runners"

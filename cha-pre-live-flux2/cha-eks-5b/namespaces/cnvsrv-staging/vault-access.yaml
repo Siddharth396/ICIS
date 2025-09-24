@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cnvsrv
+  namespace: cnvsrv-staging
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::512544833523:role/CNVSRV-STAGING-CONVERSION-SERVICE-INPUT-ROLE"
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-cnvsrv-staging-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: cnvsrv
+  namespace: cnvsrv-staging
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

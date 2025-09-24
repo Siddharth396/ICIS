@@ -1,0 +1,185 @@
+####################################################
+## Allow ingress from lngedge-uat and icis-ingress ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-ingress-lngedge-uat
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: lngedge-uat
+    - namespaceSelector:
+        matchLabels:
+          name: icis-ingress
+
+#################################
+## Allow egress from lngedge-uat ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-lngedge-uat
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          name: lngedge-uat
+
+#########################################
+## Allow external http traffic egress  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-http-external
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  egress:
+  - ports:
+    - port: 443
+      protocol: TCP
+    - port: 80
+      protocol: TCP
+
+#################################################
+## Allow traffic to aws postgres db chbqhsdbst063v - Should be deleted after rds transition ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-postgressdb
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.88.167/32
+    ports:
+    - port: 8050 
+      protocol: TCP
+      
+#################################################
+## Allow traffic to CHB RDS ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-rdspostgres
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.92.0/22
+    ports:
+    - port: 5432 
+      protocol: TCP
+
+##################################################
+## Allow traffic to confluent cloud peered vpc  ##
+
+---
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-confluent
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 172.16.0.0/16
+    ports:
+    - port: 443
+      protocol: TCP
+    - port: 9092
+      protocol: TCP
+
+---
+
+################
+## ICIS monitoring ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-icis-monitoring
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: prometheus
+      namespaceSelector:
+        matchLabels:
+          name: icis-monitoring
+
+---
+
+##################################################
+## Allow external http traffic egress to CHA IDDN  ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-cha-iddn
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.32.0/22
+    ports:
+    - port: 8000
+      protocol: TCP
+    - port: 9100
+      protocol: TCP
+    - port: 10000
+      protocol: TCP
+    - port: 9000
+      protocol: TCP
+
+---
+
+##################################################
+## Allow external http traffic egress to CHB IDDN  ##
+
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: allow-egress-chb-iddn
+  namespace: lngedge-uat
+spec:
+  podSelector: {}
+  egress:
+  - to:
+    - ipBlock:
+        cidr: 10.52.88.0/21
+    ports:
+    - port: 8000
+      protocol: TCP
+    - port: 9100
+      protocol: TCP
+    - port: 10000
+      protocol: TCP
+    - port: 9000
+      protocol: TCP

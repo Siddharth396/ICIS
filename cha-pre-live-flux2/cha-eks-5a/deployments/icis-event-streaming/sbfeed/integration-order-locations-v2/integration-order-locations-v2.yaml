@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: sbfeed
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_refdata_locations_2
+    database: sbfeed-integration
+    collection: order_locations_2
+    transforms.RenameField.renames: id:_id

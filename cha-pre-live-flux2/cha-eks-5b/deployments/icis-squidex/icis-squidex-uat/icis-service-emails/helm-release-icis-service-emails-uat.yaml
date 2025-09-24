@@ -1,0 +1,37 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-uat
+  namespace: icis-squidex-uat
+spec:
+  releaseName: icis-service-emails-uat
+  values:
+    projectName: "icis-service-emails"
+    serviceAccountName: icis-service-emails
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-uat:name"}
+        tag: uat-211-7.7.35 # {"$imagepolicy": "flux-system:icis-squidex-uat:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: icis-service-emails
+        ADMIN__ADMINUSERGROUP__0: ICIS_Earth
+        CONTENTS__MAXRESULTS: "'6000'"
+        CONTENTS__DEFAULTPAGESIZE: "'6000'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+        ASSETSTORE__TYPE: "'AmazonS3'"
+        ASSETSTORE__AMAZONS3__BUCKET: "'icis-ns-email-dispatcher-pre-live'"
+        ASSETSTORE__AMAZONS3__BUCKETFOLDER: "'integration/attachments'"
+        ASSETSTORE__AMAZONS3__REGIONNAME: "'eu-west-1'"
+        ASSETSTORE__AMAZONS3__FORCEPATHSTYLE: "'false'"
+        ASSETSTORE__AMAZONS3__USEIAM: "'true'"
+        ASSETSTORE__EXPOSESOURCEURL: "'true'"
+      kafka:
+        enabled: True
+    squidexCli:
+      enabled: True
+      schedule: "'20 8,11,14,15,17 * * *'"
+    vault_squidex_secrets:
+      name: icis-service-emails-squidex-uat-secret
+    vault_kafka_secrets:
+      name: icis-service-emails-squidex-kafka-uat-secret
+      VaultSecretPath: "icis-squidex/icis-service-emails/uat"

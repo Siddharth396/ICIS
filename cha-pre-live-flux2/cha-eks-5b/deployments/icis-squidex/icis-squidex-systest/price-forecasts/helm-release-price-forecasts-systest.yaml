@@ -1,0 +1,43 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: price-forecasts-systest
+  values:
+    projectName: "price-forecasts"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-price-forecasts:name"}
+        tag: systest-price-forecasts-1391-7.7.33 # {"$imagepolicy": "flux-system:icis-squidex-systest-price-forecasts:tag"}
+      vault:
+        authPath: "auth/cha/eks-b"
+        role: "kv-icis-squidex-read"
+        secretPath: "kv/cha/k8s/data/icis-squidex"
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: price-forecasts
+        ADMIN__ADMINUSERGROUP__0: ICIS_Mars
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'500'"
+        CONTENTS__MAXRESULTS: "'500'"
+        PLUGINS__2: ICIS.ExportPlugin.dll
+        EXPORT__MAXEXPORTCOUNT: "'500'"
+        EXPORT__ENABLEROLEPERMISSION: "'true'"
+        ELASTIC_APM_SERVICE_NAME: "PriceForecast - CMS"
+        ELASTIC_APM_CENTRAL_CONFIG: "'false'"
+        ELASTIC_APM_CAPTURE_BODY: "all"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: "'0.5'"
+        ELASTIC_APM_ENABLED: "'true'"
+      kafka:
+        enabled: True
+    squidexCli:
+      enabled: True
+      schedule: "'00 9,12,15,17,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-price-forecasts:name"}
+        tag: systest-price-forecasts-98-8.0.35 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-price-forecasts:tag"}
+    vault_squidex_secrets:
+      name: price-forecasts-systest-secret
+    vault_kafka_secrets:
+      name: price-forecasts-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/price-forecasts/systest"

@@ -1,0 +1,88 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: apm-server
+  namespace : "genesis-platform"
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: apm-server
+      version: 7.17.3
+      sourceRef:
+        kind: HelmRepository
+        name: elastic
+        namespace: genesis-platform
+
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    replicas: 3
+    imageTag: 7.17.3
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "1Gi"
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+    apmConfig:
+      apm-server.yml: |
+        apm-server:
+          host: "0.0.0.0:8200"
+          rum.enabled: true
+          rum.event_rate.limit: 300
+          rum.event_rate.lru_size: 1000
+        queue:
+          mem:
+            events: 40000
+        output.elasticsearch:
+          username: '${ELASTICSEARCH_USERNAME}'
+          password: '${ELASTICSEARCH_PASSWORD}'
+          protocol: https
+          hosts: ["elasticsearch-master:9200"]
+          bulk_max_size: 10000
+          worker: 4
+          ssl.certificate_authorities:
+            - /usr/share/apm-server/config/certs/elastic-certificate.pem
+
+    secretMounts:
+    - name: elastic-certificate-pem
+      secretName: elastic-certificate-pem
+      path: /usr/share/apm-server/config/certs
+
+    extraEnvs:
+    - name: 'ELASTICSEARCH_USERNAME'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: username
+    - name: 'ELASTICSEARCH_PASSWORD'
+      valueFrom:
+        secretKeyRef:
+          name: elastic-credentials
+          key: password
+
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        external-dns.alpha.kubernetes.io/hostname: apm.eks-4.genesis.cha.eu-west-1.dev
+        lnrs.io/zone-type: private
+      path: /
+      hosts:
+        - apm.eks-4.genesis.cha.eu-west-1.dev
+        - apm.genesis.cha.eu-west-1.dev
+      tls:
+        - hosts: 
+          - apm.eks-4.genesis.cha.eu-west-1.dev
+          secretName: apmserver-genesis.cha-eu-west-1-dev
+        - hosts:
+          - apm.genesis.cha.eu-west-1.dev
+          secretName: apmserver-old-genesis.cha-eu-west-1-dev
+          

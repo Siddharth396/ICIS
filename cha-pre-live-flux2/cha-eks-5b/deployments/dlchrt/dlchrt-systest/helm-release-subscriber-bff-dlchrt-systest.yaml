@@ -1,0 +1,62 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-dlchrt-systest
+  values:
+    replicaCount: 1
+    namespace: "dlchrt-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/dlchrt/dlchrt-bff # {"$imagepolicy": "flux-system:subscriber-bff-dlchrt-systest:name"}
+        tag: systest-8-1.0.1-JUP-5819-lakehouse-entities.27 # {"$imagepolicy": "flux-system:subscriber-bff-dlchrt-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        LOG_LEVEL: Debug
+        DEV_MODE: true
+        BASE_PATH: /dlchrt
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/dlchrt-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.systest.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        ENERGY_SERIES_VALID_MONTHS: 120
+        HOT_CHOCOLATE_REQUEST_TIMEOUT: 60
+        PETCHEM_SERIES_VALID_MONTHS: 60
+        FeatureToggles__RestrictSeriesByLatestSeriesItem: true
+        FeatureToggles__HidePetchemSpecsWithNoPrices: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+      resources:
+        limits:
+          cpu: "2"
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.systest.genesis.cha.rbxd.ds
+        path: /api/datalake-charts/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    vault_secrets:
+      name: subscriber-bff-vault-secret-dlchrt-systest
+      VaultK8sRoleName: "kv-dlchrt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "dlchrt/systest/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-dlchrt-systest
+      VaultK8sRoleName: "kv-dlchrt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "subscriber-auth-proxy/mongo"

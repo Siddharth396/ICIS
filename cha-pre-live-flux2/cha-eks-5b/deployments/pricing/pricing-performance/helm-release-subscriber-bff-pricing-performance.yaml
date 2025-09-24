@@ -1,0 +1,120 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-pricing-performance
+  values:
+    replicaCount: 3
+    namespace: "pricing-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+      readinessProbe:
+        httpGet:
+          path: /version
+          port: 8090
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /version
+          port: 8090
+        periodSeconds: 30
+    nginx:
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+      readinessProbe:
+        httpGet:
+          path: /v1/version
+          port: 443
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /v1/version
+          port: 443
+          scheme: HTTPS
+        periodSeconds: 30
+    cronJob:
+      enabled: true
+      name: iddn-sync-job
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/c-hub-iddn-to-mongo # {"$imagepolicy": "flux-system:iddn-sync-job-performance:name"}
+        tag: performance-4-1.0.1-master-21040 # {"$imagepolicy": "flux-system:iddn-sync-job-performance:tag"}
+        pullPolicy: IfNotPresent
+      schedule: '"0 */2 * * *"'
+      successfulJobsHistoryLimit: 1
+      failedJobsHistoryLimit: 1
+      concurrencyPolicy: Forbid
+      appsettings:
+        IDDN_ENDPOINT: http://core.uat.iddn.cha.rbxd.ds:9000/search?etoken=iddnlivereleased
+        MONGO_URL: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pricing-staging?retryWrites=true&w=majority"
+        SECRET_FILE_PATH: /etc/secrets/.env
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pricing/pricing-bff # {"$imagepolicy": "flux-system:subscriber-bff-pricing-performance:name"}
+        tag: performance-70-1.83.0.3518 # {"$imagepolicy": "flux-system:subscriber-bff-pricing-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        LOG_LEVEL: Debug
+        BASE_PATH: /pricing
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pricing-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.performance.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        ENABLE_ENTITLEMENTS: true
+        COOKIE_INFO_DOMAIN: .cha.rbxd.ds
+        COOKIE_INFO_EXPIRES_IN_DAYS: 30
+        ENERGY_SERIES_VALID_MONTHS: 120
+        PETCHEM_SERIES_VALID_MONTHS: 120
+        FeatureToggles__RestrictSeriesByLatestSeriesItem: true
+        FeatureToggles__HidePetchemSpecsWithNoPrices: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/pricing/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+    vault_secrets:
+      name: subscriber-bff-vault-secret-pricing-performance
+      VaultK8sRoleName: "kv-pricing-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pricing/performance/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-pricing-performance
+      VaultK8sRoleName: "kv-pricing-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "subscriber-auth-proxy/mongo"
+    autoscaling:
+      enabled: true
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

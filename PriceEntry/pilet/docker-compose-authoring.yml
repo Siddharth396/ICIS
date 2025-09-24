@@ -1,0 +1,322 @@
+services:
+  ################################################
+  #                                              #
+  #            Database + Seeders                #
+  #                                              #
+  ################################################
+  mongodb:
+    container_name: mongo
+    image: mongo:5.0.14
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PWD}
+    volumes:
+      - ./mongo_entrypoint.sh:/scripts/mongo_entrypoint.sh
+    entrypoint: bash /scripts/mongo_entrypoint.sh
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongosh admin -u $$MONGO_INITDB_ROOT_USERNAME -p $$MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  mongodb-seeder:
+    image: artifacts.cha.rbxd.ds/prcent/mongodb-seeder:latest
+    container_name: mongodb-seeder
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - MongoDb__ConnectionString=${PRICE_ENTRY_MONGO_CONNECTION_STRING}
+      - MongoDb__Username=${MONGO_DB_USER}
+      - MongoDb__Password=${MONGO_DB_PWD}
+
+  period-generator-seeder:
+    container_name: period-generator-seeder
+    image: artifacts.cha.rbxd.ds/pgnsvc/mongodb-seeder:${PERIOD_GENERATOR_SEEDER_TAG:-latest}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - MONGO_DB_CONNECTION_STRING=${PERIOD_GENERATOR_MONGO_CONNECTION_STRING}
+      - MONGO_DB_NAME=pgnsvc-local
+      - MONGO_DB_USER=${MONGO_DB_USER}
+      - MONGO_DB_PWD=${MONGO_DB_PWD}
+
+  ################################################
+  #                                              #
+  #              Pilet Auth Proxy                #
+  #  (requires pilet to be running separately)   #
+  #                                              #
+  ################################################
+  price-entry-authoring-pilet-authproxy:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy${AUTHPROXY_TAG:-:latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "8050:8050"
+    environment:
+      - Hosting__DevPort=8050
+      - Proxy__ForwardToPath=https://localhost:8083
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/icis/authproxy -p
+        mv /opt/authproxy/localhost/authoring.app.local.env /etc/icis/authproxy/local.env
+        /opt/authproxy/run.sh
+
+  ################################################
+  #                                              #
+  #        Price Entry BFF + AuthProxy           #
+  #                                              #
+  ################################################
+  price-entry-authoring-bff:
+    container_name: price-entry-authoring-bff
+    image: artifacts.cha.rbxd.ds/prcent/authoring-bff:${PRICE_ENTRY_AUTHORING_BFF_TAG:-latest}
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/secrets -p
+        mv /opt/bff/dev.env /etc/secrets/.env
+        /opt/bff/run.sh
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "8005:8005"
+    environment:
+      - MongoDb__ConnectionString=${PRICE_ENTRY_MONGO_CONNECTION_STRING}
+      - MongoDb__Username=${MONGO_DB_USER}
+      - MongoDb__Password=${MONGO_DB_PWD}
+      - CORS_ORIGINS_DOMAINS=https://localhost:8083,https://localhost:8050
+      - LOG_LEVEL=Debug
+      - OAuth__Authority=https://domainidentity.integration.cha.rbxd.ds
+      - OAuth__ClientId=${OAUTH_CLIENT_ID}
+      - OAuth__ClientSecret=${OAUTH_CLIENT_SECRET}
+
+  price-entry-authoring-bff-authproxy:
+    container_name: price-entry-authoring-bff-authproxy
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy:${AUTHPROXY_TAG:-latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      price-entry-authoring-bff:
+        condition: service_started
+    ports:
+      - "4401:4401"
+    environment:
+      - Hosting__DevPort=4401
+      - Proxy__ForwardToPath=http://localhost:8005
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/icis/authproxy -p
+        mv /opt/authproxy/localhost/authoring.api.local.env /etc/icis/authproxy/local.env
+        /opt/authproxy/run.sh
+
+  ################################################
+  #                                              #
+  #          Period Generator Service            #
+  #                                              #
+  ################################################
+
+  period-generator-service:
+    container_name: period-generator-service
+    image: artifacts.cha.rbxd.ds/pgnsvc/authoring-bff:${PERIOD_GENERATOR_SERVICE_TAG:-latest}
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/secrets -p
+        mv /opt/bff/dev.env /etc/secrets/.env
+        /opt/bff/run.sh
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "8008:8005"
+    environment:
+      - MongoDb__ConnectionString=${PERIOD_GENERATOR_MONGO_CONNECTION_STRING}
+      - MongoDb__Username=${MONGO_DB_USER}
+      - MongoDb__Password=${MONGO_DB_PWD}
+      - CORS_ORIGINS_DOMAINS=https://localhost:8083,https://localhost:8050
+      - LOG_LEVEL=Debug
+
+  period-generator-service-authproxy:
+    container_name: period-generator-service-auth-proxy
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy${AUTHPROXY_TAG:-:latest}
+    depends_on:
+      period-generator-service:
+        condition: service_started
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "8007:8007"
+    environment:
+      - Hosting__DevPort=8007
+      - Hosting__EnableSSLInDevMode=true
+      - Proxy__ForwardToPath=http://localhost:8008
+      - LOG_LEVEL=Debug
+      - LOGIN_PROMPT_ENABLED=true
+    command:
+      - sh
+      - -c
+      - |
+        apk add socat
+        socat TCP-LISTEN:8008,fork TCP:host.docker.internal:8008 &
+        mkdir /etc/icis/authproxy -p
+        mv /opt/authproxy/localhost/authoring.api.local.env /etc/icis/authproxy/local.env
+        /opt/authproxy/run.sh
+
+  ################################################
+  #                                              #
+  #              Mock App Shell                  #
+  #                                              #
+  ################################################
+
+  authoring-mock-bff:
+    container_name: authoring-mock-bff
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-app-mockbff:${AUTHORING_MOCK_BFF_TAG:-latest}
+    ports:
+      - "4200:4200"
+
+  ################################################
+  #                                              #
+  #                  App Shell                   #
+  #                                              #
+  ################################################
+
+  authoring-core-bff:
+    container_name: authoring-core-bff
+    image: artifacts.cha.rbxd.ds/atcore/atcore-bff:${AUTHORING_CORE_BFF_TAG:-latest}
+    environment:
+      - AccessControl__IsAccessControlEnabled=true
+    ports:
+      - "4202:4202"
+    command:
+      - sh
+      - -c
+      - |
+        mv /opt/authoringbff/dev.env /opt/authoringbff/.env
+        /opt/authoringbff/run.sh
+
+  authoring-core-bff-authproxy:
+    container_name: authoring-core-bff-authproxy
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy${AUTHPROXY_TAG:-:latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    ports:
+      - "4200:4200"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      authoring-core-bff:
+        condition: service_started
+    environment:
+      - Hosting__DevPort=4200
+      - Proxy__ForwardToPath=http://localhost:4202
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/icis/authproxy -p
+        mv /opt/authproxy/localhost/authoring.api.local.env /etc/icis/authproxy/local.env
+        /opt/authproxy/run.sh
+
+  feedservice:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-mfe-feed-service${FEED_SERVICE_TAG:-:latest}
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:8090/api/v1/mfe"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    ports:
+      - "8090:8090"
+
+  ################################################
+  #                                              #
+  #                 Rich Text                    #
+  #                                              #
+  ################################################
+
+  rich-text-pilet-authoring:
+    image: artifacts.cha.rbxd.ds/sbmfe/sbmfe-richtext-pilet-authoring:${RICH_TEXT_AUTHORING_PILET_TAG:-latest}
+    depends_on:
+      feedservice:
+        condition: service_healthy
+    extra_hosts:
+      - "localhost:host-gateway"
+    environment:
+      - FEED_SERVICE_URL=http://localhost:8090/api/v1/mfe
+      - FEED_SERVICE_API_KEY=${FEED_SERVICE_API_KEY}
+
+  richtext-authoring-bff:
+    container_name: richtext-authoring-bff
+    image: artifacts.cha.rbxd.ds/rchtxt/authoring-bff:${RICH_TEXT_AUTHORING_BFF_TAG:-latest}
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "8009:8005"
+    environment:
+      - MongoDb__ConnectionString=${RICH_TEXT_MONGO_CONNECTION_STRING}
+      - MongoDb__Username=${MONGO_DB_USER}
+      - MongoDb__Password=${MONGO_DB_PWD}
+      - CORS_ORIGINS_DOMAINS=https://localhost:8083,https://localhost:8050
+      - HtmlSanitizerConfig__AllowedTags=a,blockquote,h2,h3,h6,i,li,ol,p,strong,u,ul
+      - HtmlSanitizerConfig__AllowedAttributes=class,href
+    command:
+      - sh
+      - -c
+      - |
+        apk add socat
+        socat TCP-LISTEN:27017,fork TCP:host.docker.internal:27017 &
+        mkdir /etc/secrets -p
+        mv /opt/bff/dev.env /etc/secrets/.env
+        /opt/bff/run.sh
+
+  richtext-authoring-bff-authproxy:
+    container_name: richtext-authoring-bff-auth-proxy
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy:${AUTHPROXY_TAG:-latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    depends_on:
+      richtext-authoring-bff:
+        condition: service_started
+      mongodb:
+        condition: service_healthy
+    ports:
+      - "4400:4400"
+    environment:
+      - Hosting__DevPort=4400
+      - Proxy__ForwardToPath=http://localhost:8009
+    command:
+      - sh
+      - -c
+      - |
+        mkdir /etc/icis/authproxy -p
+        mv /opt/authproxy/localhost/authoring.api.local.env /etc/icis/authproxy/local.env
+        /opt/authproxy/run.sh
+
+  prcent-mongodb-migration:
+    image: artifacts.cha.rbxd.ds/prcent/mongo-migration:${PRICE_ENTRY_BFF_VERSION:-latest}
+    container_name: prcent-mongodb-migrations
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    environment:
+      - MONGO_DB_CONNECTION_STRING=${PRICE_ENTRY_MONGO_CONNECTION_STRING}
+      - MONGO_DB_USER=${MONGO_DB_USER}
+      - MONGO_DB_PWD=${MONGO_DB_PWD}
+      - MONGO_DB_NAME=prcent-local

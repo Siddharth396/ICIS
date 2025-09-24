@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- agent-service-accounts/common-github-agent
+- agent-service-accounts/titan-tc-agent.yaml
+- agent-service-accounts/c-hub-tc-agent.yaml
+- agent-service-accounts/vega-tc-agent.yaml
+- agent-service-accounts/mars-tc-agent.yaml
+- agent-service-accounts/homepage-tc-agent.yaml
+- agent-service-accounts/pricing-tc-agent.yaml
+- agent-service-accounts/energy-tc-agent.yaml
+- agent-service-accounts/enapi1-gitlab-agent.yaml
+- agent-service-accounts/icis-gitlab.yaml
+- agent-service-accounts/alerting-engine-tc-agent.yaml
+- agent-service-accounts/spt-tc-agent.yaml
+- agent-service-accounts/iddn-tc-agent.yaml
+- agent-service-accounts/sbnews-tc-agent.yaml
+- agent-service-accounts/sun-tc-agent.yaml
+- agent-service-accounts/flux-deployer-gitlab-runner.yaml
+#- agent-service-accounts/icis-gitlab-runner-cosmos.yaml
+- agent-service-accounts/supdem-tc-agent.yaml
+- agent-service-accounts/atlas-tc-agent.yaml
+- agent-service-accounts/sbfeed-tc-agent.yaml
+- agent-service-accounts/sberdg-tc-agent.yaml
+- agent-service-accounts/genesis-tc-agent.yaml
+- agent-service-accounts/mercury-tc-agent.yaml
+- agent-service-accounts/datapr-gitlab-agent.yaml
+- agent-service-accounts/backstage-read-only.yaml
+- agent-service-accounts/sbcore-tc-agent.yaml
+- agent-service-accounts/visualization-apps-gitlab-runner.yaml
+###############################
+#- user-service-accounts/service-account-manav.yaml
+- user-service-accounts/sa-tony.yaml
+- user-service-accounts/sa-jasleen.yaml
+- user-service-accounts/sa-gorremuchua.yaml
+- user-service-accounts/test.yaml

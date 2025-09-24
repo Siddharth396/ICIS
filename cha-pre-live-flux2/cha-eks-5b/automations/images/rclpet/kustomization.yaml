@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- rclpet-bff-policy-integration.yaml
+# - rclpet-bff-policy-performance.yaml
+- rclpet-bff-policy-staging.yaml
+- rclpet-bff-policy-systest.yaml
+- rclpet-bff-registry.yaml

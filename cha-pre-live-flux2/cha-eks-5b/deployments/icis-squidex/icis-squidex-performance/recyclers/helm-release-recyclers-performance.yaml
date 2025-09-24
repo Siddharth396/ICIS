@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-performance
+  namespace: icis-squidex-performance
+spec:
+  releaseName: recyclers-performance
+  values:
+    projectName: "recyclers"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-performance-recyclers-supply-tracker:name"}
+        tag: performance-recyclers-supply-tracker-293-7.7.14 # {"$imagepolicy": "flux-system:icis-squidex-performance-recyclers-supply-tracker:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: recyclers
+        ADMIN__ADMINUSERGROUP__0: ICIS_Titan
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'200'"
+        CONTENTS__MAXRESULTS: "'5000'"
+        PLUGINS__2: ICIS.CustomId.dll
+      kafka:
+        enabled: True
+      resources:
+        limits:
+          cpu: 500m
+          memory: 2048Mi
+        requests:
+          cpu: 200m
+          memory: 1024Mi
+    squidexCli:
+      enabled: false
+      schedule: "'40 7,10,13,16 * * *'"
+    vault_squidex_secrets:
+      name: recyclers-squidex-performance-secret
+    vault_kafka_secrets:
+      name: recyclers-squidex-kafka-performance-secret
+      VaultSecretPath: "icis-squidex/recyclers-supply-tracker/performance"

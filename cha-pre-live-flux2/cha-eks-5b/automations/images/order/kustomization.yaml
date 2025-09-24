@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- order-kafka-producer-policy-systest.yaml
+- order-kafka-producer-policy-uat.yaml
+- order-kafka-producer-registry.yaml
+- order-snowflake-producer-policy-dev.yaml
+- order-snowflake-producer-policy-systest.yaml
+- order-snowflake-producer-policy-uat.yaml
+- order-snowflake-producer-registry.yaml

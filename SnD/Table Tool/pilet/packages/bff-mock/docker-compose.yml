@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:
+  supply-and-demand-mock-bff:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: builder
+    command: yarn start
+    container_name: supply-and-demand-mock-bff
+    volumes:
+      - ./certificates/:/app/certificates/
+    ports:
+      - "5001:5000"

@@ -1,0 +1,40 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-realm-bff
+spec:
+  values:
+    namespace: "grn-systest"
+    environment: "systest"
+    authproxy:
+      resources:
+        requests:
+          memory: "16Mi"
+          cpu: "10m"
+        limits:
+          memory: "64Mi"
+          cpu: "100m"
+    realm_deployer:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/recspt-realm-deployer # {"$imagepolicy": "flux-system:grn-realm-bff-systest:name"}
+        tag: systest-72-1.20.0-TITAN-4055.1.15609 # {"$imagepolicy": "flux-system:grn-realm-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      appsettings:
+        REALMID: recspt-systest-ajwoy
+        REALMDATABASE: grn-systest
+        REALMAPPNAME: recspt-systest
+        REALMCLUSTERNAME: cha-pre-live
+        AUDIENCE: id.systest.genesis.cha.rbxd.ds
+        ENVVALUE: systest
+        SECRET_FILE_PATH: /etc/secrets/.env
+    data_deployer: # Data deployer is not used for RST Realm App as data is served via BFF, hence enabled is set to false. Template taken from sboutg
+      enabled: false
+    nginx: # nginx is not used for RST Realm App as data is served via BFF, hence enabled is set to false. Template taken from sboutg
+      enabled: false
+    ingress: # ingress is not used for RST Realm App as data is served via BFF, hence enabled is set to false. Template taken from sboutg
+      enabled: false
+    vault_secrets:
+      name: subscriber-realm-bff-vault-secret-grn-systest
+    vault_secrets_proxy:
+      name: subscriber-realm-bff-vault-secret-proxy-grn-systest

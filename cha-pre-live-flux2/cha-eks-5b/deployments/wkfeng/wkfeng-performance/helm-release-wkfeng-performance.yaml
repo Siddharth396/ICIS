@@ -1,0 +1,52 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: workflow-engine
+spec:
+  values:
+    replicaCount: 3
+    serviceAccountName: wkfeng
+    namespace: "wkfeng-performance"
+    app:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/wkfeng/workflow-engine # {"$imagepolicy": "flux-system:workflow-engine-performance:name"}
+        tag: performance-32-2.2.1-CC-132-Bundling.1.20410 # {"$imagepolicy": "flux-system:workflow-engine-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        DB_URL: "jdbc:postgresql://icis-camunda-db-prelive.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com/camunda-performance"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1.0
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENABLED: true
+        ELASTIC_APM_ENVIRONMENT: performance
+      resources:
+        requests:
+          memory: "512Mi"
+          cpu: "300m"
+        limits:
+          memory: "800Mi"
+          cpu: "1"
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/affinity: "cookie"
+        nginx.ingress.kubernetes.io/session-cookie-name: "route"
+        nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+        nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+      hosts:
+        - host: workflow-engine.performance.cha.rbxd.ds
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - workflow-engine.performance.cha.rbxd.ds
+          secretName: workflow-engine.performance.cha.rbxd.ds
+    secrets:
+      name: workflow-engine.performance.cha.rbxd.ds
+    vault_secrets:
+      name: wkfeng-vault-secret-performance
+      VaultSecretPath: "wkfeng/performance"

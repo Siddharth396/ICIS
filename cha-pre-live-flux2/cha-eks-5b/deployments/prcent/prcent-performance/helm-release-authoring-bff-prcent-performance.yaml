@@ -1,0 +1,92 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-prcent-performance
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  values:
+    replicaCount: 3
+    namespace: "prcent-performance"
+    environment: "performance"
+    deploymentStrategy: "RollingUpdate"
+    migration_init_script:
+      enabled: false
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/mongodb-seeder # {"$imagepolicy": "flux-system:prcent-mongo-seeder-performance:name"}
+        tag: performance-68-6.2.0-main.48409 # {"$imagepolicy": "flux-system:prcent-mongo-seeder-performance:tag"}
+        pullPolicy: IfNotPresent
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "50m"
+        limits:
+          memory: "256Mi"
+          cpu: "200m"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/prcent/authoring-bff # {"$imagepolicy": "flux-system:prcent-authoring-bff-performance:name"}
+        tag: performance-256-7.3.0-feature-PCA-358-adhoc-prices-36270 # {"$imagepolicy": "flux-system:prcent-authoring-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/prcent-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        MUTATION: true
+        PeriodGeneratorService__BaseUrl: https://authoring.performance.cha.rbxd.ds/api/period-generator
+        Workflow__BaseUrl: https://authoring.performance.cha.rbxd.ds/api/workflow
+        Workflow__Versions__Overrides__LNG: "advance"
+        OAUTH_AUTHORITY_URL: https://domainidentity.performance.cha.rbxd.ds
+        PUBNUB_ENABLED: true
+        LOG_LEVEL: Debug
+        CANVAS_API_URL: https://authoring.performance.cha.rbxd.ds/api/canvas
+        IS_AUTHORING: true
+        DEV_MODE: true
+        DLH_RECORD_SOURCE: canvas-prcent-performance
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "512Mi"
+          cpu: "250m"
+    nginx:
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/price-entry/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-prcent-performance
+      VaultSecretPath: "prcent/performance/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-prcent-performance
+    autoscaling:
+      enabled: true
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- cvideo-sub-bff-policy-integration.yaml
+- cvideo-sub-bff-policy-performance.yaml
+- cvideo-sub-bff-policy-staging.yaml
+- cvideo-sub-bff-policy-systest.yaml
+- cvideo-sub-bff-registry.yaml
+###############################
+- cvideo-auth-bff-policy-integration.yaml
+- cvideo-auth-bff-policy-performance.yaml
+- cvideo-auth-bff-policy-staging.yaml
+- cvideo-auth-bff-policy-systest.yaml
+- cvideo-auth-bff-registry.yaml

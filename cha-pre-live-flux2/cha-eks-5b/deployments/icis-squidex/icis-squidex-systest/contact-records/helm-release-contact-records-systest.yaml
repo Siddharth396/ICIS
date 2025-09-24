@@ -1,0 +1,28 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: contact-records-systest
+  values:
+    projectName: "contact-records"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-contact-records:name"}
+        tag: systest-contact-records-613-6.7.5-cosmos-172-lfs-squidex-pull-6-7-0.192 # {"$imagepolicy": "flux-system:icis-squidex-systest-contact-records:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: contact-records
+        ADMIN__ADMINUSERGROUP__0: ICIS_Darwin
+        ASSETS__MAXSIZE: "'10485760'"
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    squidexCli:
+      enabled: True
+      schedule: "'15 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-contact-records:name"}
+        tag: systest-8-6.8.5 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-contact-records:tag"}
+    vault_squidex_secrets:
+      name: contact-records-squidex-systest-secret      

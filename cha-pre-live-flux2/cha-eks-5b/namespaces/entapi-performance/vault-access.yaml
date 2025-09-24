@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: entapi
+  namespace: entapi-performance
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-entapi-performance-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: entapi
+  namespace: entapi-performance
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

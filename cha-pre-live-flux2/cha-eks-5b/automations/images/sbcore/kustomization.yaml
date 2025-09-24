@@ -1,0 +1,33 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- sbcore-auth-proxy-policy-stable.yaml
+- sbcore-auth-proxy-policy-systest.yaml 
+- sbcore-auth-proxy-policy-staging.yaml 
+- sbcore-auth-proxy-policy-performance.yaml 
+- sbcore-auth-proxy-policy-integration.yaml   
+- sbcore-auth-proxy-registry.yaml
+###############################
+- authoring-app-policy-systest.yaml  
+- authoring-app-policy-integration.yaml
+- authoring-app-policy-staging.yaml
+- authoring-app-policy-performance.yaml
+- authoring-app-registry.yaml
+###############################
+- sbcore-shared-header-policy-integration.yaml
+- sbcore-shared-header-policy-performance.yaml
+- sbcore-shared-header-policy-staging.yaml
+- sbcore-shared-header-policy-systest.yaml
+- sbcore-shared-header-registry.yaml
+#################################
+- sbcore-bff-policy-systest.yaml
+- sbcore-bff-policy-performance.yaml
+- sbcore-bff-policy-staging.yaml
+- sbcore-bff-policy-integration.yaml
+- sbcore-bff-registry.yaml
+#################################
+- authoring-mfe-feed-service-systest.yaml
+- authoring-mfe-feed-service-staging.yaml
+- authoring-mfe-feed-service-integration.yaml
+- authoring-mfe-feed-service-performance.yaml
+- sbcore-mfe-feed-service-registry.yaml

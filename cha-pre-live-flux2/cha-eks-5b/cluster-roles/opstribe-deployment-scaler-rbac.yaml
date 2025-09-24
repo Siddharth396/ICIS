@@ -1,0 +1,127 @@
+## The RBAC  content  YAML file grants specific permissions to a ServiceAccount  opstribe-deployment-scaler so that it can scale Kubernetes Deployments across all namespaces.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: deployment-scaler-role
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments", "deployments/scale"]
+    verbs: ["get", "list", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["list", "get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: deployment-scaler-binding
+subjects:
+  - kind: ServiceAccount
+    name: backstage
+    namespace: icis-backstage-staging
+  - kind: ServiceAccount 
+    name: backstage
+    namespace: icis-backstage
+  - kind: ServiceAccount 
+    name: canvas
+    namespace: canvas-performance
+  - kind: ServiceAccount 
+    name: sbnews
+    namespace: sbnews-performance
+  - kind: ServiceAccount 
+    name: sboutg
+    namespace: sboutg-performance 
+  - kind: ServiceAccount 
+    name: price-forecast
+    namespace: pforecast-performance
+  - kind: ServiceAccount 
+    name: pgnsvc
+    namespace: pgnsvc-performance
+  - kind: ServiceAccount 
+    name: prcent
+    namespace: prcent-performance 
+  - kind: ServiceAccount 
+    name: apimanagement
+    namespace: enalog-performance
+  - kind: ServiceAccount 
+    name: wkfeng
+    namespace: wkfeng-performance
+  - kind: ServiceAccount 
+    name: wrkflw
+    namespace: wrkflw-performance
+  - kind: ServiceAccount 
+    name: newsfd
+    namespace: newsfd-performance  
+  - kind: ServiceAccount 
+    name: rchtxt
+    namespace: rchtxt-performance
+  - kind: ServiceAccount 
+    name: sbcore
+    namespace: sbcore-performance
+  - kind: ServiceAccount 
+    name: adchrt
+    namespace: adchrt-performance
+  - kind: ServiceAccount 
+    name: adtabl
+    namespace: adtabl-performance
+  - kind: ServiceAccount 
+    name: cnvspt
+    namespace: cnvspt-performance 
+  - kind: ServiceAccount 
+    name: pricing
+    namespace: pricing-performance
+  - kind: ServiceAccount 
+    name: infgrm
+    namespace: infgrm-performance 
+  - kind: ServiceAccount 
+    name: enapi1
+    namespace: enapi1-prf
+  - kind: ServiceAccount 
+    name: enfapi
+    namespace: enfapi-prf
+  - kind: ServiceAccount 
+    name: acmapi
+    namespace: acmapi-performance
+  - kind: ServiceAccount 
+    name: alrthb
+    namespace: alrthb-performance
+  - kind: ServiceAccount 
+    name: chub
+    namespace: c-hub-performance
+  - kind: ServiceAccount 
+    name: cimage
+    namespace: cimage-performance
+  - kind: ServiceAccount 
+    name: cnvsrv
+    namespace: cnvsrv-performance 
+  - kind: ServiceAccount 
+    name: cvideo
+    namespace: cvideo-performance 
+  - kind: ServiceAccount 
+    name: datapr
+    namespace: datapr-performance 
+  - kind: ServiceAccount 
+    name: didens
+    namespace: didens-performance 
+  - kind: ServiceAccount 
+    name: entapi
+    namespace: entapi-performance 
+  - kind: ServiceAccount 
+    name: esvcep
+    namespace: esvcep-performance
+  - kind: ServiceAccount 
+    name: extids
+    namespace: extids-performance
+  - kind: ServiceAccount 
+    name: notsys
+    namespace: notsys-performance 
+  - kind: ServiceAccount 
+    name: spfeed
+    namespace: spfeed-performance 
+  - kind: ServiceAccount 
+    name: spot-price-tracker
+    namespace: spt-performance        
+roleRef:
+  kind: ClusterRole
+  name: deployment-scaler-role
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+
+- grn-sub-bff-policy-performance.yaml
+- grn-sub-bff-policy-staging.yaml
+- grn-sub-bff-policy-systest.yaml
+- grn-sub-bff-registry.yaml
+
+- grn-realm-bff-policy-performance.yaml
+- grn-realm-bff-policy-staging.yaml
+- grn-realm-bff-policy-systest.yaml
+- grn-realm-bff-registry.yaml

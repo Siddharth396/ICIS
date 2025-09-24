@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- agent-service-accounts
+
+###############################
+#- user-service-accounts/service-account-manav.yaml
+- user-service-accounts/sa-tony.yaml
+- user-service-accounts/sa-jasleen.yaml
+- user-service-accounts/test-sa.yaml
+
+

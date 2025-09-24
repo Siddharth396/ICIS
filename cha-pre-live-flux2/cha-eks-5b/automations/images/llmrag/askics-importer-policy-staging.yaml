@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: askics-importer-staging
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: askics-importer
+    namespace: flux-system
+  filterTags:
+    pattern: '^staging-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

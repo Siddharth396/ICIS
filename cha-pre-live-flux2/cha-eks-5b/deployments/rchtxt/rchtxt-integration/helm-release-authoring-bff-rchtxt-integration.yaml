@@ -1,0 +1,72 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-rchtxt-integration
+  values:
+    replicaCount: 1
+    namespace: "rchtxt-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/rchtxt/mongo-migration # {"$imagepolicy": "flux-system:rchtxt-mongo-migration-integration:name"}
+        tag: integration-11-1.20.5-NEP-11493-create-scripts-to-remove-duplicate-tags.1.43577 # {"$imagepolicy": "flux-system:rchtxt-mongo-migration-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/rchtxt-integration?retryWrites=true&w=majority"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/rchtxt/authoring-bff # {"$imagepolicy": "flux-system:rchtxt-auth-bff-integration:name"}
+        tag: integration-28-1.20.0.15432 # {"$imagepolicy": "flux-system:rchtxt-sub-bff-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/rchtxt-integration?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.integration.cha.rbxd.ds
+        ACM_BASE_URL: https://acm.integration.cha.rbxd.ds
+        DOMAIN_IDENTITY_BASE_URL: https://domainidentity.integration.cha.rbxd.ds/v1
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        LOG_LEVEL: Warning
+        SECRET_FILE_PATH: /etc/secrets/.env
+        IS_PUBLISH_TO_LAKEHOUSE_ENABLED: true
+        SNOWFLAKE_CONNECTION_STRING: "account={0};user={1};password={2};role={3};warehouse={4};db={5};MinPoolSize={6};MaxPoolSize={7}"
+        SNOWFLAKE_ACCOUNT: "ex99616.eu-west-1"
+        SNOWFLAKE_ROLE: "SVC_TEXTUAL_CONTENT_PUBLISHER_GOLD_UAT"
+        SNOWFLAKE_WAREHOUSE: "QRY_WH_GOLD_UAT"
+        SNOWFLAKE_DB: "ICIS_GOLD_UAT_DB"
+        SNOWFLAKE_TEXTUAL_CONTENT_SCHEMA: "TEXTUAL_CONTENT"
+        SNOWFLAKE_NOTIFICATION_SCHEMA: "LH_CONFIG"
+        SNOWFLAKE_DESTINATION_TOPICS: "arn:aws:sns:eu-west-1:512544833523:uat-TEXTUAL_CONTENT-changes"
+        SNOWFLAKE_NOTIFICATIONS_ENABLED: false
+        SNOWFLAKE_MIN_POOL_SIZE: 5
+        SNOWFLAKE_MAX_POOL_SIZE: 20
+    ingress:
+      enabled: true
+      host:
+        name: authoring.integration.cha.rbxd.ds
+        path: /api/richtext/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-rchtxt-integration
+      VaultK8sRoleName: "kv-rchtxt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "rchtxt/integration/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-rchtxt-integration
+      VaultK8sRoleName: "kv-rchtxt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

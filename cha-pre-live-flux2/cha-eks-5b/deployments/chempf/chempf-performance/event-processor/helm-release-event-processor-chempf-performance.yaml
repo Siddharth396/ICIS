@@ -1,0 +1,49 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:  
+  releaseName: event-processor-chempf-performance
+  values:
+    replicaCount: 1
+    namespace: "chempf-performance"
+    environment: "performance"
+    
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "performance"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_performance_petchem_analytics_forecast_prices_1: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "responsive_price_forecast_event_processor_performance"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "public_performance_petchem_analytics_forecast_prices_event_processor_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "public_performance_petchem_analytics_forecast_prices_event_processor_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_performance_petchem_analytics_forecast_prices_1" 
+      
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/chempf/chempf-kafka-event-processor # {"$imagepolicy": "flux-system:chempf-event-processor-performance:name"}
+        tag: performance-3-1.0.1.156893 # {"$imagepolicy": "flux-system:chempf-event-processor-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT : performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/chempf-performance?retryWrites=true&w=majority"
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        MESSAGE_EXPIRE_IN_MINUTES: 21600
+        PRICING_DB_NAME: "pricing-pfe-systest"
+        STOP_NOTIFICATION: false
+        LOG_LEVEL: "Warning"
+        # It's pointing to systest for temp measure
+        SQUIDEX_URL: "https://price-forecasts.cosmos.systest.cha.eu-west-1.dev/"
+
+    vault:
+      VaultConsumerSecretPath: "kv/cha/k8s/data/chempf/performance/eventprocessor"
+      VaultSecretPath: "kv/cha/k8s/data/chempf/performance/eventprocessor"
+      
+    autoscaling:
+      enabled: false
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

@@ -1,0 +1,6 @@
+{
+"ssl": {
+"cert": "./certificates/tls.crt",
+"key": "./certificates/tls.key"
+}
+}

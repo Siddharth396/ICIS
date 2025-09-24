@@ -1,0 +1,77 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: enavip-admin-vaults
+  namespace: enavip-dev
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: enavip-admin-vaults
+  namespace: enavip-tst
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: enavip-admin-vaults
+  namespace: enavip-integration
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: enavip-admin-vaults
+  namespace: enavip-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: enavip-admin-vaults
+  namespace: enavip-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,16 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: mfe-feed-service
+
+spec:
+  values:
+    vault_secrets:    
+        name: mfe-feed-subscriber-secret-homepage
+        VaultK8sRoleName: "kv-homepage-read"
+        VaultK8sAuthPath: "cha/eks-b"
+        VaultSecretMount: "kv/cha/k8s"
+        VaultSecretPath: "homepage/mfe"
+    ServiceAccountName: "homepage"
+    projectName: subscriber-mfe-feed-service

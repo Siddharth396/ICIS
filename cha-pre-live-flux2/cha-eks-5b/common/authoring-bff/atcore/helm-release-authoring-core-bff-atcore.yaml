@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-atcore"
+    ServiceAccountName: "atcore"
+    vault_secrets:
+      name: authoring-bff-vault-secret-atcore
+      VaultK8sRoleName: "kv-atcore-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "atcore/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-mongo-atcore
+      VaultK8sRoleName: "kv-atcore-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

@@ -1,0 +1,143 @@
+schema {
+  query: Query
+}
+
+type AlternateField {
+  seriesItemTypeCodes: [String!]!
+  field: String!
+  priceDeltaField: String
+}
+
+type AuditInfo {
+  timestamp: DateTime!
+  user: String!
+}
+
+type ColumnForDisplay {
+  field: String!
+  displayOrder: Int!
+  hidden: Boolean!
+}
+
+type ContentBlockDefinitionForDisplay {
+  contentBlockId: String!
+  version: Int!
+  title: String
+  columns: [ColumnForDisplay!]
+  rows: [RowForDisplay!]
+  selectedFilters: SelectedFilters
+  assessedDateTime: DateTime
+  priceDisplayGridConfiguration: PriceDisplayGridConfiguration
+  priceSeriesItemForDisplay(assessedDateTime: Long!): [PriceSeriesResponse!]
+}
+
+type PriceDisplayColumn {
+  field: String!
+  headerName: String!
+  cellDataType: String!
+  displayOrder: Int!
+  values: [String!]
+  pinned: String
+  type: String
+  customConfig: PriceDisplayCustomConfig
+  tooltipField: String
+  cellType: String
+  columnOrder: Int!
+  hideable: Boolean!
+  hidden: Boolean!
+  minWidth: Int
+  maxWidth: Int
+  width: Int
+  alternateFields: [AlternateField!]!
+  autoSize: Boolean!
+}
+
+type PriceDisplayCustomConfig {
+  priceDelta: PriceDisplayPriceDelta
+}
+
+type PriceDisplayGridConfiguration {
+  columns: [PriceDisplayColumn!]!
+  sort: PriceDisplaySort
+  seriesItemTypeCodes: [String!]!
+}
+
+type PriceDisplayPriceDelta {
+  priceField: String!
+  priceDeltaField: String!
+  precisionField: String!
+}
+
+type PriceDisplaySort {
+  name: String!
+  order: String!
+}
+
+type PriceSeriesItemVersion {
+  price: Decimal
+  priceLow: Decimal
+  priceHigh: Decimal
+  priceMid: Decimal
+  lastModified: AuditInfo!
+}
+
+type PriceSeriesResponse {
+  id: String
+  unitDisplay: String
+  priceSeriesName: String
+  period: String
+  seriesItemTypeCode: String
+  seriesId: String
+  itemFrequencyName: String
+  assessedDateTime: String
+  dataUsed: String
+  price: Decimal
+  priceLow: Decimal
+  priceHigh: Decimal
+  priceMid: Decimal
+  priceDelta: Decimal
+  assessmentMethod: String
+  priceLowDelta: Decimal
+  priceMidDelta: Decimal
+  priceHighDelta: Decimal
+  status: String
+  lastModifiedDate: String
+  previousVersion: PriceSeriesItemVersion
+  priceDeltaType: String!
+}
+
+type Query {
+  contentBlockForDisplay(contentBlockId: String! version: Int): ContentBlockDefinitionForDisplay
+}
+
+type RowForDisplay {
+  priceSeriesId: String!
+  displayOrder: Int!
+  seriesItemTypeCode: String!
+}
+
+type SelectedFilters {
+  isInactiveIncluded: Boolean!
+  selectedCommodities: [String!]!
+  selectedRegions: [String!]
+  selectedPriceCategories: [String!]
+  selectedAssessedFrequencies: [String!]
+  selectedTransactionTypes: [String!]
+}
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+  VALIDATION
+}
+
+"The `DateTime` scalar represents an ISO-8601 compliant date time type."
+scalar DateTime @specifiedBy(url: "https:\/\/www.graphql-scalars.com\/date-time")
+
+"The built-in `Decimal` scalar type."
+scalar Decimal
+
+"The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1."
+scalar Long
+
+scalar UUID @specifiedBy(url: "https:\/\/tools.ietf.org\/html\/rfc4122")

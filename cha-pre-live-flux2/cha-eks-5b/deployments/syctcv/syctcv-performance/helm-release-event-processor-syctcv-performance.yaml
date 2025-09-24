@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: syctcv-event-processor
+spec:
+  releaseName: syctcv-event-processor-performance
+  values:
+    replicaCount: 1
+    namespace: "syctcv-performance"
+    environment: "performance"
+    migration_init_script:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/syctcv/mongo-migration # {"$imagepolicy": "flux-system:syctcv-mongo-migration-performance:name"}
+        tag: performance-4-5.0.0-monitoring.3487 # {"$imagepolicy": "flux-system:syctcv-mongo-migration-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/syctcv-performance?retryWrites=true&w=majority"
+        ENVIRONMENT: performance
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/syctcv/syctcv-event-processor # {"$imagepolicy": "flux-system:syctcv-event-processor-performance:name"}
+        tag: performance-26-9.0.6-feature-github-migration-3440 # {"$imagepolicy": "flux-system:syctcv-event-processor-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net?retryWrites=true&w=majority"
+        MONGO_DB_NAME: "syctcv-performance"
+        PF_MONGO_DB_NAME: "pf-performance"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENVIRONMENT: performance
+        QUEUE_NAME: "sync_to_canvas_performance_report_event"
+        DB_API_URL: "https://dbapi.performance.genesis.cha.rbxd.ds/v1"
+        CANVAS_CORE_API_URL: "https://authoring.performance.cha.rbxd.ds/api/canvas/v1"
+        SNAPSHOTS_SYSTEM_API_URL: "https://authoring.performance.cha.rbxd.ds/api/snapshots/v1"
+        IMAGE_API_URL: "https://authoring.performance.cha.rbxd.ds/api/image/v1"
+        RICHTEXT_API_URL: "https://authoring.performance.cha.rbxd.ds/api/richtext/v1"
+        ADHOC_TABLE_API_URL: "https://authoring.performance.cha.rbxd.ds/api/adhoc-table/v1"
+        WORKFLOW_API_URL: "https://authoring.performance.cha.rbxd.ds/api/workflow/v1"
+    yjs_messaging_api:
+      config_env:
+        YJS_SERVER_URL: "wss://authoring.performance.cha.rbxd.ds/api/canvas-yjs/ws"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/sync-to-canvas/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: syctcv-vault-secret-event-processor-performance
+      VaultSecretPath: "syctcv/performance/eventprocessor"
+    vault_secrets_proxy:
+      name: syctcv-auth-proxy-vault-secret-event-processor-performance

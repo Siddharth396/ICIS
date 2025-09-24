@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: sbfeed-integration
+nameSuffix: -sbfeed
+resources:
+- ../../../common/subscriber-bff/sbfeed/
+- ../../../common/event-processor/sbfeed/
+- ../../../common/cronjob/sbfeed/
+- ../../../common/job/sbfeed/
+patches:
+- path: helm-release-subscriber-bff-sbfeed-integration.yaml
+- path: helm-release-event-processor-sbfeed-integration.yaml
+- path: helm-release-event-processor-healthcheck-cronjob-sbfeed-integration.yaml
+- path: helm-release-mongo-migrator-sbfeed-integration.yaml

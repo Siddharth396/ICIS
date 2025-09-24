@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: pricing
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_petchem_price_assessments_specification_names_1
+    database: pricing-performance
+    collection: petchem_price_assessments_specification_names_1
+    transforms.RenameField.renames: migrated_series_id:_id
+    writemodel.strategy: com.mongodb.kafka.connect.sink.writemodel.strategy.UpdateOneTimestampsStrategy
+

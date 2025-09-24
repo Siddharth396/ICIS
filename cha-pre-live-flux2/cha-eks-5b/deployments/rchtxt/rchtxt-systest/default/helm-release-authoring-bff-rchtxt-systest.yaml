@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-rchtxt-systest
+  values:
+    replicaCount: 1
+    namespace: "rchtxt-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    migration_init_script:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/rchtxt/mongo-migration # {"$imagepolicy": "flux-system:rchtxt-mongo-migration-systest:name"}
+        tag: systest-58-1.20.4-1.26149 # {"$imagepolicy": "flux-system:rchtxt-mongo-migration-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/rchtxt-systest?retryWrites=true&w=majority"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/rchtxt/authoring-bff # {"$imagepolicy": "flux-system:rchtxt-auth-bff-systest:name"}
+        tag: systest-470-1.20.5-NEP-11493-create-scripts-to-remove-duplicate-tags.1.43577 # {"$imagepolicy": "flux-system:rchtxt-auth-bff-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/rchtxt-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ACM_BASE_URL: https://acm.integration.cha.rbxd.ds
+        DOMAIN_IDENTITY_BASE_URL: https://domainidentity.integration.cha.rbxd.ds/v1
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        LOG_LEVEL: Warning
+        SECRET_FILE_PATH: /etc/secrets/.env
+        IS_PUBLISH_TO_LAKEHOUSE_ENABLED: false
+        SNOWFLAKE_CONNECTION_STRING: "account={0};user={1};password={2};role={3};warehouse={4};db={5};MinPoolSize={6};MaxPoolSize={7}"
+        SNOWFLAKE_ACCOUNT: "ex99616.eu-west-1"
+        SNOWFLAKE_ROLE: "SVC_TEXTUAL_CONTENT_PUBLISHER_GOLD_DEV"
+        SNOWFLAKE_WAREHOUSE: "QRY_WH_GOLD_DEV"
+        SNOWFLAKE_DB: "ICIS_GOLD_DEV_DB"
+        SNOWFLAKE_TEXTUAL_CONTENT_SCHEMA: "TEXTUAL_CONTENT"
+        SNOWFLAKE_NOTIFICATION_SCHEMA: "LH_CONFIG"
+        SNOWFLAKE_DESTINATION_TOPICS: "arn:aws:sns:eu-west-1:512544833523:dev-TEXTUAL_CONTENT-changes"
+        SNOWFLAKE_NOTIFICATIONS_ENABLED: true
+        SNOWFLAKE_MIN_POOL_SIZE: 5
+        SNOWFLAKE_MAX_POOL_SIZE: 20
+    ingress:
+      enabled: true
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/richtext/?(.*)
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+      secret:
+        cert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUgwekNDQTd1Z0F3SUJBZ0lDR1RNd0RRWUpLb1pJaHZjTkFRRUxCUUF3ZXpFTE1Ba0dBMVVFQmhNQ1IwSXgKRURBT0JnTlZCQWdNQjBWdVoyeGhibVF4RHpBTkJnTlZCQWNNQmxOMWRIUnZiakVOTUFzR0ExVUVDZ3dFU1VOSgpVekVqTUNFR0ExVUVDd3dhU1VOSlV5QkRaWEowYVdacFkyRjBaU0JCZFhSb2IzSnBkSGt4RlRBVEJnTlZCQU1NCkRFbERTVk1nVW05dmRDQkRRVEFlRncweU1qRXhNekF3T1RNMk5EaGFGdzB5TlRBeU1UY3dPVE0yTkRoYU1HVXgKQ3pBSkJnTlZCQVlUQWtkQ01SQXdEZ1lEVlFRSURBZEZibWRzWVc1a01RMHdDd1lEVlFRS0RBUkpRMGxUTVEwdwpDd1lEVlFRTERBUkpRMGxUTVNZd0pBWURWUVFEREIxaGRYUm9iM0pwYm1jdWMzbHpkR1Z6ZEM1amFHRXVjbUo0ClpDNWtjekNDQVNJd0RRWUpLb1pJaHZjTkFRRUJCUUFEZ2dFUEFEQ0NBUW9DZ2dFQkFMdlgvUVFOcjAyS25xcUoKcWF1S1VSRkw3MGZvODNrbHdGNUR6OEJtNWQxREY1L1ptWXZuRE5uYi9ETC83QXdWdFVNbFBsTkYvYW9wanpmRwpaVWlHNXFadGptVnB6SzByUUZxeEhObWp1QUJHQjdiSFZUb3JjVlh6UE5tS2xUbzZjekp6c1ozb1dHazRZRHVZCldweTByOUczQk0wMEVQd0psVm5pc24yRU5FQVZqSS8wNzhyU1AzZElHSnk2eDdyY1B0ZmtGV2NYdUZ6ODVMRUUKYkRRV3lkUnhHOVdQd3RKYVk0N3VNL1diWHpqd3Z4cUVjaU5ndE93c1dWVXJUMjBMRFczbFQwRThaTVgwR3VRMQpnTmtOai9UQ1BPaDJyOWJxUm1HNmJWbnk5WjZ6VnJtdU5QNngrd0Q3N1d4SUQrYWJZMVhGemNrcVRURkxETmdvCk1laGMybDBDQXdFQUFhT0NBWFV3Z2dGeE1Ba0dBMVVkRXdRQ01BQXdFUVlKWUlaSUFZYjRRZ0VCQkFRREFnWkEKTURNR0NXQ0dTQUdHK0VJQkRRUW1GaVJQY0dWdVUxTk1JRWRsYm1WeVlYUmxaQ0JUWlhKMlpYSWdRMlZ5ZEdsbQphV05oZEdVd0hRWURWUjBPQkJZRUZNN1dDMXRUeGZJT2Y0cmRLbUNFNmEzTXFtK1NNSUd0QmdOVkhTTUVnYVV3CmdhS0FGR2VpVFA3YVFZdzB3bm8vdWVUdlE2MFdObVhlb1gra2ZUQjdNUXN3Q1FZRFZRUUdFd0pIUWpFUU1BNEcKQTFVRUNBd0hSVzVuYkdGdVpERVBNQTBHQTFVRUJ3d0dVM1YwZEc5dU1RMHdDd1lEVlFRS0RBUkpRMGxUTVNNdwpJUVlEVlFRTERCcEpRMGxUSUVObGNuUnBabWxqWVhSbElFRjFkR2h2Y21sMGVURVZNQk1HQTFVRUF3d01TVU5KClV5QlNiMjkwSUVOQmdna0FrOFBzemdxWDFpSXdEZ1lEVlIwUEFRSC9CQVFEQWdXZ01CTUdBMVVkSlFRTU1Bb0cKQ0NzR0FRVUZCd01CTUNnR0ExVWRFUVFoTUIrQ0hXRjFkR2h2Y21sdVp5NXplWE4wWlhOMExtTm9ZUzV5WW5oawpMbVJ6TUEwR0NTcUdTSWIzRFFFQkN3VUFBNElFQVFBa1UyeDNISTMwMkR3NWZKRVlnWnhQc3NORm9RS2l1dDIvCm9LSjVtcU0wNWRCNXUxZ3NtaHFGcVk4VFMxTGhrSXVHazhBdDNyNHhLUldkNUJhQUp1dFlRMG43MTY3Z0pCNmkKdXc4N0YvSVphQW41Q1FyY2NxT1o3VWhQRVd0K1BCTzFSc29ZS1R6Vm9SYXV0bXVicnFvNUpFaUYvRkRhU0ZkNAorRjhvTjRnMUVBQzZ4eTFydWVsNW96ZktuUkRnVTNBNUIvZytjZzdXV0NHNGRhL0UxRzBNUmduRFVZTmgwcXBrCkNHb3hhVDYzQThSbW41RTFRSzIxNkw2ZGYxaU5aTGpyVE5OVmFVSGxOK2VPVHNkTjRYdEFyNUlUbkF6dnpxWVgKVW1yek1uSW5UNWlNWXhhSTBkWDJuRStJZFhKRUd3RUZick5rUVhpdHhENDR0OXRYc1NYc0hFdGVZMFFRcFhyaApmU1hmd1duWHlKbTA4dW5sYjBqUEVncEovVk1DWU5mQXNNcjhXNnBBaFA4c1RQczZyYk5PMHI1alpFWXVoZjVHCk5FOStramZkUXA3WXdBME1uNVBoaXNDQ09hYzZud2E1TlJDK1pJTldZd0tUdzJXcEx6SjJaRkFvSHgxalJITGYKR05LY0J0V0prZnpHUmdVbU5IdHpBRU1TYnpHMlpmSDFXbTdJeWhIN3B6S0xyeGlCb1RJOURxNmI3RXg4aEl5VApvTUo4NE5oaHRtQmE1VVdsdUhiTmswRkUyc0sybjNYUk92MlRRcFRER24wWWNPSjBMN3ZDWVo0SG1GT1VlOFk3CnI1dlJsYnhJcUNFWFYwV2hqMi8rYmlYU0RTRDJHdGhIOENtNzc3TmFvTE5TaTNhZ29MSzZucVQ3YndmYlFuQzIKWFlEajdrNkFJRDdjanZqMHVmd3VBaG5HOXVKZ0NZREJTU1lETE5GaWxKMHc0RDN4d21XeGJKazcrc0tkTnBhQwpRYWdCTTRSUHpmWGROQW5MU010c1U3djNGN3hjSFVWVjdtcXRKRHZDYU1WTktlTEV4RGFsYU9zaHQrSG5FZkNzCk8rc3FqbmdDSFV5UytLTVhaMlRrMk5ZcmNtaWNhZlJweHVTNkxkbjNZTlNIYkQ1ZDRZaE1GbllweE5OWXFPN3EKWDZzUWdBSk5QT0xrSVd5citLL3QraXU0V1QzeTJRZ1V1Q0xBQ1hzZHFUYWw4NDB2WEVaT25od3FBUmlKeDVDZApMMmpQQm5LeSt0OWU3RzVjOWdlRUlROXd5c0pYK3R5Y1FPUkNRczlBamNZUEhVMHZVdndpYTh2NGZSS21sdXU5CitFUkI1cFc1dTFaTmJwUUwwNlFlMTFzWTdGL050T2xQNGoyUWlMN2t2VFp4TzlxNm9WQWtMSXUzTnRXdFlKS0MKZGo0dWhYc1NFYldmaXNQZHN1SjRoaHJSY2hEQk1QeHYyaHBTZktvRWZZZzI4TzRuUmE0N09vM0JxSFBnT2x3SgpUN1hHckIzKzZsTklEU1JvbUlESkQxVHcvVTdpOGpnOVhBazRTOFhwdWlmeTRnVlEweGFTSTlSNlV4N2Q1blB5CkZOdkVNQ2NPTFVvSGhxRC9BeURwQnFaN0IvbVJuSWVaYk1PY2UwUkNjc3pDaWlqeUozSU83Y1lTQTdmeWR0MVoKMnJxamgwVUVoYnhtRTY4ODFtUkFJUzVJTTZwSHVSaTdub3l0SEV0WEI3eGY2Q0VZMHB0M01YWldpSXAwd0pwMwpabXo5eTVxdGlmSmtvRWN2c1BkSE56VkROYWlNRG5mZGZTRmxvMnJFSnlWVGowWlNyM1hPCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+        key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFb3dJQkFBS0NBUUVBdTlmOUJBMnZUWXFlcW9tcHE0cFJFVXZ2UitqemVTWEFYa1BQd0dibDNVTVhuOW1aCmkrY00yZHY4TXYvc0RCVzFReVUrVTBYOXFpbVBOOFpsU0libXBtMk9aV25NclN0QVdyRWMyYU80QUVZSHRzZFYKT2l0eFZmTTgyWXFWT2pwek1uT3huZWhZYVRoZ081aGFuTFN2MGJjRXpUUVEvQW1WV2VLeWZZUTBRQldNai9Udgp5dEkvZDBnWW5Mckh1dHcrMStRVlp4ZTRYUHprc1FSc05CYkoxSEViMVkvQzBscGpqdTR6OVp0Zk9QQy9Hb1J5CkkyQzA3Q3haVlN0UGJRc05iZVZQUVR4a3hmUWE1RFdBMlEyUDlNSTg2SGF2MXVwR1licHRXZkwxbnJOV3VhNDAKL3JIN0FQdnRiRWdQNXB0alZjWE55U3BOTVVzTTJDZ3g2RnphWFFJREFRQUJBb0lCQUZZZVdkTm42cnprRm9ZZApBdnF3T1NaeTU4clNFLzJ3dnhiNGcrQ3p6Q0s2eGJQMWNSM2cyZFZ2czVvMkZxUWJ0N1NHK0tINDdxajYwTHhECmF0L3JhUWRZSnZaN29PaXJjWitpbjVWd0o4V0lWYlVJZ2h4ZkdtRExXVlJxNHF1RmJKYnV6N21UY2lVYlFaTlEKOEFuMEZMOVM1eEtsRWp4YXNHdzdNSlcyN0xXTDRjRmt5QVVPTy9ieGYvWXNRcHBaOVBocHI1dXhUa3ppNUw5LwozNFpMK2NIMUVVRktGQXgvbm1CSHVXMG43Z1JzK21qUFFBSkJRSzFJdjh2M2QvRVdzYnNmajRxSlVQKzhPTFFICmlEaDZFT00vVDZoWnY5V3NWNGRyQUd3TEFvWHZQZmVSY3lsNDFMdERmVStLZmppUjlBVEFoZGVWQnNjeFE2RXQKeHZFTUdRa0NnWUVBNzNRMkNROXNaVGY4cVVQak1zTGVvREdVZmdIa2N1SnZnMU1QL3NyV3c3amExZjlOQWVKQQpDL1FvZzdhVWlXRk1PMGI3cmdOTkdJRmg0ZFc5Q3J3ZUpHN2RxcGJSWFBVYTJVWGxKcFlFVHpWTkQ3RUF0VVIxCnBJbnJaclNkMDFnYXkwRTYrUSszYkVuazdFOEIwWnNYVXpHaGNUVVRrUW01UUdyL3ZnTlhLZjhDZ1lFQXlOTFQKSGNxWWloaDJ2b21HYVVXRk41RjdWWkt3MDM0d1V6aFM4VWxTQktqdVpXajM2dEdScjhwTUpBdlRTM1AvaFhiSgpGbERuYnhvT3hlbUlDTTVRbjllOWk1a21Fa2xxeDE0UnJPUXZvalZrd2tYcWtZNWhvNGcxTTgrM216aXhXMDZhCmdaOFh2d1k1WjRDTjRqLyt0MEJ4RnhHNHBxNS9BMHNNUkVKZzQ2TUNnWUVBd2wwRjcxekJrM2RhY3RwVDlNUVEKaU44MXRRSThPTFJyNTZEb2Z0eU9idGdCYVdxTlMxWW12bzAweFpUU0JLRWhpNHdXaGl6UHkzQlp6MEg2N0ZlOQo3N3k5Mk5ZS292V2hFWE9XaVRlRHovZG4wYkRPN2xQZldldEpWRmlQTXhsMHhqN3dhM0hDWlBlbUJkb3JrOFBiCnJ2KytGM0lKcTlURXRmRWtIVXdBMkdrQ2dZQUlLUURwR2YxZXh5VzBFbFNDM0k5UU5ib2tQUVN3WTFWRlhHbUsKWW1kUnh5ZUF1V1l4aFhoOUF5UmE1cHdjV2NkTlBnbG52YnZadU41V3ptbDNxaUorakQ2b2VIMmlpcGNyS0xoaApKUmlHWjlNRFRlSDlMaUxyaVRKWU81MkRVaWRxeFdQajFub1ppZ0ExSTNVZ2QyYzdQUVFiWXQzMDcrdzdUd1pkCms3RHFMd0tCZ0REWWxkM1k2NUkraVMxeVZ1QXRNUjFFZlYrWVJZK3BWdks5aWg5dkFKdDIvNWZpWXQ4TXM5ZGIKTEtTcmdsWk1YNXh0Qmc5R2dkUnczZTFSSTMvWlhVODRVQ0ZVdE8zcUxXL0J4ZlBPZ2xtbXZpUlpva2I4eDg5bgpSSHM5OFZ3N0NrOSswbGZIZTVQY1JuWkRTSEp4RHVFSkJJMkRUSG1uYnJTR291SDU0dzBlCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tCg==
+    vault_secrets:
+      name: authoring-bff-vault-secret-rchtxt-systest
+      VaultK8sRoleName: "kv-rchtxt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "rchtxt/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-rchtxt-systest
+      VaultK8sRoleName: "kv-rchtxt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

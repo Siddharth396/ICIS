@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: esvcep-performance
+nameSuffix: -esvcep
+resources:
+- ../../../common/event-processor/esvcep/
+- helm-release-event-processor-deployment-scaler.yaml
+patches:
+- path: helm-release-event-processor-esvcep-performance.yaml

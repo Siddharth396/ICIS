@@ -1,0 +1,159 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: domain-identity-service
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: didens
+      version: "0.1.17"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    replicaCount: 1
+    ServiceAccountName: "didens"
+    projectName: "domain-identity-service"
+    
+    vault_agent:
+      repository: "artifacts.cha.rbxd.ds/base-image/vault"
+      tag: "latest"
+
+    consul_template:
+      repository: "artifacts.cha.rbxd.ds/base-image/consul-template"
+      tag: "alpine"
+
+    didens:
+      port: 80
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/domain-identity/core"
+        tag: "systest-1-0.1.7.23917"
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "50m"
+        limits:
+          memory: "256Mi"
+          cpu: "250m"
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 80
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        periodSeconds: 30
+      config_env:
+         ENVIRONMENT: systest
+         HEALTHCHECK_READINESS: "/internal/health/readiness"
+         HEALTHCHECK_LIVENESS: "/internal/health/liveness"
+         WSFEDERATION_METADATAADDRESS: "https://adfs.cha.rbxd.ds/federationmetadata/2007-06/federationmetadata.xml"
+         ELASTIC_APM_TRANSACTION_IGNORE_URLS: /internal/*
+         ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+
+    nginx:
+      port: 8080
+      image:
+        repository: artifacts.cha.rbxd.ds/base-image/nginx
+        tag: alpine
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "50m"
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 8080
+          scheme: HTTPS
+        initialDelaySeconds: 30
+        periodSeconds: 5
+        timeoutSeconds: 2
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 8080
+          scheme: HTTPS
+        periodSeconds: 30
+      config: |-
+        server {
+          listen 8080 ssl;
+          server_name  localhost;
+
+          proxy_read_timeout 300;
+          proxy_connect_timeout 300;
+          proxy_send_timeout 300;
+
+          access_log /dev/stdout main;
+          error_log /dev/stdout warn;
+
+          ssl_certificate /etc/ssl/tls.crt;
+          ssl_certificate_key /etc/ssl/tls.key;
+
+          client_header_buffer_size    32k;
+          large_client_header_buffers  4 64k;
+        
+          server_tokens off;
+          
+          #Reverse Proxy rules to serve the BFF from other container
+          
+          location ~* ^/internal/metrics {
+            deny all;
+            return 403;
+            server_tokens off;
+          }
+          
+          location / {
+            add_header Strict-Transport-Security "max-age=31536000";
+            proxy_set_header Host $http_host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Forwarded-Proto $scheme;
+
+            proxy_buffers 4 128k;
+            proxy_buffer_size 64k;
+            proxy_busy_buffers_size 128k;
+
+            proxy_pass http://localhost:80;
+          }
+        }
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+    
+
+    service:
+      port_name: https
+      port: 443
+
+    autoscaling:
+      enabled: false
+
+    vault_secrets:
+      VaultK8sRoleName: "kv-didens-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+
+
+
+

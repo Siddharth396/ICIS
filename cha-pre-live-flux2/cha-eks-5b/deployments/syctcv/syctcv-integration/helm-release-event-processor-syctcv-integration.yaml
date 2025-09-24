@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: syctcv-event-processor
+spec:
+  releaseName: syctcv-event-processor-integration
+  values:
+    replicaCount: 1
+    namespace: "syctcv-integration"
+    environment: "integration"
+    migration_init_script:
+      enabled: true
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/syctcv/mongo-migration # {"$imagepolicy": "flux-system:syctcv-mongo-migration-integration:name"}
+        tag: integration-2-7.0.0.35329 # {"$imagepolicy": "flux-system:syctcv-mongo-migration-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/syctcv-integration?retryWrites=true&w=majority"
+        ENVIRONMENT: integration
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/syctcv/syctcv-event-processor # {"$imagepolicy": "flux-system:syctcv-event-processor-integration:name"}
+        tag: integration-8-9.0.6-37324 # {"$imagepolicy": "flux-system:syctcv-event-processor-integration:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: integration
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net?retryWrites=true&w=majority"
+        MONGO_DB_NAME: "syctcv-integration"
+        PF_MONGO_DB_NAME: "pf-integration"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENVIRONMENT: integration
+        QUEUE_NAME: "sync_to_canvas_integration_report_event"
+        DB_API_URL: "https://dbapi.staging.genesis.cha.rbxd.ds/v1"
+        CANVAS_CORE_API_URL: "https://authoring.integration.cha.rbxd.ds/api/canvas/v1"
+        SNAPSHOTS_SYSTEM_API_URL: "https://authoring.integration.cha.rbxd.ds/api/snapshots/v1"
+        IMAGE_API_URL: "https://authoring.integration.cha.rbxd.ds/api/image/v1"
+        RICHTEXT_API_URL: "https://authoring.integration.cha.rbxd.ds/api/richtext/v1"
+        ADHOC_TABLE_API_URL: "https://authoring.integration.cha.rbxd.ds/api/adhoc-table/v1"
+        WORKFLOW_API_URL: "https://authoring.integration.cha.rbxd.ds/api/workflow/v1"
+    yjs_messaging_api:
+      config_env:
+        YJS_SERVER_URL: "wss://authoring.integration.cha.rbxd.ds/api/canvas-yjs/ws"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.integration.cha.rbxd.ds
+        path: /api/sync-to-canvas/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: syctcv-vault-secret-event-processor-integration
+      VaultSecretPath: "syctcv/integration/eventprocessor"
+    vault_secrets_proxy:
+      name: syctcv-auth-proxy-vault-secret-event-processor-integration

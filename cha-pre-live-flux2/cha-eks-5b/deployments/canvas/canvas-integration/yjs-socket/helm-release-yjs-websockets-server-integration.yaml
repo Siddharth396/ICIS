@@ -1,0 +1,34 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-socket-bff
+spec:
+  releaseName: yjs-websockets-server-canvas-integration
+  values:
+    replicaCount: 1
+    namespace: "canvas-integration"
+    environment: "integration"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:name"}
+        tag: integration-14-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-integration:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/canvas/yjs-websockets-server # {"$imagepolicy": "flux-system:canvas-yjs-websockets-server-integration:name"}
+        tag: integration-3-1.0.1.1349 # {"$imagepolicy": "flux-system:canvas-yjs-websockets-server-integration:tag"}
+        pullPolicy: IfNotPresent
+    ingress:
+      enabled: true
+      host:
+        name: authoring.integration.cha.rbxd.ds
+        path: /api/canvas-yjs/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-canvas-integration-yjs
+      VaultSecretPath: "canvas/integration/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-canvas-integration-yjs

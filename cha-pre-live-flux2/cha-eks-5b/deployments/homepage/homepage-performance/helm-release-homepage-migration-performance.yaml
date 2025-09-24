@@ -1,0 +1,56 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "homepage-performance"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/homepage/migration # {"$imagepolicy": "flux-system:homepage-migration-performance:name"}
+        tag: performance-1-1.95.0-feature-long-run-27012 # {"$imagepolicy": "flux-system:homepage-migration-performance:tag"}
+      config_env:
+        ENVIRONMENT: performance
+        SECRET_FILE_PATH: /etc/secrets/.env
+
+        # https://www.elastic.co/guide/en/apm/agent/dotnet/current/config-core.html
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .5
+        ELASTIC_APM_CAPTURE_BODY: all
+        TRACE_ENABLED: true
+        DB_URL: https://dbapi.performance.genesis.cha.rbxd.ds/v1
+
+        # SQL
+        SQL_HOST: genesis-ups-stag.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com
+        SQL_CAT: genesis-ups-performance
+        SQL_USR: genesis-ups-performance
+
+        # MongoDb
+        PRICING_MONGO_SERVER: cha-pre-live-ak0n6.mongodb.net
+        PRICING_MONGO_DB_NAME: pricing-performance
+
+        FAVORITE_PUBLICATIONS_MONGO_SERVER: cha-pre-live-ak0n6.mongodb.net
+        FAVORITE_PUBLICATIONS_MONGO_DB_NAME: favorite-publications-performance
+
+        COMMODITY_MONGO_SERVER: cha-pre-live-ak0n6.mongodb.net
+        COMMODITY_MONGO_DB_NAME: commodity-performance
+
+        # Patterns
+        PRICE_SERIES_PATTERN: "^(petchem|energy)"
+        CHART_SERIES_PATTERN: "^(petchem|energy)"
+        FAVORITE_PUBLICATIONS_PATTERN: "^(petchem|energy)"
+
+        # Toggles
+        MIGRATE_PRICE_SERIES_ENABLED: false
+        MIGRATE_COMMODITIES_ENABLED: false
+        MIGRATE_CHART_SERIES_ENABLED: false
+        ANALYSE_PRICE_SERIES_ENABLED: true
+        ANALYSE_COMMODITIES_ENABLED: true
+        ANALYSE_CHART_SERIES_ENABLED: true
+    vault_secrets:
+      name: homepage-migration-vault-secret-performance
+      VaultSecretPath: "homepage/performance/bff"
+      VaultK8sRoleName: "kv-homepage-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+

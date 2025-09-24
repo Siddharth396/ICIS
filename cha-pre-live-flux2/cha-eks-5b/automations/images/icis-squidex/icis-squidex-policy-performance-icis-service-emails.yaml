@@ -1,0 +1,18 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: icis-squidex-performance-icis-service-emails
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: icis-squidex
+    namespace: flux-system
+  filterTags:
+    pattern: '^performance-icis-service-emails-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc
+
+
+

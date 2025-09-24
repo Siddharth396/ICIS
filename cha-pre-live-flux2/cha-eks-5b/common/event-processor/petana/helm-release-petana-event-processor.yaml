@@ -1,0 +1,145 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: generic-event-processor-kafka-consumer
+      version: "0.13.8"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+
+  values:
+    replicaCount: 1
+    projectName: "petana"
+    ServiceAccountName: "petana"
+
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/dsm/cost-curves/generic-kafka-consumer
+        tag: 2.2.3.268
+        pullPolicy: IfNotPresent
+      config_env:
+        KafkaConsumer_Serilog__Source: "PetchemAnalytics"
+        KafkaConsumer_Serilog__Component: "EventProcessor"
+        KafkaConsumer_Serilog__Service: "KafkaConsumer"
+        KafkaConsumer_AppSettings__Consumer__SecurityProtocol: 3
+        KafkaConsumer_AppSettings__Consumer__SaslMechanism: 1
+        KafkaConsumer_ElasticApm__ServerUrl: https://apm.genesis.cha.eu-west-1.dev/
+        KafkaConsumer_AppSettings__ClusterConfig__SchemaRegistryUrl: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KafkaConsumer_AppSettings__Consumer__BrokerUrls: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+
+    nginx:
+     readinessProbe:
+        httpGet:
+         path: /v1/healthcheck
+         port: 8080
+         scheme: HTTPS
+        initialDelaySeconds: 60
+        periodSeconds: 5
+     livenessProbe:
+        httpGet:
+         path: /v1/healthcheck
+         port: 8080
+         scheme: HTTPS
+        initialDelaySeconds: 60
+        periodSeconds: 30
+
+    podMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /metrics
+          targetPort: 80
+          scheme: http
+
+    vault_agent:
+      repository: artifacts.cha.rbxd.ds/base-image/vault
+      tag: latest
+
+    consul_template:
+      repository: artifacts.cha.rbxd.ds/base-image/consul-template
+      tag: alpine
+        
+    event_processor:
+      image:
+        registry: "artifacts.cha.rbxd.ds"
+        repo_path: ""
+        tag: ""
+        pullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      livenessProbe:
+        httpGet:
+          path: /v1/healthcheck
+          port: 80
+        initialDelaySeconds: 60
+        periodSeconds: 30
+      securityContext:
+        readOnlyRootFilesystem: true
+        privileged: false
+      config_env:
+        ELASTIC_APM_TRANSACTION_IGNORE_URLS: /internal/*
+        SECRET_FILE_PATH: /etc/secrets/.env
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        KAFKA_SCHEMA_REGISTRY_URL:  "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"  
+        KAFKA_BROKER_URLS: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+
+
+    
+    service:
+      port: 8080
+      type: ClusterIP
+  
+    autoscaling:
+      enabled: false
+
+    vault:
+      url: "https://vault_eu_prod.b2b.regn.net"
+      VaultK8sAuthPath: "auth/cha/eks-b"
+      VaultK8sRoleName: "kv-petana-read"
+      certificate:
+        vault.crt: |-
+          -----BEGIN CERTIFICATE-----
+          MIIEijCCA3KgAwIBAgIQay0iJoZ+c6NJt7cqchus+zANBgkqhkiG9w0BAQsFADBg
+          MRMwEQYKCZImiZPyLGQBGRYDbmV0MRQwEgYKCZImiZPyLGQBGRYEcmVnbjETMBEG
+          CgmSJomT8ixkARkWA2IyYjEeMBwGA1UEAxMVYjJiLVJCSVFIU1BLSVAwMDJWLUNB
+          MB4XDTE3MDgxNzA5MzY1N1oXDTI3MDgxNzA5NDY1N1owYDETMBEGCgmSJomT8ixk
+          ARkWA25ldDEUMBIGCgmSJomT8ixkARkWBHJlZ24xEzARBgoJkiaJk/IsZAEZFgNi
+          MmIxHjAcBgNVBAMTFWIyYi1SQklRSFNQS0lQMDAyVi1DQTCCASIwDQYJKoZIhvcN
+          AQEBBQADggEPADCCAQoCggEBAMv3KNkRI/WzMqcLwkSsKU3vM5coMtDbqdPccdXU
+          MufO94gQXzWsLYN4gUVW2BQq2ULolCzwEDuEep61By2uKw4myr9RHENM8zy7cQXs
+          VvrkNiE+cyYa2zxxM34ImJDc19vHdBovX0zcY3jT3uqtdJX42Etvh2zJoAi26SDk
+          9miXggePd9eoGfnE6MKxTdCtf3s7AHQxR9Y3Rx+uCMKOSWNN+LterAA2n7qMtu6n
+          Uo51ZXmCdJYQDgyvVgS2CgUZwfCwBvD3bCeDwM8FLOr/V/5FDDVvIDmREqQN1eeY
+          Y2q7UQTujHRFzF18Iw+Thk1eGV/zyNvaXr8ny7o1uOeIg80CAwEAAaOCAT4wggE6
+          MBMGCSsGAQQBgjcUAgQGHgQAQwBBMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTAD
+          AQH/MB0GA1UdDgQWBBQjySkPLCVwclOIUQnzz5V3rO+1WzASBgkrBgEEAYI3FQEE
+          BQIDBQAFMIGsBgNVHR8EgaQwgaEwgZ6ggZuggZiGSmh0dHA6Ly9yYmlxaHNwa2lw
+          MDAzdi5iMmIucmVnbi5uZXQvQ2VydEVucm9sbC9iMmItUkJJUUhTUEtJUDAwMlYt
+          Q0EoNSkuY3JshkpodHRwOi8vcmJpcWhzcGtpcDAwNHYuYjJiLnJlZ24ubmV0L0Nl
+          cnRFbnJvbGwvYjJiLVJCSVFIU1BLSVAwMDJWLUNBKDUpLmNybDAjBgkrBgEEAYI3
+          FQIEFgQU2RDhuv3cL/CQBA4ZVzMUpO+Tqf4wDQYJKoZIhvcNAQELBQADggEBADHm
+          Vhw0S0ICMgXQDpXOp8nraCKsm9LpLcmi/SOtR35AgGQmxAxlPebKgIL3vpUOfnec
+          10htfOInwmF2dVheluEoFBPSbh0uXm3+Rm2p44/d6HTo5AkTygOQf3Fdu0IFqvBH
+          kXBLyQkgVfH2p3OjIfJAV+6seWBI3n+VvBg+YUVYHIqUCHzmxL07ztKuI7f6ZTuO
+          8AvcJzMcsjKkGeUNS3lNimEdI339C93BrBDNzPHZe7LOQr7SiFcIU32hIKfLLkWT
+          MM+pxYAJe1wZkDN1XvYgQ+R4W9XItalDf4y4ZwQIpYo60jZLS1OJQJngE3Tu6R2K
+          gA9dcD2vlZA86EhY8Mg=
+          -----END CERTIFICATE-----    

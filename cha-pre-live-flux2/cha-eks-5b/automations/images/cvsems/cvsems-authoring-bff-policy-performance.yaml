@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: cvsems-authoring-bff-performance
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: cvsems-authoring-bff
+    namespace: flux-system
+  filterTags:
+    pattern: '^performance-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

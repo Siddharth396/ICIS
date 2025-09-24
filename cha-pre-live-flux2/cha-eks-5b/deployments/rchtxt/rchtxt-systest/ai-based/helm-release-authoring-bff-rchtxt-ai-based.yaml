@@ -1,0 +1,62 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-ai-rchtxt-systest
+  values:
+    projectName: "authoring-rchtxt-ai"
+    replicaCount: 1
+    namespace: "rchtxt-systest"
+    environment: "systest"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:name"}
+        tag: systest-66-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-systest:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      resources:
+        requests:
+          memory: "1024Mi"
+          cpu: "50m"
+        limits:
+          memory: "1024Mi"
+          cpu: "200m"
+      image:
+        # this is not an acutal bff, connection strings are not needed, but break helm is missing
+        repository: artifacts.cha.rbxd.ds/automated/askicis-richtext/rich-ai-based-support-k8s # {"$imagepolicy": "flux-system:rchtxt-auth-bff-ai-based-systest:name"}
+        tag: systest-6-1.0.5 # {"$imagepolicy": "flux-system:rchtxt-auth-bff-ai-based-systest:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/rchtxt-systest?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.systest.cha.rbxd.ds
+        ACM_BASE_URL: https://acm.integration.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        LOG_LEVEL: Warning
+        COLLECTION_NAME_PREFIX: ai_based
+        SECRET_FILE_PATH: /etc/secrets/.env
+    ingress:
+      enabled: true
+      secretName: subscriber-bff-ingress-secret-authoring-rchtxt-ai
+      host:
+        name: authoring.systest.cha.rbxd.ds
+        path: /api/richtext-ai-based/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-ai-vault-secret-rchtxt-systest
+      VaultK8sRoleName: "kv-rchtxt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "rchtxt/systest/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-ai-vault-secret-proxy-rchtxt-systest
+      VaultK8sRoleName: "kv-rchtxt-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

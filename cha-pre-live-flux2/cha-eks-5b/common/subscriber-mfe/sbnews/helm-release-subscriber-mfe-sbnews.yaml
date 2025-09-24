@@ -1,0 +1,14 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-mfe
+spec: 
+  values:
+    projectName : "sbnews"
+    serviceAccountName : "sbnews"
+    vault_secrets:
+      VaultK8sRoleName: "kv-sbnews-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+  

@@ -1,0 +1,32 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:     
+  values:
+    replicaCount: 1
+    projectName: "authoring-dlchrt"
+    ServiceAccountName: "dlchrt"
+
+    bff:
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 80
+        initialDelaySeconds: 60
+        periodSeconds: 30
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        periodSeconds: 30
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "512Mi"
+          cpu: "500m"
+      config_env:
+        DEV_MODE: "true"

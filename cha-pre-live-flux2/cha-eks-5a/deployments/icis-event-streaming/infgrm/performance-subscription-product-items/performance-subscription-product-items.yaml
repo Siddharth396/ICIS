@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: infgrm
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_subscription_product_items_1
+    database: infgrm-performance
+    collection: product_items
+    transforms.RenameField.renames: id:_id

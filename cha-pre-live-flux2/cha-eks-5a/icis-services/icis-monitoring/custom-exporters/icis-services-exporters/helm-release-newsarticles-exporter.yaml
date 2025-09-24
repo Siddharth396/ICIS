@@ -1,0 +1,55 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: newsarticles-exporter
+  namespace: icis-monitoring
+spec:
+  releaseName: newsarticles-exporter
+  interval: 5m0s
+  chart:
+    spec:
+      chart: icis-monitoring-exporter
+      version: "1.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    nameOverride: "newsarticles-check-exporter"
+    fullnameOverride: "newsarticles-check-exporter"
+
+    image:
+      repository: artifacts.cha.rbxd.ds/icis-monitoring/newsarticles_checks_exporter
+      tag: "1.0.0"
+      pullPolicy: IfNotPresent
+
+    service:
+      type: ClusterIP
+      port: 3301
+
+    vault:
+      type: kv-v2
+      mount: kv/cha/k8s
+      path: icis-monitoring/newsarticles-vars
+
+    serviceMonitor:
+      interval: 30s
+      namespace: icis-monitoring
+      release: newsarticles-exporter
+
+    secrets:
+      - name: newsarcticles-vars
+        envName: BASE_URL
+        key: IDDN_BASE_URL
+      - name: newsarcticles-vars
+        envName: PASSWORD
+        key: IDDN_ML_PASSWORD
+      - name: newsarcticles-vars
+        envName: USERNAME
+        key: IDDN_ML_USERNAME
+

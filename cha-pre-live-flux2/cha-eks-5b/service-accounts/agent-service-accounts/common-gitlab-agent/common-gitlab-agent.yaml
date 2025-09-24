@@ -1,0 +1,598 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: common-gitlab-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: pforecast-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: pforecast-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: pforecast-staging
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: pforecast-staging
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: pforecast-integ
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: pforecast-integ
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: pforecast-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: pforecast-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: tesla-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: tesla-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: tesla-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: tesla-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: tesla-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: tesla-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: supdem-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: supdem-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-supdem-admin-vaults
+  namespace: supdem-systest
+subjects:
+- kind: ServiceAccount
+  name: supdem-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: supdem-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: supdem-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: supdem-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: supdem-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: lngedge-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: lngedge-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: lngedge-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: lngedge-uat
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: c-hub-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: c-hub-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-admin-vaults
+  namespace: c-hub-systest
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: c-hub-staging
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: c-hub-staging
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-admin-vaults
+  namespace: c-hub-staging
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: c-hub-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: c-hub-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-admin-vaults
+  namespace: c-hub-performance
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent
+  namespace: c-hub-integration
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+
+---  
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: common-gitlab-agent-service-monitor
+  namespace: c-hub-integration
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: c-hub-admin-vaults
+  namespace: c-hub-integration
+subjects:
+- kind: ServiceAccount
+  name: common-gitlab-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io

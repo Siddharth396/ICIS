@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cosmos-gitlab-runner
+  namespace: icis-gitlab-runner
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::512544833523:role/icis-gitlab-runner-cosmos-pre-live-access
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cosmos-gitlab-runner-admin
+  namespace: icis-gitlab-runner
+subjects:
+- kind: ServiceAccount
+  name: cosmos-gitlab-runner
+  namespace: icis-gitlab-runner
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io

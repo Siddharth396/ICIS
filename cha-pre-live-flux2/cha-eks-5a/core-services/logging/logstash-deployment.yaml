@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logstash
+  namespace: logging
+  labels:
+    app.kubernetes.io/name: elasticsearch-logstash
+    app.kubernetes.io/component: logstash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: elasticsearch-logstash
+      app.kubernetes.io/component: logstash
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: elasticsearch-logstash
+        app.kubernetes.io/component: logstash
+    spec:
+      containers:
+        - name: logstash
+          image: artifacts.cha.rbxd.ds/icis-services/logstash:9.0.3
+          ports:
+            - name: "http-input"
+              containerPort: 8080
+            - name: metrics
+              containerPort: 9600
+          env:
+            - name: ES_HOSTS
+              value: "https://logs.cha.rbxd.ds"
+          volumeMounts:
+            - name: logstash-config
+              mountPath: /usr/share/logstash/config/logstash.yml
+              subPath: logstash.yml
+            - name: pipelines-config
+              mountPath: /usr/share/logstash/config/pipelines.yml
+              subPath: pipelines.yml
+            - name: k8s-input-config
+              mountPath: /usr/share/logstash/k8s-assets/input-conf
+            - name: k8s-filter-config
+              mountPath: /usr/share/logstash/k8s-assets/filter-conf
+            - name: k8s-output-config
+              mountPath: /usr/share/logstash/k8s-assets/output-conf
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "1000m"
+              memory: "2Gi"
+      volumes:
+        - name: logstash-config
+          configMap:
+            name: logstash-base-config
+            items:
+              - key: logstash.yml
+                path: logstash.yml
+        - name: pipelines-config
+          configMap:
+            name: logstash-pipelines
+            items:
+              - key: pipelines.yml
+                path: pipelines.yml
+        - name: k8s-input-config
+          configMap:
+            name: logstash-k8s-input-config
+        - name: k8s-filter-config
+          configMap:
+            name: logstash-k8s-filter-config
+        - name: k8s-output-config
+          configMap:
+            name: logstash-k8s-output-config
+
+

@@ -1,0 +1,13 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: price-forecast
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_refdata_mappings_1
+    database: pf-systest
+    collection: refdata.order.mappings
+    transforms.RenameField.renames: id:_id
+    transforms.FilterValue.filter.condition: $[?(@.data_producer_entity_class in ['icis.iddn.commodity', 'icis.iddn.location'])]
+    transforms.FilterValue.filter.type: include

@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-uat
+  namespace: icis-squidex-uat
+spec:
+  releaseName: spot-price-uat
+  values:
+    projectName: "spot-price"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-uat:name"}
+        tag: uat-211-7.7.35 # {"$imagepolicy": "flux-system:icis-squidex-uat:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: spot-price
+        ADMIN__ADMINUSERGROUP__0: ICIS_Mercury
+        CONTENTS__MAXRESULTS: "'6000'"
+        CONTENTS__DEFAULTPAGESIZE: "'6000'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+        SCRIPTING__TIMEOUTEXECUTION: "'00:05:00'"
+        SCRIPTING__TIMEOUTSCRIPT: "'00:05:00'"
+        PLUGINS__2: ICIS.ExportPlugin.dll
+        PLUGINS__3: ICIS.SpotPrices.dll
+        EXPORT__MAXEXPORTCOUNT: "'500'"
+        EXPORT__ENABLEROLEPERMISSION: "'true'"
+        ELASTIC_APM_ENABLED: "'true'"
+      kafka:
+        enabled: True
+      envValues:
+        ELASTIC_APM_SERVICE_NAME: "SpotPrices - CMS"
+        ELASTIC_APM_CENTRAL_CONFIG: "'false'"
+        ELASTIC_APM_CAPTURE_BODY: "all"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: "'1.0'"
+    squidexCli:
+      enabled: True
+      schedule: "'40 8,11,14,15,17 * * *'"
+    vault_squidex_secrets:
+      name: spot-price-squidex-uat-secret
+    vault_kafka_secrets:
+      name: spot-price-squidex-kafka-uat-secret
+      VaultSecretPath: "icis-squidex/spot-price/uat"

@@ -1,0 +1,37 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: vault-issuer
+    external-dns.alpha.kubernetes.io/hostname: prometheus-icis-cha-eks-5a.cha.eu-west-1.dev
+    lnrs.io/zone-type: private
+    nginx.org/rewrites: "serviceName=icis-prometheus rewrite=/;"
+  labels:
+    app: icis-prometheus
+    monitoring-platform: icis-prometheus
+  name: icis-prometheus
+  namespace: icis-monitoring
+spec:
+  ingressClassName: icis-nginx-ingress
+  rules:
+  - host: prometheus-icis-cha-eks-5a.cha.eu-west-1.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: icis-prometheus
+            port: 
+              number: 9090
+        pathType: ImplementationSpecific
+        path: /
+      - backend:
+          service:
+            name: icis-prometheus
+            port: 
+              number: 10902
+        pathType: ImplementationSpecific   
+        path: /thanos-query
+  tls:
+  - hosts:
+    - prometheus-icis-cha-eks-5a.cha.eu-west-1.dev
+    secretName: prometheus-cert

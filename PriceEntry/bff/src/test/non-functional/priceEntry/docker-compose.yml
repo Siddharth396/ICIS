@@ -1,0 +1,15 @@
+
+version: "3.4"
+
+services:
+  k6-tests:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: base
+    command: yarn start:priceEntry
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT}
+      PRICE_ENTRY_TEST_USER: ${PRICE_ENTRY_TEST_USER}
+      PRICE_ENTRY_TEST_PWD: ${PRICE_ENTRY_TEST_PWD}
+    container_name: priceEntry-k6-api-tests

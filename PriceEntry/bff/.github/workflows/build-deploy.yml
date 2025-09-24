@@ -1,0 +1,751 @@
+name: CI/CD Pipeline
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "**" ]
+    tags: [ "**" ]
+
+jobs:
+
+  #########################
+  #        Version        #
+  #########################
+
+  determine_version:
+    name: Determine Semantic Version
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container: 
+      image: artifacts.cha.rbxd.ds/gittools/gitversion:6.0.2
+    outputs:
+      semver: ${{ steps.semver.outputs.semver }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Determine version
+        id: semver
+        run: |
+          git config --global --add safe.directory /__w/dsg-icis-capability-price-entry-bff/dsg-icis-capability-price-entry-bff
+          chmod +x ./ci_scripts/version.sh
+          export GITHUB_HEAD_REF=${{ github.ref_name }}
+          echo "GITHUB_HEAD_REF ${GITHUB_HEAD_REF}" 
+          SEMVER=$(./ci_scripts/version.sh)
+          echo "sem version is : $SEMVER"
+          echo "SEMVER=${SEMVER}" >> ${GITHUB_ENV}
+          echo "semver=${SEMVER}" >> ${GITHUB_OUTPUT}
+
+  #########################
+  #        Tests          #
+  #########################
+
+  run_unit_tests:
+    name: Run Unit Tests
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+    needs: determine_version
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Run unit tests
+        run: |
+          sudo apt update && sudo apt install bc
+          chmod +x ./ci_scripts/run_unit_tests.sh
+          ./ci_scripts/run_unit_tests.sh
+        env:
+          target_coverage: 100
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test_results
+          path: ./artifacts/*test-result.xml
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()        
+        with:
+          name: coverage_report
+          path: build/coverage/
+      - name: Publish coverage in build summary # Only applicable if 'MarkdownSummaryGithub' report types is generated
+        run: cat build/coverage/report/SummaryGithub.md >> $GITHUB_STEP_SUMMARY
+        shell: bash
+
+  #########################
+  #        Build          #
+  #########################
+
+  authoring_bff_build:
+    name: Build Authoring BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+    needs: [determine_version, run_unit_tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build authoring BFF
+        run: |
+          chmod +x ./ci_scripts/build_authoring_bff.sh
+          ./ci_scripts/build_authoring_bff.sh
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: authoringBffBuild
+          path: authoringBffBuild.tar
+          retention-days: 1
+          
+  subscriber_bff_build:
+    name: Build Subscriber BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+    needs: [determine_version, run_unit_tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build subscriber BFF
+        run: |
+          chmod +x ./ci_scripts/build_subscriber_bff.sh
+          ./ci_scripts/build_subscriber_bff.sh
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: subscriberBffBuild
+          path: subscriberBffBuild.tar
+          retention-days: 1
+
+  mongodb_seeder_build:
+    name: Build MongoDB Seeder
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+    
+    needs: [determine_version, run_unit_tests]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Build mongodb seeder BFF
+        run: |
+          chmod +x ./ci_scripts/build_mongodb_seeder.sh
+          ./ci_scripts/build_mongodb_seeder.sh
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mongoDbSeederBuild
+          path: mongoDbSeederBuild.tar
+          retention-days: 1
+
+  #########################
+  #       Security        #
+  #########################
+
+  snyk_scan:
+    name: Run Snyk Code Analysis Scan
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/docker_images_proxy/snyk/snyk:dotnet-8.0
+    env:
+      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    needs: [determine_version, authoring_bff_build, subscriber_bff_build, mongodb_seeder_build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Run Snyk scan
+        run: |       
+          snyk code test --severity-threshold=${{ vars.SNYK_SEVERITY_THRESHOLD }}
+
+  authoring_bff_whitesource_scan:
+    name: Run Authoring WhiteSource Dependency Scan
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+      WHITESOURCE_APIKEY: ${{ secrets.WHITESOURCE_APIKEY }}
+      WHITESOURCE_USERKEY: ${{ secrets.WHITESOURCE_USERKEY }}
+    needs: [determine_version, authoring_bff_build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        if: always()
+        with:
+          name: authoringBffBuild
+          path: ./
+      - name: Run Whitesource scan
+        run: |
+          chmod +x ./build_tools/whitesource/build_authoring_bff.sh
+          ./build_tools/whitesource/build_authoring_bff.sh | tee whitesource.result
+          ! grep "All dependencies conform with open source policies" whitesource.result
+      - name: Upload Whitesource scan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: whitesource_scan_results_auth
+          path: ./whitesource/index.html
+
+  subscriber_bff_whitesource_scan:
+    name: Run Subscriber WhiteSource Dependency Scan
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+      WHITESOURCE_APIKEY: ${{ secrets.WHITESOURCE_APIKEY }}
+      WHITESOURCE_USERKEY: ${{ secrets.WHITESOURCE_USERKEY }}
+    
+    needs: [determine_version, subscriber_bff_build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: subscriberBffBuild
+          path: ./
+      - name: Run Whitesource scan
+        run: |
+          chmod +x ./build_tools/whitesource/build_subscriber_bff.sh
+          ./build_tools/whitesource/build_subscriber_bff.sh | tee whitesource.result
+          ! grep "All dependencies conform with open source policies" whitesource.result
+      - name: Upload Whitesource scan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: whitesource_scan_results_sub
+          path: ./whitesource/index.html
+          
+  mongodb_seeder_whitesource_scan:
+    name: Run MongoDB Seeder WhiteSource Dependency Scan
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+      WHITESOURCE_APIKEY: ${{ secrets.WHITESOURCE_APIKEY }}
+      WHITESOURCE_USERKEY: ${{ secrets.WHITESOURCE_USERKEY }}
+    
+    needs: [determine_version, mongodb_seeder_build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mongoDbSeederBuild
+          path: ./
+      - name: Run Whitesource scan
+        run: |
+          chmod +x ./build_tools/whitesource/build_mongodb_seeder.sh
+          ./build_tools/whitesource/build_mongodb_seeder.sh | tee whitesource.result
+          ! grep "All dependencies conform with open source policies" whitesource.result
+      - name: Upload Whitesource scan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: whitesource_scan_results_mongoSeeder
+          path: ./whitesource/index.html
+
+  #########################
+  #        Publish        #
+  #########################
+
+  authoring_bff_publish:
+    name: Publish Authoring BFF Docker Image
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+      DOCKER_REGISTRY_CHA: artifacts.cha.rbxd.ds
+    needs: [determine_version, snyk_scan, authoring_bff_whitesource_scan]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: authoringBffBuild
+          path: ./
+      - name: Login to Docker Hub Artifacts
+        uses: docker/login-action@v3
+        with:
+          registry: artifacts.cha.rbxd.ds
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Publish authoring BFF
+        run: |
+          chmod +x ./ci_scripts/publish_authoring_bff.sh
+          ./ci_scripts/publish_authoring_bff.sh
+
+  subscriber_bff_publish:
+    name: Publish Subscriber BFF Docker Image
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+      DOCKER_REGISTRY_CHA: artifacts.cha.rbxd.ds
+    needs: [determine_version, snyk_scan, subscriber_bff_whitesource_scan]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: subscriberBffBuild
+          path: ./
+      - name: Login to Docker Hub Artifacts
+        uses: docker/login-action@v3
+        with:
+          registry: artifacts.cha.rbxd.ds
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Publish subscriber BFF
+        run: |
+          chmod +x ./ci_scripts/publish_subscriber_bff.sh
+          ./ci_scripts/publish_subscriber_bff.sh
+          
+  mongodb_seeder_publish:
+    name: Publish MongoDB Seeder Docker Image
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    env:
+      SEM_VERSION: ${{ needs.determine_version.outputs.semver }}
+      DOCKER_REGISTRY_CHA: artifacts.cha.rbxd.ds
+    needs: [determine_version, snyk_scan, mongodb_seeder_whitesource_scan]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: mongoDbSeederBuild
+          path: ./ 
+      - name: Login to Docker Hub Artifacts
+        uses: docker/login-action@v3
+        with:
+          registry: artifacts.cha.rbxd.ds
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Publish Mongo migration
+        run: |
+          chmod +x ./ci_scripts/publish_mongodb_seeder.sh
+          ./ci_scripts/publish_mongodb_seeder.sh
+          
+  #########################
+  #        Deploy         #
+  #########################
+
+  ready_to_deploy:
+    name: Prepare for Deployment
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    needs: [determine_version, authoring_bff_publish, subscriber_bff_publish, mongodb_seeder_publish]
+    outputs:
+      semver: ${{ steps.semver_output.outputs.semver }}
+    steps:
+      - name: Cascade outputs
+        id: semver_output
+        run: |
+            echo "semver=${{ needs.determine_version.outputs.semver }}" >> $GITHUB_OUTPUT
+
+  #########################
+  #        Systest        #
+  #########################
+
+  authoring_bff_systest_deploy:
+    name: 🔵 Systest - Deploy Authoring BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest
+    environment: systest-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: systest
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to systest
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_bff_systest_deploy:
+    name: 🔵 Systest - Deploy Subscriber BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest
+    environment: systest-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: systest
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to systest
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+  
+  #########################
+  #     END: Systest      #
+  #########################
+
+  #########################
+  #       Staging         #
+  #########################
+
+  authoring_bff_staging_deploy:
+    name: 🟡 Staging - Deploy Authoring BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: staging-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: staging
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to staging
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_bff_staging_deploy:
+    name: 🟡 Staging - Deploy Subscriber BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: staging-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: staging
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to staging
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+  
+  #########################
+  #     END: Staging      #
+  #########################
+
+  #########################
+  #     Performance       #
+  #########################    
+
+  authoring_bff_performance_deploy:
+    name: 🟠 Performance - Deploy Authoring BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: performance-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: performance
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to performance
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_bff_performance_deploy:
+    name: 🟠 Performance - Deploy Subscriber BFF
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: performance-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: performance
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to performance
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+  
+  #########################
+  #   END: Performance    #
+  #########################
+
+  #########################
+  #     Integration       #
+  #########################
+
+  authoring_bff_integration_deploy:
+    name: 🟣 Integration - Deploy Authoring BFF
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: integration-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: integration
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to integration
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_bff_integration_deploy:
+    name: 🟣 Integration - Deploy Subscriber BFF
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-cha-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: integration-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: integration
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-pre-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to integration
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+  
+  #########################
+  #   END: Integration    #
+  #########################
+
+  #########################
+  #      Onboarding       #
+  #########################
+
+  authoring_bff_onboarding_deploy:
+    name: 🟤 Onboarding - Deploy Authoring BFF
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: onboarding-authoring
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: onboarding
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-onboarding
+      CLUSTER_VERSION: eks-onb-1a
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to onboarding
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_bff_onboarding_deploy:
+    name: 🟤 Onboarding - Deploy Subscriber BFF
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: onboarding-subscriber
+    needs: [ready_to_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: onboarding
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-onboarding
+      CLUSTER_VERSION: eks-onb-1a
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to onboarding
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+  
+  #########################
+  #    END: Onboarding    #
+  #########################
+
+  #########################
+  #      Production       #
+  #########################
+
+  authoring_bff_prod_deploy:
+    name: 🟢 Production - Deploy Authoring BFF
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: prod-authoring
+    needs: [ready_to_deploy, authoring_bff_integration_deploy]
+    env:
+      IMAGE_TYPE: authoring
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: prod
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to prod
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+
+  subscriber_bff_prod_deploy:
+    name: 🟢 Production - Deploy Subscriber BFF
+    if: ${{ startsWith(github.ref, 'refs/tags/')}}
+    runs-on:
+      group: dsg-icis-eks-github-actions-runner
+      labels: gha-runner-chp-live-eks-5b
+    container:
+      image: artifacts.cha.rbxd.ds/gh-cli:latest 
+    environment: prod-subscriber
+    needs: [ready_to_deploy, subscriber_bff_integration_deploy]
+    env:
+      IMAGE_TYPE: subscriber
+      SEM_VERSION: ${{ needs.ready_to_deploy.outputs.semver }}
+      ENVIRONMENT: prod
+      ASSETID: prcent
+      DEPLOYMENT_REPO: LexisNexis-RBA/dsg-icis-common-flux-live
+      CLUSTER_VERSION: eks-5b
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Deployment to prod
+        run: |
+          chmod +x ./ci_scripts/deployer.sh
+          ./ci_scripts/deployer.sh
+  
+  #########################
+  #    END: Production    #
+  #########################

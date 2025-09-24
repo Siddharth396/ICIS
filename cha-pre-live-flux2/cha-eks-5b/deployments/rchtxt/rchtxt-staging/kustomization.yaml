@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: rchtxt-staging
+nameSuffix: -rchtxt
+resources:
+- ../../../common/subscriber-bff/rchtxt/
+- ../../../common/authoring-bff/rchtxt/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-rchtxt-staging.yaml
+- path: helm-release-authoring-bff-rchtxt-staging.yaml
+# BACKSTAGE-COMMENT-PATTERN2

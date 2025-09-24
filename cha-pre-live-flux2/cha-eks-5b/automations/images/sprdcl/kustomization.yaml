@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- sprdcl-sub-bff-policy-systest.yaml
+- sprdcl-sub-bff-registry.yaml
+###############################
+- sprdcl-auth-bff-policy-systest.yaml
+- sprdcl-auth-bff-registry.yaml

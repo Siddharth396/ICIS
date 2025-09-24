@@ -1,0 +1,240 @@
+# don't mix this agent up with the common-gitlab-agent. They are different agents.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: datapr-agent
+  namespace: default
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin
+  namespace: datapr-integration
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin-service-monitor
+  namespace: datapr-integration
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin
+  namespace: datapr-systest
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin-service-monitor
+  namespace: datapr-systest
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-agent
+  namespace: datapr-systest
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin
+  namespace: datapr-staging
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin-service-monitor
+  namespace: datapr-staging
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin
+  namespace: datapr-performance
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin-service-monitor
+  namespace: datapr-performance
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: tc-agent-custom
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-agent
+  namespace: datapr-integration
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin-vaults
+  namespace: datapr-integration
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-agent
+  namespace: datapr-performance
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin-vaults
+  namespace: datapr-performance
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-agent
+  namespace: datapr-staging
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: datapr-admin-vaults
+  namespace: datapr-staging
+subjects:
+- kind: ServiceAccount
+  name: datapr-agent
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: vault-secrets-operator-manager-role
+  apiGroup: rbac.authorization.k8s.io   

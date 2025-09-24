@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: refdts-systest
+nameSuffix: -refdts
+resources:
+- ../../../common/authoring-bff/refdts/
+  
+patches:
+- path: helm-release-authoring-bff-refdts-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN1
+

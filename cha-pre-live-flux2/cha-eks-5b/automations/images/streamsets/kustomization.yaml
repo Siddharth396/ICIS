@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- streamsets-env-policy.yaml
+- streamsets-deployer-policy.yaml
+- streamsets-deployer-registry.yaml
+- streamsets-env-registry.yaml

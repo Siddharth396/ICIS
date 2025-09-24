@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: "-two"
+resources:
+  - ../../../../common/authoring-bff/canvas/
+  - ../../../../common/job/canvas/
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+  - path: helm-release-authoring-bff-canvas-systest-two.yaml
+  - path: helm-release-mongo-canvas-systest.yaml
+# BACKSTAGE-COMMENT-PATTERN2

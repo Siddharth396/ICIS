@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<EmbeddedResource Include="Infrastructure\TestData\Mongo\json\*.json">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="..\..\..\main\Authoring\appsettings.json" Link="authoring.appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+
+		<Content Include="..\..\..\main\Authoring\.env" Link="authoring.env">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+
+		<Content Include="..\..\..\main\Subscriber\appsettings.json" Link="subscriber.appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+
+		<Content Include="..\..\..\main\Subscriber\.env" Link="subscriber.env">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="altcover" />
+		<PackageReference Include="EphemeralMongo7" />
+		<PackageReference Include="FluentAssertions" />
+		<PackageReference Include="JunitXml.TestLogger" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="MongoDB.Driver" />
+		<PackageReference Include="Newtonsoft.Json" />
+		<PackageReference Include="NSubstitute" />
+		<PackageReference Include="SharpCompress" />
+		<PackageReference Include="Snapshooter" />
+		<PackageReference Include="Snapshooter.Xunit" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\main\Authoring\Authoring.csproj" />
+    <ProjectReference Include="..\..\..\main\BusinessLayer\BusinessLayer.csproj" />
+    <ProjectReference Include="..\..\..\main\MongoDbSeeder\MongoDbSeeder.csproj" />
+    <ProjectReference Include="..\..\..\main\Subscriber\Subscriber.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <None Update="authoring.test.env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="subscriber.test.env">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

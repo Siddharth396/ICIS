@@ -1,0 +1,57 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-alrthb-performance
+  values:
+    replicaCount: 3
+    namespace: "alrthb-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/alrthb/subscriber-bff # {"$imagepolicy": "flux-system:alrthb-subscriber-bff-performance:name"}
+        tag: performance-14-1.0.10-72 # {"$imagepolicy": "flux-system:alrthb-subscriber-bff-performance:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/alrthb-performance?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.performance.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        AlertingPreferencesUrls__CommodityPageAlerts: "https://subscriber.performance.genesis.cha.rbxd.ds/commodity/alerts"
+        AlertingPreferencesUrls__PriceAlerts: "https://dashboard.performance.cha.rbxd.ds/dashboard/alerting/"
+        AlertingPreferencesUrls__NewsAlerts: "https://subscriber.performance.genesis.cha.rbxd.ds/news/alerts"
+        AlertingPreferencesUrls__PowerAnalyticsAlerts: "https://energy.performance.analytics.cha.rbxd.ds/profile-settings/"
+        AlertingPreferencesUrls__SupplyDisruptionAlerts: "https://dashboard.performance.cha.rbxd.ds/dashboard/alerting/"
+        AlertingPreferencesUrls__GasAnalyticsAlerts: "https://energy.performance.analytics.cha.rbxd.ds/profile-settings/"
+        AlertingPreferencesUrls__LngEdgeIntelAlerts: "https://lngedge.icis.com/alerts"
+        ExternalServices__PriceForecast: https://subscriber.performance.genesis.cha.rbxd.ds/api/price-forecast/v1/api
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.performance.genesis.cha.rbxd.ds
+        path: /api/alerting-hub/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-alrthb-performance
+      VaultSecretPath: "alrthb/performance/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-alrthb-performance
+    autoscaling:
+      enabled: true
+      minReplicas: 3
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 2

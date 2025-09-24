@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cnvspt
+  namespace: cnvspt-systest
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::512544833523:role/svc_cha_eks_snapshots_processor_pre_live"
+    
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: role-cnvspt-systest-tokenreview-binding
+subjects:
+- kind: ServiceAccount
+  name: cnvspt
+  namespace: cnvspt-systest
+roleRef:
+  kind: ClusterRole
+  name: system:auth-delegator
+  apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,53 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- icis-squidex-policy-systest.yaml
+- icis-squidex-policy-performance.yaml
+- icis-squidex-policy-uat.yaml
+- icis-squidex-registry.yaml
+###############################
+
+# - icis-squidex-policy-systest-charting.yaml
+# - icis-squidex-policy-performance-darwin-price-tool.yaml
+# - icis-squidex-policy-systest-chemical-analytics.yaml
+# - icis-squidex-policy-performance-chemical-analytics.yaml
+# - icis-squidex-policy-systest-contact-records.yaml
+# - icis-squidex-policy-systest-energy-commentary.yaml
+- icis-squidex-policy-performance-spot-price.yaml
+- icis-squidex-policy-systest-platformcms.yaml
+- icis-squidex-policy-systest-spot-price.yaml
+- icis-squidex-policy-performance-elisa.yaml
+- icis-squidex-policy-systest-elisa.yaml
+- icis-squidex-policy-systest-recyclers-supply-tracker.yaml
+- icis-squidex-policy-performance-recyclers-supply-tracker.yaml
+###############################
+
+- icis-squidex-event-processor-policy-systest.yaml
+- icis-squidex-event-processor-policy-uat.yaml
+- icis-squidex-event-processor-policy-performance.yaml
+- icis-squidex-event-processor-registry.yaml
+###############################
+# - icis-squidex-event-processor-policy-systest-chemical-analytics.yaml
+# - icis-squidex-event-processor-policy-performance-chemical-analytics.yaml
+- icis-squidex-event-processor-policy-systest-core.yaml
+- icis-squidex-event-processor-policy-systest-platformcms.yaml
+- icis-squidex-event-processor-policy-performance-spot-price.yaml
+- icis-squidex-event-processor-policy-systest-spot-price.yaml
+###############################
+- icis-squidex-policy-systest-drdc-price-tool.yaml
+- icis-squidex-policy-systest-core.yaml
+- icis-squidex-policy-systest-price-forecasts.yaml
+- icis-squidex-policy-systest-icis-service-emails.yaml
+- icis-squidex-policy-systest-iddn-news.yaml
+
+###################################
+- icis-squidex-policy-performance-core.yaml
+- icis-squidex-policy-performance-drdc-price-tool.yaml
+- icis-squidex-policy-performance-icis-service-emails.yaml
+- icis-squidex-policy-performance-iddn-news.yaml
+
+###################################
+- icis-squidex-lakehouse-event-processor-policy-performance.yaml
+- icis-squidex-lakehouse-event-processor-policy-systest.yaml
+- icis-squidex-lakehouse-event-processor-policy-uat.yaml
+- icis-squidex-lakehouse-event-processor-registry.yaml

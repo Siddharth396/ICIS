@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: llmrag
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_petchem_price_forecast_outlook_2
+    database: llmrag-systest
+    transforms.RenameField.renames: partition_key:_id
+    collection: raw.priceForecastOutlook

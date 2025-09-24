@@ -1,0 +1,10 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: syctcv-mongo-migration
+  namespace: flux-system
+spec:
+  certSecretRef:
+    name: artifacts-ca-crt
+  image: artifacts.cha.rbxd.ds/automated/syctcv/mongo-migration
+  interval: 5m0s

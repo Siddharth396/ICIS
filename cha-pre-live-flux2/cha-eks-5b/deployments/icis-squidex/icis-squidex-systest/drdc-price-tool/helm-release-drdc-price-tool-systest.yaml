@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: drdc-price-tool-systest
+  values:
+    projectName: "drdc-price-tool"
+    replicaCount: 1
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-drdc-price-tool:name"}
+        tag: systest-drdc-price-tool-1423-7.7.14-LFS-upgrade-63662 # {"$imagepolicy": "flux-system:icis-squidex-systest-drdc-price-tool:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: drdc-price-tool
+        ADMIN__ADMINUSERGROUP__0: ICIS_Darwin
+        CONTENTS__MAXRESULTS: "'5000'"
+        CONTENTS__TIMEOUTQUERY: "'00:00:55'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'10000'"
+        PLUGINS__2: ICIS.EmbargoEtlPlugin.dll
+      kafka:
+        enabled: True
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2048Mi
+        requests:
+          cpu: 500m
+          memory: 1024Mi
+      envValues:
+        IDENTITY__ICISAUTHSERVER: "https://domainidentity.systest.cha.rbxd.ds"
+        IDENTITY__ICISOIDCSCOPES: ""
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "60s"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "120s"
+        nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+    squidexCli:
+      enabled: True
+      schedule: "'25 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-drdc-price-tool:name"}
+        tag: systest-drdc-price-tool-102-8.0.37-github-action-deployment.3 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-drdc-price-tool:tag"}
+    vault_squidex_secrets:
+      name: drdc-price-tool-squidex-systest-secret
+    vault_kafka_secrets:
+      name: drdc-price-tool-squidex-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/drdc-price-tool/systest"

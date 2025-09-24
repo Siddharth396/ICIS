@@ -1,0 +1,12 @@
+mode: Mainline
+branches:
+  master:
+    tag: ''
+  release:
+    tag: ''
+  feature:
+    tag: feature-{BranchName}
+    regex: ^feature?[/-]
+ignore:
+  sha: []
+

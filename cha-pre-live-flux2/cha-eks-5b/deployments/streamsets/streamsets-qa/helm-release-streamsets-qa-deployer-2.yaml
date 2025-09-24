@@ -1,0 +1,58 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: streamsets-qa-release-v2
+  namespace: streamsets-qa
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: streamsets
+      version: 0.0.15
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    ServiceAccountName: "streamsets"
+    namespace: "streamsets-qa"
+    LOAD_BALANCER_HOSTNAME: streamsets-qa-deployment-v2.cha.eu-west-1.dev
+    SMTP_HOST: chamailrelay.cha.rbxd.ds
+    SMTP_FROM_HOST: streamsets-qa@cha.rbxd.ds
+    SDC_REPO: "artifacts.cha.rbxd.ds/ds/streamsets-dc-generic"
+    SDC_TAG: "1.0.30"
+    SDC_VERSION: "6.3.0-0103"
+    REQUESTS_MEMORY: 3Gi
+    REQUESTS_CPU: "0.5"
+    LIMITS_MEMORY: 6Gi
+    LIMITS_CPU: "1.5"
+    USER_STAGE_LIBS: http,apache-kafka,aws,aws-secrets-manager-credentialstore,jdbc,jython_2_7,sdc-snowflake,vault-credentialstore,mongodb-atlas,groovy_4_0,webclient-impl-okhttp,orchestrator
+    properties_configmap:
+      name: properties-configs-v2
+    streamsets:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/streamsets" # {"$imagepolicy": "flux-system:streamsets-deployer:name"}
+        tag: "streamsets-20-0.0.0.20" # {"$imagepolicy": "flux-system:streamsets-deployer:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: qa
+      argument:
+        arg1: deployment.properties
+        arg2: streamsets-qa
+        arg3: deployment-v2
+    vault_secrets:
+      name: streamsets-qa-secrets-deployer-v2
+      VaultK8sRoleName: "kv-streamsets-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "streamsets/qa"
+    vault_secrets_streamsets:
+      name: streamsets-qa-job-deployer-v2
+      VaultK8sRoleName: "kv-streamsets-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "streamsets/common"

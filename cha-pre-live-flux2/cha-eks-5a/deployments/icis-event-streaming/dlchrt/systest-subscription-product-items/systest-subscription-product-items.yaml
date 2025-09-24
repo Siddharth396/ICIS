@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: dlchrt
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_subscription_product_items_1
+    database: dlchrt-systest
+    collection: product_items
+    transforms.RenameField.renames: id:_id

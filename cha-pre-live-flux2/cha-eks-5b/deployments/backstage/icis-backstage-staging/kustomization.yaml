@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- helmrelease-backstage-staging.yaml
+##- backstage-staging-deployment-stop.yaml
+##- backstage-staging-deployment-start.yaml
+- helmrelease-backstage-staging-deployment-scaler.yaml

@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-newsfd-staging
+  values:
+    replicaCount: 1
+    namespace: "newsfd-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/newsfd/subscriber-bff # {"$imagepolicy": "flux-system:newsfd-sub-bff-staging:name"}
+        tag: staging-202-1.5.5-NEP-9498-add-monitoring-for-excesive-filters.1.52497 # {"$imagepolicy": "flux-system:newsfd-sub-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/newsfd-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://subscriber.staging.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        LOG_LEVEL: Warning
+        SECRET_FILE_PATH: /etc/secrets/.env
+        DOMAIN_API_BASE_URL: https://dbapi.staging.genesis.cha.rbxd.ds
+        BASE_URL: https://subscriber.staging.genesis.cha.rbxd.ds/api/news-feed
+        THREE_MONTHS_LIMIT_FEATURE_FLAG: false
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/news-feed/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-newsfd-staging
+      VaultSecretPath: "newsfd/staging/subscriber/bff"

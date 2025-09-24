@@ -1,0 +1,1 @@
+export function htmlReport(data: any): string;

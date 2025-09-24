@@ -1,0 +1,51 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  chart:
+    spec:
+      chart: subscriber-bff
+      version: 0.1.75
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  releaseName: authoring-api-kfkpro-staging
+  values:
+    namespace: "supdem-staging"
+    environment: "staging"
+    projectName: "kfkpro-author-bff"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: Always
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/snd/kfkpro # {"$imagepolicy": "flux-system:kfkpro-staging:name"}
+        tag: staging-72-2.4.2-51960 # {"$imagepolicy": "flux-system:kfkpro-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ASPNETCORE_ENVIRONMENT: uat
+        ENVIRONMENT: uat
+        CONNECTION_STRING: Data Source=CHAQHSDBST993V.cha.rbxd.ds\Editing,55001;initial catalog=SupplyNDemandEditing;user id=${SQL_USER};password=${SQL_PWD};Encrypt=false;Integrated Security=False;Connection Timeout=60
+        CommandTimeout: 60
+        ThresholdForBackgroundProcessing: 500
+        BatchLength: 2000
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/snd/kafka/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-risk-vault-secret-supdem-staging
+      VaultSecretPath: "supdem/staging/kfkpro"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-supdem-kfkpro-connection"
+      VaultNamespace: dataservices/icis/nonprod

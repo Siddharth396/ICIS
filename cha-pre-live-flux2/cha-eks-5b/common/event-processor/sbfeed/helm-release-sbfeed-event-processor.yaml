@@ -1,0 +1,51 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+
+  values:
+    projectName: "sbfeed"
+    ServiceAccountName: "sbfeed"
+
+    kafka_consumer:
+      resources:
+        requests:
+          memory: 64Mi
+          cpu: 10m
+        limits:
+          cpu: 100m
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 4.0.0.479
+        pullPolicy: IfNotPresent
+      config_env:
+        KafkaConsumer_Serilog__Source: "ActivityFeed"
+        KafkaConsumer_Serilog__Component: "EventProcessor"
+        KafkaConsumer_Serilog__Service: "KafkaConsumer"
+        KafkaConsumer_ElasticApm__ServiceName: "NS - ActivityFeed - Generic Consumer"
+        KafkaConsumer_ElasticApm__TransactionSampleRate: 1
+        KafkaConsumer_AppSettings__Consumer__RetryMillis: 240000
+
+    event_processor:
+      config_env:
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+
+    vault_secrets:
+      VaultK8sRoleName: "kv-sbfeed-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_consumer:
+      VaultK8sRoleName: "kv-sbfeed-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s" 

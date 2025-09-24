@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: testable-mock-api
+spec:
+  interval: 5m
+  releaseName: testable-mock-api-staging
+  upgrade:
+    remediation:
+      remediateLastFailure: false
+  chart:
+    spec:
+      chart: testable-mock-api
+      version: "0.1.2"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    replicaCount: 1
+    namespace: "testable-mock-api"
+    environment: "staging"
+    deploymentStrategy: "RollingUpdate"   
+    mockapi:
+      image:
+        repository: artifacts.cha.rbxd.ds/docker_images/mock-api/grafana-mock-api
+        tag: "3"
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: staging
+        TRACE_ENABLED: true

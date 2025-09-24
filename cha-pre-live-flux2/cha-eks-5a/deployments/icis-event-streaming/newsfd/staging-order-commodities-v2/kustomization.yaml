@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: -staging-order-commodities-v2
+resources:
+- ../common
+
+patches:
+- path: staging-order-commodities.yaml

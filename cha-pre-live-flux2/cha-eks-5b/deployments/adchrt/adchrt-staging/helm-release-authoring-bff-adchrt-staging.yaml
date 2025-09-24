@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-adchrt-staging
+  values:
+    replicaCount: 1
+    namespace: "adchrt-staging"
+    environment: "staging"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:name"}
+        tag: staging-17-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-staging:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/adchrt/authoring-bff # {"$imagepolicy": "flux-system:adchrt-auth-bff-staging:name"}
+        tag: staging-66-1.18.0-feature-JUP-6481-Update-list-of-forbidden-words-in-SQL.--BE-part-25237 # {"$imagepolicy": "flux-system:adchrt-auth-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/adchrt-staging?retryWrites=true&w=majority"
+        CORS_ORIGINS_DOMAINS: https://authoring.staging.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        MUTATION: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SNOWFLAKE_CONNECTION_STRING: scheme=https;ACCOUNT=ex99616;HOST=ex99616.eu-west-1.snowflakecomputing.com;port=443;ROLE=SVC_DLE_GOLD_UAT;WAREHOUSE=QRY_WH_GOLD_UAT;USER=${dle_snowflake_user};PASSWORD=${dle_snowflake_pwd};DB=ICIS_GOLD_UAT_DB;SCHEMA=PRICING
+        SQL_SNOWFLAKE_CONNECTION_STRING: scheme=https;account=ex99616;host=ex99616.eu-west-1.snowflakecomputing.com;port=443;user=${sql_snowflake_user_uat};password=${sql_snowflake_pwd_uat};warehouse=DATA_CANVAS_WH_UAT;
+    ingress:
+      enabled: true
+      host:
+        name: authoring.staging.cha.rbxd.ds
+        path: /api/adhoc-chart/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-adchrt-staging
+      VaultSecretPath: "adchrt/staging/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-adchrt-staging

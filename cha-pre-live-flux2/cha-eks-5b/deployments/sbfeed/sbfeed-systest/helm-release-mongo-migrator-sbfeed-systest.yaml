@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "sbfeed-systest"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbfeed/sbfeed-mongo-migrator # {"$imagepolicy": "flux-system:sbfeed-mongo-migrator-systest:name"}
+        tag: systest-16-1.4.40.20777 # {"$imagepolicy": "flux-system:sbfeed-mongo-migrator-systest:tag"}
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_NAME: sbfeed-systest
+
+    vault_secrets:
+      name: mongo-migrator-job-vault-secret-sbfeed-systest
+      VaultSecretPath: "sbfeed/systest/eventprocessor"      

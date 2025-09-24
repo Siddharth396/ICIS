@@ -1,0 +1,33 @@
+{
+  "SnDQueueNames": [
+    "snd_uat_company_events.fifo",
+    "snd_uat_region_events.fifo",
+    "snd_uat_country_events.fifo",
+    "snd_uat_state_events.fifo",
+    "snd_uat_site_events.fifo",
+    "snd_uat_product_events.fifo",
+    "snd_uat_route_events.fifo",
+    "snd_uat_technology_events.fifo",
+    "snd_uat_licensor_events.fifo",
+    "snd_uat_generic_events.fifo"
+  ],
+  "PollerConfig": {
+    "MaxInitialDelayInSeconds": 60,
+    "IntervalInSeconds": 300,
+    "MessageBatchSize": 10
+  },
+  "SQSConfig": {
+    "SQSRegion": "eu-west-1",
+    "MessageWaitTime": "3",
+    "MessageVisibilityTimeout": 120,
+    "RequestTimeOutInSeconds": 10,
+    "MaxRetryCount": 3
+  },
+  "SnDEventProcessorApiUrl": "https://supply-demand.processor.uat.cha.eu-west-1.dev/api/sndevents",
+  "SnDKafkaProducerApiUrl": "https://authoring.staging.cha.rbxd.ds/api/snd/kafka/v1/Publish",
+  "EnableAuthorization": true,
+  "AuthorizationRequestDetail": {
+	"DomainUrl": "https://domainidentity.integration.cha.rbxd.ds/connect/token",
+	"GrantType": "client_credentials"
+  }
+}

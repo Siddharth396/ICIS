@@ -1,0 +1,20 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: job
+spec:
+  values:
+    namespace: "pgnsvc-systest"
+    job:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/pgnsvc/absolute-period-generator-job # {"$imagepolicy": "flux-system:pgnjob-absolute-systest:name"}
+        tag: systest-18-1.12.0-bugfix-ENAPI-6999-make-logging-consistent-60558 # {"$imagepolicy": "flux-system:pgnjob-absolute-systest:tag"}
+      config_env:
+        ENVIRONMENT: systest
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/pgnsvc-systest?retryWrites=true&w=majority"
+    vault_secrets:
+      name: authoring-bff-vault-secret-pgnsvc-systest-job
+      VaultK8sRoleName: "kv-pgnsvc-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pgnsvc/systest/authoring/bff"

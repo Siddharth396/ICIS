@@ -1,0 +1,10 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: order-kafka-producer
+  namespace: flux-system
+spec:
+  certSecretRef:
+    name: artifacts-ca-crt
+  image: artifacts.cha.rbxd.ds/automated/ds/order-custom-kafka-producer
+  interval: 5m0s

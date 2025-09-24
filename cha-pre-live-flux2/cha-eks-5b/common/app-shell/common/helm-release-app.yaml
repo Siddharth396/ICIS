@@ -1,0 +1,70 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: homepage-app
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: homepage-app
+      version: "0.1.29"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    replicaCount: 1
+    vault_agent:
+      repository: "artifacts.cha.rbxd.ds/base-image/vault"
+      tag: "latest"
+    consul_template:
+      repository: "artifacts.cha.rbxd.ds/base-image/consul-template"
+      tag: "alpine"
+    authproxy:
+      #Add env variables for authproxy if needed
+      port: 8090
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "sbcore-auth-proxy-stable:name"}
+        tag: stable-108-1.4.95.1215 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-stable:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "128Mi"
+          cpu: "200m"
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 8090
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 8090
+        periodSeconds: 30
+    nginx:
+      port: 443
+      image:
+        repository: artifacts.cha.rbxd.ds/base-image/nginx
+        tag: alpine3.17
+        pullPolicy: IfNotPresent
+      config: "server {\n   listen 443 ssl;\n   server_name  localhost;\n\n   access_log /dev/stdout main;\n   error_log /dev/stdout warn;\n\n   ssl_certificate /etc/ssl/tls.crt;\n   ssl_certificate_key /etc/ssl/tls.key;\n\n   client_header_buffer_size    8k;\n   large_client_header_buffers  4 32k;\n \n   server_tokens off;\n\n   location ~* ^/internal/metrics {\n       deny all;\n       return 403;\n       server_tokens off;\n   }\n\n   location / {\n       add_header Strict-Transport-Security \"max-age=31536000\";\n       add_header X-Frame-Options \"SAMEORIGIN\";\n       add_header X-XSS-Protection \"1; mode=block\";\n       add_header X-Content-Type-Options \"nosniff\";\n       add_header Content-Security-Policy \"frame-ancestors 'self' *.cha.rbxd.ds\";\n\n       proxy_set_header Host $http_host;\n       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n       proxy_set_header X-Forwarded-Proto $scheme;\n\n       proxy_buffers 4 64k;\n       proxy_buffer_size 32k; \n       proxy_busy_buffers_size 64k;\n\n       proxy_pass http://localhost:8090;\n   }\n }"
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "100m"
+        limits:
+          memory: "128Mi"
+          cpu: "100m"
+    service:
+      port_name: https
+      port: 443
+    autoscaling:
+      enabled: false

@@ -1,0 +1,40 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: supdem-uat
+environment: uat
+ServiceAccountName: supdem
+
+processor:
+  image:
+    tag: "0.1.0-beta.1.258-322"
+  env_vars:
+    ASPNETCORE_ENVIRONMENT: uat
+
+
+poller:
+  image:
+    tag: "0.1.0-alpha.82-170"
+  env_vars:
+    ASPNETCORE_ENVIRONMENT: uat
+
+ingress:
+  className: icis-nginx-ingress
+  enabled: true
+  annotations:
+    lnrs.io/zone-type: private
+    external-dns.alpha.kubernetes.io/hostname: supply-demand.processor.uat.cha.eu-west-1.dev
+    cert-manager.io/cluster-issuer: vault-issuer
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+  hosts:
+    - host: supply-demand.processor.uat.cha.eu-west-1.dev
+      paths:
+      - /
+      tls: "true"
+  tls:
+    - hosts:
+      - supply-demand.processor.uat.cha.eu-west-1.dev
+      secretName: supply-demand-processor-uat-cha-eu-west-1-dev
+
+vault:
+  VaultSecretPath: "kv/cha/k8s/data/supdem/uat"

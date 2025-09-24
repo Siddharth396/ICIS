@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: notsys-integration
+nameSuffix: -nsesvc
+resources:
+- ../../../../common/event-processor/nsesvc/
+patches:
+- path: helm-release-event-processor-nsesvc-integration.yaml

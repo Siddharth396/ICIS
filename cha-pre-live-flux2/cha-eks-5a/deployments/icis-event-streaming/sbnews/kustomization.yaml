@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- systest-order-mappings-v2
+- systest-order-locations-v2
+- systest-order-commodity-families-v2
+- staging-order-mappings-v2
+- staging-order-locations-v2
+- staging-order-commodity-families-v2
+- performance-order-mappings-v2
+- performance-order-locations-v2
+- performance-order-commodity-families-v2
+- integration-order-mappings-v2
+- integration-order-locations-v2
+- integration-order-commodity-families-v2

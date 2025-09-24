@@ -1,0 +1,60 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: askics-importer
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: askics-importer
+      version: "0.0.1"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    projectName: "askics-importer"
+    ServiceAccountName: "llmrag"
+    
+    importer:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        initialDelaySeconds: 60
+        periodSeconds: 30
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 80
+        initialDelaySeconds: 60
+        periodSeconds: 30
+      config_env:
+        SECRET_FILE_PATH: /etc/secrets/.env
+        LOG_LEVEL: Information
+        ELASTIC_APM_TRANSACTION_IGNORE_URLS: /internal/*
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+
+    
+    vault_secrets:
+      VaultK8sRoleName: "kv-llmrag-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultAddress: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io"
+      VaultConnName: "risk-vault-connection"
+      VaultNamespace: dataservices/icis/nonprod
+    # vault_secrets_proxy:
+    #   VaultK8sRoleName: "kv-llmrag-read"
+    #   VaultK8sAuthPath: "cha/eks-b"
+    #   VaultSecretMount: "kv/cha/k8s"       
+
+
+

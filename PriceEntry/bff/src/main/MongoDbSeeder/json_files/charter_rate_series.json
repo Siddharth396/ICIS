@@ -1,0 +1,1358 @@
+﻿[
+  {
+    "_id": "23f618b2-3bb7-4c9d-9e87-389b8bfe6929",
+    "series_name": {
+      "en": "Charter Rates, Pacific prompt Two-Stroke",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "31458ca5-9a4e-4d9a-bed7-19266fe23523",
+      "name": {
+        "en": "Pacific basin",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "2021-06-23T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "7631479e-443a-4c58-a239-4ec729f3d667",
+      "name": {
+        "en": "prompt",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "d795afb3-22e4-4dd1-90ab-11123e5382f6",
+      "name": {
+        "en": "two-stroke",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "2b70b8fd-db4c-4f41-a489-549f7830a93a",
+    "series_name": {
+      "en": "Charter Rates, Pacific prompt steam",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "31458ca5-9a4e-4d9a-bed7-19266fe23523",
+      "name": {
+        "en": "Pacific basin",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "7631479e-443a-4c58-a239-4ec729f3d667",
+      "name": {
+        "en": "prompt",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "015b1b29-c45a-4f8d-a9ec-9d42d7112ead",
+      "name": {
+        "en": "steam",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "4873b1b6-9d71-46f1-b756-da18e2bc1556",
+    "series_name": {
+      "en": "Charter Rates, long-term Two-Stroke",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+      "name": {
+        "en": "World",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "2021-06-23T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "b2da8855-2c6a-4ce2-8301-e5ae3e97d92f",
+      "name": {
+        "en": "long-term",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "d795afb3-22e4-4dd1-90ab-11123e5382f6",
+      "name": {
+        "en": "two-stroke",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "5e6c69d7-e592-453f-b103-6dc58d31bd70",
+    "series_name": {
+      "en": "Charter Rates, mid-term Two-Stroke",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+      "name": {
+        "en": "World",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "2021-06-23T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "dc01b12e-e081-4b9c-a4c7-af5c95bf02e8",
+      "name": {
+        "en": "mid-term",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "d795afb3-22e4-4dd1-90ab-11123e5382f6",
+      "name": {
+        "en": "two-stroke",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "91d4d746-99ef-4aae-a101-cc96b1bfa4c3",
+    "series_name": {
+      "en": "Charter Rates, mid-term steam",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+      "name": {
+        "en": "World",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "dc01b12e-e081-4b9c-a4c7-af5c95bf02e8",
+      "name": {
+        "en": "mid-term",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "015b1b29-c45a-4f8d-a9ec-9d42d7112ead",
+      "name": {
+        "en": "steam",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "98ce75b5-aa2b-4155-93bd-cdac7807c4b3",
+    "series_name": {
+      "en": "Charter Rates, Atlantic prompt TFDE",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a019c34b-31ed-492b-b201-6741160b7501",
+      "name": {
+        "en": "Atlantic basin",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "7631479e-443a-4c58-a239-4ec729f3d667",
+      "name": {
+        "en": "prompt",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "f555c857-1c83-4235-a507-4d27f7c6c275",
+      "name": {
+        "en": "TFDE",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "a4e6564d-bd37-49c3-a9c6-25ab8e5a841c",
+    "series_name": {
+      "en": "Charter Rates, Atlantic prompt Two-Stroke",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a019c34b-31ed-492b-b201-6741160b7501",
+      "name": {
+        "en": "Atlantic basin",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "2021-06-23T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "7631479e-443a-4c58-a239-4ec729f3d667",
+      "name": {
+        "en": "prompt",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "d795afb3-22e4-4dd1-90ab-11123e5382f6",
+      "name": {
+        "en": "two-stroke",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "bddc314e-f78e-4ead-8c94-b27cb095dc1a",
+    "series_name": {
+      "en": "Charter Rates, mid-term TFDE",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+      "name": {
+        "en": "World",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "dc01b12e-e081-4b9c-a4c7-af5c95bf02e8",
+      "name": {
+        "en": "mid-term",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "f555c857-1c83-4235-a507-4d27f7c6c275",
+      "name": {
+        "en": "TFDE",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "c2868e23-00e8-4246-a7ed-9b3e217c52dd",
+    "series_name": {
+      "en": "Charter Rates, Atlantic prompt steam",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "a019c34b-31ed-492b-b201-6741160b7501",
+      "name": {
+        "en": "Atlantic basin",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "7631479e-443a-4c58-a239-4ec729f3d667",
+      "name": {
+        "en": "prompt",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "015b1b29-c45a-4f8d-a9ec-9d42d7112ead",
+      "name": {
+        "en": "steam",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "cb4ddfa2-46f2-47b6-b3fc-bc5587161b28",
+    "series_name": {
+      "en": "Charter Rates, long-term steam",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+      "name": {
+        "en": "World",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "b2da8855-2c6a-4ce2-8301-e5ae3e97d92f",
+      "name": {
+        "en": "long-term",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "015b1b29-c45a-4f8d-a9ec-9d42d7112ead",
+      "name": {
+        "en": "steam",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "efe45753-fd7d-4eea-af4a-c284e01d97db",
+    "series_name": {
+      "en": "Charter Rates, long-term TFDE",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+      "name": {
+        "en": "World",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "b2da8855-2c6a-4ce2-8301-e5ae3e97d92f",
+      "name": {
+        "en": "long-term",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "f555c857-1c83-4235-a507-4d27f7c6c275",
+      "name": {
+        "en": "TFDE",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  },
+  {
+    "_id": "f24ee00e-9662-428d-b93d-7e4b228aae1b",
+    "series_name": {
+      "en": "Charter Rates, Pacific prompt TFDE",
+      "zh": null
+    },
+    "series_short_name": null,
+    "series_unique_name": null,
+    "series_item_type_code": "cri-single",
+    "commodity": {
+      "guid": "fa627c9b-3d8d-4ff5-b9d9-1abca5049d5f",
+      "name": {
+        "en": "LNG",
+        "zh": null
+      }
+    },
+    "location": {
+      "guid": "31458ca5-9a4e-4d9a-bed7-19266fe23523",
+      "name": {
+        "en": "Pacific basin",
+        "zh": null
+      },
+      "region": {
+        "guid": "fdd61dcc-5143-42d8-9404-cbba2b60824c",
+        "name": {
+          "en": "World",
+          "zh": null
+        }
+      }
+    },
+    "assessed_location": {
+      "guid": "8fb35ed9-f6a1-4617-a6f5-12ac4b4621c8",
+      "name": {
+        "en": "Singapore",
+        "zh": null
+      },
+      "region": {
+        "guid": "26494825-d4ba-4f88-b855-24e4b1b79f2b",
+        "name": {
+          "en": "Asia-Pacific",
+          "zh": null
+        }
+      }
+    },
+    "currency_unit": {
+      "guid": "e293c5c9-c320-43e1-91a3-3c9a2f1c1e72",
+      "name": {
+        "en": "US Dollar",
+        "zh": null
+      },
+      "code": "USD"
+    },
+    "measure_unit": {
+      "guid": "2b976e4c-1b10-4ad8-aaa1-da5c22b82a33",
+      "name": {
+        "en": "day",
+        "zh": null
+      },
+      "symbol": "day"
+    },
+    "launch_date": {
+      "$date": "1990-01-01T00:00:00Z"
+    },
+    "termination_date": null,
+    "item_frequency": {
+      "guid": "de0f5c7f-c082-445b-a1d2-89e3a350766a",
+      "name": {
+        "en": "daily",
+        "zh": null
+      }
+    },
+    "ref_period": {
+      "guid": "b4a04425-8c3d-43cb-8e7b-779e7c090456",
+      "name": {
+        "en": "1 day",
+        "zh": null
+      }
+    },
+    "price_category": {
+      "guid": "0bb95d7a-db25-4cb7-8c2a-a35994a000ee",
+      "name": {
+        "en": "assessed",
+        "zh": null
+      },
+      "code": "ASSESSED"
+    },
+    "price_settlement_type": null,
+    "price_derivation_type": null,
+    "trade_terms": null,
+    "relative_fulfilment_period": null,
+    "derivation_inputs": null,
+    "price_series_link": null,
+    "charter_horizon": {
+      "guid": "7631479e-443a-4c58-a239-4ec729f3d667",
+      "name": {
+        "en": "prompt",
+        "zh": null
+      }
+    },
+    "charter_rate_code": null,
+    "vessel_capacity": null,
+    "vessel_engine_type": {
+      "guid": "f555c857-1c83-4235-a507-4d27f7c6c275",
+      "name": {
+        "en": "TFDE",
+        "zh": null
+      }
+    },
+    "dlh_record_source": "pricing_schema_data_upload/CHARTER_RATE_SERIES-UAT-20240920.csv",
+    "dlh_load_timestamp": {
+      "$date": "2024-09-20T11:39:15.856Z"
+    }
+  }
+]

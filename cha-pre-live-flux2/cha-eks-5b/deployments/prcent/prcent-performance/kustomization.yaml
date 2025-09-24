@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prcent-performance
+nameSuffix: -prcent
+resources:
+- ../../../common/subscriber-bff/prcent/
+- ../../../common/authoring-bff/prcent/
+- ../../../common/job/prcent/
+- helm-release-subscriber-bff-authoring-deployment-scaler.yaml
+- helm-release-subscriber-bff-subscriber-deployment-scaler.yaml
+
+# BACKSTAGE-COMMENT-PATTERN1
+patches:
+- path: helm-release-subscriber-bff-prcent-performance.yaml
+- path: helm-release-authoring-bff-prcent-performance.yaml
+- path: helm-release-mongo-migration-prcent-performance.yaml
+# BACKSTAGE-COMMENT-PATTERN2

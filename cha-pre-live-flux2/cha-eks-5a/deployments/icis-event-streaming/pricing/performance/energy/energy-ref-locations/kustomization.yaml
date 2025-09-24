@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+nameSuffix: -performance-energy-ref-locations
+resources:
+- ../../../energy-price-data-common
+
+patches:
+- path: energy-ref-locations.yaml

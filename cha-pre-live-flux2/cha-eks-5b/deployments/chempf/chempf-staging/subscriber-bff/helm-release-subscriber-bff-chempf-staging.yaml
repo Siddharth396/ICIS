@@ -1,0 +1,39 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  releaseName: subscriber-bff-chempf-staging
+  values:
+    replicaCount: 1
+    namespace: "chempf-staging"
+    environment: "staging"
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/chempf/subscriber-bff # {"$imagepolicy": "flux-system:chempf-sub-bff-staging:name"}
+        tag: staging-31-1.0.1-epic-pfe.3630 # {"$imagepolicy": "flux-system:chempf-sub-bff-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/chempf-staging?retryWrites=true&w=majority"
+        PRICING_DB_NAME: "pricing-pfe-staging"
+        CORS_ORIGINS_DOMAINS: https://subscriber.staging.genesis.cha.rbxd.ds
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 0.1
+        ELASTIC_APM_CAPTURE_BODY: off
+        TRACE_ENABLED: true
+        SECRET_FILE_PATH: /etc/secrets/.env
+        Db__Collections__ModelRunData: subscriber.model_run_data
+    ingress:
+      enabled: true
+      host:
+        name: subscriber.staging.genesis.cha.rbxd.ds
+        path: /api/chempf/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: subscriber-bff-vault-secret-staging
+      VaultSecretPath: "chempf/staging/subscriber/bff"
+    vault_secrets_proxy:
+      name: subscriber-bff-vault-secret-proxy-staging        

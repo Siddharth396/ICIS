@@ -1,0 +1,55 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  releaseName: authoring-bff-eacons-performance
+  values:
+    replicaCount: 1
+    namespace: "eacons-performance"
+    environment: "performance"
+    authproxy:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/sbcore/sbcore-auth-proxy # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:name"}
+        tag: performance-73-1.4.107-VEGA-4344-Update-Authproxy-to-go-to-Auth0.1155 # {"$imagepolicy": "flux-system:sbcore-auth-proxy-performance:tag"}
+        pullPolicy: IfNotPresent
+    bff:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/eacons/authoring-bff # {"$imagepolicy": "flux-system:eacons-auth-bff-performance:name"}
+        tag: performance-24-0.0.0-feature-upgrade-eacons-bff.4772 # {"$imagepolicy": "flux-system:eacons-auth-bff-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        ALLOWED_ROLE_CLAIM: ADFS-ICIS-ACCESS-CONTROL-MANAGER-PRELIVE
+        AWS_BUCKET_NAME: icis-entitlement-admin-performance-lambda-acm
+        AWS_CONNECT_WITH_IAM_ROLE: true
+        CORS_ORIGINS_DOMAINS: https://authoring.performance.cha.rbxd.ds
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: .1
+        LOG_LEVEL: Information
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SWAGGER_ENABLED: true
+        SWAGGER_OAUTH_AUTHORIZATION_URL: https://domainidentity.integration.cha.rbxd.ds/connect/authorize
+        SWAGGER_OAUTH_TOKEN_URL: https://domainidentity.integration.cha.rbxd.ds/connect/token
+        TRACE_ENABLED: true
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/eaconsole/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: authoring-bff-vault-secret-eacons-performance
+      VaultK8sRoleName: "kv-eacons-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "eacons/performance/authoring/bff"
+    vault_secrets_proxy:
+      name: authoring-bff-vault-secret-proxy-eacons-performance
+      VaultK8sRoleName: "kv-eacons-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "authoring-auth-proxy/mongo"

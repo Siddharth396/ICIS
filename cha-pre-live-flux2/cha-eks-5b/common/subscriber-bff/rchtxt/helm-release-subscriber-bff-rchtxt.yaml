@@ -1,0 +1,13 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: subscriber-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "subscriber-rchtxt"
+    ServiceAccountName: "rchtxt"
+    bff:
+      config_env:
+        MUTATION: false

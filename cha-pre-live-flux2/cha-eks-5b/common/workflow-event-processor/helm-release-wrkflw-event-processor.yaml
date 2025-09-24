@@ -1,0 +1,55 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: workflow-event-processor
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: workflow-event-processor
+      version: "0.1.8"
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  values:
+    projectName: "workflow-event-processor"
+    ServiceAccountName: "wrkflw"
+    
+    wrkflw:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 256Mi
+        requests:
+          cpu: 100m
+          memory: 128Mi
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        initialDelaySeconds: 60
+        periodSeconds: 30
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 80
+        initialDelaySeconds: 60
+        periodSeconds: 30
+      config_env:
+        SECRET_FILE_PATH: /etc/secrets/.env
+        LOG_LEVEL: Information
+        ELASTIC_APM_TRANSACTION_IGNORE_URLS: /internal/*
+        ELASTIC_APM_SERVER_URLS: https://apm.genesis.cha.eu-west-1.dev/
+        KAFKA_BROKER_SECURITY_PROTOCOL: 3
+        KAFKA_BROKER_SASL_MECHANISM: 1
+        KAFKA_SCHEMA_REGISTRY_URL: "https://psrc-4xrp1.eu-central-1.aws.confluent.cloud"
+        KAFKA_BROKER_URLS: "pkc-l568n.eu-west-1.aws.confluent.cloud:9092"
+
+    vault_secrets:
+      VaultK8sRoleName: "kv-wrkflw-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+
+

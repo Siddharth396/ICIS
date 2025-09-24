@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: bdo
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_systest_pricing_petchem_specification_calculated_names_1
+    database: spt-systest
+    collection: denormalized_price_specifications
+    transforms.RenameField.renames: id:_id

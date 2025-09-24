@@ -1,0 +1,42 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: snkidn-event-processor
+spec:
+  releaseName: snkidn-event-processor-performance
+  values:
+    replicaCount: 1
+    namespace: "snkidn-performance"
+    environment: "performance"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/snkidn/snkidn-event-processor # {"$imagepolicy": "flux-system:snkidn-event-processor-performance:name"}
+        tag: performance-17-0.0.0-feature-include-region-in-reportId.53902 # {"$imagepolicy": "flux-system:snkidn-event-processor-performance:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: performance
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/snkidn-performance?retryWrites=true&w=majority"
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ELASTIC_APM_ENVIRONMENT: performance
+        QUEUE_NAME: "performance-CONTENT_STRUCTURES-changes-sync_to_iddn"
+        SNOWFLAKE_USER: "SVC_SYNC_TO_IDDN_RW_USER_GOLD_UAT"
+        SNOWFLAKE_ROLE: "SVC_SYNC_TO_IDDN_RW_GOLD_UAT"
+        SNOWFLAKE_WAREHOUSE: "QRY_WH_GOLD_UAT"
+        SNOWFLAKE_DB: "ICIS_GOLD_UAT_DB"
+        IDDN_FETCH_API_URL: "http://genesis.performance.iddn.cha.rbxd.ds:9000"
+        IDDN_STORE_API_URL: "http://genesis.performance.iddn.cha.rbxd.ds:9100"
+    ingress:
+      enabled: true
+      host:
+        name: authoring.performance.cha.rbxd.ds
+        path: /api/sync-to-iddn/?(.*)
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    vault_secrets:
+      name: snkidn-vault-secret-event-processor-performance
+      VaultSecretPath: "snkidn/performance/eventprocessor"
+    vault_secrets_proxy:
+      name: snkidn-auth-proxy-vault-secret-event-processor-performance

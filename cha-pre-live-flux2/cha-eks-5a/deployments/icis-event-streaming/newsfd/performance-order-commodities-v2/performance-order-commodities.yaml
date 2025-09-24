@@ -1,0 +1,11 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: newsfd
+  namespace: icis-event-streaming
+spec:
+  config:
+    topics: public_uat_refdata_commodities_2
+    database: newsfd-performance
+    collection: order_commodities_v2
+    transforms.RenameField.renames: id:_id

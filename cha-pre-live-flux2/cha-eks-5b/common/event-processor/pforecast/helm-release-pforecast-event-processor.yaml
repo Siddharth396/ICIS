@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  values:
+    projectName: "pforecast"
+    ServiceAccountName: "pforecast"
+    
+    kafka_consumer:
+      image:
+        repository: artifacts.cha.rbxd.ds/estream/generic-kafka-consumer
+        tag: 3.1.0-vso.1.1002
+        pullPolicy: IfNotPresent
+      config_env:
+        KafkaConsumer_Serilog__Source: "PriceForecast"
+        KafkaConsumer_Serilog__Component: "ActivityFeedProducer"
+        KafkaConsumer_Serilog__Service: "KafkaConsumer"   
+        KafkaConsumer_ElasticApm__ServiceName: "NS - PriceForecasts - Generic Consumer"
+        KafkaConsumer_ElasticApm__TransactionSampleRate: 1
+
+    event_processor:
+      config_env:
+        ElasticApm__TransactionSampleRate: 1
+        ElasticApm__ServiceName: "NS - PriceForecasts - Event Processor"
+    
+    serviceMonitor:
+      enabled: true
+      endpoints:
+        - interval: 30s
+          honorLabels: true
+          path: /internal/metrics
+          targetPort: 80
+          scheme: http
+    
+    
+    vault_secrets:
+      VaultK8sRoleName: "kv-pf-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    vault_secrets_consumer:
+      VaultK8sRoleName: "kv-pf-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+    

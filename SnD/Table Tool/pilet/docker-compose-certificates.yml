@@ -1,0 +1,19 @@
+version: "3.4"
+services:
+  local-ssl-certificate:
+    container_name: local-ssl-certificate
+    image: artifacts.cha.rbxd.ds/local-ssl-certificate:latest
+    volumes: 
+      - ./packages/bff-mock/certificates/:/certificates/
+      - ./ci/certificates/:/ci-certificates/
+      - ./docker-resources/certificates/:/docker-resources-certificates/
+      - ./packages/supply-and-demand-pilet/certificates/:/pilet-certificates/
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        cp /downloaded_local_ssl_certs/* /certificates/ &&
+        cp /downloaded_local_ssl_certs/* /ci-certificates/ &&
+        cp /downloaded_local_ssl_certs/* /docker-resources-certificates/ &&
+        cp /downloaded_local_ssl_certs/* /pilet-certificates/ &&
+        tail -f /dev/null

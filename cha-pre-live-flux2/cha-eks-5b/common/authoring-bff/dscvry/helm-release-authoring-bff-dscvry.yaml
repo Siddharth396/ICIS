@@ -1,0 +1,17 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  chart:
+    spec:
+      version: 0.1.69
+  values:
+    replicaCount: 1
+    projectName: "authoring-dscvry"
+    ServiceAccountName: "dscvry"    
+
+    authproxy:
+      env:
+        Proxy__ExcludedPathsFromAuthorization: "(/v1(\\.[0-9])?/(version|jsnlog\\.logger))|/v1/graphql/websocket|(/v1/workflow/(.*))"

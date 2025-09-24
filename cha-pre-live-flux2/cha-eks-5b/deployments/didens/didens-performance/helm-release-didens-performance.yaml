@@ -1,0 +1,94 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: domain-identity-service
+spec:
+  releaseName: domain-identity-service-performance
+  values:
+    replicaCount: 1
+    namespace: "didens-performance"
+    environment: "performance"
+    didens:
+      port: 80
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/domain-identity/core" # {"$imagepolicy": "flux-system:domain-identity-performance:name"}
+        tag: "performance-106-2.0.0-7410" # {"$imagepolicy": "flux-system:domain-identity-performance:tag"}
+        pullPolicy: IfNotPresent
+      resources:
+        requests:
+          memory: "128Mi"
+          cpu: "100m"
+        limits:
+          memory: "512Mi"
+          cpu: "1"
+      readinessProbe:
+        httpGet:
+          path: /internal/health/readiness
+          port: 80
+        initialDelaySeconds: 30
+        periodSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /internal/health/liveness
+          port: 80
+        periodSeconds: 30
+      config_env:
+        ENVIRONMENT: performance
+        LOG_LEVEL: Information
+        CORS_ORIGINS_DOMAINS: https://*.cha.rbxd.ds,https://*.cha.eu-west-1.dev,https://localhost:7002
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/didens-performance?retryWrites=true&w=majority&maxPoolSize=1024"
+        FEDERATION_TYPE: "WsFederation"
+        WSFEDERATION_WREALM: "https://domainidentity.performance.cha.rbxd.ds/"
+        WSFEDERATION_DISPLAYNAME: "CHA"
+        WSFEDERATION_ALLOWED_ROLE_GROUP: "ADFS-ICIS-DOMAIN-IDENTITY-PRELIVE"
+        OIDC_DISPLAYNAME: "Duende Test"
+        OIDC_AUTHORITY: "https://demo.duendesoftware.com/"
+        OIDC_CLIENTID: "interactive.confidential"
+        OIDC_SECRET: "secret"
+        OIDC_ALLOWED_ROLE_GROUP: "RBI-AZ-ICIS-DOMAIN-IDENTITY-PRELIVE"
+        TRACE_ENABLED: true
+        ELASTIC_APM_TRANSACTION_SAMPLE_RATE: 1
+        ELASTIC_APM_CAPTURE_BODY: all
+        ENABLE_DUENDE_LICENSE_KEY: false
+        SECRET_FILE_PATH: /etc/secrets/.env
+        SWAGGER_CONFIGURATION_AUTHORIZATION_URL: "https://domainidentity.performance.cha.rbxd.ds/connect/authorize"
+        SWAGGER_CONFIGURATION_TOKEN_URL: "https://domainidentity.performance.cha.rbxd.ds/connect/token"
+        SWAGGER_CONFIGURATION_CLIENT_ID: "didens-swagger-api"
+        SWAGGER_CONFIGURATION_CLIENT_SECRET: "dFeQxrDiBb1UBoofsd/Ccew38yqN/2LMnVMwDRlhzmg="
+        SWAGGER_CONFIGURATION_CLIENT_REDIRECT_URL: "https://domainidentity.performance.cha.rbxd.ds/swagger/oauth2-redirect.html"
+        AUTHENTICATION_COOKIE_LIFETIME_DAYS: 14
+        AUTHENTICATION_ENABLE_COOKIE_SLIDING_EXPIRATION: true
+    autoscaling:
+      enabled: true
+      minReplicas: 1
+      maxReplicas: 6
+      targetCPUUtilizationPercentage: 80
+    pdb:
+      minAvailable: 1
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        cert-manager.io/cluster-issuer: vault-issuer
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        nginx.ingress.kubernetes.io/ssl-ciphers: "ALL:!aNULL:!EXPORT56:+HIGH:+MEDIUM:+LOW:+SSLv2:+EXP"
+        nginx.ingress.kubernetes.io/proxy-buffer-size: "32k"
+        nginx.ingress.kubernetes.io/affinity: "cookie"
+        nginx.ingress.kubernetes.io/session-cookie-name: "SSDIDENS"
+        nginx.ingress.kubernetes.io/session-cookie-secure: "true"
+        nginx.ingress.kubernetes.io/session-cookie-expires: "172800"
+        nginx.ingress.kubernetes.io/session-cookie-max-age: "172800"
+        nginx.ingress.kubernetes.io/session-cookie-samesite: "None"
+        nginx.ingress.kubernetes.io/session-cookie-conditional-samesite-none: "true"
+      host:
+        name: domainidentity.performance.cha.rbxd.ds
+        paths:
+          - /
+        tls: "true"
+      tls:
+        - hosts:
+            - domainidentity.performance.cha.rbxd.ds
+          secretName: domainidentity.performance.cha.rbxd.ds
+    vault_secrets:
+      name: domain-identity-vault-secret-service-performance
+      VaultSecretPath: "didens/performance"

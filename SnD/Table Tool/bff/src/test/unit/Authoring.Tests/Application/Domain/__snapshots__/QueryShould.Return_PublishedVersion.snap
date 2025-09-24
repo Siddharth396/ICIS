@@ -1,0 +1,20 @@
+﻿{
+  "data": {
+    "publishedVersion": {
+      "id": "63c48c6ce1189f714bcdaf1a",
+      "createdOn": 1673825388570,
+      "createdBy": "1f2a74bc-f5a5-46f2-aad3-a2916827be18",
+      "modifiedOn": 1673825405764,
+      "modifiedBy": "1f2a74bc-f5a5-46f2-aad3-a2916827be18",
+      "version": 4,
+      "metadata": {
+        "pageId": "commentary",
+        "workflowInstanceId": "test_workflow",
+        "mfeIdentifier": "widget_0"
+      },
+      "data": {
+        "text": "commentary 4"
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- prcent-subscriber-bff-policy-integration.yaml
+- prcent-subscriber-bff-policy-systest.yaml
+- prcent-subscriber-bff-policy-performance.yaml
+- prcent-subscriber-bff-policy-staging.yaml
+- prcent-subscriber-bff-registry.yaml
+########
+- prcent-authoring-bff-policy-integration.yaml
+- prcent-authoring-bff-policy-systest.yaml
+- prcent-authoring-bff-policy-performance.yaml
+- prcent-authoring-bff-policy-staging.yaml
+- prcent-authoring-bff-registry.yaml
+########
+- prcent-mongo-migration-policy-integration.yaml
+- prcent-mongo-migration-policy-systest.yaml
+- prcent-mongo-migration-policy-performance.yaml
+- prcent-mongo-migration-policy-staging.yaml
+- prcent-mongo-migration-registry.yaml
+########
+- prcent-mongo-seeder-policy-integration.yaml
+- prcent-mongo-seeder-policy-systest.yaml
+- prcent-mongo-seeder-policy-performance.yaml
+- prcent-mongo-seeder-policy-staging.yaml
+- prcent-mongo-seeder-registry.yaml

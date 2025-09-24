@@ -1,0 +1,39 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-performance
+  namespace: icis-squidex-performance
+spec:
+  releaseName: iddn-news-performance
+  values:
+    projectName: "iddn-news"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-performance-iddn-news:name"}
+        tag: performance-iddn-news-292-7.7.14 # {"$imagepolicy": "flux-system:icis-squidex-performance-iddn-news:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: iddn-news
+        ADMIN__ADMINUSERGROUP__0: ICIS_IDDN
+        CONTENTS__MAXRESULTS: "'6000'"
+        CONTENTS__DEFAULTPAGESIZE: "'6000'"
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'6000'"
+      kafka:
+        enabled: True
+      resources:
+        limits:
+          cpu: "1"
+          memory: 2048Mi
+        requests:
+          cpu: 500m
+          memory: 1024Mi
+      envValues:
+        IDENTITY__ICISAUTHSERVER: "https://domainidentity.performance.cha.rbxd.ds"
+        IDENTITY__ICISOIDCSCOPES: ""
+    squidexCli:
+      enabled: True
+      schedule: "'35 7,10,13,16 * * *'"
+    vault_squidex_secrets:
+      name: iddn-news-squidex-performance-secret
+    vault_kafka_secrets:
+      name: iddn-news-squidex-kafka-performance-secret
+      VaultSecretPath: "icis-squidex/iddn-news/performance"      

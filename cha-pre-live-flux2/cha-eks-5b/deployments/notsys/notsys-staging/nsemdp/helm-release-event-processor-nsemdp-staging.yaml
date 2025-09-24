@@ -1,0 +1,62 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+spec:
+  releaseName: event-processor-nsemdp-staging
+  values:
+    replicaCount: 1
+    namespace: "notsys-staging"
+    environment: "staging"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "staging"
+        LOG_LEVEL: Debug
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_staging_alerting_notifications_2: "http://localhost:80/v1/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "emails_notifications_consumer_staging"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_staging_notifications_email_dispatcher_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_staging_notifications_email_dispatcher_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_staging_alerting_notifications_2"
+    event_processor:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/nsemdp/nsemdp-kafka-event-processor # {"$imagepolicy": "flux-system:notsys-event-processor-nsemdp-staging:name"}
+        tag: staging-3-0.97.0-alpha.1011 # {"$imagepolicy": "flux-system:notsys-event-processor-nsemdp-staging:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: staging
+        LOG_LEVEL: Debug
+        MONGO_DB_CONNECTION_STRING: "mongodb+srv://<username>:<password>@cha-pre-live-ak0n6.mongodb.net/nsemdp-staging?retryWrites=true&w=majority"
+        EMAIL_SERVICE_DB: nsemdp-staging
+        USER_ENTITLEMENTS_DB: nsesvc-staging
+        AWS_BUCKET_NAME: icis-ns-email-dispatcher-pre-live/staging
+        LANGUAGE_PREFERENCE_URL: https://api.subscriber.internal.staging.genesis.cha.rbxd.ds/v1/user/language
+        LANGUAGE_PREFERENCE_HEALTHCHECK_URL: https://api.subscriber.internal.staging.genesis.cha.rbxd.ds/v1/health
+        LANGUAGE_PREFERENCE_ACCESS_TOKEN_URL: https://id.internal.staging.genesis.cha.rbxd.ds/connect/token
+        LANGUAGE_PREFERENCE_SCOPE: https://api.subscriber.staging.genesis.cha.rbxd.ds
+        NOTIFICATION_PROVIDER_IMMEDIATE_EMAIL_PROVIDER: MockSparkPost
+        NOTIFICATION_PROVIDER_DIGEST_EMAIL_PROVIDER: MockSparkPost
+        HANGFIRE_IMMEDIATE_NOTIFICATIONS_SERVER_WORKER_COUNT: 3
+        HANGFIRE_DIGEST_NOTIFICATIONS_SERVER_WORKER_COUNT: 3
+    ingress:
+      enabled: true
+      className: icis-nginx-ingress
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: email-dispatcher-event-processor.staging.cha.eu-west-1.dev
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+        cert-manager.io/cluster-issuer: vault-issuer
+        lnrs.io/zone-type: private
+      hosts:
+        - host: email-dispatcher-event-processor.staging.cha.eu-west-1.dev
+          paths:
+            - /
+          tls: "true"
+      tls:
+        - hosts:
+            - email-dispatcher-event-processor.staging.cha.eu-west-1.dev
+          secretName: email-dispatcher-event-processor-staging-cha-eu-west-1-dev
+    vault_secrets:
+      name: nsemdp-event-processor-vault-secret-staging
+      VaultSecretPath: "notsys/nsemdp/staging/eventprocessor"
+    vault_secrets_consumer:
+      name: nsemdp-event-processor-vault-secret-consumer-staging
+      VaultSecretPath: "notsys/nsemdp/staging/eventprocessor"

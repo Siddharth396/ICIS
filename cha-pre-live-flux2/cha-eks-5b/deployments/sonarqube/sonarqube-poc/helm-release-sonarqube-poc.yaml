@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: sonarqube
+spec:
+  values:
+    image:
+      repository: "artifacts.cha.rbxd.ds/automated/sonarqube/sonarqube-server" # {"$imagepolicy": "flux-system:sonarqube-poc:name"} 
+      tag: "poc-14-9.9.1-community" # {"$imagepolicy": "flux-system:sonarqube-poc:tag"} 
+      pullPolicy: IfNotPresent
+    namespace: "sonarqube-poc"
+    ingress:
+      enabled: true
+      ingressClassName: icis-nginx-ingress
+      hosts:
+        - name: sonarqube.poc.cha.eu-west-1.dev
+          path: /
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: sonarqube.poc.cha.eu-west-1.dev
+      tls:
+        - hosts:
+            - sonarqube.poc.cha.eu-west-1.dev
+          secretName: sonarqube.poc.cha.eu-west-1.dev
+    jdbcOverwrite:
+      enable: true
+      jdbcUrl: "jdbc:postgresql://icis-sonarqube-poc-db.c5xpmfqwcbio.eu-west-1.rds.amazonaws.com:5432/"
+    vault:
+      VaultSecretPath: "kv/cha/k8s/data/sonarqube/poc"
+
+# test2

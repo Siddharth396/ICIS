@@ -1,0 +1,15 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: syctcv-yjs-message-api-stable
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: syctcv-yjs-message-api
+    namespace: flux-system
+  filterTags:
+    pattern: '^stable-(?P<counter>\d+)-.*'
+    extract: '$counter'
+  policy:
+    numerical:
+      order: asc

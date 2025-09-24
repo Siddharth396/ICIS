@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: charting-systest
+  values:
+    projectName: "charting"
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-charting:name"}
+        tag: systest-charting-659-6.7.20 # {"$imagepolicy": "flux-system:icis-squidex-systest-charting:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: charting
+        ADMIN__ADMINUSERGROUP__0: ICIS_Genesis
+      kafka:
+        enabled: True
+    vault_squidex_secrets:
+      name: charting-squidex-systest-secret
+    vault_kafka_secrets:
+      name: charting-squidex-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/charting/systest"         

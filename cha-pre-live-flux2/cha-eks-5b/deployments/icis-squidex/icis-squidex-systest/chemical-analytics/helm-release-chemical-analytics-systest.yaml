@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: chemical-analytics-systest
+  values:
+    projectName: "chemical-analytics"
+    replicaCount: 3
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-chemical-analytics:name"}
+        tag: systest-chemical-analytics-713-6.7.27-bugfix-vega-2323-aggrid-boolean-fields.1 # {"$imagepolicy": "flux-system:icis-squidex-systest-chemical-analytics:tag"}
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: chemical-analytics
+        ADMIN__ADMINUSERGROUP__0: ICIS_Darwin
+        UI__DISABLESCHEDULEDCHANGES: "'true'"
+        CONTENTS__MAXRESULTS: "'5000'"
+        PLUGINS__2: ICIS.EmbargoPlugin.dll
+        PLUGINS__3: ICIS.AWFPlugin.dll
+        AWF__PUBLISHAPIURL: https://pfawf.systest.cha.eu-west-1.dev/
+        AWF__TIMEOUTINMS: "'15000'"
+      kafka:
+        enabled: True
+      resources:
+        limits:
+          cpu: 1
+          memory: 1024Mi
+        requests:
+          cpu: 500m
+          memory: 512Mi
+    squidexCli:
+      enabled: true
+      schedule: "'10 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-chemical-analytics:name"}
+        tag: 6.8.7-feature-cosmos-92-logging-pattern-improvement.4 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-chemical-analytics:tag"}
+        pullPolicy: IfNotPresent
+      envValues:
+        EXCEPTIONLOGPATTERN__SINGLELINEJSONLOGGING: "'true'" 
+    vault_squidex_secrets:
+      name: chemical-analytics-squidex-systest-secret
+    vault_kafka_secrets:
+      name: chemical-analytics-squidex-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/chemical-analytics/systest"      

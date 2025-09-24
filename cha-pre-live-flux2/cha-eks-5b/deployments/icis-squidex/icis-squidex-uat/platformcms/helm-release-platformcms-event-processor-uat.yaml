@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: event-processor
+  namespace: icis-squidex-uat
+spec:
+  releaseName: platformcms-event-processor-uat
+  values:
+    replicaCount: 1
+    namespace: "icis-squidex-uat"
+    environment: "uat"
+    projectName: "platformcms"
+    ServiceAccountName: "icis-squidex"
+    kafka_consumer:
+      config_env:
+        ASPNETCORE_ENVIRONMENT: "uat"
+        KafkaConsumer_AppSettings__Consumer__HandlerConfiguration__public_uat_petchem_publication_type_1: "http://localhost:80/api/1.0/messageHandler"
+        KafkaConsumer_AppSettings__Consumer__ConsumerName: "platformcms-consumer-uat-4"
+        KafkaConsumer_AppSettings__Consumer__RetryTopic: "private_uat_platform_cms_consumer_retry"
+        KafkaConsumer_AppSettings__Consumer__FailedTopic: "private_uat_platform_cms_consumer_failed"
+        KafkaConsumer_AppSettings__Consumer__Topics__0: "public_uat_petchem_publication_type_1"
+    event_processor:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/icis-squidex/event-processor" # {"$imagepolicy": "flux-system:icis-squidex-event-processor-uat:name"}
+        tag: uat-36-1.0.0-30-g7aa1666 # {"$imagepolicy": "flux-system:icis-squidex-event-processor-uat:tag"}
+        pullPolicy: IfNotPresent
+      config_env:
+        ENVIRONMENT: uat
+        ASPNETCORE_ENVIRONMENT: uat
+        Processor__TopicToSchemaMapping__public_uat_petchem_publication_type_1__SchemaName: "publication-type"
+        Processor__TopicToSchemaMapping__public_uat_petchem_publication_type_1__ExcludeFields__0: "metadata"
+        Processor__TopicToSchemaMapping__public_uat_petchem_publication_type_1__LogicalTypeFields__released_on: "timestamp-millis"
+        Processor__TopicToSchemaMapping__public_uat_petchem_publication_type_1__LogicalTypeFields__created_on: "timestamp-millis"
+        Processor__TopicToSchemaMapping__public_uat_petchem_publication_type_1__IdentifierFormat: "{0}_Suffix_Commodity"
+        Squidex__Url: https://platformcms.cosmos.uat.cha.eu-west-1.dev/
+        Squidex__AppName: "platformcms"
+        Squidex__SkipSchemaCreation: true
+    # vault_secrets:
+    #   name: platformcms-event-processor-vault-secret-uat
+    # vault_secrets_consumer:
+    #   name: platformcms-event-processor-vault-secret-consumer-uat
+    #   VaultSecretPath: "icis-squidex/platformcms/uat"
+    vault:
+      VaultConsumerSecretPath: "kv/cha/k8s/data/icis-squidex/platformcms/uat"

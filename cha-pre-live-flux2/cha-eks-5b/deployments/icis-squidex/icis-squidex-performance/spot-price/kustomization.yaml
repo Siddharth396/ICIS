@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namePrefix: spot-price-
+resources:
+- ../common/
+- ../common/event-processor
+patches:
+- path: helm-release-spot-price-performance.yaml
+- path: helm-release-spot-price-event-processor-performance.yaml

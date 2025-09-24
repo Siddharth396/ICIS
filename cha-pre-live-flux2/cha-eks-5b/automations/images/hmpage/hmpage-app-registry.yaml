@@ -1,0 +1,10 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: hmpage-app
+  namespace: flux-system
+spec:
+  certSecretRef:
+    name: artifacts-ca-crt
+  image: artifacts.icis.rbi.web.ds/automated/hmpage/hmpage-app
+  interval: 5m0s

@@ -1,0 +1,41 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pricing-uat-streamsets-release
+  namespace: pricing-performance
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: streamsets
+      version: 0.0.9
+      sourceRef:
+        kind: HelmRepository
+        name: helm-charts
+        namespace: flux-system
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+      strategy: rollback
+  values:
+    ServiceAccountName: "pricing"
+    namespace: "pricing-performance"
+    LOAD_BALANCER_HOSTNAME: ss-pricing-uat.cha.eu-west-1.dev
+    USER_STAGE_LIBS: apache-kafka_3_4,aws,aws-secrets-manager-credentialstore,jdbc,jython_2_7,sdc-snowflake,vault-credentialstore,mongodb-atlas
+    streamsets:
+      image:
+        repository: "artifacts.cha.rbxd.ds/automated/streamsets" # {"$imagepolicy": "flux-system:streamsets-deployer:name"}
+        tag: "dev-1-0.0.0.1" # {"$imagepolicy": "flux-system:pricing-dev-streamsets:tag"}
+        pullPolicy: Always
+      config_env:
+        ENVIRONMENT: uat
+      argument:
+        arg1: deployment.properties
+        arg2: pricing-uat
+        arg3: deployment
+    vault_secrets:
+      name: streamsets-job-pricing-uat
+      VaultK8sRoleName: "kv-pricing-read"
+      VaultK8sAuthPath: "cha/eks-b"
+      VaultSecretMount: "kv/cha/k8s"
+      VaultSecretPath: "pricing/ss"

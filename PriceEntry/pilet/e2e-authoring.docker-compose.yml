@@ -1,0 +1,111 @@
+services:
+  mongodb:
+    image: mongo:5.0.18
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PWD}
+
+  authoring-appshell-auth-proxy:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy:${AUTHPROXY_TAG:-latest}
+    extra_hosts:
+      - "localhost:host-gateway"
+    depends_on:
+      - mongodb
+    ports:
+      - "8050:8050"
+    environment:
+      - Hosting__DevPort=8050
+      - Proxy__ForwardToPath=https://localhost:8083
+    command: |
+      bash -c "mkdir /etc/icis/authproxy -p &&
+      mv /opt/authproxy/localhost/authoring.app.local.env /etc/icis/authproxy/local.env &&
+      /opt/authproxy/run.sh"
+
+  authoring-appshell:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-app:${AUTHORING_APP_SHELL_TAG:-latest}
+    depends_on:
+      - authoring-appshell-auth-proxy
+    volumes:
+      - ./docker-resources/appshell-app.conf:/etc/nginx/conf.d/homepage-app.conf
+      - ./docker-resources/ssl:/etc/ssl
+      - ./docker-resources/authoring-appshell.env:/etc/icis/homepage/authoring-appshell.env
+    ports:
+      - "8083:8083"
+
+  authoring-core-bff-auth-proxy:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy:${AUTHPROXY_TAG:-latest}
+    depends_on:
+      - mongodb
+      - authoring-core-bff
+    ports:
+      - "4201:443"
+    environment:
+      - Hosting__DevPort=443
+      - Proxy__ForwardToPath=http://authoring-core-bff:4202
+    command: |
+      bash -c "mkdir /etc/icis/authproxy -p &&
+      mv /opt/authproxy/localhost/authoring.api.local.env /etc/icis/authproxy/local.env &&
+      /opt/authproxy/run.sh"
+
+  authoring-core-bff:
+    image: artifacts.cha.rbxd.ds/atcore/atcore-bff:${AUTHORING_CORE_BFF_TAG:-latest}
+    ports:
+      - "4202:4202"
+    command: |
+      bash -c "mkdir /etc/icis/atcore -p &&
+      mv /opt/authoringbff/dev.env /etc/icis/atcore/local.env &&
+      /opt/authoringbff/run.sh"
+    environment:
+      - SECRET_FILE_PATH=/etc/icis/atcore/local.env
+
+  mfe-feed-service:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-mfe-feed-service${FEED_SERVICE_TAG:-:latest}
+    ports:
+      - "8090:8090"
+
+  mfe-feed-service-local-seeder:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-mfe-feed-service-localseeder
+    depends_on:
+      - mfe-feed-service
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/feed:/tmp/feed
+    environment:
+      - PILET_TAG=${PILET_TAG:-latest}
+      - SOURCE_FEED=https://authoring.staging.cha.rbxd.ds/mfe/mfe-feed-service/api/v1/mfe/
+      - DESTINATION_FEED=host.docker.internal:8090/api/v1/mfe
+
+  canvas-authoring-bff-auth-proxy:
+    image: artifacts.cha.rbxd.ds/sbcore/sbcore-auth-proxy:${AUTHPROXY_TAG:-latest}
+    depends_on:
+      - mongodb
+    ports:
+      - "4400:443"
+    environment:
+      - Hosting__DevPort=443
+      - Proxy__ForwardToPath=http://canvas-authoring-bff
+    command: |
+      bash -c "mkdir /etc/icis/authproxy -p &&
+      mv /opt/authproxy/localhost/authoring.api.local.env /etc/icis/authproxy/local.env &&
+      /opt/authproxy/run.sh"
+
+  canvas-authoring-bff:
+    image: artifacts.cha.rbxd.ds/canvas/authoring-bff:${CANVAS_BFF_TAG:-latest}
+    depends_on:
+      - mongodb
+    environment:
+      - ENVIRONMENT=local
+      - MONGO_DB_PWD=${MONGO_DB_PWD}
+      - MONGO_DB_USER=${MONGO_DB_USER}
+      - MONGO_DB_CONNECTION_STRING=${CANVAS_MONGO_CONNECTION_STRING}
+      - MUTATION=true
+      - TRACE_ENABLED=false
+      - CORS_ORIGINS_DOMAINS=https://localhost:8083,https://localhost:8050
+      - ID_CLAIM=user_id
+      - NAME_CLAIM=name
+      - EMAIL_CLAIM=email
+      - ALLOWED_ROLES=RBI-GLO-ICIS-APPLICATION-SECURITY-CANVAS-ALPHA
+      - IS_NEW_AUTH=false

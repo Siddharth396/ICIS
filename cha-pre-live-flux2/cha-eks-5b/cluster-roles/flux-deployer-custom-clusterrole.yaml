@@ -1,0 +1,14 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: flux-deployer-custom
+rules:
+  - verbs:
+      - '*'
+    apiGroups:
+      - helm.fluxcd.io
+      - monitoring.coreos.com
+    resources:
+      - helmreleases
+      - servicemonitors
+      - podmonitors

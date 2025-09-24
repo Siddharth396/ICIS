@@ -1,0 +1,45 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: icis-squidex-systest
+  namespace: icis-squidex-systest
+spec:
+  releaseName: recyclers-supply-tracker-systest
+  values:
+    projectName: "recyclers-supply-tracker"
+    replicaCount: 1
+    squidex:
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex # {"$imagepolicy": "flux-system:icis-squidex-systest-recyclers-supply-tracker:name"}
+        tag: systest-recyclers-supply-tracker-1388-7.7.33 # {"$imagepolicy": "flux-system:icis-squidex-systest-recyclers-supply-tracker:tag"}
+      kafka:
+        enabled: True
+      customEnvValues:
+        ADMIN__ADMINAPPS__0: recyclers-supply-tracker
+        ADMIN__ADMINUSERGROUP__0: ICIS_Titan
+        UI__REFERENCESDROPDOWNITEMCOUNT: "'200'"
+        CONTENTS__MAXRESULTS: "'200'"
+        PLUGINS__2: ICIS.CustomId.dll
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 256Mi
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/proxy-connect-timeout: "120"
+          nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
+          nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
+    squidexCli:
+      enabled: True
+      schedule: "'55 9,12,15,18 * * *'"
+      image:
+        repository: artifacts.cha.rbxd.ds/automated/icis-squidex-cli # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-recyclers-supply-tracker:name"}
+        tag: systest-recyclers-supply-tracker-95-8.0.35 # {"$imagepolicy": "flux-system:icis-squidex-cli-systest-recyclers-supply-tracker:tag"}
+    vault_squidex_secrets:
+      name: recyclers-supply-tracker-systest-secret
+    vault_kafka_secrets:
+      name: recyclers-supply-tracker-kafka-systest-secret
+      VaultSecretPath: "icis-squidex/recyclers-supply-tracker/systest"

@@ -1,0 +1,13 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authoring-bff
+spec:
+  values:
+    replicaCount: 1
+    projectName: "authoring-seantest"
+    ServiceAccountName: "seantest"    
+    vault:
+      url: "https://vault.cluster.us-vault-nonprod.azure.lnrsg.io/dataservices/icis/alex-poc"
+      VaultK8sRoleName: "kv-seantest-read"
+      VaultK8sAuthPath: "auth/cha/eks-b"
