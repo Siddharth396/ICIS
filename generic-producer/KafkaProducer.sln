@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32804.467
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icis.SpecificKafkaProducer.Sample", "src\SpecificKafkaProducer.Sample\Icis.SpecificKafkaProducer.Sample.csproj", "{9ECD50BC-640E-442E-99E8-C9F80DD17AE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icis.SpecificKafkaProducer", "src\SpecificKafkaProducer\Icis.SpecificKafkaProducer.csproj", "{AD1433FA-4D03-4324-9AD5-F6C5D81A38DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icis.SpecificKafkaProducer.Test", "src\SpecificKafkaProducer.Test\Icis.SpecificKafkaProducer.Test.csproj", "{1EEBDE39-69A0-4DBA-AE4D-12A27719150A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icis.GenericKafkaProducer", "src\GenericKafkaProducer\Icis.GenericKafkaProducer.csproj", "{EE8F9719-560A-4B9C-8F39-930D64178C59}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icis.GenericKafkaProducer.Sample", "src\GenericKafkaProducer.Sample\Icis.GenericKafkaProducer.Sample.csproj", "{C8C2D8D6-1932-4199-9CA5-0B8C28F4125B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Icis.GenericKafkaProducer.Test", "src\GenericKafkaProducer.Test\Icis.GenericKafkaProducer.Test.csproj", "{BE692254-6175-4EC5-B0FA-A0BE735B337B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9957364F-40B8-4C39-8A2A-C90EEC37BBD7}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		GitVersion.yml = GitVersion.yml
+		icis.ruleset = icis.ruleset
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9ECD50BC-640E-442E-99E8-C9F80DD17AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ECD50BC-640E-442E-99E8-C9F80DD17AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ECD50BC-640E-442E-99E8-C9F80DD17AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ECD50BC-640E-442E-99E8-C9F80DD17AE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD1433FA-4D03-4324-9AD5-F6C5D81A38DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD1433FA-4D03-4324-9AD5-F6C5D81A38DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD1433FA-4D03-4324-9AD5-F6C5D81A38DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD1433FA-4D03-4324-9AD5-F6C5D81A38DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EEBDE39-69A0-4DBA-AE4D-12A27719150A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EEBDE39-69A0-4DBA-AE4D-12A27719150A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EEBDE39-69A0-4DBA-AE4D-12A27719150A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EEBDE39-69A0-4DBA-AE4D-12A27719150A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE8F9719-560A-4B9C-8F39-930D64178C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE8F9719-560A-4B9C-8F39-930D64178C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE8F9719-560A-4B9C-8F39-930D64178C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE8F9719-560A-4B9C-8F39-930D64178C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8C2D8D6-1932-4199-9CA5-0B8C28F4125B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8C2D8D6-1932-4199-9CA5-0B8C28F4125B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8C2D8D6-1932-4199-9CA5-0B8C28F4125B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8C2D8D6-1932-4199-9CA5-0B8C28F4125B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE692254-6175-4EC5-B0FA-A0BE735B337B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE692254-6175-4EC5-B0FA-A0BE735B337B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE692254-6175-4EC5-B0FA-A0BE735B337B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE692254-6175-4EC5-B0FA-A0BE735B337B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E6880FB-3E24-4512-81C5-8506721A2E34}
+	EndGlobalSection
+EndGlobal
